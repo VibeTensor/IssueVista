@@ -34,9 +34,7 @@ chat:
 knowledge_base:
   learnings:
     scope: global
-  issues: false
-  pull_requests: false
-  jira_issues: false
+  opt_out: false
 
 instructions: |
   ## Project Context
