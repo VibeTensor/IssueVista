@@ -1,5 +1,11 @@
 # IssueFlow
 
+[![CI](https://github.com/ascender1729/IssueFlow/workflows/CI/badge.svg)](https://github.com/ascender1729/IssueFlow/actions)
+[![CodeRabbit](https://img.shields.io/badge/CodeRabbit-Enabled-FF570A?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMiAyMkgyMkwxMiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+)](https://coderabbit.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-Friendly-blueviolet?logo=hacktoberfest)](https://hacktoberfest.com/)
+[![GitHub stars](https://img.shields.io/github/stars/ascender1729/IssueFlow?style=social)](https://github.com/ascender1729/IssueFlow/stargazers)
+
 Find unassigned open GitHub issues without pull requests - your gateway to open-source contribution!
 
 **Live Demo**: [https://issueflow.pages.dev](https://issueflow.pages.dev)
