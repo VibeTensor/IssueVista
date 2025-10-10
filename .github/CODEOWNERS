@@ -1,0 +1,21 @@
+# Code Owners for IssueFlow
+# These owners will be automatically requested for review when someone opens a pull request.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+* @ascender1729
+
+# Core components
+/src/components/ @ascender1729
+/src/lib/ @ascender1729
+
+# Configuration files
+*.config.* @ascender1729
+package.json @ascender1729
+tsconfig.json @ascender1729
+
+# Documentation
+*.md @ascender1729
+
+# GitHub workflows and templates
+/.github/ @ascender1729

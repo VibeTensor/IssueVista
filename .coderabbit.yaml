@@ -1,0 +1,105 @@
+# CodeRabbit Configuration for IssueFlow
+# https://docs.coderabbit.ai/guides/configure-coderabbit
+
+# Language settings
+language: en-US
+
+# Review settings
+reviews:
+  # Enable auto-review on pull requests
+  auto_review:
+    enabled: true
+    # Trigger on draft PRs
+    drafts: true
+
+  # Review effort level (1-5, higher means more thorough)
+  effort: 4
+
+  # Code quality checks
+  checks:
+    # Check for potential bugs
+    - bug_risk
+    # Security vulnerabilities
+    - security
+    # Performance issues
+    - performance
+    # Code maintainability
+    - maintainability
+    # Best practices
+    - best_practices
+
+  # Review categories
+  categories:
+    - code_quality
+    - security
+    - performance
+    - accessibility
+    - documentation
+
+  # File filters
+  path_filters:
+    # Ignore these paths
+    ignore:
+      - "dist/**"
+      - "node_modules/**"
+      - ".astro/**"
+      - "*.log"
+      - "package-lock.json"
+
+# Chat settings
+chat:
+  # Enable chat commands
+  enabled: true
+  # Auto-reply to comments
+  auto_reply: true
+
+# Code suggestions
+suggestions:
+  # Enable inline code suggestions
+  enabled: true
+  # Max suggestions per file
+  max_per_file: 10
+
+# Learning
+learn_from_feedback: true
+
+# Tone
+tone_instructions: "Be constructive, helpful, and educational. Focus on teaching best practices while being respectful of the contributor's effort."
+
+# Custom instructions
+instructions: |
+  This is IssueFlow, a tool for finding unassigned GitHub issues.
+
+  Key areas to focus on:
+  - TypeScript type safety
+  - Svelte component best practices
+  - Accessibility (a11y) for all UI components
+  - Mobile responsiveness
+  - Performance optimization
+  - Security (especially with GitHub tokens)
+  - Code readability and maintainability
+
+  Tech stack:
+  - Astro 5.x (static site generator)
+  - Svelte 5 (interactive components)
+  - TypeScript (type safety)
+  - UnoCSS (utility-first CSS)
+  - GitHub GraphQL API
+
+  Be especially careful about:
+  - Authentication and token handling (must be client-side only)
+  - API rate limiting
+  - Error handling for GitHub API calls
+  - Cross-browser compatibility
+  - Mobile-first responsive design
+
+# Repository knowledge
+knowledge_base:
+  - path: "README.md"
+    description: "Project overview and quick start"
+  - path: "CONTRIBUTING.md"
+    description: "Contribution guidelines"
+  - path: "src/lib/github-graphql.ts"
+    description: "GitHub API client"
+  - path: "src/components/ResultsList.svelte"
+    description: "Main UI component"
