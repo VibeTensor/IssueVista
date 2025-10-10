@@ -121,15 +121,15 @@
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <!-- Header -->
-  <div class="text-center mb-12">
-    <div class="sketch-container inline-block px-12 py-8">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-2 sketch-title">
+  <div class="text-center mb-8 md:mb-12">
+    <div class="sketch-container inline-block px-6 py-6 md:px-12 md:py-8 max-w-full">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-2 sketch-title break-words">
         IssueFlow
       </h1>
-      <p class="text-slate-300 text-lg md:text-xl mb-3">
+      <p class="text-slate-300 text-base md:text-lg lg:text-xl mb-2 md:mb-3 break-words px-2">
         Find Unassigned Issues with No PRs
       </p>
-      <p class="text-slate-400 text-sm md:text-base">
+      <p class="text-slate-400 text-xs md:text-sm lg:text-base break-words px-2">
         Discover open-source contribution opportunities · Start contributing today
       </p>
     </div>
@@ -141,18 +141,18 @@
       <GitHubAuth onAuthChange={handleAuthChange} />
     </div>
   {:else if !isAuthenticated}
-    <div class="mb-8 sketch-card p-6">
-      <div class="flex items-start gap-5">
+    <div class="mb-8 sketch-card p-4 md:p-6">
+      <div class="flex flex-col md:flex-row items-start gap-4 md:gap-5">
         <div class="flex-shrink-0">
-          <div class="w-12 h-12 rounded-lg bg-slate-700 flex items-center justify-center sketch-icon">
-            <svg class="w-6 h-6 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-slate-700 flex items-center justify-center sketch-icon">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
         </div>
-        <div class="flex-1">
-          <h3 class="text-xl font-bold text-white mb-2">Unlock Full Speed</h3>
-          <p class="text-base text-slate-300 mb-4 leading-relaxed">
+        <div class="flex-1 min-w-0 w-full">
+          <h3 class="text-lg md:text-xl font-bold text-white mb-2 break-words">Unlock Full Speed</h3>
+          <p class="text-sm md:text-base text-slate-300 mb-4 leading-relaxed break-words">
             <span class="font-semibold text-slate-400">Without token:</span> 60 requests/hour ·
             <span class="font-semibold text-slate-200">With token:</span> 5000 requests/hour (83x faster)
           </p>
@@ -160,18 +160,18 @@
             href="https://github.com/settings/tokens/new?description=GitHub%20Issues%20Finder&scopes=public_repo"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 font-semibold sketch-button"
+            class="inline-flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 font-semibold sketch-button text-sm md:text-base w-full md:w-auto"
           >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
             </svg>
-            <span>Create Token in 30 Seconds</span>
+            <span class="truncate">Create Token in 30 Seconds</span>
           </a>
-          <p class="text-sm text-slate-400 mt-3 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p class="text-xs md:text-sm text-slate-400 mt-3 flex items-start gap-2 break-words">
+            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Select "public_repo" scope and paste token below
+            <span>Select "public_repo" scope and paste token below</span>
           </p>
         </div>
       </div>
@@ -179,7 +179,7 @@
   {/if}
 
   <!-- Main search card -->
-  <div class="sketch-card p-8 mb-8">
+  <div class="sketch-card p-4 md:p-6 lg:p-8 mb-8">
     <div class="space-y-6">
       <!-- Repository URL Input -->
       <div>
@@ -447,11 +447,11 @@
 <!-- Help Button - Fixed to bottom right -->
 <button
   on:click={toggleHelpPopup}
-  class="help-button fixed w-16 h-16 bg-slate-700 rounded-full hover:bg-slate-600 transition-all flex items-center justify-center sketch-button shadow-2xl"
+  class="help-button fixed w-14 h-14 md:w-16 md:h-16 bg-slate-700 rounded-full hover:bg-slate-600 transition-all flex items-center justify-center sketch-button shadow-2xl"
   aria-label="Help"
-  style="bottom: 2rem; right: 2rem; z-index: 9999;"
+  style="bottom: 1rem; right: 1rem; z-index: 9999;"
 >
-  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg class="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 </button>
@@ -459,22 +459,22 @@
 <!-- Help Popup Modal -->
 {#if showHelpPopup}
   <div
-    class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end md:items-center justify-center p-0 md:p-4"
     on:click={toggleHelpPopup}
   >
     <div
-      class="sketch-container max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+      class="sketch-container max-w-3xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto rounded-t-2xl md:rounded-2xl"
       on:click|stopPropagation
     >
       <!-- Header -->
-      <div class="sticky top-0 bg-slate-900/95 backdrop-blur px-8 py-6 flex items-center justify-between border-b border-slate-700 z-10">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 bg-slate-700 rounded-lg flex items-center justify-center sketch-icon">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="sticky top-0 bg-slate-900/98 backdrop-blur px-4 md:px-8 py-4 md:py-6 flex items-center justify-between border-b border-slate-700 z-10">
+        <div class="flex items-center gap-3 md:gap-4 min-w-0">
+          <div class="w-10 h-10 md:w-12 md:h-12 bg-slate-700 rounded-lg flex items-center justify-center sketch-icon flex-shrink-0">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 class="text-3xl font-extrabold text-white">How It Works</h2>
+          <h2 class="text-xl md:text-2xl lg:text-3xl font-extrabold text-white truncate">How It Works</h2>
         </div>
         <button
           on:click={toggleHelpPopup}
@@ -488,76 +488,76 @@
       </div>
 
       <!-- Content -->
-      <div class="px-8 py-6 space-y-6 bg-slate-900/95">
+      <div class="px-4 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6 bg-slate-900/95">
         <!-- Steps -->
-        <div class="sketch-card p-6">
-          <div class="flex items-start gap-4 mb-4">
-            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-lg sketch-icon-small">1</div>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-white mb-2">Choose Authentication (Optional)</h3>
-              <p class="text-slate-300 text-sm mb-2">Without token: 60 req/hr · With token: 5000 req/hr</p>
-              <p class="text-slate-400 text-sm">Create token at github.com/settings/tokens (select "public_repo" scope)</p>
+        <div class="sketch-card p-4 md:p-6">
+          <div class="flex items-start gap-3 md:gap-4">
+            <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-base md:text-lg sketch-icon-small">1</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-2 break-words">Choose Authentication (Optional)</h3>
+              <p class="text-slate-300 text-xs md:text-sm mb-2 break-words">Without token: 60 req/hr · With token: 5000 req/hr</p>
+              <p class="text-slate-400 text-xs md:text-sm break-words">Create token at github.com/settings/tokens (select "public_repo" scope)</p>
             </div>
           </div>
         </div>
 
-        <div class="sketch-card p-6">
-          <div class="flex items-start gap-4 mb-4">
-            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-lg sketch-icon-small">2</div>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-white mb-2">Enter Repository URL</h3>
-              <p class="text-slate-300 text-sm">Format: https://github.com/owner/repository</p>
+        <div class="sketch-card p-4 md:p-6">
+          <div class="flex items-start gap-3 md:gap-4">
+            <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-base md:text-lg sketch-icon-small">2</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-2 break-words">Enter Repository URL</h3>
+              <p class="text-slate-300 text-xs md:text-sm break-words">Format: https://github.com/owner/repository</p>
             </div>
           </div>
         </div>
 
-        <div class="sketch-card p-6">
-          <div class="flex items-start gap-4 mb-4">
-            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-lg sketch-icon-small">3</div>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-white mb-2">Find Issues</h3>
-              <p class="text-slate-300 text-sm mb-2">Automatically filters for:</p>
-              <ul class="text-slate-300 text-sm space-y-1 ml-4">
+        <div class="sketch-card p-4 md:p-6">
+          <div class="flex items-start gap-3 md:gap-4">
+            <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-base md:text-lg sketch-icon-small">3</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-2 break-words">Find Issues</h3>
+              <p class="text-slate-300 text-xs md:text-sm mb-2">Automatically filters for:</p>
+              <ul class="text-slate-300 text-xs md:text-sm space-y-1 ml-4">
                 <li class="flex items-start gap-2">
-                  <span class="text-slate-400">•</span>
-                  <span>Open issues</span>
+                  <span class="text-slate-400 flex-shrink-0">•</span>
+                  <span class="break-words">Open issues</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-slate-400">•</span>
-                  <span>Unassigned issues</span>
+                  <span class="text-slate-400 flex-shrink-0">•</span>
+                  <span class="break-words">Unassigned issues</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-slate-400">•</span>
-                  <span><strong>With token:</strong> Excludes issues with PRs</span>
+                  <span class="text-slate-400 flex-shrink-0">•</span>
+                  <span class="break-words"><strong>With token:</strong> Excludes issues with PRs</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-amber-400">⚠</span>
-                  <span class="text-amber-300 text-xs"><strong>Without token:</strong> PR filtering unavailable</span>
+                  <span class="text-amber-400 flex-shrink-0">⚠</span>
+                  <span class="text-amber-300 text-xs break-words"><strong>Without token:</strong> PR filtering unavailable</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div class="sketch-card p-6">
-          <div class="flex items-start gap-4 mb-4">
-            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-lg sketch-icon-small">4</div>
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-white mb-2">Start Contributing</h3>
-              <p class="text-slate-300 text-sm">Click "View" on any issue to open it on GitHub</p>
+        <div class="sketch-card p-4 md:p-6">
+          <div class="flex items-start gap-3 md:gap-4">
+            <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-base md:text-lg sketch-icon-small">4</div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-2 break-words">Start Contributing</h3>
+              <p class="text-slate-300 text-xs md:text-sm break-words">Click "View" on any issue to open it on GitHub</p>
             </div>
           </div>
         </div>
 
         <!-- Privacy Note -->
-        <div class="sketch-card p-6 bg-slate-800/40">
-          <div class="flex items-start gap-4">
-            <svg class="w-6 h-6 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="sketch-card p-4 md:p-6 bg-slate-800/40">
+          <div class="flex items-start gap-3 md:gap-4">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
-            <div>
-              <h3 class="text-lg font-bold text-slate-300 mb-2">Privacy & Security</h3>
-              <p class="text-slate-400 text-sm">
+            <div class="min-w-0">
+              <h3 class="text-base md:text-lg font-bold text-slate-300 mb-2 break-words">Privacy & Security</h3>
+              <p class="text-slate-400 text-xs md:text-sm break-words">
                 Your GitHub token is stored locally in your browser only. Never sent to any server except GitHub's official API.
               </p>
             </div>
@@ -566,10 +566,10 @@
       </div>
 
       <!-- Footer -->
-      <div class="sticky bottom-0 bg-slate-900/95 backdrop-blur px-8 py-6 border-t border-slate-700">
+      <div class="sticky bottom-0 bg-slate-900/98 backdrop-blur px-4 md:px-8 py-4 md:py-6 border-t border-slate-700">
         <button
           on:click={toggleHelpPopup}
-          class="w-full bg-slate-700 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-slate-600 sketch-button"
+          class="w-full bg-slate-700 text-white py-3 md:py-4 px-4 md:px-6 rounded-lg font-bold text-base md:text-lg hover:bg-slate-600 sketch-button"
         >
           Got it! Let's Find Issues
         </button>
@@ -756,9 +756,24 @@
   /* Help button fixed positioning */
   .help-button {
     position: fixed !important;
-    bottom: 2rem !important;
-    right: 2rem !important;
+    bottom: 1rem !important;
+    right: 1rem !important;
     z-index: 9999 !important;
+  }
+
+  @media (min-width: 768px) {
+    .help-button {
+      bottom: 2rem !important;
+      right: 2rem !important;
+    }
+  }
+
+  /* Ensure text wrapping on mobile */
+  @media (max-width: 640px) {
+    * {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   }
 
   /* Smooth transitions */
