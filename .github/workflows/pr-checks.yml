@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Check PR title format
         run: |
@@ -29,9 +32,14 @@ jobs:
 
       - name: Verify files changed
         run: |
-          FILES_CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          FILES_CHANGED=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..HEAD)
           echo "Files changed:"
           echo "$FILES_CHANGED"
+          if [ -z "$FILES_CHANGED" ]; then
+            echo "Error: No files changed in this PR"
+            exit 1
+          fi
 
   build-check:
     runs-on: ubuntu-latest
