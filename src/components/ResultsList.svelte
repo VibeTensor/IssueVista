@@ -55,6 +55,9 @@
 
     if (githubToken) {
       localStorage.setItem('github_token', githubToken);
+      isAuthenticated = true;
+    } else {
+      isAuthenticated = false;
     }
 
     const parsed = parseRepoUrl(repoUrl);
