@@ -157,7 +157,7 @@
             <span class="font-semibold text-slate-200">With token:</span> 5000 requests/hour (83x faster)
           </p>
           <a
-            href="https://github.com/settings/tokens/new?description=GitHub%20Issues%20Finder&scopes=public_repo"
+            href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 font-semibold sketch-button text-sm md:text-base w-full md:w-auto"
