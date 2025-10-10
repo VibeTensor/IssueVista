@@ -494,9 +494,78 @@
           <div class="flex items-start gap-3 md:gap-4">
             <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-slate-700 rounded-lg flex items-center justify-center font-bold text-white text-base md:text-lg sketch-icon-small">1</div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-2 break-words">Choose Authentication (Optional)</h3>
-              <p class="text-slate-300 text-xs md:text-sm mb-2 break-words">Without token: 60 req/hr · With token: 5000 req/hr</p>
-              <p class="text-slate-400 text-xs md:text-sm break-words">Create token at github.com/settings/tokens (select "public_repo" scope)</p>
+              <h3 class="text-base md:text-lg lg:text-xl font-bold text-white mb-3 break-words">Choose Authentication (Optional)</h3>
+              <p class="text-slate-300 text-xs md:text-sm mb-3 break-words">Without token: 60 req/hr · With token: 5000 req/hr</p>
+
+              <!-- Token Generation Substeps -->
+              <div class="bg-slate-800/50 rounded-lg p-3 md:p-4 space-y-3">
+                <p class="text-white text-xs md:text-sm font-semibold mb-2">How to create a GitHub token:</p>
+
+                <div class="space-y-2">
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">1</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Click <a href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 underline">this link</a> or the "Create Token" button
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">2</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Authenticate with GitHub (if not logged in)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">3</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Scroll down and check the <span class="font-semibold text-white">"public_repo"</span> scope (should be auto-selected)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">4</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Scroll to bottom and click <span class="font-semibold text-green-400">"Generate token"</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">5</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Copy the token (starts with <code class="text-amber-300 text-xs">ghp_</code>)
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-2">
+                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 flex items-center justify-center text-white text-xs font-bold">6</span>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-slate-300 text-xs md:text-sm break-words">
+                        Paste it in the "GitHub Token" field above and save it
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-2 mt-3 pt-3 border-t border-slate-700">
+                  <svg class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p class="text-amber-300 text-xs break-words">
+                    Save your token somewhere safe! GitHub only shows it once.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
