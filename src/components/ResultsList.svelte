@@ -463,7 +463,7 @@
     on:click={toggleHelpPopup}
   >
     <div
-      class="sketch-container max-w-3xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto rounded-t-2xl md:rounded-2xl"
+      class="help-popup-scroll sketch-container max-w-3xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto rounded-t-2xl md:rounded-2xl"
       on:click|stopPropagation
     >
       <!-- Header -->
@@ -850,5 +850,35 @@
     transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
+  }
+
+  /* Custom scrollbar for help popup */
+  .help-popup-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.6) transparent;
+  }
+
+  .help-popup-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .help-popup-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+  }
+
+  .help-popup-scroll::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.6);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+
+  .help-popup-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.8);
+  }
+
+  /* Smooth scrolling */
+  .help-popup-scroll {
+    scroll-behavior: smooth;
   }
 </style>
