@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to IssueFlow! This document provides guidelines and instructions for contributing to this project.
 
-**Repository**: [https://github.com/ascender1729/IssueFlow](https://github.com/ascender1729/IssueFlow)
+**Repository**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
 
 **Live Demo**: [https://issueflow.pages.dev](https://issueflow.pages.dev)
 
@@ -18,7 +18,7 @@ IssueFlow participates in Hacktoberfest! If you're contributing during Hacktober
 - What counts as spam
 - Quick start guide
 
-**Looking for Hacktoberfest issues?** Check issues labeled [`hacktoberfest`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) or [`good first issue`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+**Looking for Hacktoberfest issues?** Check issues labeled [`hacktoberfest`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) or [`good first issue`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 ---
 
@@ -111,7 +111,7 @@ We welcome various types of contributions:
 
 ### Finding Work
 
-- Check the [Issues](https://github.com/ascender1729/IssueFlow/issues) page
+- Check the [Issues](https://github.com/VibeTensor/IssueFlow/issues) page
 - Look for issues labeled `good first issue` or `help wanted`
 - Comment on an issue to express interest before starting work
 - Ask questions if anything is unclear

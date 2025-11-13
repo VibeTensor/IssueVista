@@ -14,7 +14,7 @@
 ### Step-by-Step Deployment
 
 1. **Push to GitHub** ✅ (Already done!)
-   - Repository: https://github.com/ascender1729/IssueFlow
+   - Repository: https://github.com/VibeTensor/IssueFlow
 
 2. **Login to Cloudflare**
    - Go to: https://dash.cloudflare.com/
@@ -24,7 +24,7 @@
    - Click "Workers & Pages" in left sidebar
    - Click "Create" → "Pages" → "Connect to Git"
    - Click "Connect GitHub" and authorize Cloudflare
-   - Select repository: `ascender1729/IssueFlow`
+   - Select repository: `VibeTensor/IssueFlow`
    - Click "Begin setup"
 
 4. **Configure Build Settings**

@@ -17,7 +17,7 @@ Hacktoberfest is a month-long celebration of open-source software run by Digital
    - Register between September 26 and October 31
 
 2. **Find Issues to Work On**
-   - Browse our [Issues labeled `hacktoberfest`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest)
+   - Browse our [Issues labeled `hacktoberfest`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest)
    - Look for issues labeled `good first issue` for beginner-friendly tasks
    - Check issues labeled `help wanted` for priority tasks
 
@@ -219,6 +219,6 @@ Thank you for considering contributing to IssueFlow during Hacktoberfest! Your c
 
 **Questions?** Open an issue or comment on an existing one.
 
-**Repository**: [https://github.com/ascender1729/IssueFlow](https://github.com/ascender1729/IssueFlow)
+**Repository**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
 
 **Live Demo**: [https://issueflow.pages.dev](https://issueflow.pages.dev)

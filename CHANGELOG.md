@@ -70,7 +70,7 @@ This is the initial public release of IssueFlow, a tool designed to help develop
 
 **Live Demo:** [https://issueflow.pages.dev](https://issueflow.pages.dev)
 
-**Repository:** [https://github.com/ascender1729/IssueFlow](https://github.com/ascender1729/IssueFlow)
+**Repository:** [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
 
 ---
 
@@ -89,4 +89,4 @@ Planned features for future releases:
 
 ---
 
-For detailed information about changes in each version, see the [Git commit history](https://github.com/ascender1729/IssueFlow/commits/master).
+For detailed information about changes in each version, see the [Git commit history](https://github.com/VibeTensor/IssueFlow/commits/master).

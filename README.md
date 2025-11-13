@@ -1,16 +1,16 @@
 # IssueFlow
 
-[![CI](https://github.com/ascender1729/IssueFlow/workflows/CI/badge.svg)](https://github.com/ascender1729/IssueFlow/actions)
+[![CI](https://github.com/VibeTensor/IssueFlow/workflows/CI/badge.svg)](https://github.com/VibeTensor/IssueFlow/actions)
 [![CodeRabbit](https://img.shields.io/badge/CodeRabbit-Enabled-FF570A?logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMiAyMkgyMkwxMiAyWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+)](https://coderabbit.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-Friendly-blueviolet?logo=hacktoberfest)](https://hacktoberfest.com/)
-[![GitHub stars](https://img.shields.io/github/stars/ascender1729/IssueFlow?style=social)](https://github.com/ascender1729/IssueFlow/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/VibeTensor/IssueFlow?style=social)](https://github.com/VibeTensor/IssueFlow/stargazers)
 
 Find unassigned GitHub issues without pull requests - streamline your path to open-source contribution.
 
 **Live Application**: [https://issueflow.pages.dev](https://issueflow.pages.dev)
 
-**Repository**: [https://github.com/ascender1729/IssueFlow](https://github.com/ascender1729/IssueFlow)
+**Repository**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
 
 ## Overview
 
@@ -118,7 +118,7 @@ The tool provides three authentication modes to match your workflow and offers a
 
 ```bash
 # Clone the repository
-git clone https://github.com/ascender1729/IssueFlow.git
+git clone https://github.com/VibeTensor/IssueFlow.git
 cd IssueFlow
 
 # Install dependencies
@@ -358,9 +358,9 @@ Contributions are welcome! IssueFlow is a Hacktoberfest-friendly project.
 
 ### Helpful Labels
 
-- [`good first issue`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) - Beginner-friendly issues
-- [`hacktoberfest`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) - Hacktoberfest-eligible issues
-- [`help wanted`](https://github.com/ascender1729/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) - Issues seeking contributors
+- [`good first issue`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) - Beginner-friendly issues
+- [`hacktoberfest`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) - Hacktoberfest-eligible issues
+- [`help wanted`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22) - Issues seeking contributors
 
 ### Documentation
 
@@ -432,14 +432,14 @@ Built with modern web technologies and best practices for performance, accessibi
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/ascender1729/IssueFlow/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/ascender1729/IssueFlow/discussions)
+- **Issues**: [GitHub Issues](https://github.com/VibeTensor/IssueFlow/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/VibeTensor/IssueFlow/discussions)
 - **Email**: Available in GitHub profile
 
 ## Links
 
 - **Live Demo**: [https://issueflow.pages.dev](https://issueflow.pages.dev)
-- **Repository**: [https://github.com/ascender1729/IssueFlow](https://github.com/ascender1729/IssueFlow)
+- **Repository**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
 - **Documentation**: Repository markdown files
 - **Changelog**: [CHANGELOG.md](./CHANGELOG.md)
 
