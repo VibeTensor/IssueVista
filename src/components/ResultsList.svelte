@@ -857,6 +857,13 @@
     animation-play-state: paused;
   }
 
+  /* Respect user's motion preferences for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .help-button-pulse {
+      animation: none;
+    }
+  }
+
   /* Ensure text wrapping on mobile */
   @media (max-width: 640px) {
     * {

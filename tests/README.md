@@ -179,7 +179,7 @@ npx vitest run -t "should have pulse animation class"
 - Maintains transition-all class
 - Maintains hover background class
 
-**Total Unit Tests: 32**
+**Total Unit Tests: 28**
 
 #### E2E Tests (`help-button-animation.spec.ts`)
 
@@ -217,7 +217,7 @@ npx vitest run -t "should have pulse animation class"
 - No layout shifts during animation
 - Uses CSS transform (hardware accelerated)
 
-**Total E2E Tests: 20**
+**Total E2E Tests: 24**
 
 **Grand Total: 52 tests**
 
