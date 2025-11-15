@@ -54,3 +54,6 @@ coverage/
 # Local development settings
 .vscode/settings.json
 .claude/
+
+# Implementation guides (personal workflow files)
+IMPLEMENTATION_GUIDE.md
