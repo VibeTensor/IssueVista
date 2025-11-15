@@ -447,7 +447,7 @@
 <!-- Help Button - Fixed to bottom right -->
 <button
   on:click={toggleHelpPopup}
-  class="help-button fixed w-14 h-14 md:w-16 md:h-16 bg-slate-700 rounded-full hover:bg-slate-600 transition-all flex items-center justify-center sketch-button shadow-2xl"
+  class="help-button help-button-pulse fixed w-14 h-14 md:w-16 md:h-16 bg-slate-700 rounded-full hover:bg-slate-600 transition-all flex items-center justify-center sketch-button shadow-2xl"
   aria-label="Help"
   style="bottom: 1rem; right: 1rem; z-index: 9999;"
 >
@@ -834,6 +834,33 @@
     .help-button {
       bottom: 2rem !important;
       right: 2rem !important;
+    }
+  }
+
+  /* Help button pulse animation */
+  @keyframes pulse-scale {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 10px 50px rgba(148, 163, 184, 0.4);
+    }
+  }
+
+  .help-button-pulse {
+    animation: pulse-scale 2s ease-in-out infinite;
+  }
+
+  .help-button-pulse:hover {
+    animation-play-state: paused;
+  }
+
+  /* Respect user's motion preferences for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .help-button-pulse {
+      animation: none;
     }
   }
 
