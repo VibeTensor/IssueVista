@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../lib/github-graphql';
   import GitHubAuth from './GitHubAuth.svelte';
 
@@ -16,15 +16,45 @@
   function toggleHelpPopup() {
     showHelpPopup = !showHelpPopup;
   }
+  function handleKeydown(event: KeyboardEvent) {
+  // ESC key - close help popup if open
+  if (event.key === 'Escape' && showHelpPopup) {
+    event.preventDefault();
+    showHelpPopup = false;
+  }
+  
+  // Ctrl+K or / key - focus repository URL input
+  if ((event.ctrlKey && event.key === 'k') || event.key === '/') {
+    event.preventDefault();
+    const repoInput = document.getElementById('repoUrl') as HTMLInputElement;
+    if (repoInput) {
+      repoInput.focus();
+    }
+  }
+}
 
   onMount(() => {
-    const savedToken = localStorage.getItem('github_token');
-    if (savedToken) {
-      githubToken = savedToken;
-      isAuthenticated = true;
-    }
-    updateRateLimit();
-  });
+  const savedToken = localStorage.getItem('github_token');
+  if (savedToken) {
+    githubToken = savedToken;
+    isAuthenticated = true;
+  }
+  updateRateLimit();
+  
+  // Add keyboard event listener
+  window.addEventListener('keydown', handleKeydown);
+  
+  // Return cleanup function (alternative to onDestroy)
+  return () => {
+    window.removeEventListener('keydown', handleKeydown);
+  };
+});
+onDestroy(() => {
+  // Remove keyboard event listener to prevent memory leaks
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('keydown', handleKeydown);
+  }
+});
 
   function handleAuthChange(token: string | null) {
     if (token) {
