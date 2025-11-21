@@ -57,3 +57,5 @@ coverage/
 
 # Implementation guides (personal workflow files)
 IMPLEMENTATION_GUIDE.md
+ISSUE_*_IMPLEMENTATION_GUIDE.md
+UPLIFT_TRACKER_*.txt

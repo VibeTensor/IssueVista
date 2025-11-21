@@ -12,6 +12,8 @@
   let isAuthenticated = false;
   let loadingMessage = 'Fetching issues...';
   let showHelpPopup = false;
+  let copiedIssueNumber: number | null = null;
+  let copyFeedbackTimeout: number | null = null;
 
   function toggleHelpPopup() {
     showHelpPopup = !showHelpPopup;
@@ -99,6 +101,46 @@
     const diff = resetDate.getTime() - now.getTime();
     const minutes = Math.floor(diff / 60000);
     return minutes > 0 ? `${minutes} minutes` : 'soon';
+  }
+
+  // Copy issue URL to clipboard
+  async function copyIssueUrl(issueUrl: string, issueNumber: number) {
+    if (!issueUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(issueUrl);
+      copiedIssueNumber = issueNumber;
+
+      // Clear previous timeout if exists
+      if (copyFeedbackTimeout) {
+        clearTimeout(copyFeedbackTimeout);
+      }
+
+      // Hide feedback after 2 seconds
+      copyFeedbackTimeout = window.setTimeout(() => {
+        copiedIssueNumber = null;
+        copyFeedbackTimeout = null;
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy issue URL:', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = issueUrl;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        copiedIssueNumber = issueNumber;
+        copyFeedbackTimeout = window.setTimeout(() => {
+          copiedIssueNumber = null;
+        }, 2000);
+      } catch (e) {
+        console.error('Fallback copy failed:', e);
+      }
+      document.body.removeChild(textArea);
+    }
   }
 </script>
 
@@ -207,13 +249,13 @@
       <div>
         <label for="token" class="block text-base font-bold text-white mb-3">
           {#if isAuthenticated}
-            <span class="flex items-center gap-2">
-              GitHub Token
-              <span class="inline-flex items-center gap-1 text-sm font-semibold text-slate-200 bg-slate-700/80 px-3 py-1 rounded-full sketch-badge">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span class="flex flex-col sm:flex-row sm:items-center gap-2">
+              <span>GitHub Token</span>
+              <span class="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-200 bg-slate-700/80 px-2.5 py-1 rounded-full sketch-badge w-fit">
+                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Authenticated (5000 req/hr)
+                <span class="whitespace-nowrap">Authenticated (5000 req/hr)</span>
               </span>
             </span>
           {:else}
@@ -271,15 +313,15 @@
   </div>
 
   {#if rateLimit.remaining !== undefined && rateLimit.remaining > 0}
-    <div class="text-center text-sm mb-6">
-      <div class="inline-flex items-center gap-2 sketch-badge px-4 py-2 rounded-full bg-slate-800/80">
-        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="text-center text-xs md:text-sm mb-6 px-4">
+      <div class="inline-flex items-center gap-2 sketch-badge px-3 md:px-4 py-2 rounded-full bg-slate-800/80 max-w-full">
+        <svg class="w-4 h-4 text-slate-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
-        <span class={rateLimit.remaining < 10 ? 'text-amber-400 font-semibold' : 'text-slate-300'}>
+        <span class={`${rateLimit.remaining < 10 ? 'text-amber-400 font-semibold' : 'text-slate-300'} break-words`}>
           {rateLimit.remaining} requests remaining
           {#if rateLimit.resetAt}
-            (resets in {getResetTime(rateLimit.resetAt)})
+            <span class="whitespace-nowrap">(resets in {getResetTime(rateLimit.resetAt)})</span>
           {/if}
         </span>
       </div>
@@ -287,14 +329,14 @@
   {/if}
 
   {#if loading}
-    <div class="sketch-card p-12 flex flex-col items-center justify-center">
-      <div class="relative mb-6">
+    <div class="sketch-card p-8 md:p-12 flex flex-col items-center justify-center text-center">
+      <div class="relative mb-6 w-16 h-16 mx-auto">
         <div class="animate-spin rounded-full h-16 w-16 border-4 border-slate-700"></div>
         <div class="animate-spin rounded-full h-16 w-16 border-4 border-slate-400 border-t-transparent absolute top-0 left-0"></div>
       </div>
-      <p class="text-white font-semibold mb-2 text-lg">{loadingMessage}</p>
-      <p class="text-sm text-slate-400">This may take a few seconds...</p>
-      <div class="mt-4 flex gap-2">
+      <p class="text-white font-semibold mb-2 text-base md:text-lg px-4">{loadingMessage}</p>
+      <p class="text-xs md:text-sm text-slate-400 px-4">This may take a few seconds...</p>
+      <div class="mt-4 flex gap-2 items-center justify-center">
         <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
         <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
         <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
@@ -344,81 +386,198 @@
       {#each issues as issue}
         <div class="group sketch-card hover-effect">
           <!-- Card content -->
-          <div class="p-6 md:p-8">
-            <div class="flex flex-col md:flex-row items-start gap-6">
-              <!-- Issue number badge -->
-              <div class="flex-shrink-0 self-center md:self-start">
-                <div class="issue-badge w-20 h-20 md:w-24 md:h-24 rounded-lg bg-slate-700 flex flex-col items-center justify-center font-black text-white">
-                  <span class="text-xs font-bold uppercase tracking-wider opacity-70">Issue</span>
-                  <span class="text-xl md:text-2xl">{issue.number}</span>
+          <div class="p-5 md:p-6">
+            <!-- Mobile: Vertical layout -->
+            <div class="md:hidden">
+              <!-- Top row: Issue badge + Action buttons -->
+              <div class="flex items-stretch justify-between gap-4 mb-5">
+                <!-- Issue number badge -->
+                <div class="flex-shrink-0 w-[100px]">
+                  <div class="issue-badge w-full h-full rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 flex flex-col items-center justify-center font-black text-white shadow-lg border-2 border-slate-600/30">
+                    <span class="text-[10px] font-bold uppercase tracking-wider opacity-60 mb-1">Issue</span>
+                    <span class="text-2xl font-black">{issue.number}</span>
+                  </div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="flex flex-col gap-2.5 w-[100px] flex-shrink-0">
+                  <!-- Copy Link Button -->
+                  <button
+                    type="button"
+                    on:click={() => copyIssueUrl(issue.url, issue.number)}
+                    class="flex-1 inline-flex flex-row items-center justify-center gap-2 px-2 {copiedIssueNumber === issue.number ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600' : 'bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600'} text-white rounded-xl font-bold sketch-button transition-all w-full shadow-md"
+                    aria-label="Copy issue link for issue {issue.number}"
+                    title={copiedIssueNumber === issue.number ? 'Copied!' : 'Copy issue link'}
+                  >
+                    {#if copiedIssueNumber === issue.number}
+                      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                      </svg>
+                      <span class="font-extrabold text-xs">Copied!</span>
+                    {:else}
+                      <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                      </svg>
+                      <span class="font-extrabold text-xs">Copy</span>
+                    {/if}
+                  </button>
+
+                  <!-- View Issue Button -->
+                  <a
+                    href={issue.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex-1 inline-flex flex-row items-center justify-center gap-2 px-2 bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-xl font-bold hover:from-slate-600 hover:to-slate-700 sketch-button transition-all w-full shadow-md"
+                    aria-label="View issue {issue.number} on GitHub"
+                  >
+                    <svg class="w-5 h-5 transition-transform group-hover:scale-110 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    <span class="font-extrabold text-xs">View</span>
+                  </a>
                 </div>
               </div>
 
-              <!-- Issue details -->
-              <div class="flex-1 min-w-0 w-full">
-                <!-- Title -->
-                <a
-                  href={issue.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-xl md:text-2xl font-extrabold text-white hover:text-slate-300 transition-colors block mb-4 leading-tight break-words"
-                >
-                  {issue.title}
-                </a>
+              <!-- Content below -->
+              <div class="w-full">
+                <h3 class="text-xl font-extrabold text-white hover:text-slate-200 transition-colors mb-4 leading-tight break-words line-clamp-2">
+                  <a href={issue.url} target="_blank" rel="noopener noreferrer">
+                    {issue.title}
+                  </a>
+                </h3>
 
-                <!-- Meta information -->
-                <div class="flex flex-wrap items-center gap-4 md:gap-6 mb-4">
+                <div class="flex flex-wrap items-center gap-4 mb-4">
                   <div class="flex items-center gap-2 text-slate-300">
-                    <div class="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-slate-800/60 flex items-center justify-center sketch-icon-small">
-                      <svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-9 h-9 rounded-lg bg-slate-800/70 flex items-center justify-center">
+                      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <span class="font-semibold text-sm md:text-base">{formatDate(issue.createdAt)}</span>
+                    <span class="font-semibold text-sm">{formatDate(issue.createdAt)}</span>
                   </div>
 
                   <div class="flex items-center gap-2 text-slate-300">
-                    <div class="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-slate-800/60 flex items-center justify-center sketch-icon-small">
-                      <svg class="w-4 h-4 md:w-5 md:h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-9 h-9 rounded-lg bg-slate-800/70 flex items-center justify-center">
+                      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                       </svg>
                     </div>
-                    <span class="font-semibold text-sm md:text-base">{issue.comments.totalCount} {issue.comments.totalCount === 1 ? 'comment' : 'comments'}</span>
+                    <span class="font-semibold text-sm">{issue.comments.totalCount} {issue.comments.totalCount === 1 ? 'comment' : 'comments'}</span>
                   </div>
                 </div>
 
-                <!-- Labels -->
                 {#if issue.labels.nodes.length > 0}
-                  <div class="flex flex-wrap gap-2 mb-4 md:mb-0">
-                    {#each issue.labels.nodes.slice(0, 6) as label}
+                  <div class="flex flex-wrap gap-2">
+                    {#each issue.labels.nodes.slice(0, 5) as label}
                       <span
-                        class="px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold sketch-badge"
-                        style="background-color: #{label.color}20; color: #{label.color};"
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm"
+                        style="background-color: #{label.color}25; color: #{label.color}; border: 1.5px solid #{label.color}40;"
                       >
                         {label.name}
                       </span>
                     {/each}
-                    {#if issue.labels.nodes.length > 6}
-                      <span class="px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold bg-slate-700/80 text-slate-300 sketch-badge">
-                        +{issue.labels.nodes.length - 6}
+                    {#if issue.labels.nodes.length > 5}
+                      <span class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-700/80 text-slate-300 border border-slate-600/50 shadow-sm">
+                        +{issue.labels.nodes.length - 5} more
+                      </span>
+                    {/if}
+                  </div>
+                {/if}
+              </div>
+            </div>
+
+            <!-- Desktop: Horizontal layout -->
+            <div class="hidden md:flex items-center gap-6">
+              <!-- Issue number badge - Left -->
+              <div class="flex-shrink-0 w-[110px]">
+                <div class="issue-badge w-full aspect-square rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 flex flex-col items-center justify-center font-black text-white shadow-lg border-2 border-slate-600/30">
+                  <span class="text-xs font-bold uppercase tracking-wider opacity-60 mb-1">Issue</span>
+                  <span class="text-3xl font-black">{issue.number}</span>
+                </div>
+              </div>
+
+              <!-- Content - Middle (takes remaining space) -->
+              <div class="flex-1 min-w-0">
+                <h3 class="text-2xl font-extrabold text-white hover:text-slate-200 transition-colors mb-3 leading-tight break-words line-clamp-2">
+                  <a href={issue.url} target="_blank" rel="noopener noreferrer">
+                    {issue.title}
+                  </a>
+                </h3>
+
+                <div class="flex flex-wrap items-center gap-4 mb-3">
+                  <div class="flex items-center gap-2 text-slate-300">
+                    <div class="w-9 h-9 rounded-lg bg-slate-800/70 flex items-center justify-center">
+                      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <span class="font-semibold text-sm">{formatDate(issue.createdAt)}</span>
+                  </div>
+
+                  <div class="flex items-center gap-2 text-slate-300">
+                    <div class="w-9 h-9 rounded-lg bg-slate-800/70 flex items-center justify-center">
+                      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                      </svg>
+                    </div>
+                    <span class="font-semibold text-sm">{issue.comments.totalCount} {issue.comments.totalCount === 1 ? 'comment' : 'comments'}</span>
+                  </div>
+                </div>
+
+                {#if issue.labels.nodes.length > 0}
+                  <div class="flex flex-wrap gap-2">
+                    {#each issue.labels.nodes.slice(0, 5) as label}
+                      <span
+                        class="px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm"
+                        style="background-color: #{label.color}25; color: #{label.color}; border: 1.5px solid #{label.color}40;"
+                      >
+                        {label.name}
+                      </span>
+                    {/each}
+                    {#if issue.labels.nodes.length > 5}
+                      <span class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-700/80 text-slate-300 border border-slate-600/50 shadow-sm">
+                        +{issue.labels.nodes.length - 5} more
                       </span>
                     {/if}
                   </div>
                 {/if}
               </div>
 
-              <!-- Action button -->
-              <div class="flex-shrink-0 w-full md:w-auto self-stretch md:self-start">
+              <!-- Action buttons - Right -->
+              <div class="flex flex-col gap-2.5 w-[110px] flex-shrink-0">
+                <!-- Copy Link Button -->
+                <button
+                  type="button"
+                  on:click={() => copyIssueUrl(issue.url, issue.number)}
+                  class="inline-flex flex-row items-center justify-center gap-2 py-3 px-2 {copiedIssueNumber === issue.number ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600' : 'bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600'} text-white rounded-xl font-bold sketch-button transition-all w-full shadow-md"
+                  aria-label="Copy issue link for issue {issue.number}"
+                  title={copiedIssueNumber === issue.number ? 'Copied!' : 'Copy issue link'}
+                >
+                  {#if copiedIssueNumber === issue.number}
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span class="font-extrabold text-xs">Copied!</span>
+                  {:else}
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    <span class="font-extrabold text-xs">Copy</span>
+                  {/if}
+                </button>
+
+                <!-- View Issue Button -->
                 <a
                   href={issue.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-slate-700 text-white rounded-lg font-bold text-base md:text-lg hover:bg-slate-600 sketch-button w-full md:w-auto"
+                  class="inline-flex flex-row items-center justify-center gap-2 py-3 px-2 bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-xl font-bold hover:from-slate-600 hover:to-slate-700 sketch-button transition-all w-full shadow-md"
+                  aria-label="View issue {issue.number} on GitHub"
                 >
-                  <span>View Issue</span>
-                  <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <svg class="w-5 h-5 transition-transform group-hover:scale-110 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
+                  <span class="font-extrabold text-xs">View</span>
                 </a>
               </div>
             </div>
