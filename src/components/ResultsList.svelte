@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { GitHubAPI, parseRepoUrl, validateRepoUrl, type GitHubIssue } from '../lib/github-graphql';
+  import { getRelativeTime, getExactDateTime, getFreshnessLevel } from '../lib/time-utils';
   import GitHubAuth from './GitHubAuth.svelte';
 
   let repoUrl = '';
@@ -125,11 +126,7 @@
   }
 
   function formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    return getRelativeTime(dateString);
   }
 
   function getResetTime(resetAt: string): string {
@@ -676,7 +673,24 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <span class="font-semibold text-sm">{formatDate(issue.createdAt)}</span>
+                    <time
+                      datetime={issue.createdAt}
+                      class="font-semibold text-sm cursor-help"
+                      title={getExactDateTime(issue.createdAt)}
+                      aria-label={`Created ${formatDate(issue.createdAt)}, ${getExactDateTime(issue.createdAt)}`}
+                    >
+                      {formatDate(issue.createdAt)}
+                    </time>
+                    {#if getFreshnessLevel(issue.createdAt) === 'fresh'}
+                      <span class="w-2 h-2 bg-green-500 rounded-full" aria-hidden="true" title="Fresh issue (less than 7 days old)"></span>
+                      <span class="sr-only">Fresh issue</span>
+                    {:else if getFreshnessLevel(issue.createdAt) === 'moderate'}
+                      <span class="w-2 h-2 bg-amber-500 rounded-full" aria-hidden="true" title="Moderate age (7-30 days old)"></span>
+                      <span class="sr-only">Moderately old issue</span>
+                    {:else}
+                      <span class="w-2 h-2 bg-gray-400 rounded-full" aria-hidden="true" title="Stale issue (over 30 days old)"></span>
+                      <span class="sr-only">Stale issue</span>
+                    {/if}
                   </div>
 
                   <div class="flex items-center gap-2 text-slate-300">
@@ -734,7 +748,24 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <span class="font-semibold text-sm">{formatDate(issue.createdAt)}</span>
+                    <time
+                      datetime={issue.createdAt}
+                      class="font-semibold text-sm cursor-help"
+                      title={getExactDateTime(issue.createdAt)}
+                      aria-label={`Created ${formatDate(issue.createdAt)}, ${getExactDateTime(issue.createdAt)}`}
+                    >
+                      {formatDate(issue.createdAt)}
+                    </time>
+                    {#if getFreshnessLevel(issue.createdAt) === 'fresh'}
+                      <span class="w-2 h-2 bg-green-500 rounded-full" aria-hidden="true" title="Fresh issue (less than 7 days old)"></span>
+                      <span class="sr-only">Fresh issue</span>
+                    {:else if getFreshnessLevel(issue.createdAt) === 'moderate'}
+                      <span class="w-2 h-2 bg-amber-500 rounded-full" aria-hidden="true" title="Moderate age (7-30 days old)"></span>
+                      <span class="sr-only">Moderately old issue</span>
+                    {:else}
+                      <span class="w-2 h-2 bg-gray-400 rounded-full" aria-hidden="true" title="Stale issue (over 30 days old)"></span>
+                      <span class="sr-only">Stale issue</span>
+                    {/if}
                   </div>
 
                   <div class="flex items-center gap-2 text-slate-300">
