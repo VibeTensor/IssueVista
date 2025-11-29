@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../lib/github-graphql';
+  import { GitHubAPI, parseRepoUrl, validateRepoUrl, type GitHubIssue } from '../lib/github-graphql';
   import GitHubAuth from './GitHubAuth.svelte';
 
   let repoUrl = '';
@@ -18,8 +18,38 @@
   // Export functionality state
   let showExportDropdown = false;
 
+  // Auto-focus reference
+  let repoUrlInput: HTMLInputElement;
+
+  // Validation state
+  let validationState: 'idle' | 'valid' | 'invalid' = 'idle';
+  let validationMessage = '';
+  let validationTimeout: number | null = null;
+
   function toggleHelpPopup() {
     showHelpPopup = !showHelpPopup;
+  }
+
+  // Debounced URL validation handler
+  function handleRepoUrlInput() {
+    // Clear previous timeout
+    if (validationTimeout) {
+      clearTimeout(validationTimeout);
+    }
+
+    // If empty, reset to idle immediately
+    if (!repoUrl.trim()) {
+      validationState = 'idle';
+      validationMessage = '';
+      return;
+    }
+
+    // Debounce validation by 300ms
+    validationTimeout = window.setTimeout(() => {
+      const result = validateRepoUrl(repoUrl);
+      validationState = result.state;
+      validationMessage = result.message || '';
+    }, 300);
   }
 
   onMount(() => {
@@ -29,6 +59,11 @@
       isAuthenticated = true;
     }
     updateRateLimit();
+
+    // Auto-focus the repository URL input
+    if (repoUrlInput) {
+      repoUrlInput.focus();
+    }
   });
 
   function handleAuthChange(token: string | null) {
@@ -321,13 +356,41 @@
           </div>
           <input
             id="repoUrl"
+            bind:this={repoUrlInput}
             type="text"
             bind:value={repoUrl}
             placeholder="https://github.com/facebook/react"
-            class="sketch-input w-full pl-14 pr-4 py-4 text-base text-white rounded-lg outline-none bg-slate-800/80 placeholder-slate-500"
+            class="sketch-input w-full pl-14 pr-12 py-4 text-base text-white rounded-lg outline-none bg-slate-800/80 placeholder-slate-500 {validationState === 'valid' ? 'border-green-500/50' : validationState === 'invalid' ? 'border-red-500/50' : ''}"
+            on:input={handleRepoUrlInput}
             on:keypress={(e) => e.key === 'Enter' && handleSearch()}
+            aria-describedby="repoUrl-hint"
+            aria-invalid={validationState === 'invalid'}
           />
+          <!-- Validation Icon -->
+          {#if validationState === 'valid'}
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          {:else if validationState === 'invalid'}
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+          {/if}
         </div>
+        <!-- Validation Hint Text -->
+        {#if validationMessage}
+          <p
+            id="repoUrl-hint"
+            class="text-sm mt-2 flex items-center gap-2 {validationState === 'valid' ? 'text-green-400' : 'text-red-400'}"
+            role={validationState === 'invalid' ? 'alert' : undefined}
+          >
+            {validationMessage}
+          </p>
+        {/if}
       </div>
 
       <!-- Token Input -->
@@ -921,7 +984,9 @@
                   <span class="break-words"><strong>With token:</strong> Excludes issues with PRs</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-amber-400 flex-shrink-0">⚠</span>
+                  <svg class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
                   <span class="text-amber-300 text-xs break-words"><strong>Without token:</strong> PR filtering unavailable</span>
                 </li>
               </ul>

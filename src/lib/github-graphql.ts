@@ -121,12 +121,12 @@ export class GitHubAPI {
   async fetchAvailableIssues(owner: string, repo: string): Promise<{ issues: GitHubIssue[]; rateLimit: { remaining: number; resetAt: string } }> {
     // If no token, use REST API fallback
     if (!this.token) {
-      console.log('✅ No token provided, using REST API (60 requests/hour)');
+      console.log('[OK] No token provided, using REST API (60 requests/hour)');
       const issues = await this.fetchIssuesViaREST(owner, repo);
       return { issues, rateLimit: { remaining: 60, resetAt: new Date().toISOString() } };
     }
 
-    console.log('🔑 Token provided, attempting GraphQL API (5000 requests/hour)');
+    console.log('[AUTH] Token provided, attempting GraphQL API (5000 requests/hour)');
 
     let allIssues: GitHubIssue[] = [];
     let hasNextPage = true;
@@ -162,16 +162,16 @@ export class GitHubAPI {
         cursor = issues.pageInfo.endCursor;
         pageCount++;
 
-        console.log(`📄 Fetched page ${pageCount}/${maxPages}, found ${issuesWithoutPRs.length} issues (${allIssues.length} total)`);
+        console.log(`[PAGE] Fetched page ${pageCount}/${maxPages}, found ${issuesWithoutPRs.length} issues (${allIssues.length} total)`);
       }
 
-      console.log(`✅ GraphQL: Found ${allIssues.length} unassigned issues without PRs`);
-      console.log(`⚡ Rate limit: ${lastRateLimit.remaining} requests remaining`);
+      console.log(`[OK] GraphQL: Found ${allIssues.length} unassigned issues without PRs`);
+      console.log(`[RATE] Rate limit: ${lastRateLimit.remaining} requests remaining`);
       return { issues: allIssues, rateLimit: lastRateLimit };
     } catch (error: any) {
       // Handle authentication errors - try REST API fallback
       if (error.response?.status === 401 || error.response?.status === 403) {
-        console.log('⚠️ GraphQL authentication failed (403), falling back to REST API...');
+        console.log('[WARN] GraphQL authentication failed (403), falling back to REST API...');
         const issues = await this.fetchIssuesViaREST(owner, repo);
         return { issues, rateLimit: { remaining: 60, resetAt: new Date().toISOString() } };
       }
@@ -187,7 +187,7 @@ export class GitHubAPI {
 
   // REST API fallback for unauthenticated access (optimized - no timeline checks)
   private async fetchIssuesViaREST(owner: string, repo: string): Promise<GitHubIssue[]> {
-    console.log(`🌐 Fetching issues from ${owner}/${repo} via REST API (Fast mode - skipping PR checks)...`);
+    console.log(`[REST] Fetching issues from ${owner}/${repo} via REST API (Fast mode - skipping PR checks)...`);
     const allIssues: GitHubIssue[] = [];
     let page = 1;
     const perPage = 100;
@@ -257,7 +257,7 @@ export class GitHubAPI {
         page++;
       }
 
-      console.log(`✅ REST API: Found ${allIssues.length} unassigned issues (Note: PR filtering only available with token)`);
+      console.log(`[OK] REST API: Found ${allIssues.length} unassigned issues (Note: PR filtering only available with token)`);
       return allIssues;
     } catch (error: any) {
       throw new Error(`Failed to fetch issues via REST API: ${error.message}`);
@@ -294,5 +294,48 @@ export function parseRepoUrl(url: string): { owner: string; repo: string } | nul
   return {
     owner: match[1],
     repo: match[2].replace(/\.git$/, '')
+  };
+}
+
+// Validation result interface
+export interface ValidationResult {
+  isValid: boolean;
+  state: 'idle' | 'valid' | 'invalid';
+  owner?: string;
+  repo?: string;
+  message?: string;
+}
+
+// Real-time URL validation function
+export function validateRepoUrl(url: string): ValidationResult {
+  // Empty or whitespace only - idle state
+  if (!url || url.trim() === '') {
+    return {
+      isValid: false,
+      state: 'idle',
+      message: undefined
+    };
+  }
+
+  const trimmedUrl = url.trim();
+
+  // Use existing parseRepoUrl
+  const parsed = parseRepoUrl(trimmedUrl);
+
+  if (parsed) {
+    return {
+      isValid: true,
+      state: 'valid',
+      owner: parsed.owner,
+      repo: parsed.repo,
+      message: `Valid: ${parsed.owner}/${parsed.repo}`
+    };
+  }
+
+  // Invalid URL
+  return {
+    isValid: false,
+    state: 'invalid',
+    message: 'Enter a valid GitHub URL (e.g., https://github.com/owner/repo)'
   };
 }
