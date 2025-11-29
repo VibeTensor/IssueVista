@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { GitHubAPI, parseRepoUrl, validateRepoUrl, type GitHubIssue } from '../lib/github-graphql';
   import { getRelativeTime, getExactDateTime, getFreshnessLevel } from '../lib/time-utils';
+  import { isZeroComment, sortByComments, countZeroCommentIssues, type CommentSortOrder } from '../lib/issue-utils';
   import GitHubAuth from './GitHubAuth.svelte';
 
   let repoUrl = '';
@@ -27,8 +28,51 @@
   let validationMessage = '';
   let validationTimeout: number | null = null;
 
+  // Zero-comment filter and sort state
+  let showOnlyZeroComments = false;
+  let sortByCommentsOrder: CommentSortOrder | 'default' = 'default';
+
+  // Reactive: filtered and sorted issues
+  $: displayedIssues = (() => {
+    let result = issues;
+
+    // Apply zero-comment filter
+    if (showOnlyZeroComments) {
+      result = result.filter(isZeroComment);
+    }
+
+    // Apply sort by comments
+    if (sortByCommentsOrder !== 'default') {
+      result = sortByComments(result, sortByCommentsOrder);
+    }
+
+    return result;
+  })();
+
+  // Reactive: count of zero-comment issues for badge
+  $: zeroCommentCount = countZeroCommentIssues(issues);
+
+  // Accessibility: live region announcement for filter changes
+  let filterAnnouncement = '';
+  $: {
+    if (issues.length > 0) {
+      const filterStatus = showOnlyZeroComments ? 'Showing easy issues only.' : '';
+      const sortStatus = sortByCommentsOrder === 'asc' ? 'Sorted by fewest comments.' :
+                         sortByCommentsOrder === 'desc' ? 'Sorted by most comments.' : '';
+      const count = `${displayedIssues.length} ${displayedIssues.length === 1 ? 'issue' : 'issues'} displayed.`;
+      filterAnnouncement = [filterStatus, sortStatus, count].filter(Boolean).join(' ');
+    }
+  }
+
   function toggleHelpPopup() {
     showHelpPopup = !showHelpPopup;
+  }
+
+  // Accessibility: Handle Escape key to close help popup
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && showHelpPopup) {
+      showHelpPopup = false;
+    }
   }
 
   // Debounced URL validation handler
@@ -506,32 +550,42 @@
   {/if}
 
   {#if issues.length > 0}
+    <!-- Accessibility: Live region for announcing filter/sort changes to screen readers -->
+    <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
+      {filterAnnouncement}
+    </div>
+
     <!-- Results header -->
     <div class="mb-8 sketch-card p-6 md:p-8 relative z-20">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <!-- Left: Title and info -->
-        <div class="text-center md:text-left">
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2">
-            {issues.length} Unassigned {issues.length === 1 ? 'Issue' : 'Issues'} Found
-          </h2>
-          {#if isAuthenticated}
-            <p class="text-base md:text-lg text-slate-300">
-              All issues are open, unassigned, and have no pull requests
-            </p>
-          {:else}
-            <p class="text-base md:text-lg text-slate-300 mb-2">
-              All issues are open and unassigned
-            </p>
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-900/30 border border-amber-500/30 rounded-lg">
-              <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <span class="text-amber-300 text-xs md:text-sm font-semibold">Add a token to filter out issues with PRs</span>
-            </div>
-          {/if}
-        </div>
+      <div class="flex flex-col gap-4">
+        <!-- Top row: Title and Export -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <!-- Left: Title and info -->
+          <div class="text-center md:text-left">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2">
+              {displayedIssues.length} Unassigned {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
+              {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
+                <span class="text-lg text-slate-400 font-normal">(filtered from {issues.length})</span>
+              {/if}
+            </h2>
+            {#if isAuthenticated}
+              <p class="text-base md:text-lg text-slate-300">
+                All issues are open, unassigned, and have no pull requests
+              </p>
+            {:else}
+              <p class="text-base md:text-lg text-slate-300 mb-2">
+                All issues are open and unassigned
+              </p>
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-900/30 border border-amber-500/30 rounded-lg">
+                <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span class="text-amber-300 text-xs md:text-sm font-semibold">Add a token to filter out issues with PRs</span>
+              </div>
+            {/if}
+          </div>
 
-        <!-- Right: Export Button -->
+          <!-- Right: Export Button -->
         <div class="relative flex justify-center md:justify-end">
           <button
             type="button"
@@ -603,13 +657,74 @@
             </div>
           {/if}
         </div>
+        </div>
+
+        <!-- Filter and Sort Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4 border-t border-slate-700/50">
+          <!-- Filter Toggle: Easy Issues Only -->
+          <label class="filter-toggle-container flex items-center gap-3 cursor-pointer select-none" id="easy-issues-toggle-label">
+            <div class="relative">
+              <input
+                type="checkbox"
+                bind:checked={showOnlyZeroComments}
+                class="sr-only peer"
+                id="easy-issues-toggle"
+                aria-describedby="easy-issues-description"
+                role="switch"
+                aria-checked={showOnlyZeroComments}
+              />
+              <div class="toggle-track w-11 h-6 bg-slate-700 rounded-full peer-checked:bg-green-500 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-green-400 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900" aria-hidden="true"></div>
+              <div class="toggle-knob absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-transform peer-checked:translate-x-5" aria-hidden="true"></div>
+            </div>
+            <span class="text-sm font-semibold text-slate-200">
+              Easy Issues Only
+              {#if zeroCommentCount > 0}
+                <span class="ml-1.5 px-2 py-0.5 text-xs font-bold bg-green-500 text-white rounded-full" aria-label="{zeroCommentCount} easy issues available">
+                  {zeroCommentCount}
+                </span>
+              {/if}
+            </span>
+          </label>
+          <span id="easy-issues-description" class="sr-only">Filter to show only issues with zero comments, which are easier for new contributors</span>
+
+          <!-- Sort Dropdown -->
+          <div class="flex items-center gap-2" role="group" aria-labelledby="sort-label">
+            <label for="sort-comments" id="sort-label" class="text-sm font-semibold text-slate-400">Sort:</label>
+            <select
+              id="sort-comments"
+              bind:value={sortByCommentsOrder}
+              class="sort-dropdown bg-slate-800 border border-slate-600 text-white text-sm font-semibold rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 outline-none cursor-pointer"
+              aria-describedby="sort-description"
+            >
+              <option value="default">Default Order</option>
+              <option value="asc">Fewest Comments</option>
+              <option value="desc">Most Comments</option>
+            </select>
+            <span id="sort-description" class="sr-only">Sort issues by number of comments</span>
+          </div>
+
+          <!-- Clear Filters Button (shown when filters are active) -->
+          {#if showOnlyZeroComments || sortByCommentsOrder !== 'default'}
+            <button
+              type="button"
+              on:click={() => { showOnlyZeroComments = false; sortByCommentsOrder = 'default'; }}
+              class="text-sm font-semibold text-slate-400 hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-md px-2 py-1 transition-colors flex items-center gap-1.5"
+              aria-label="Clear all active filters and reset to default"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Clear Filters
+            </button>
+          {/if}
+        </div>
       </div>
     </div>
 
     <!-- Issues grid -->
     <div class="grid gap-6">
-      {#each issues as issue}
-        <div class="group sketch-card hover-effect">
+      {#each displayedIssues as issue}
+        <div class="group sketch-card hover-effect {isZeroComment(issue) ? 'zero-comment-highlight' : ''}">
           <!-- Card content -->
           <div class="p-5 md:p-6">
             <!-- Mobile: Vertical layout -->
@@ -665,6 +780,18 @@
 
               <!-- Content below -->
               <div class="w-full">
+                <!-- Easy to Start badge for zero-comment issues (Mobile) -->
+                {#if isZeroComment(issue)}
+                  <div class="mb-3">
+                    <span class="easy-start-badge" role="status" aria-label="Easy to start - this issue has no comments and is beginner-friendly">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      Easy to Start!
+                    </span>
+                  </div>
+                {/if}
+
                 <h3 class="text-xl font-extrabold text-white hover:text-slate-200 transition-colors mb-4 leading-tight break-words line-clamp-2">
                   <a href={issue.url} target="_blank" rel="noopener noreferrer">
                     {issue.title}
@@ -740,6 +867,18 @@
 
               <!-- Content - Middle (takes remaining space) -->
               <div class="flex-1 min-w-0">
+                <!-- Easy to Start badge for zero-comment issues (Desktop) -->
+                {#if isZeroComment(issue)}
+                  <div class="mb-2">
+                    <span class="easy-start-badge" role="status" aria-label="Easy to start - this issue has no comments and is beginner-friendly">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                      </svg>
+                      Easy to Start!
+                    </span>
+                  </div>
+                {/if}
+
                 <h3 class="text-2xl font-extrabold text-white hover:text-slate-200 transition-colors mb-3 leading-tight break-words line-clamp-2">
                   <a href={issue.url} target="_blank" rel="noopener noreferrer">
                     {issue.title}
@@ -881,6 +1020,10 @@
   <div
     class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end md:items-center justify-center p-0 md:p-4"
     on:click={toggleHelpPopup}
+    on:keydown={handleKeydown}
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="help-dialog-title"
   >
     <div
       class="help-popup-scroll sketch-container max-w-3xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto rounded-t-2xl md:rounded-2xl"
@@ -894,7 +1037,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 class="text-xl md:text-2xl lg:text-3xl font-extrabold text-white truncate">How It Works</h2>
+          <h2 id="help-dialog-title" class="text-xl md:text-2xl lg:text-3xl font-extrabold text-white truncate">How It Works</h2>
         </div>
         <button
           on:click={toggleHelpPopup}
@@ -1117,9 +1260,96 @@
     pointer-events: none;
   }
 
+  /* Keyframe Animations */
+  @keyframes badge-pulse {
+    0%, 100% {
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4), 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% {
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4), 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+  }
+
+  @keyframes card-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.35), 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* Zero-comment issue highlight - green glow with animation */
+  .zero-comment-highlight {
+    border: 2px solid rgba(34, 197, 94, 0.5);
+    background: rgba(34, 197, 94, 0.08);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
+    animation: card-glow 3s ease-in-out infinite;
+  }
+
+  .zero-comment-highlight::before {
+    border-color: rgba(34, 197, 94, 0.4);
+  }
+
+  /* Easy to Start badge with pulse animation */
+  .easy-start-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+    animation: badge-pulse 2s ease-in-out infinite;
+  }
+
+  /* Filter toggle styles */
+  .filter-toggle-container {
+    padding: 0.5rem 1rem;
+    background: rgba(51, 65, 85, 0.5);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(71, 85, 105, 0.5);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .filter-toggle-container:hover {
+    background: rgba(51, 65, 85, 0.7);
+    border-color: rgba(71, 85, 105, 0.8);
+  }
+
+  .toggle-track {
+    position: relative;
+    transition: background-color 0.2s ease;
+  }
+
+  .toggle-knob {
+    pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  /* Sort dropdown styles */
+  .sort-dropdown {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  .sort-dropdown option {
+    background: #1e293b;
+    color: white;
+  }
+
   /* Hover effect for issue cards */
   .hover-effect {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
 
   .hover-effect:hover {
@@ -1330,5 +1560,51 @@
   /* Smooth scrolling */
   .help-popup-scroll {
     scroll-behavior: smooth;
+  }
+
+  /* Accessibility: Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .easy-start-badge,
+    .zero-comment-highlight {
+      animation: none;
+    }
+
+    .toggle-track,
+    .toggle-knob,
+    .filter-toggle-container,
+    .hover-effect,
+    .sort-dropdown {
+      transition: none;
+    }
+  }
+
+  /* Accessibility: Enhanced focus indicators for keyboard navigation */
+  .sketch-button:focus-visible,
+  .sketch-input:focus-visible,
+  a:focus-visible {
+    outline: 2px solid #4ade80;
+    outline-offset: 2px;
+  }
+
+  /* Ensure focus is visible on dark backgrounds */
+  :focus-visible {
+    outline: 2px solid #4ade80;
+    outline-offset: 2px;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .easy-start-badge {
+      background: #22c55e;
+      border: 2px solid white;
+    }
+
+    .zero-comment-highlight {
+      border: 3px solid #22c55e;
+    }
+
+    .toggle-track {
+      border: 2px solid currentColor;
+    }
   }
 </style>

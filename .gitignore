@@ -61,3 +61,11 @@ test-results/
 IMPLEMENTATION_GUIDE.md
 ISSUE_*_IMPLEMENTATION_GUIDE.md
 UPLIFT_TRACKER_*.txt
+
+# Issue submission/tracking files
+issue-*-submission.txt
+ai-allowed-hours.txt
+hours-breakdown.txt
+new-issues-summary.txt
+nul
+ISSUE_WORKFLOW.md
