@@ -503,10 +503,11 @@ test.describe('Zero-Comment Issue Highlighting - E2E Tests', () => {
       await toggleLabel.click();
       await page.waitForTimeout(500);
 
-      // Header should update (may show filtered count)
+      // Header should update (may show filtered count or "(filtered from X)")
       const filteredText = await header.textContent();
-      // Either count changed or "(filtered from X)" text appears
-      expect(filteredText).toBeTruthy();
+      // Verify header changed or shows filtered indicator
+      const headerChanged = filteredText !== initialText || filteredText?.includes('filtered from');
+      expect(headerChanged).toBe(true);
     });
   });
 });
