@@ -9,23 +9,10 @@
 <script lang="ts">
   interface Props {
     remaining: number;
-    resetAt: string;
-    isAuthenticated: boolean;
+    resetTime: string;
   }
 
-  let { remaining, resetAt, isAuthenticated }: Props = $props();
-
-  /**
-   * Calculate time until rate limit resets
-   */
-  function getResetTime(resetAt: string): string {
-    if (!resetAt) return '';
-    const resetDate = new Date(resetAt);
-    const now = new Date();
-    const diff = resetDate.getTime() - now.getTime();
-    const minutes = Math.floor(diff / 60000);
-    return minutes > 0 ? `${minutes} minutes` : 'soon';
-  }
+  let { remaining, resetTime }: Props = $props();
 
   // Derived state
   let isLowRemaining = $derived(remaining < 10);
@@ -41,8 +28,8 @@
       </svg>
       <span class={`${isLowRemaining ? 'text-amber-400 font-semibold' : 'text-slate-300'} break-words`}>
         {remaining} requests remaining
-        {#if resetAt}
-          <span class="whitespace-nowrap">(resets in {getResetTime(resetAt)})</span>
+        {#if resetTime}
+          <span class="whitespace-nowrap">(resets in {resetTime})</span>
         {/if}
       </span>
     </div>
