@@ -46,7 +46,10 @@
   let commentText = $derived(`${issue.comments.totalCount} ${issue.comments.totalCount === 1 ? 'comment' : 'comments'}`);
 </script>
 
-<div class="group sketch-card hover-effect {isEasyIssue ? 'zero-comment-highlight' : ''}">
+<div
+  class="group sketch-card hover-effect issue-card-animate {isEasyIssue ? 'zero-comment-highlight' : ''}"
+  {...$$restProps}
+>
   <!-- Card content -->
   <div class="p-5 md:p-6">
     <!-- Mobile: Vertical layout -->
@@ -303,3 +306,27 @@
     </div>
   </div>
 </div>
+
+<style>
+/* Issue card animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.issue-card-animate {
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .issue-card-animate {
+    animation: none;
+  }
+}
+</style>

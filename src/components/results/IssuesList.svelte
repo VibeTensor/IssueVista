@@ -134,14 +134,16 @@
 
 <!-- Issues grid -->
 <div class="grid gap-6">
-  {#each displayedIssues as issue (issue.number)}
+  {#each displayedIssues as issue, i (issue.number)}
     <IssueCard
       {issue}
       {copiedIssueNumber}
       onCopy={onCopyIssue}
+      style={`animation-delay: ${i * 120}ms`}
     />
   {/each}
 </div>
+
 
 <!-- Success footer -->
 <div class="mt-10 sketch-card p-6 md:p-8">
