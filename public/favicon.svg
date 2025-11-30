@@ -1,34 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- IssueFlow Logo: Flowing lines with issue circles -->
-  <defs>
-    <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#64748b;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
-    </linearGradient>
-  </defs>
+  <!-- IssueFlow Logo - VibeTensor Private Limited -->
+  <!-- Concept: Issues flowing through a curved pipeline -->
 
-  <!-- Flow path -->
-  <path d="M 20 64 Q 40 20, 64 40 T 108 64"
-        stroke="url(#flowGradient)"
-        stroke-width="6"
-        fill="none"
-        stroke-linecap="round"/>
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="56" fill="#0d9488"/>
 
-  <!-- Issue circles -->
-  <circle cx="30" cy="54" r="12" fill="#64748b"/>
-  <circle cx="64" cy="40" r="14" fill="#475569"/>
-  <circle cx="98" cy="64" r="12" fill="#64748b"/>
+  <!-- Flowing S-curve path - the "flow" -->
+  <path
+    d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
+    stroke="#ffffff"
+    stroke-width="6"
+    fill="none"
+    stroke-linecap="round"
+  />
 
-  <!-- Checkmarks in circles -->
-  <path d="M 26 54 L 29 57 L 34 51" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M 60 40 L 63 43 L 68 37" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M 94 64 L 97 67 L 102 61" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Three issue nodes on the flow -->
+  <circle cx="32" cy="50" r="10" fill="#ffffff"/>
+  <circle cx="64" cy="64" r="12" fill="#ffffff"/>
+  <circle cx="96" cy="78" r="10" fill="#ffffff"/>
 
-  <style>
-    @media (prefers-color-scheme: dark) {
-      stop { stop-color: #94a3b8; }
-      circle { fill: #94a3b8; }
-      circle:nth-of-type(2) { fill: #cbd5e1; }
-    }
-  </style>
+  <!-- Checkmarks inside nodes - resolved issues -->
+  <path d="M 27 50 L 30 53 L 37 46" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 58 64 L 62 68 L 70 58" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M 91 78 L 94 81 L 101 74" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

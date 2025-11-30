@@ -114,76 +114,35 @@
     type="button"
     onclick={toggleDropdown}
     disabled={isDisabled}
-    class="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-br from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 text-white rounded-xl font-extrabold sketch-button transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-    aria-label="Export all issues"
+    class="inline-flex items-center gap-1 px-2 py-1 bg-slate-700/60 hover:bg-slate-600/80 text-slate-300 hover:text-white rounded text-[10px] font-medium transition-colors disabled:opacity-50"
+    aria-label="Export issues"
     aria-expanded={showDropdown}
     aria-haspopup="true"
   >
-    <!-- Download icon -->
-    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
     </svg>
-    <span class="text-sm">Export</span>
-    <!-- Chevron icon -->
-    <svg class="w-4 h-4 transition-transform {showDropdown ? 'rotate-180' : ''} flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    Export
+    <svg class="w-2.5 h-2.5 {showDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </svg>
   </button>
 
-  <!-- Dropdown Menu -->
   {#if showDropdown}
     <div
-      class="absolute right-0 top-full mt-2 w-56 bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden z-50"
+      class="absolute left-0 top-full mt-1 w-36 bg-slate-800 rounded shadow-lg border border-slate-700 overflow-hidden z-50"
       role="menu"
       onmouseleave={closeDropdown}
       onkeydown={(e) => e.key === 'Escape' && closeDropdown()}
     >
-      <!-- Markdown option -->
-      <button
-        type="button"
-        onclick={() => exportIssues('markdown')}
-        class="w-full px-4 py-3 text-left text-white hover:bg-slate-700 transition-colors flex items-center gap-3"
-        role="menuitem"
-      >
-        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
-        </svg>
-        <div>
-          <p class="font-semibold">Markdown (.md)</p>
-          <p class="text-xs text-slate-400">List with titles and links</p>
-        </div>
+      <button type="button" onclick={() => exportIssues('markdown')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+        Markdown (.md)
       </button>
-
-      <!-- Plain Text option -->
-      <button
-        type="button"
-        onclick={() => exportIssues('plain')}
-        class="w-full px-4 py-3 text-left text-white hover:bg-slate-700 transition-colors flex items-center gap-3"
-        role="menuitem"
-      >
-        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-        </svg>
-        <div>
-          <p class="font-semibold">Plain Text (.txt)</p>
-          <p class="text-xs text-slate-400">URLs only, one per line</p>
-        </div>
+      <button type="button" onclick={() => exportIssues('plain')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+        Plain Text (.txt)
       </button>
-
-      <!-- CSV option -->
-      <button
-        type="button"
-        onclick={() => exportIssues('csv')}
-        class="w-full px-4 py-3 text-left text-white hover:bg-slate-700 transition-colors flex items-center gap-3"
-        role="menuitem"
-      >
-        <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-        </svg>
-        <div>
-          <p class="font-semibold">CSV (.csv)</p>
-          <p class="text-xs text-slate-400">Spreadsheet format</p>
-        </div>
+      <button type="button" onclick={() => exportIssues('csv')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+        CSV (.csv)
       </button>
     </div>
   {/if}

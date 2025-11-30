@@ -20,8 +20,6 @@ pnpm-debug.log*
 
 # Editor directories and files
 .vscode/
-.vscode/*
-!.vscode/extensions.json
 .idea/
 *.suo
 *.ntvs*
@@ -53,19 +51,21 @@ test-results/
 *.temp
 .cache/
 
-# Local development settings
-.vscode/settings.json
+# Claude/AI workflow files
 .claude/
-
-# Implementation guides (personal workflow files)
 IMPLEMENTATION_GUIDE.md
 ISSUE_*_IMPLEMENTATION_GUIDE.md
+ISSUE_*_IMPLEMENTATION_PLAN.md
+ISSUE_*_COMPLETION.txt
+ISSUE_*_UPLIFT_STUDY.txt
 UPLIFT_TRACKER_*.txt
 
-# Issue submission/tracking files
+# Issue tracking files
 issue-*-submission.txt
 ai-allowed-hours.txt
 hours-breakdown.txt
 new-issues-summary.txt
-nul
 ISSUE_WORKFLOW.md
+
+# Windows null file
+nul

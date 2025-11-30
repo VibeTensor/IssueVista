@@ -162,7 +162,9 @@ test.describe('Auto-Focus and URL Validation - E2E Tests', () => {
 
     test('should not show hint text when input is empty', async ({ page }) => {
       const hintText = page.locator('#repoUrl-hint');
-      await expect(hintText).not.toBeVisible();
+      // Hint element exists but should have invisible class when no validation message
+      const classList = await hintText.getAttribute('class');
+      expect(classList).toContain('invisible');
     });
 
     test('should return to idle state when input is cleared', async ({ page }) => {
@@ -267,7 +269,7 @@ test.describe('Auto-Focus and URL Validation - E2E Tests', () => {
   test.describe('Integration with Search', () => {
     test('should allow search after valid URL validation', async ({ page }) => {
       const repoUrlInput = page.locator('#repoUrl');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
 
       await repoUrlInput.fill('https://github.com/facebook/react');
       await page.waitForTimeout(400);
@@ -276,19 +278,19 @@ test.describe('Auto-Focus and URL Validation - E2E Tests', () => {
       await expect(searchButton).toBeEnabled();
     });
 
-    test('should enable search button even for invalid URL format', async ({ page }) => {
+    test('should disable search button for invalid URL format', async ({ page }) => {
       const repoUrlInput = page.locator('#repoUrl');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
 
       await repoUrlInput.fill('invalid-but-not-empty');
       await page.waitForTimeout(400);
 
-      // Button is enabled as long as there's text (validation is informational)
-      await expect(searchButton).toBeEnabled();
+      // Button is disabled when URL validation fails (invalid state)
+      await expect(searchButton).toBeDisabled();
     });
 
     test('should disable search button when input is empty', async ({ page }) => {
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
 
       // Button should be disabled when input is empty
       await expect(searchButton).toBeDisabled();

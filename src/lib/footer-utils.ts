@@ -11,6 +11,16 @@ export const ISSUES_URL = `${REPO_URL}/issues`;
 export const CONTRIBUTING_URL = `${REPO_URL}/blob/master/CONTRIBUTING.md`;
 export const SITE_URL = 'https://issueflow.pages.dev';
 
+// Company Information - VibeTensor Private Limited (India)
+export const COMPANY_NAME = 'VibeTensor Private Limited';
+export const COMPANY_SHORT = 'VibeTensor';
+export const COMPANY_GITHUB = 'https://github.com/VibeTensor';
+export const COMPANY_WEBSITE = 'https://vibetensor.com';
+export const COMPANY_EMAIL = 'info@vibetensor.com';
+
+// Legal/Compliance - Indian Companies Act 2013
+export const COMPANY_COUNTRY = 'India';
+
 // Default sharing configuration
 export const DEFAULT_SHARE_TEXT = 'Check out IssueFlow - Find unassigned GitHub issues for open-source contributions!';
 export const DEFAULT_HASHTAGS = 'opensource,github,hacktoberfest';

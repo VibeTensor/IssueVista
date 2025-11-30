@@ -16,13 +16,17 @@
   import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../../lib/github-graphql';
   import { countZeroCommentIssues, sortByComments, isZeroComment, type CommentSortOrder } from '../../lib/issue-utils';
   import GitHubAuth from '../GitHubAuth.svelte';
-  import { SVGFilters } from '../shared';
+  import { SVGFilters, EmptyState } from '../shared';
+  import {
+    detectEmptyStateVariant,
+    isRateLimitError,
+    type EmptyStateVariant
+  } from '../../lib/empty-state-utils';
   import {
     SearchForm,
     RateLimitDisplay,
-    IssuesList,
     HelpPopup,
-    ExportMenu
+    IssueCard
   } from './index';
 
   // Core state
@@ -32,6 +36,7 @@
   let error = $state('');
   let issues = $state<GitHubIssue[]>([]);
   let loadingMessage = $state('Fetching issues...');
+  let hasSearched = $state(false);
 
   // Rate limit state
   let rateLimit = $state({ remaining: 0, resetAt: '' });
@@ -65,6 +70,14 @@
 
   // Derived: count of zero-comment issues
   let zeroCommentCount = $derived(countZeroCommentIssues(issues));
+
+  // Derived: detect which empty state variant to show (if any)
+  let emptyStateVariant = $derived(detectEmptyStateVariant({
+    hasSearched,
+    isLoading: loading,
+    error: error || null,
+    resultsCount: issues.length
+  }));
 
   // Initialize on mount
   onMount(() => {
@@ -112,6 +125,7 @@
     issues = [];
     loading = true;
     loadingMessage = 'Initializing...';
+    hasSearched = true;
 
     if (githubToken) {
       localStorage.setItem('github_token', githubToken);
@@ -133,10 +147,7 @@
       const result = await api.fetchAvailableIssues(parsed.owner, parsed.repo);
       issues = result.issues;
       rateLimit = result.rateLimit;
-
-      if (issues.length === 0) {
-        error = 'No unassigned issues found. Try another repository or all issues may have PRs.';
-      }
+      // Note: Empty results (issues.length === 0) are handled by EmptyState component
     } catch (e: any) {
       error = e.message || 'Failed to fetch issues';
     } finally {
@@ -168,6 +179,18 @@
   function handleClearFilters() {
     showOnlyZeroComments = false;
     sortOrder = 'default';
+  }
+
+  // Handle EmptyState primary action based on variant
+  function handleEmptyStatePrimaryAction() {
+    if (emptyStateVariant === 'error' || emptyStateVariant === 'rate-limited') {
+      // Retry search
+      handleSearch();
+    } else if (emptyStateVariant === 'no-results') {
+      // Clear filters
+      handleClearFilters();
+    }
+    // Note: 'initial' state no longer has primary action (quick picks are in SearchForm)
   }
 
   // Handle copy issue URL
@@ -220,6 +243,49 @@
     showHelpPopup = !showHelpPopup;
   }
 
+  // Export issues
+  function exportIssues(format: 'markdown' | 'plain' | 'csv') {
+    if (issues.length === 0) return;
+
+    let content = '';
+    const timestamp = new Date().toISOString().split('T')[0];
+    const parsed = parseRepoUrl(repoUrl);
+    const repoName = parsed ? `${parsed.owner}-${parsed.repo}` : 'issues';
+
+    switch (format) {
+      case 'markdown':
+        content = issues.map(issue =>
+          `- [#${issue.number} ${issue.title.replace(/[\[\]]/g, '\\$&')}](${issue.url})`
+        ).join('\n');
+        downloadFile(content, `${repoName}-issues-${timestamp}.md`, 'text/markdown');
+        break;
+      case 'plain':
+        content = issues.map(issue => issue.url).join('\n');
+        downloadFile(content, `${repoName}-issues-${timestamp}.txt`, 'text/plain');
+        break;
+      case 'csv':
+        const header = 'Number,Title,URL';
+        const rows = issues.map(issue =>
+          `${issue.number},"${issue.title.replace(/"/g, '""').replace(/\r?\n/g, ' ')}",${issue.url}`
+        );
+        content = [header, ...rows].join('\n');
+        downloadFile(content, `${repoName}-issues-${timestamp}.csv`, 'text/csv');
+        break;
+    }
+  }
+
+  function downloadFile(content: string, filename: string, mimeType: string) {
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
   // Get reset time for rate limit display
   function getResetTime(resetAt: string): string {
     if (!resetAt) return '';
@@ -234,142 +300,195 @@
 <!-- SVG Filters for hand-drawn sketch effects -->
 <SVGFilters />
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <!-- Header -->
-  <div class="text-center mb-8 md:mb-12">
-    <div class="sketch-container inline-block px-6 py-6 md:px-12 md:py-8 max-w-full">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-2 sketch-title break-words">
-        IssueFlow
-      </h1>
-      <p class="text-slate-300 text-base md:text-lg lg:text-xl mb-2 md:mb-3 break-words px-2">
-        Find Unassigned Issues with No PRs
-      </p>
-      <p class="text-slate-400 text-xs md:text-sm lg:text-base break-words px-2">
-        Discover open-source contribution opportunities · Start contributing today
-      </p>
-    </div>
-  </div>
+<!-- Split Layout: Sidebar + Main Content -->
+<div class="flex flex-col lg:flex-row min-h-screen">
 
-  <!-- Auth prompt -->
-  {#if import.meta.env.PUBLIC_GITHUB_CLIENT_ID}
-    <div class="mb-8">
-      <GitHubAuth onAuthChange={handleAuthChange} />
-    </div>
-  {:else if !isAuthenticated}
-    <div class="mb-8 sketch-card p-4 md:p-6">
-      <div class="flex flex-col md:flex-row items-start gap-4 md:gap-5">
-        <div class="flex-shrink-0">
-          <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-slate-700 flex items-center justify-center sketch-icon">
-            <svg class="w-5 h-5 md:w-6 md:h-6 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <!-- LEFT SIDEBAR - Sticky on desktop -->
+  <aside class="sidebar-panel lg:w-[300px] xl:w-[320px] lg:flex-shrink-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+    <div class="p-3 lg:p-4 space-y-3">
+      <!-- Brand Header - Using favicon design -->
+      <div class="brand-header text-center py-3">
+        <!-- Logo - Issues flowing through pipeline (matches favicon.svg) -->
+        <div class="logo-mark inline-flex items-center justify-center mb-2">
+          <svg class="w-14 h-14 lg:w-16 lg:h-16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background circle -->
+            <circle cx="64" cy="64" r="56" fill="#0d9488"/>
+            <!-- Flowing S-curve path -->
+            <path d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <!-- Three issue nodes -->
+            <circle cx="32" cy="50" r="10" fill="#ffffff"/>
+            <circle cx="64" cy="64" r="12" fill="#ffffff"/>
+            <circle cx="96" cy="78" r="10" fill="#ffffff"/>
+            <!-- Checkmarks inside -->
+            <path d="M 27 50 L 30 53 L 37 46" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 58 64 L 62 68 L 70 58" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M 91 78 L 94 81 L 101 74" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <!-- Brand Text -->
+        <h1 class="text-xl lg:text-2xl font-bold tracking-tight leading-none text-white">
+          IssueFlow
+        </h1>
+        <p class="text-[10px] lg:text-xs text-slate-500 mt-1">Find your next contribution</p>
+      </div>
+
+      <!-- Search Form -->
+      <SearchForm
+        {repoUrl}
+        token={githubToken}
+        {loading}
+        {isAuthenticated}
+        onSearch={handleSearch}
+        onUrlChange={handleUrlChange}
+        onTokenChange={handleTokenChange}
+        onShowHelp={toggleHelpPopup}
+      />
+
+      <!-- Auth prompt - User-friendly token generation guide -->
+      {#if import.meta.env.PUBLIC_GITHUB_CLIENT_ID}
+        <GitHubAuth onAuthChange={handleAuthChange} />
+      {:else if !isAuthenticated}
+        <div class="auth-prompt p-2.5 bg-gradient-to-r from-amber-500/10 to-teal-500/10 border border-amber-500/30 rounded-lg">
+          <div class="flex items-start gap-2">
+            <svg class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
+            <div class="flex-1 min-w-0">
+              <p class="text-[11px] text-slate-300 font-medium mb-1">Boost your rate limit</p>
+              <p class="text-[10px] text-slate-400 mb-2">Without token: <span class="text-slate-300">60 requests/hr</span></p>
+              <a
+                href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-semibold rounded transition-colors"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                Generate Token (5000/hr)
+              </a>
+            </div>
           </div>
         </div>
-        <div class="flex-1 min-w-0 w-full">
-          <h3 class="text-lg md:text-xl font-bold text-white mb-2 break-words">Unlock Full Speed</h3>
-          <p class="text-sm md:text-base text-slate-300 mb-4 leading-relaxed break-words">
-            <span class="font-semibold text-slate-400">Without token:</span> 60 requests/hour ·
-            <span class="font-semibold text-slate-200">With token:</span> 5000 requests/hour (83x faster)
-          </p>
-          <a
-            href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 font-semibold sketch-button text-sm md:text-base w-full md:w-auto"
+      {/if}
+
+      <!-- Rate Limit -->
+      {#if rateLimit.remaining !== undefined && rateLimit.remaining > 0}
+        <RateLimitDisplay remaining={rateLimit.remaining} resetTime={getResetTime(rateLimit.resetAt)} />
+      {/if}
+
+      <!-- Filter/Sort Controls - Compact inline design -->
+      {#if issues.length > 0 && !emptyStateVariant}
+        <div class="filters-card p-2.5 space-y-2.5">
+          <!-- Easy issues toggle -->
+          <button
+            type="button"
+            onclick={() => handleFilterToggle(!showOnlyZeroComments)}
+            class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-md transition-all {showOnlyZeroComments ? 'bg-emerald-500/20 border border-emerald-500/40' : 'bg-slate-700/40 border border-slate-600/30 hover:bg-slate-700/60'}"
+            aria-pressed={showOnlyZeroComments}
           >
-            <svg class="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-            </svg>
-            <span class="truncate">Create Token in 30 Seconds</span>
-          </a>
-          <p class="text-xs md:text-sm text-slate-400 mt-3 flex items-start gap-2 break-words">
-            <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>Select "public_repo" scope and paste token below</span>
-          </p>
+            <div class="flex items-center gap-1.5">
+              <div class="w-4 h-4 rounded flex items-center justify-center {showOnlyZeroComments ? 'bg-emerald-500' : 'bg-slate-600'}">
+                <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <span class="text-[10px] font-medium {showOnlyZeroComments ? 'text-emerald-300' : 'text-slate-300'}">Easy to Start</span>
+            </div>
+            <span class="text-[9px] font-bold px-1 py-0.5 rounded {showOnlyZeroComments ? 'bg-emerald-500/30 text-emerald-300' : 'bg-slate-600/50 text-slate-400'}">{zeroCommentCount}</span>
+          </button>
+
+          <!-- Sort - Vertical layout with clear labels -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] text-slate-300 font-medium">Sort by Comments</span>
+            <div class="flex rounded bg-slate-800/60 p-0.5 border border-slate-700/40">
+              <button type="button" onclick={() => handleSortChange('default')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'default' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Default</button>
+              <button type="button" onclick={() => handleSortChange('asc')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'asc' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Fewest</button>
+              <button type="button" onclick={() => handleSortChange('desc')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'desc' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Most</button>
+            </div>
+          </div>
+
+          <!-- Export - Vertical layout with clear labels -->
+          <div class="space-y-1.5">
+            <span class="text-[10px] text-slate-300 font-medium">Export As</span>
+            <div class="flex rounded bg-slate-800/60 p-0.5 border border-slate-700/40">
+              <button type="button" onclick={() => exportIssues('markdown')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">Markdown</button>
+              <button type="button" onclick={() => exportIssues('plain')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">Text</button>
+              <button type="button" onclick={() => exportIssues('csv')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">CSV</button>
+            </div>
+          </div>
+
+          {#if showOnlyZeroComments || sortOrder !== 'default'}
+            <button type="button" onclick={handleClearFilters} class="text-[9px] text-amber-400 hover:text-amber-300 font-medium">Reset filters</button>
+          {/if}
+        </div>
+      {/if}
+
+    </div>
+  </aside>
+
+  <!-- RIGHT MAIN PANEL -->
+  <main class="flex-1 min-w-0 p-3 lg:p-4 lg:overflow-y-auto">
+    <!-- Loading State - centered in right panel -->
+    {#if loading}
+      <div class="flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
+        <div class="relative w-12 h-12 mb-4">
+          <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
+          <div class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"></div>
+        </div>
+        <p class="text-slate-300 text-sm font-medium">{loadingMessage}</p>
+      </div>
+    {/if}
+
+    <!-- Empty states -->
+    {#if emptyStateVariant && !loading}
+      <div class="flex items-center justify-center min-h-[300px] lg:min-h-[400px]">
+        <div class="max-w-sm">
+          <EmptyState variant={emptyStateVariant} onPrimaryAction={handleEmptyStatePrimaryAction} customDescription={emptyStateVariant === 'error' ? error : undefined} />
         </div>
       </div>
-    </div>
-  {/if}
+    {/if}
 
-  <!-- Search Form -->
-  <SearchForm
-    {repoUrl}
-    token={githubToken}
-    {loading}
-    {isAuthenticated}
-    onSearch={handleSearch}
-    onUrlChange={handleUrlChange}
-    onTokenChange={handleTokenChange}
-    onShowHelp={toggleHelpPopup}
-  />
-
-  <!-- Rate Limit Display -->
-  {#if rateLimit.remaining !== undefined && rateLimit.remaining > 0}
-    <RateLimitDisplay
-      remaining={rateLimit.remaining}
-      resetTime={getResetTime(rateLimit.resetAt)}
-    />
-  {/if}
-
-  <!-- Loading State -->
-  {#if loading}
-    <div class="sketch-card p-8 md:p-12 flex flex-col items-center justify-center text-center">
-      <div class="relative mb-6 w-16 h-16 mx-auto">
-        <div class="animate-spin rounded-full h-16 w-16 border-4 border-slate-700"></div>
-        <div class="animate-spin rounded-full h-16 w-16 border-4 border-slate-400 border-t-transparent absolute top-0 left-0"></div>
+    <!-- Issues List -->
+    {#if issues.length > 0 && !emptyStateVariant && !loading}
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h2 class="text-base lg:text-lg font-bold text-white">
+            {displayedIssues.length} {displayedIssues.length === 1 ? 'Issue' : 'Issues'}
+            {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
+              <span class="text-xs text-slate-500 font-normal">of {issues.length}</span>
+            {/if}
+          </h2>
+          <p class="text-[10px] text-slate-500">{#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}</p>
+        </div>
       </div>
-      <p class="text-white font-semibold mb-2 text-base md:text-lg px-4">{loadingMessage}</p>
-      <p class="text-xs md:text-sm text-slate-400 px-4">This may take a few seconds...</p>
-      <div class="mt-4 flex gap-2 items-center justify-center">
-        <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-        <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-        <div class="h-2 w-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
-      </div>
-    </div>
-  {/if}
 
-  <!-- Error State -->
-  {#if error}
-    <div class="sketch-card px-6 py-4 mb-4 bg-red-950/30">
-      <div class="flex items-center gap-3">
-        <svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <span class="text-red-300">{error}</span>
+      <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
+        Showing {displayedIssues.length} issues{showOnlyZeroComments ? ', filtered to easy issues' : ''}{sortOrder !== 'default' ? `, sorted by ${sortOrder === 'asc' ? 'fewest' : 'most'} comments` : ''}
       </div>
-    </div>
-  {/if}
 
-  <!-- Issues List -->
-  {#if issues.length > 0}
-    <IssuesList
-      {issues}
-      {displayedIssues}
-      {repoUrl}
-      {isAuthenticated}
-      {showOnlyZeroComments}
-      {sortOrder}
-      {zeroCommentCount}
-      {copiedIssueNumber}
-      onFilterToggle={handleFilterToggle}
-      onSortChange={handleSortChange}
-      onClearFilters={handleClearFilters}
-      onCopyIssue={handleCopyIssue}
-    />
-  {/if}
+      <div class="space-y-2">
+        {#each displayedIssues as issue (issue.number)}
+          <IssueCard {issue} {copiedIssueNumber} onCopy={handleCopyIssue} />
+        {/each}
+      </div>
+
+      <div class="mt-6 text-center py-3">
+        <p class="text-[10px] text-slate-500">Pick an issue and start contributing!</p>
+      </div>
+    {/if}
+  </main>
 </div>
 
 <!-- Help Button (fixed position) -->
 <button
   type="button"
   onclick={toggleHelpPopup}
-  class="help-button sketch-card w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-slate-700/80 help-button-pulse"
+  class="help-button sketch-card w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-slate-700/80"
   aria-label="Show help"
   aria-expanded={showHelpPopup}
 >
-  <svg class="w-6 h-6 md:w-7 md:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 </button>
@@ -389,24 +508,15 @@
     min-height: 100vh;
   }
 
-  /* Sketch container - hand-drawn look */
-  .sketch-container {
-    background: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(20px);
-    border-radius: 16px;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  /* Sidebar panel - clean background, no overlay */
+  .sidebar-panel {
+    background: #0f172a;
   }
 
-  .sketch-container::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    background: transparent;
-    border: 3px solid rgba(148, 163, 184, 0.3);
-    border-radius: 18px;
-    filter: url(#sketch);
-    pointer-events: none;
+  @media (min-width: 1024px) {
+    .sidebar-panel {
+      border-right: 1px solid rgba(71, 85, 105, 0.3);
+    }
   }
 
   /* Sketch card - hand-drawn borders */
@@ -626,21 +736,49 @@
     pointer-events: none;
   }
 
-  /* Title underline sketch */
-  .sketch-title {
-    position: relative;
-    padding-bottom: 8px;
+  /* Brand header styling */
+  .brand-header {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+    margin-bottom: 0.5rem;
   }
 
-  .sketch-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    right: 10%;
-    height: 3px;
-    background: rgba(148, 163, 184, 0.4);
-    filter: url(#sketch-light);
+  .logo-mark {
+    position: relative;
+  }
+
+  .logo-mark svg {
+    filter: drop-shadow(0 4px 12px rgba(13, 148, 136, 0.4));
+  }
+
+  /* Filters card styling */
+  .filters-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo-mark svg circle:nth-child(3),
+    .logo-mark svg circle:nth-child(4),
+    .logo-mark svg circle:nth-child(5) {
+      animation: logo-pulse 3s ease-in-out infinite;
+    }
+
+    .logo-mark svg circle:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    .logo-mark svg circle:nth-child(5) {
+      animation-delay: 0.6s;
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
   }
 
   /* Help button fixed positioning */
@@ -657,26 +795,6 @@
       bottom: 2rem !important;
       right: 2rem !important;
     }
-  }
-
-  /* Help button pulse animation */
-  @keyframes pulse-scale {
-    0%, 100% {
-      transform: scale(1);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    }
-    50% {
-      transform: scale(1.05);
-      box-shadow: 0 10px 50px rgba(148, 163, 184, 0.4);
-    }
-  }
-
-  .help-button-pulse {
-    animation: pulse-scale 2s ease-in-out infinite;
-  }
-
-  .help-button-pulse:hover {
-    animation-play-state: paused;
   }
 
   /* Ensure text wrapping on mobile */
@@ -696,7 +814,7 @@
 
   /* Accessibility: Respect user's motion preferences */
   @media (prefers-reduced-motion: reduce) {
-    .help-button-pulse,
+    .logo-mark svg circle,
     :global(.easy-start-badge),
     :global(.zero-comment-highlight) {
       animation: none;
@@ -715,13 +833,13 @@
   :global(.sketch-button):focus-visible,
   :global(.sketch-input):focus-visible,
   :global(a):focus-visible {
-    outline: 2px solid #4ade80;
+    outline: 2px solid #14b8a6;
     outline-offset: 2px;
   }
 
   /* Ensure focus is visible on dark backgrounds */
   :global(:focus-visible) {
-    outline: 2px solid #4ade80;
+    outline: 2px solid #14b8a6;
     outline-offset: 2px;
   }
 

@@ -75,34 +75,26 @@
   {filterAnnouncement}
 </div>
 
-<!-- Results header -->
-<div class="mb-8 sketch-card p-6 md:p-8 relative z-20">
-  <div class="flex flex-col gap-4">
+<!-- Results header - Compact -->
+<div class="mb-6 sketch-card p-4 md:p-5 relative z-20">
+  <div class="flex flex-col gap-3">
     <!-- Top row: Title and Export -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <!-- Left: Title and info -->
       <div class="text-center md:text-left">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-2">
-          {displayedIssues.length} Unassigned {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
+        <h2 class="text-xl md:text-2xl font-bold text-white">
+          {displayedIssues.length} {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
           {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
-            <span class="text-lg text-slate-400 font-normal">(filtered from {issues.length})</span>
+            <span class="text-sm text-slate-400 font-normal ml-1">(from {issues.length})</span>
           {/if}
         </h2>
-        {#if isAuthenticated}
-          <p class="text-base md:text-lg text-slate-300">
-            All issues are open, unassigned, and have no pull requests
-          </p>
-        {:else}
-          <p class="text-base md:text-lg text-slate-300 mb-2">
-            All issues are open and unassigned
-          </p>
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-900/30 border border-amber-500/30 rounded-lg">
-            <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <span class="text-amber-300 text-xs md:text-sm font-semibold">Add a token to filter out issues with PRs</span>
-          </div>
-        {/if}
+        <p class="text-xs text-slate-400 mt-0.5">
+          {#if isAuthenticated}
+            Open, unassigned, no pull requests
+          {:else}
+            Open and unassigned · <span class="text-amber-400">Add token to filter PRs</span>
+          {/if}
+        </p>
       </div>
 
       <!-- Right: Export Button -->
@@ -112,7 +104,7 @@
     </div>
 
     <!-- Filter and Sort Controls -->
-    <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4 border-t border-slate-700/50">
+    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-3 border-t border-slate-700/50">
       <FilterControls
         enabled={showOnlyZeroComments}
         {zeroCommentCount}
@@ -133,7 +125,7 @@
 </div>
 
 <!-- Issues grid -->
-<div class="grid gap-6">
+<div class="grid gap-4">
   {#each displayedIssues as issue (issue.number)}
     <IssueCard
       {issue}
@@ -143,19 +135,9 @@
   {/each}
 </div>
 
-<!-- Success footer -->
-<div class="mt-10 sketch-card p-6 md:p-8">
-  <div class="text-center">
-    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-700 flex items-center justify-center sketch-icon">
-      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-      </svg>
-    </div>
-    <p class="text-3xl font-extrabold text-white mb-2">
-      Ready to Contribute
-    </p>
-    <p class="text-lg text-slate-300">
-      Pick an issue above and make your mark on open source
-    </p>
-  </div>
+<!-- Success footer - Compact -->
+<div class="mt-6 text-center py-6">
+  <p class="text-sm text-slate-400">
+    Pick an issue and start contributing!
+  </p>
 </div>

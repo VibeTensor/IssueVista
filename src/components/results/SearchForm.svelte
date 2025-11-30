@@ -3,7 +3,7 @@
   Issue #35 - Extracted from ResultsList.svelte
 
   Search form with repository URL input, GitHub token input,
-  and real-time URL validation with debouncing.
+  popular repo quick-select chips, and real-time URL validation.
 -->
 
 <script lang="ts">
@@ -32,6 +32,16 @@
     onTokenChange,
     onShowHelp
   }: Props = $props();
+
+  // Popular repositories for quick selection
+  const POPULAR_REPOS = [
+    { name: 'facebook/react', label: 'React' },
+    { name: 'microsoft/vscode', label: 'VS Code' },
+    { name: 'vercel/next.js', label: 'Next.js' },
+    { name: 'sveltejs/svelte', label: 'Svelte' },
+    { name: 'tailwindlabs/tailwindcss', label: 'Tailwind' },
+    { name: 'nodejs/node', label: 'Node.js' }
+  ];
 
   // Local state for validation
   let validationState = $state<ValidationState['state']>('idle');
@@ -84,6 +94,21 @@
     }
   }
 
+  /**
+   * Handle quick repo selection from chips
+   * Auto-fills URL and triggers search
+   */
+  function handleQuickRepoSelect(repoName: string) {
+    const url = `https://github.com/${repoName}`;
+    onUrlChange(url);
+    // Validate immediately
+    const result = validateRepoUrl(url);
+    validationState = result.state;
+    validationMessage = result.message || '';
+    // Auto-search after a brief delay to let the UI update
+    setTimeout(() => onSearch(), 100);
+  }
+
   // Auto-focus the repository URL input on mount and cleanup timeout
   onMount(() => {
     if (repoUrlInput) {
@@ -100,16 +125,51 @@
   let canSubmit = $derived(!loading && repoUrl.trim().length > 0 && validationState !== 'invalid');
 </script>
 
-<div class="sketch-card p-4 md:p-6 lg:p-8 mb-8">
-  <div class="space-y-6">
+<style>
+  .quick-pick-chip {
+    padding: 0.125rem 0.375rem;
+    font-size: 0.5625rem;
+    font-weight: 500;
+    color: #94a3b8;
+    background: rgba(51, 65, 85, 0.4);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    border-radius: 3px;
+    transition: all 0.1s ease;
+    cursor: pointer;
+  }
+
+  .quick-pick-chip:hover:not(:disabled) {
+    color: #e2e8f0;
+    background: rgba(71, 85, 105, 0.5);
+    border-color: rgba(100, 116, 139, 0.5);
+  }
+
+  .quick-pick-chip:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="sketch-card p-3">
+  <div class="space-y-2.5">
     <!-- Repository URL Input -->
     <div>
-      <label for="repoUrl" class="block text-base font-bold text-white mb-3">
-        Repository URL
-      </label>
+      <div class="flex items-center justify-between mb-1.5">
+        <label for="repoUrl" class="text-xs font-medium text-slate-300">
+          Repository URL
+        </label>
+        <span
+          id="repoUrl-hint"
+          class="text-[10px] {validationState === 'valid' ? 'text-green-400' : validationState === 'invalid' ? 'text-red-400' : 'text-transparent'}"
+          class:invisible={!validationMessage}
+          role={validationState === 'invalid' ? 'alert' : undefined}
+        >
+          {validationMessage || '\u00A0'}
+        </span>
+      </div>
       <div class="relative">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <svg class="h-6 w-6 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+          <svg class="h-3.5 w-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
           </svg>
         </div>
@@ -118,60 +178,60 @@
           bind:this={repoUrlInput}
           type="text"
           value={repoUrl}
-          placeholder="https://github.com/facebook/react"
-          class="sketch-input w-full pl-14 pr-12 py-4 text-base text-white rounded-lg outline-none bg-slate-800/80 placeholder-slate-500 {validationState === 'valid' ? 'border-green-500/50' : validationState === 'invalid' ? 'border-red-500/50' : ''}"
+          placeholder="https://github.com/owner/repo"
+          class="sketch-input w-full pl-8 pr-8 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500 {validationState === 'valid' ? 'border-green-500/50' : validationState === 'invalid' ? 'border-red-500/50' : ''}"
           oninput={handleRepoUrlInput}
           onkeydown={handleKeydown}
           aria-describedby="repoUrl-hint"
           aria-invalid={validationState === 'invalid'}
         />
-        <!-- Validation Icon -->
         {#if validationState === 'valid'}
-          <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-            <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+            <svg class="h-3.5 w-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
             </svg>
           </div>
         {:else if validationState === 'invalid'}
-          <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-            <svg class="h-5 w-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+            <svg class="h-3.5 w-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
         {/if}
       </div>
-      <!-- Validation Hint Text -->
-      {#if validationMessage}
-        <p
-          id="repoUrl-hint"
-          class="text-sm mt-2 flex items-center gap-2 {validationState === 'valid' ? 'text-green-400' : 'text-red-400'}"
-          role={validationState === 'invalid' ? 'alert' : undefined}
-        >
-          {validationMessage}
-        </p>
-      {/if}
+
+      <!-- Quick picks - compact chips -->
+      <div class="mt-1.5 flex flex-wrap gap-1">
+        {#each POPULAR_REPOS as repo}
+          <button
+            type="button"
+            onclick={() => handleQuickRepoSelect(repo.name)}
+            disabled={loading}
+            class="quick-pick-chip"
+            title={repo.name}
+          >
+            {repo.label}
+          </button>
+        {/each}
+      </div>
+
     </div>
 
     <!-- Token Input -->
     <div>
-      <label for="token" class="block text-base font-bold text-white mb-3">
+      <label for="token" class="block text-xs font-medium text-slate-300 mb-1.5">
         {#if isAuthenticated}
-          <span class="flex flex-col sm:flex-row sm:items-center gap-2">
-            <span>GitHub Token</span>
-            <span class="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-slate-200 bg-slate-700/80 px-2.5 py-1 rounded-full sketch-badge w-fit">
-              <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span class="whitespace-nowrap">Authenticated (5000 req/hr)</span>
-            </span>
+          <span class="flex items-center gap-1.5">
+            Token
+            <span class="text-[10px] text-green-400 bg-green-500/10 px-1.5 py-0.5 rounded">5000/hr</span>
           </span>
         {:else}
-          GitHub Token <span class="text-slate-400 text-sm font-normal">(Optional)</span>
+          Token <span class="text-slate-500 text-[10px] font-normal">(optional)</span>
         {/if}
       </label>
       <div class="relative">
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <svg class="h-6 w-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+          <svg class="h-3.5 w-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
         </div>
@@ -179,43 +239,33 @@
           id="token"
           type="password"
           value={token}
-          placeholder={isAuthenticated ? "••••••••••••••••••••" : "ghp_xxxxxxxxxxxx"}
-          class="sketch-input w-full pl-14 pr-4 py-4 text-base text-white rounded-lg outline-none bg-slate-800/80 placeholder-slate-500"
+          placeholder={isAuthenticated ? "••••••••" : "ghp_xxxx..."}
+          class="sketch-input w-full pl-8 pr-3 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500"
           oninput={handleTokenInput}
         />
       </div>
-      {#if !isAuthenticated}
-        <p class="text-sm text-slate-400 mt-2 flex items-center gap-2">
-          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>Works without token (60 req/hr). Stored locally for your privacy.</span>
-        </p>
-      {/if}
     </div>
 
-    <!-- Search Button -->
+    <!-- Search Button - Brand Primary Action -->
     <button
       onclick={onSearch}
       disabled={!canSubmit}
-      class="sketch-button w-full bg-slate-700 text-white py-5 px-8 rounded-lg font-bold text-lg hover:bg-slate-600 disabled:bg-slate-800 disabled:text-slate-600 disabled:cursor-not-allowed"
+      class="w-full py-2.5 px-4 rounded-lg font-semibold text-sm transition-all {canSubmit ? 'bg-teal-600 hover:bg-teal-500 text-white shadow-lg shadow-teal-500/25' : 'bg-slate-800 text-slate-600 cursor-not-allowed'}"
     >
-      {#if loading}
-        <span class="flex items-center justify-center gap-3">
-          <svg class="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <span class="flex items-center justify-center gap-2">
+        {#if loading}
+          <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
           </svg>
-          <span>Searching...</span>
-        </span>
-      {:else}
-        <span class="flex items-center justify-center gap-3">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          Searching...
+        {:else}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <span>Find Unassigned Issues (No PRs)</span>
-        </span>
-      {/if}
+          Find Issues
+        {/if}
+      </span>
     </button>
   </div>
 </div>

@@ -359,6 +359,14 @@ If you have questions:
 
 By contributing to IssueFlow, you agree that your contributions will be licensed under the MIT License.
 
+## About
+
+IssueFlow is developed and maintained by **VibeTensor Private Limited**, an Indian technology company.
+
+- **Company**: [VibeTensor Private Limited](https://github.com/VibeTensor)
+- **Location**: India
+- **Contact**: info@vibetensor.com
+
 ## Recognition
 
 Contributors will be recognized in the project. Thank you for helping make IssueFlow better!
