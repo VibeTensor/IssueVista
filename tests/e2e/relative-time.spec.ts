@@ -6,6 +6,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Smart Relative Time Display - E2E Tests', () => {
+  // Increase timeout for API-dependent tests
+  test.setTimeout(60000);
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -20,7 +23,7 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
     const searchInput = page.locator('#repoUrl');
     await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
 
-    const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+    const searchButton = page.locator('button:has-text("Find Issues")');
     await searchButton.click();
 
     // Wait for API response

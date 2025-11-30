@@ -6,6 +6,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Zero-Comment Issue Highlighting - E2E Tests', () => {
+  // Increase timeout for API-dependent tests
+  test.setTimeout(60000);
+
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -31,7 +34,7 @@ test.describe('Zero-Comment Issue Highlighting - E2E Tests', () => {
     const searchInput = page.locator('#repoUrl');
     await searchInput.fill('https://github.com/sveltejs/svelte');
 
-    const searchButton = page.locator('button:has-text("Find Unassigned Issues (No PRs)")');
+    const searchButton = page.locator('button:has-text("Find Issues")');
     await searchButton.click();
 
     // Wait for either results header or error message (up to 30 seconds)

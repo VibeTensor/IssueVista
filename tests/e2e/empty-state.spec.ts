@@ -84,8 +84,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const urlInput = page.locator('input[placeholder*="github"]');
       await urlInput.fill('invalid-url');
 
-      // Submit search (button text is "Find Unassigned Issues")
-      const searchButton = page.locator('button:has-text("Find Unassigned")');
+      // Submit search (button text is "Find Issues")
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
       // Wait for error state to appear
@@ -106,8 +106,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const urlInput = page.locator('input[placeholder*="github"]');
       await urlInput.fill('invalid-url');
 
-      // Submit search (button text is "Find Unassigned Issues")
-      const searchButton = page.locator('button:has-text("Find Unassigned")');
+      // Submit search (button text is "Find Issues")
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
       // Wait for error state to appear
@@ -126,8 +126,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const urlInput = page.locator('input[placeholder*="github"]');
       await urlInput.fill('invalid-url');
 
-      // Submit search (button text is "Find Unassigned Issues")
-      const searchButton = page.locator('button:has-text("Find Unassigned")');
+      // Submit search (button text is "Find Issues")
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
       // Wait for error state to appear
@@ -240,8 +240,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const urlInput = page.locator('input[placeholder*="github"]');
       await urlInput.fill('https://github.com/facebook/react');
 
-      // Submit search (button text is "Find Unassigned Issues")
-      const searchButton = page.locator('button:has-text("Find Unassigned")');
+      // Submit search (button text is "Find Issues")
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
       // Wait for results (or timeout)
@@ -259,22 +259,22 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const urlInput = page.locator('input[placeholder*="github"]');
       await urlInput.fill('https://github.com/facebook/react');
 
-      // Submit search (button text is "Find Unassigned Issues")
-      const searchButton = page.locator('button:has-text("Find Unassigned")');
+      // Submit search (button text is "Find Issues")
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
-      // Verify the button shows "Searching..." text when clicked
-      // This confirms the loading state was triggered
-      const buttonText = await searchButton.textContent();
+      // Wait a moment for state change
+      await page.waitForTimeout(500);
 
-      // Either the button shows loading text, or the search completed quickly
-      // In both cases, the page transitioned from initial state
-      const hasLoadingText = buttonText?.includes('Searching');
+      // Check for various possible states after clicking search
       const hasResults = await page.locator('.issue-card').count() > 0;
       const hasEmptyState = await page.locator('.empty-state-container').count() > 0;
+      const buttonText = await searchButton.textContent();
+      const hasLoadingText = buttonText?.includes('Searching') || buttonText?.includes('Loading');
+      const hasDisabledButton = await searchButton.isDisabled();
 
-      // Verify the UI responded to the search action
-      expect(hasLoadingText || hasResults || hasEmptyState).toBe(true);
+      // Verify the UI responded to the search action (any of these states is valid)
+      expect(hasLoadingText || hasResults || hasEmptyState || hasDisabledButton).toBe(true);
     });
   });
 

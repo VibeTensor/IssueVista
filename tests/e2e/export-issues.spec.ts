@@ -18,7 +18,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
 
       // Click search button
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
 
       // Wait for results to load
@@ -36,7 +36,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have export button with proper text', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -51,7 +51,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should display export icon on button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -66,7 +66,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should position export button in header area', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -89,7 +89,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should show dropdown menu when clicking export button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -108,7 +108,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should display three format options in dropdown', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -134,7 +134,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should display file extension hints in dropdown', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -160,7 +160,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should close dropdown when clicking outside', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -184,7 +184,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should toggle dropdown when clicking export button again', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -209,7 +209,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('dropdown should appear above issue cards (z-index)', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -241,7 +241,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should download Markdown file when selecting Markdown option', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -268,7 +268,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should download Plain Text file when selecting Plain Text option', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -294,7 +294,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should download CSV file when selecting CSV option', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -320,7 +320,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should include repo name in downloaded filename', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -347,7 +347,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should include date in downloaded filename', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -373,7 +373,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should close dropdown after selecting export format', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -402,7 +402,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should display export button on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -416,7 +416,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should show dropdown menu on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -434,7 +434,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should be easily tappable on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -457,7 +457,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should display export button on right side of header', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -477,7 +477,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have proper dropdown width on desktop', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -502,7 +502,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have proper ARIA attributes on dropdown', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -524,7 +524,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should be keyboard accessible', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -547,7 +547,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have proper focus management in dropdown', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -572,7 +572,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have sketch-button styling', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -587,7 +587,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have gradient background', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -602,7 +602,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have rounded corners', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -617,7 +617,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have shadow effect', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -632,7 +632,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have extrabold font weight', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -649,7 +649,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should not interfere with issue cards', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -672,7 +672,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should not interfere with copy buttons on cards', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -689,7 +689,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should appear in header alongside results count', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -713,7 +713,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should not show export button when no results', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/nonexistent-xyz/repo-12345');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 
@@ -732,7 +732,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
     test('should have hover effect on menu items', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
       await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
-      const searchButton = page.locator('button:has-text("Find Unassigned Issues")');
+      const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
       await page.waitForTimeout(3000);
 

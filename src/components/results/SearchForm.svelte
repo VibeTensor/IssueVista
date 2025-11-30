@@ -158,11 +158,14 @@
         <label for="repoUrl" class="text-xs font-medium text-slate-300">
           Repository URL
         </label>
-        {#if validationMessage}
-          <span class="text-[10px] {validationState === 'valid' ? 'text-green-400' : 'text-red-400'}" role={validationState === 'invalid' ? 'alert' : undefined}>
-            {validationMessage}
-          </span>
-        {/if}
+        <span
+          id="repoUrl-hint"
+          class="text-[10px] {validationState === 'valid' ? 'text-green-400' : validationState === 'invalid' ? 'text-red-400' : 'text-transparent'}"
+          class:invisible={!validationMessage}
+          role={validationState === 'invalid' ? 'alert' : undefined}
+        >
+          {validationMessage || '\u00A0'}
+        </span>
       </div>
       <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
