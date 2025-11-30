@@ -103,12 +103,12 @@
     </nav>
 
     <!-- Social Sharing - Icon only buttons -->
-    <div class="footer-social" aria-label="Share on social media">
+    <div class="footer-social" role="group" aria-label="Share on social media">
       <!-- Native Share (Mobile) -->
       {#if canNativeShare}
         <button
           type="button"
-          onclick={handleNativeShare}
+          on:click={handleNativeShare}
           class="social-icon-button"
           aria-label="Share IssueFlow"
           title="Share"

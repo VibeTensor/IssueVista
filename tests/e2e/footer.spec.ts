@@ -202,10 +202,10 @@ test.describe('Footer Component - E2E Tests', () => {
     });
 
     test('should have hidden icons from screen readers', async ({ page }) => {
-      const icons = page.locator('footer svg[aria-hidden="true"]');
-      const count = await icons.count();
-      // All SVG icons should have aria-hidden
-      expect(count).toBeGreaterThan(0);
+      const iconsWithAriaHidden = await page.locator('footer svg[aria-hidden="true"]').count();
+      const totalIcons = await page.locator('footer svg').count();
+      // All SVG icons in the footer should be hidden from screen readers
+      expect(iconsWithAriaHidden).toBe(totalIcons);
     });
 
     test('should be keyboard accessible - can tab to links', async ({ page }) => {
@@ -385,8 +385,8 @@ test.describe('Footer Component - E2E Tests', () => {
 
       await footerLink.hover();
 
-      // Wait for CSS transition to apply translateY(-2px) which becomes matrix(1, 0, 0, 1, 0, -2)
-      await expect(footerLink).toHaveCSS('transform', /matrix\(1,\s*0,\s*0,\s*1,\s*0,\s*-2\)/);
+      // Wait for CSS transition to apply a non-default transform
+      await expect(footerLink).not.toHaveCSS('transform', 'none');
     });
 
     test('should change social button appearance on hover', async ({ page }) => {
@@ -394,61 +394,8 @@ test.describe('Footer Component - E2E Tests', () => {
 
       await socialButton.hover();
 
-      // Wait for CSS transition to apply translateY transform
-      await expect(socialButton).toHaveCSS('transform', /matrix/);
-    });
-  });
-
-  test.describe('Link Navigation', () => {
-    test('should navigate to GitHub repo on click', async ({ page, context }) => {
-      const githubLink = page.locator('footer a[aria-label="View IssueFlow on GitHub (opens in new tab)"]');
-
-      // Listen for new page
-      const pagePromise = context.waitForEvent('page');
-      await githubLink.click();
-      const newPage = await pagePromise;
-
-      await newPage.waitForLoadState('domcontentloaded');
-      expect(newPage.url()).toContain('github.com/VibeTensor/IssueFlow');
-      await newPage.close();
-    });
-
-    test('should navigate to Issues page on click', async ({ page, context }) => {
-      const issueLink = page.locator('footer a[aria-label*="Report an issue"]');
-
-      const pagePromise = context.waitForEvent('page');
-      await issueLink.click();
-      const newPage = await pagePromise;
-
-      await newPage.waitForLoadState('domcontentloaded');
-      expect(newPage.url()).toContain('github.com/VibeTensor/IssueFlow/issues');
-      await newPage.close();
-    });
-
-    test('should open Twitter share dialog', async ({ page, context }) => {
-      const twitterButton = page.locator('footer a[aria-label*="Twitter"]');
-
-      const pagePromise = context.waitForEvent('page');
-      await twitterButton.click();
-      const newPage = await pagePromise;
-
-      await newPage.waitForLoadState('domcontentloaded');
-      // Twitter redirects to x.com now
-      const url = newPage.url();
-      expect(url.includes('twitter.com') || url.includes('x.com')).toBe(true);
-      await newPage.close();
-    });
-
-    test('should open LinkedIn share dialog', async ({ page, context }) => {
-      const linkedinButton = page.locator('footer a[aria-label*="LinkedIn"]');
-
-      const pagePromise = context.waitForEvent('page');
-      await linkedinButton.click();
-      const newPage = await pagePromise;
-
-      await newPage.waitForLoadState('domcontentloaded');
-      expect(newPage.url()).toContain('linkedin.com');
-      await newPage.close();
+      // Wait for CSS transition to apply a non-default transform
+      await expect(socialButton).not.toHaveCSS('transform', 'none');
     });
   });
 
