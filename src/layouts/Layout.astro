@@ -1,4 +1,6 @@
 ---
+import { Footer } from '../components/shared';
+
 interface Props {
   title: string;
   description?: string;
@@ -33,6 +35,7 @@ const ogImage = `${siteUrl}/og-image.png`;
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -50,7 +53,7 @@ const ogImage = `${siteUrl}/og-image.png`;
     <meta name="keywords" content="github, issues, open source, contribution, pull requests, hacktoberfest, github api, graphql, unassigned issues" />
 
     <!-- Author -->
-    <meta name="author" content="ascender1729" />
+    <meta name="author" content="VibeTensor" />
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#0f172a" />
@@ -82,14 +85,15 @@ const ogImage = `${siteUrl}/og-image.png`;
           "priceCurrency": "USD"
         },
         "author": {
-          "@type": "Person",
-          "name": "ascender1729",
-          "url": "https://github.com/ascender1729"
+          "@type": "Organization",
+          "name": "VibeTensor",
+          "url": "https://github.com/VibeTensor"
         }
       }
     </script>
   </head>
   <body>
     <slot />
+    <Footer client:load />
   </body>
 </html>
