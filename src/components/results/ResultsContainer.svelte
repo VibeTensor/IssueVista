@@ -501,7 +501,7 @@
   </aside>
 
   <!-- RIGHT MAIN PANEL -->
-  <main class="flex-1 min-w-0 p-3 lg:p-4 lg:overflow-y-auto">
+  <main class="flex-1 min-w-0 p-3 lg:p-4 lg:overflow-y-auto pb-20">
     <!-- Loading State - centered in right panel (Issue #23) -->
     {#if loading && progressState}
       <div class="flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
@@ -562,15 +562,16 @@
   </main>
 </div>
 
-<!-- Help Button (fixed position) -->
+<!-- Help Button (fixed position) - Brand styled circular FAB -->
 <button
   type="button"
   onclick={toggleHelpPopup}
-  class="help-button sketch-card w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:bg-slate-700/80"
-  aria-label="Show help"
+  class="help-button"
+  aria-label="How it works - Show help guide"
   aria-expanded={showHelpPopup}
+  title="How it works?"
 >
-  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg class="help-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
   </svg>
 </button>
@@ -871,19 +872,93 @@
     }
   }
 
-  /* Help button fixed positioning */
+  /* Help button - Brand styled circular FAB (compact) */
+  /* Positioned above footer (footer ~70px height) */
   .help-button {
     position: fixed !important;
-    bottom: 1rem !important;
+    bottom: 5rem !important;  /* Above footer */
     right: 1rem !important;
-    z-index: 9999 !important;
-    border-radius: 9999px !important;
+    z-index: 40 !important;
+
+    /* Circular button - compact size */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    /* Brand teal gradient */
+    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    color: white;
+
+    /* Shadow glow - subtle */
+    box-shadow: 0 3px 12px rgba(20, 184, 166, 0.35);
+
+    /* Transitions */
+    transition: all 0.2s ease;
+
+    /* Pulse animation */
+    animation: help-glow 3s ease-in-out infinite;
   }
 
+  .help-button:hover {
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    box-shadow: 0 4px 16px rgba(20, 184, 166, 0.45);
+    transform: translateY(-1px);
+  }
+
+  .help-button:active {
+    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+    box-shadow: 0 2px 10px rgba(20, 184, 166, 0.3);
+    transform: translateY(0) scale(0.98);
+  }
+
+  .help-button:focus-visible {
+    outline: 2px solid #14b8a6;
+    outline-offset: 2px;
+  }
+
+  /* Icon styling - compact */
+  .help-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Pulse glow animation - subtle */
+  @keyframes help-glow {
+    0%, 100% {
+      box-shadow: 0 3px 12px rgba(20, 184, 166, 0.35);
+    }
+    50% {
+      box-shadow: 0 3px 16px rgba(20, 184, 166, 0.5);
+    }
+  }
+
+  /* Tablet and up: Larger position offset */
   @media (min-width: 768px) {
     .help-button {
-      bottom: 2rem !important;
-      right: 2rem !important;
+      bottom: 5.5rem !important;  /* Above footer */
+      right: 1.5rem !important;
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .help-button {
+      animation: none;
+      transition: none;
+    }
+
+    .help-button:hover {
+      transform: none;
+    }
+
+    .help-button:active {
+      transform: none;
     }
   }
 
