@@ -1,4 +1,14 @@
 import { GraphQLClient } from 'graphql-request';
+import type { ProgressCallback, ProgressState } from './loading-progress-utils';
+import {
+  GRAPHQL_MAX_PAGES,
+  REST_MAX_PAGES,
+  createInitialState,
+  toAuthenticatingState,
+  toFetchingState,
+  toProcessingState,
+  toCompleteState
+} from './loading-progress-utils';
 
 const GITHUB_GRAPHQL_ENDPOINT = 'https://api.github.com/graphql';
 
@@ -118,11 +128,16 @@ export class GitHubAPI {
     });
   }
 
-  async fetchAvailableIssues(owner: string, repo: string): Promise<{ issues: GitHubIssue[]; rateLimit: { remaining: number; resetAt: string } }> {
+  async fetchAvailableIssues(
+    owner: string,
+    repo: string,
+    onProgress?: ProgressCallback,
+    signal?: AbortSignal
+  ): Promise<{ issues: GitHubIssue[]; rateLimit: { remaining: number; resetAt: string } }> {
     // If no token, use REST API fallback
     if (!this.token) {
       console.log('[OK] No token provided, using REST API (60 requests/hour)');
-      const issues = await this.fetchIssuesViaREST(owner, repo);
+      const issues = await this.fetchIssuesViaREST(owner, repo, onProgress, signal);
       return { issues, rateLimit: { remaining: 60, resetAt: new Date().toISOString() } };
     }
 
@@ -133,12 +148,31 @@ export class GitHubAPI {
     let cursor: string | null = null;
     let lastRateLimit = { remaining: 0, resetAt: '' };
 
+    // Initialize progress state
+    const maxPages = GRAPHQL_MAX_PAGES;
+    let progressState = createInitialState({
+      maxPages,
+      isAuthenticated: true
+    });
+
+    // Report authenticating phase
+    onProgress?.(toAuthenticatingState(progressState));
+
     try {
       // Limit to 3 pages (300 issues) for faster loading
       let pageCount = 0;
-      const maxPages = 3;
 
       while (hasNextPage && pageCount < maxPages) {
+        // Check if cancelled
+        if (signal?.aborted) {
+          console.log('[CANCELLED] Fetch aborted by user');
+          break;
+        }
+
+        // Report fetching progress BEFORE fetch
+        progressState = toFetchingState(progressState, pageCount + 1, allIssues.length);
+        onProgress?.(progressState);
+
         const data = await this.client.request<IssuesResponse>(QUERY, {
           owner,
           repo,
@@ -165,14 +199,29 @@ export class GitHubAPI {
         console.log(`[PAGE] Fetched page ${pageCount}/${maxPages}, found ${issuesWithoutPRs.length} issues (${allIssues.length} total)`);
       }
 
+      // Report processing phase
+      progressState = toProcessingState(progressState, allIssues.length);
+      onProgress?.(progressState);
+
       console.log(`[OK] GraphQL: Found ${allIssues.length} unassigned issues without PRs`);
       console.log(`[RATE] Rate limit: ${lastRateLimit.remaining} requests remaining`);
+
+      // Report complete
+      progressState = toCompleteState(progressState, allIssues.length);
+      onProgress?.(progressState);
+
       return { issues: allIssues, rateLimit: lastRateLimit };
     } catch (error: any) {
+      // Check if aborted
+      if (error.name === 'AbortError' || signal?.aborted) {
+        console.log('[CANCELLED] Fetch was aborted');
+        // Return partial results (per user preference)
+        return { issues: allIssues, rateLimit: lastRateLimit };
+      }
       // Handle authentication errors - try REST API fallback
       if (error.response?.status === 401 || error.response?.status === 403) {
         console.log('[WARN] GraphQL authentication failed (403), falling back to REST API...');
-        const issues = await this.fetchIssuesViaREST(owner, repo);
+        const issues = await this.fetchIssuesViaREST(owner, repo, onProgress, signal);
         return { issues, rateLimit: { remaining: 60, resetAt: new Date().toISOString() } };
       }
 
@@ -186,18 +235,41 @@ export class GitHubAPI {
   }
 
   // REST API fallback for unauthenticated access (optimized - no timeline checks)
-  private async fetchIssuesViaREST(owner: string, repo: string): Promise<GitHubIssue[]> {
+  private async fetchIssuesViaREST(
+    owner: string,
+    repo: string,
+    onProgress?: ProgressCallback,
+    signal?: AbortSignal
+  ): Promise<GitHubIssue[]> {
     console.log(`[REST] Fetching issues from ${owner}/${repo} via REST API (Fast mode - skipping PR checks)...`);
     const allIssues: GitHubIssue[] = [];
     let page = 1;
     const perPage = 100;
+    const maxPages = REST_MAX_PAGES;
+
+    // Initialize progress state for REST API
+    let progressState = createInitialState({
+      maxPages,
+      isAuthenticated: !!this.token
+    });
 
     try {
       // Only fetch first 2 pages (200 issues) for speed
-      while (page <= 2) {
+      while (page <= maxPages) {
+        // Check if cancelled
+        if (signal?.aborted) {
+          console.log('[CANCELLED] REST fetch aborted by user');
+          break;
+        }
+
+        // Report progress
+        progressState = toFetchingState(progressState, page, allIssues.length);
+        onProgress?.(progressState);
+
         const response = await fetch(
           `https://api.github.com/repos/${owner}/${repo}/issues?state=open&per_page=${perPage}&page=${page}&assignee=none`,
           {
+            signal,
             headers: this.token ? { Authorization: `Bearer ${this.token}` } : {}
           }
         );
@@ -257,9 +329,24 @@ export class GitHubAPI {
         page++;
       }
 
+      // Report processing phase
+      progressState = toProcessingState(progressState, allIssues.length);
+      onProgress?.(progressState);
+
       console.log(`[OK] REST API: Found ${allIssues.length} unassigned issues (Note: PR filtering only available with token)`);
+
+      // Report complete
+      progressState = toCompleteState(progressState, allIssues.length);
+      onProgress?.(progressState);
+
       return allIssues;
     } catch (error: any) {
+      // Check if aborted
+      if (error.name === 'AbortError' || signal?.aborted) {
+        console.log('[CANCELLED] REST fetch was aborted');
+        // Return partial results (per user preference)
+        return allIssues;
+      }
       throw new Error(`Failed to fetch issues via REST API: ${error.message}`);
     }
   }
