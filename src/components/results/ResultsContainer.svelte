@@ -424,7 +424,7 @@
     inset: -2px;
     background: transparent;
     border: 2px solid rgba(148, 163, 184, 0.25);
-    border-radius: 14px;
+    border-radius: inherit;
     filter: url(#sketch);
     pointer-events: none;
   }
@@ -649,6 +649,7 @@
     bottom: 1rem !important;
     right: 1rem !important;
     z-index: 9999 !important;
+    border-radius: 9999px !important;
   }
 
   @media (min-width: 768px) {
