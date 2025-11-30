@@ -14,13 +14,34 @@
 
   let { show, onClose }: Props = $props();
   let closeButtonRef: HTMLButtonElement | null = $state(null);
+  let ctaButtonRef: HTMLButtonElement | null = $state(null);
 
   /**
-   * Handle keyboard events on backdrop - close on Escape
+   * Handle keyboard events on backdrop - close on Escape, trap focus on Tab
    */
   function handleBackdropKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
       onClose();
+      return;
+    }
+
+    // Focus trap: Tab cycles between close button and CTA button
+    if (event.key === 'Tab' && closeButtonRef && ctaButtonRef) {
+      const activeElement = document.activeElement;
+
+      if (event.shiftKey) {
+        // Shift+Tab: if on first element, go to last
+        if (activeElement === closeButtonRef) {
+          event.preventDefault();
+          ctaButtonRef.focus();
+        }
+      } else {
+        // Tab: if on last element, go to first
+        if (activeElement === ctaButtonRef) {
+          event.preventDefault();
+          closeButtonRef.focus();
+        }
+      }
     }
   }
 
@@ -29,7 +50,7 @@
     if (show && closeButtonRef) {
       // Small delay to ensure element is rendered
       requestAnimationFrame(() => {
-        closeButtonRef?.focus();
+        closeButtonRef.focus();
       });
     }
   });
@@ -136,6 +157,7 @@
         <!-- Footer -->
         <div class="sticky bottom-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 border-t border-slate-700/50">
           <button
+            bind:this={ctaButtonRef}
             onclick={onClose}
             class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded font-semibold text-xs hover:from-teal-400 hover:to-teal-500 shadow-sm shadow-teal-500/25 transition-all duration-200"
           >

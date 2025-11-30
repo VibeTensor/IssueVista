@@ -146,7 +146,7 @@ export class GitHubAPI {
     let allIssues: GitHubIssue[] = [];
     let hasNextPage = true;
     let cursor: string | null = null;
-    let lastRateLimit = { remaining: 0, resetAt: '' };
+    let lastRateLimit = { remaining: 0, resetAt: new Date().toISOString() };
 
     // Initialize progress state
     const maxPages = GRAPHQL_MAX_PAGES;
