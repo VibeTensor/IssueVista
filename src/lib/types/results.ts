@@ -104,6 +104,5 @@ export interface HelpPopupProps {
  */
 export interface RateLimitDisplayProps {
   remaining: number;
-  resetAt: string;
-  isAuthenticated: boolean;
+  resetTime: string;
 }

@@ -678,35 +678,6 @@
     animation-play-state: paused;
   }
 
-  /* Custom scrollbar for help popup */
-  :global(.help-popup-scroll) {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(100, 116, 139, 0.6) transparent;
-  }
-
-  :global(.help-popup-scroll)::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  :global(.help-popup-scroll)::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 10px;
-  }
-
-  :global(.help-popup-scroll)::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.6);
-    border-radius: 10px;
-    transition: background 0.2s ease;
-  }
-
-  :global(.help-popup-scroll)::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.8);
-  }
-
-  :global(.help-popup-scroll) {
-    scroll-behavior: smooth;
-  }
-
   /* Ensure text wrapping on mobile */
   @media (max-width: 640px) {
     :global(*) {
