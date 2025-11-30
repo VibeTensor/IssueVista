@@ -173,10 +173,10 @@ export class GitHubAPI {
         progressState = toFetchingState(progressState, pageCount + 1, allIssues.length);
         onProgress?.(progressState);
 
-        const data: IssuesResponse = await this.client.request<IssuesResponse>(QUERY, {
-          owner,
-          repo,
-          cursor
+        const data: IssuesResponse = await this.client.request<IssuesResponse>({
+          document: QUERY,
+          variables: { owner, repo, cursor },
+          signal
         });
 
         const issues = data.repository.issues;

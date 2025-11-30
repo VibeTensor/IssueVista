@@ -47,7 +47,6 @@
     <div
       class="help-popup-wrapper sketch-container max-w-md w-full max-h-[85vh] md:max-h-[75vh] rounded-xl overflow-hidden m-4"
       onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
       role="dialog"
       aria-modal="true"
       aria-labelledby="help-dialog-title"
