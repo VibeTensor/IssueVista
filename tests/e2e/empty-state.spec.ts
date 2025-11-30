@@ -142,19 +142,20 @@ test.describe('EmptyState Component - E2E Tests', () => {
 
   test.describe('Accessibility Features', () => {
     test('should be keyboard navigable', async ({ page }) => {
-      // Tab to the actions
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
-      await page.keyboard.press('Tab');
+      // Focus the secondary action link directly
+      const secondaryAction = page.locator('.empty-state-container .secondary-action');
 
-      // Check if focus is visible somewhere in the empty state
-      const focusedElement = await page.evaluate(() => {
-        const active = document.activeElement;
-        return active ? active.tagName : null;
-      });
+      if (await secondaryAction.count() > 0) {
+        await secondaryAction.focus();
 
-      expect(focusedElement).toBeTruthy();
+        // Verify the secondary action has focus
+        const isFocused = await secondaryAction.evaluate(el => el === document.activeElement);
+        expect(isFocused).toBe(true);
+
+        // Verify it's a focusable element (link or button)
+        const tagName = await secondaryAction.evaluate(el => el.tagName.toLowerCase());
+        expect(['a', 'button']).toContain(tagName);
+      }
     });
 
     test('should have focus-visible styles on buttons', async ({ page }) => {
@@ -262,15 +263,18 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const searchButton = page.locator('button:has-text("Find Unassigned")');
       await searchButton.click();
 
-      // Check for loading indicator
-      const loadingIndicator = page.locator('.animate-spin');
+      // Verify the button shows "Searching..." text when clicked
+      // This confirms the loading state was triggered
+      const buttonText = await searchButton.textContent();
 
-      // Either loading should appear briefly or results should show
-      // We use a race condition here since loading might be very quick
-      const isLoading = await loadingIndicator.isVisible().catch(() => false);
+      // Either the button shows loading text, or the search completed quickly
+      // In both cases, the page transitioned from initial state
+      const hasLoadingText = buttonText?.includes('Searching');
+      const hasResults = await page.locator('.issue-card').count() > 0;
+      const hasEmptyState = await page.locator('.empty-state-container').count() > 0;
 
-      // Just verify the page is responding - either loading or results
-      expect(true).toBe(true);
+      // Verify the UI responded to the search action
+      expect(hasLoadingText || hasResults || hasEmptyState).toBe(true);
     });
   });
 

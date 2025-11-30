@@ -162,9 +162,15 @@ describe('isRateLimitError', () => {
       expect(isRateLimitError('rate_limit_exceeded')).toBe(true);
     });
 
-    it('should detect "403" status code message', () => {
-      expect(isRateLimitError('Error 403: Forbidden')).toBe(true);
-      expect(isRateLimitError('GitHub API returned 403')).toBe(true);
+    it('should detect "403" with rate limit context', () => {
+      expect(isRateLimitError('403: Rate limit exceeded')).toBe(true);
+      expect(isRateLimitError('GitHub API returned 403 - rate limit')).toBe(true);
+      expect(isRateLimitError('Error 403: API quota exceeded')).toBe(true);
+    });
+
+    it('should NOT detect "403" alone (may be permission error)', () => {
+      expect(isRateLimitError('Error 403: Forbidden')).toBe(false);
+      expect(isRateLimitError('403 Access Denied')).toBe(false);
     });
 
     it('should detect "api limit" message', () => {
@@ -195,8 +201,13 @@ describe('isRateLimitError', () => {
       expect(isRateLimitError(new Error('API rate_limit reached'))).toBe(true);
     });
 
-    it('should detect 403 in Error objects', () => {
-      expect(isRateLimitError(new Error('403 Forbidden'))).toBe(true);
+    it('should detect 403 with rate context in Error objects', () => {
+      expect(isRateLimitError(new Error('403: Rate limit exceeded'))).toBe(true);
+      expect(isRateLimitError(new Error('403 - Quota exceeded'))).toBe(true);
+    });
+
+    it('should NOT detect 403 alone in Error objects', () => {
+      expect(isRateLimitError(new Error('403 Forbidden'))).toBe(false);
     });
   });
 
@@ -294,14 +305,24 @@ describe('detectEmptyStateVariant', () => {
       expect(detectEmptyStateVariant(input)).toBe('rate-limited');
     });
 
-    it('should return rate-limited for 403 error', () => {
+    it('should return rate-limited for 403 error with rate limit context', () => {
+      const input: EmptyStateDetectionInput = {
+        hasSearched: true,
+        isLoading: false,
+        error: new Error('403: Rate limit exceeded'),
+        resultsCount: 0
+      };
+      expect(detectEmptyStateVariant(input)).toBe('rate-limited');
+    });
+
+    it('should return error (not rate-limited) for 403 without rate limit context', () => {
       const input: EmptyStateDetectionInput = {
         hasSearched: true,
         isLoading: false,
         error: new Error('403 Forbidden'),
         resultsCount: 0
       };
-      expect(detectEmptyStateVariant(input)).toBe('rate-limited');
+      expect(detectEmptyStateVariant(input)).toBe('error');
     });
 
     it('should prioritize rate-limited over general error', () => {

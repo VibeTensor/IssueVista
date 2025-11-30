@@ -155,14 +155,23 @@ export function isRateLimitError(error: Error | string | null): boolean {
   const message = typeof error === 'string' ? error : error.message;
   const lowerMessage = message.toLowerCase();
 
-  return (
+  // Check for explicit rate limit patterns
+  const hasRateLimitKeyword = (
     lowerMessage.includes('rate limit') ||
     lowerMessage.includes('rate_limit') ||
-    lowerMessage.includes('403') ||
     lowerMessage.includes('api limit') ||
     lowerMessage.includes('limit exceeded') ||
     lowerMessage.includes('quota exceeded')
   );
+
+  // 403 alone may be a different error (e.g., permission denied)
+  // Only treat 403 as rate limit if combined with rate/limit/quota keywords
+  const is403RateLimited = (
+    lowerMessage.includes('403') &&
+    (lowerMessage.includes('rate') || lowerMessage.includes('limit') || lowerMessage.includes('quota'))
+  );
+
+  return hasRateLimitKeyword || is403RateLimited;
 }
 
 /**
@@ -257,12 +266,13 @@ export function getEmptyStateAnnouncement(variant: EmptyStateVariant): string {
 
 /**
  * Get all available empty state variants
+ * Derived from EMPTY_STATE_CONFIGS to ensure consistency
  * Useful for testing and validation
  *
  * @returns Array of all variant types
  */
 export function getAllVariants(): EmptyStateVariant[] {
-  return ['initial', 'no-results', 'error', 'rate-limited', 'success'];
+  return Object.keys(EMPTY_STATE_CONFIGS) as EmptyStateVariant[];
 }
 
 /**
