@@ -113,6 +113,7 @@ These require more experience:
 | [#45](https://github.com/VibeTensor/IssueFlow/issues/45) | Add SECURITY.md for vulnerability disclosure | `documentation`, `security` |
 | [#47](https://github.com/VibeTensor/IssueFlow/issues/47) | Add test execution to GitHub Actions | `enhancement`, `ci/cd` |
 | [#49](https://github.com/VibeTensor/IssueFlow/issues/49) | Add ESLint and Prettier configuration | `enhancement`, `refactoring` |
+| [#52](https://github.com/VibeTensor/IssueFlow/issues/52) | Add hacktoberfest label to eligible issues | `documentation` |
 | [#60](https://github.com/VibeTensor/IssueFlow/issues/60) | Implement multi-repository search | `enhancement` |
 | [#63](https://github.com/VibeTensor/IssueFlow/issues/63) | Add contributor dashboard with stats | `enhancement` |
 | [#64](https://github.com/VibeTensor/IssueFlow/issues/64) | Convert to Progressive Web App | `enhancement`, `pwa` |

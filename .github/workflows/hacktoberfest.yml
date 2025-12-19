@@ -10,6 +10,7 @@ on:
   schedule:
     # Run daily at midnight UTC during October to catch any missed issues
     - cron: '0 0 * 10 *'
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   add-hacktoberfest-label:
@@ -36,13 +37,14 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
 
+            // Qualifying labels for hacktoberfest (extracted to avoid duplication)
+            const qualifyingLabels = ['good first issue', 'help wanted', 'enhancement', 'documentation'];
+
             // For issue events, check the specific issue
             if (context.eventName === 'issues') {
               const issue = context.payload.issue;
               const labels = issue.labels.map(l => l.name);
 
-              // Check if issue qualifies for hacktoberfest
-              const qualifyingLabels = ['good first issue', 'help wanted', 'enhancement', 'documentation'];
               const hasQualifyingLabel = labels.some(label => qualifyingLabels.includes(label));
               const hasHacktoberfest = labels.includes('hacktoberfest');
 
@@ -57,8 +59,8 @@ jobs:
               }
             }
 
-            // For scheduled runs, check all open issues
-            if (context.eventName === 'schedule') {
+            // For scheduled runs or manual dispatch, check all open issues
+            if (context.eventName === 'schedule' || context.eventName === 'workflow_dispatch') {
               const issues = await github.paginate(github.rest.issues.listForRepo, {
                 owner,
                 repo,
@@ -70,7 +72,6 @@ jobs:
                 if (issue.pull_request) continue; // Skip PRs
 
                 const labels = issue.labels.map(l => l.name);
-                const qualifyingLabels = ['good first issue', 'help wanted', 'enhancement', 'documentation'];
                 const hasQualifyingLabel = labels.some(label => qualifyingLabels.includes(label));
                 const hasHacktoberfest = labels.includes('hacktoberfest');
 
