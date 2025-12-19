@@ -15,8 +15,7 @@ on:
 jobs:
   add-hacktoberfest-label:
     runs-on: ubuntu-latest
-    # Only run during Hacktoberfest season (October) or when manually triggered
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule') || (github.event_name == 'issues')
+    # Season check is handled in the first step below
 
     steps:
       - name: Check if Hacktoberfest season
