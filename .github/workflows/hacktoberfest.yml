@@ -1,0 +1,134 @@
+# Hacktoberfest Auto-Labeling Workflow
+# Automatically adds 'hacktoberfest' label to new issues with 'good first issue' or 'help wanted' labels
+# Active during October for Hacktoberfest participation
+
+name: Hacktoberfest Auto-Label
+
+on:
+  issues:
+    types: [opened, labeled]
+  schedule:
+    # Run daily at midnight UTC during October to catch any missed issues
+    - cron: '0 0 * 10 *'
+
+jobs:
+  add-hacktoberfest-label:
+    runs-on: ubuntu-latest
+    # Only run during Hacktoberfest season (October) or when manually triggered
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule') || (github.event_name == 'issues')
+
+    steps:
+      - name: Check if Hacktoberfest season
+        id: check-season
+        run: |
+          MONTH=$(date +%m)
+          if [ "$MONTH" = "10" ]; then
+            echo "is_hacktoberfest=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_hacktoberfest=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Add hacktoberfest label to qualifying issues
+        if: steps.check-season.outputs.is_hacktoberfest == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+
+            // For issue events, check the specific issue
+            if (context.eventName === 'issues') {
+              const issue = context.payload.issue;
+              const labels = issue.labels.map(l => l.name);
+
+              // Check if issue qualifies for hacktoberfest
+              const qualifyingLabels = ['good first issue', 'help wanted', 'enhancement', 'documentation'];
+              const hasQualifyingLabel = labels.some(label => qualifyingLabels.includes(label));
+              const hasHacktoberfest = labels.includes('hacktoberfest');
+
+              if (hasQualifyingLabel && !hasHacktoberfest && issue.state === 'open') {
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number: issue.number,
+                  labels: ['hacktoberfest']
+                });
+                console.log(`Added hacktoberfest label to issue #${issue.number}`);
+              }
+            }
+
+            // For scheduled runs, check all open issues
+            if (context.eventName === 'schedule') {
+              const issues = await github.paginate(github.rest.issues.listForRepo, {
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              });
+
+              for (const issue of issues) {
+                if (issue.pull_request) continue; // Skip PRs
+
+                const labels = issue.labels.map(l => l.name);
+                const qualifyingLabels = ['good first issue', 'help wanted', 'enhancement', 'documentation'];
+                const hasQualifyingLabel = labels.some(label => qualifyingLabels.includes(label));
+                const hasHacktoberfest = labels.includes('hacktoberfest');
+
+                if (hasQualifyingLabel && !hasHacktoberfest) {
+                  await github.rest.issues.addLabels({
+                    owner,
+                    repo,
+                    issue_number: issue.number,
+                    labels: ['hacktoberfest']
+                  });
+                  console.log(`Added hacktoberfest label to issue #${issue.number}`);
+                }
+              }
+            }
+
+  # Optional: Remove hacktoberfest label after October
+  cleanup-after-hacktoberfest:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+
+    steps:
+      - name: Check if after Hacktoberfest
+        id: check-cleanup
+        run: |
+          MONTH=$(date +%m)
+          DAY=$(date +%d)
+          # Clean up in November (month 11)
+          if [ "$MONTH" = "11" ] && [ "$DAY" = "01" ]; then
+            echo "should_cleanup=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_cleanup=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Remove hacktoberfest labels (optional cleanup)
+        if: steps.check-cleanup.outputs.should_cleanup == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+
+            // This is optional - uncomment to auto-remove labels after Hacktoberfest
+            // const issues = await github.paginate(github.rest.issues.listForRepo, {
+            //   owner,
+            //   repo,
+            //   state: 'open',
+            //   labels: 'hacktoberfest',
+            //   per_page: 100
+            // });
+            //
+            // for (const issue of issues) {
+            //   await github.rest.issues.removeLabel({
+            //     owner,
+            //     repo,
+            //     issue_number: issue.number,
+            //     name: 'hacktoberfest'
+            //   });
+            //   console.log(`Removed hacktoberfest label from issue #${issue.number}`);
+            // }
+
+            console.log('Hacktoberfest season ended. Labels preserved for reference.');
