@@ -51,4 +51,7 @@ jobs:
         run: npm ci
 
       - name: Check for TypeScript errors
-        run: npx tsc --noEmit || echo "TypeScript check completed"
+        run: |
+          echo "Running TypeScript compiler check..."
+          npx tsc --noEmit
+          echo "TypeScript check passed successfully"
