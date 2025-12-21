@@ -17,7 +17,7 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 
 **Preferred Method:** Use GitHub's Security Advisory feature by clicking the "Report a vulnerability" button in the [Security tab](https://github.com/VibeTensor/IssueFlow/security/advisories/new).
 
-**Alternative Method:** Email security@vibetensor.com with the subject line including "SECURITY".
+**Alternative Method:** Email <security@vibetensor.com> with "SECURITY" in the subject line.
 
 ### What to Include
 
@@ -42,6 +42,8 @@ We will acknowledge receipt of your report and keep you informed of our progress
 | Medium   | 7 business days  | 2-4 weeks        |
 | Low      | 14 business days | Next release     |
 
+For Low severity issues, if no release is planned within 30 days, a patch release will be created.
+
 ## Scope
 
 ### In Scope
@@ -65,7 +67,7 @@ We will acknowledge receipt of your report and keep you informed of our progress
 IssueFlow implements the following security practices:
 
 - **Client-side only**: No server-side data collection or storage
-- **Local token storage**: GitHub tokens stored in browser localStorage only
+- **Token storage**: GitHub OAuth tokens are stored in browser localStorage for session persistence. While convenient, localStorage is accessible to JavaScript and could be vulnerable to XSS attacks. We mitigate this through Content Security Policy headers, minimal OAuth scopes, and short-lived tokens. For enhanced security, consider clearing tokens after each session.
 - **Open source**: Fully auditable codebase
 - **TypeScript**: Type safety to prevent common vulnerabilities
 - **Regular updates**: Dependency updates via Dependabot
@@ -88,7 +90,7 @@ To qualify for safe harbor protection, you must:
 
 ## Questions
 
-For general security questions, please open a [GitHub Discussion](https://github.com/VibeTensor/IssueFlow/discussions) or contact info@vibetensor.com.
+For general security questions, please open a [GitHub Discussion](https://github.com/VibeTensor/IssueFlow/discussions) or contact <info@vibetensor.com>.
 
 ---
 
