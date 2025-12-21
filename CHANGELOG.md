@@ -50,6 +50,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Visual feedback on copy success
   - Keyboard accessible
 
+- **Help Button Animation** (#2): Improved discoverability for new users
+  - Pulse animation on help button
+  - Pure CSS implementation for performance
+  - Animation pauses on hover
+  - prefers-reduced-motion support
+
 ### Changed
 
 - **Brand Redesign**: New IssueFlow identity
@@ -160,3 +166,6 @@ Planned features for future releases:
 ---
 
 For detailed information about changes in each version, see the [Git commit history](https://github.com/VibeTensor/IssueFlow/commits/master).
+
+[1.1.0]: https://github.com/VibeTensor/IssueFlow/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/VibeTensor/IssueFlow/releases/tag/v1.0.0
