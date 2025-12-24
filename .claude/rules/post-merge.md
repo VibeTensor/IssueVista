@@ -75,7 +75,7 @@ gh issue view <ISSUE_NUMBER> --json title --jq '.title'
 
 ### Provide Uplift Tracker Data (COPY-PASTE READY):
 
-```
+```text
 ----------------------------------------------------------------
 UPLIFT TRACKER SUBMISSION DATA - Issue #XX
 ----------------------------------------------------------------
@@ -151,7 +151,7 @@ PERCEIVED EFFORT: [1-5 rating]
 
 1. **ISSUES COMPLETED section** - Add new row:
 
-   ```
+   ```csv
    Issue#,Title,Time(min),Time(hrs),Earnings(USD),Earnings(INR),Date,Effort,PR#
    ```
 
@@ -175,7 +175,7 @@ PERCEIVED EFFORT: [1-5 rating]
 
 ### Calculation Formulas:
 
-```
+```text
 Time(hrs) = Time(min) / 60
 Earnings(USD) = Time(hrs) x 50
 Earnings(INR) = Earnings(USD) x 90

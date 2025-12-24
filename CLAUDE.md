@@ -35,7 +35,7 @@ npm run test:e2e     # Run E2E tests
 
 ## Directory Structure
 
-```
+```text
 src/
 ├── components/
 │   ├── results/      # Issue display components
