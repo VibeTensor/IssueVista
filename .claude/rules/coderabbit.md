@@ -11,12 +11,14 @@ CodeRabbit provides automated analysis at TWO points. You MUST check and address
 **When**: Before starting implementation (Pre-Implementation Phase, Step 2)
 
 **Command**:
+
 ```bash
 gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
   --jq '.[] | select(.user.login | contains("coderabbit")) | .body'
 ```
 
 **What to Check**:
+
 - Related Issues suggested by CodeRabbit
 - Suggested Assignees
 - Implementation plan suggestions
@@ -24,6 +26,7 @@ gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
 - Links to similar issues or patterns
 
 **Actions Required**:
+
 - Document all suggestions in `issue_XX_research.txt`
 - Consider related issues for context
 - Follow any implementation recommendations
@@ -36,6 +39,7 @@ gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
 **When**: After creating PR and CodeRabbit review completes (PR Review Phase, Step 8)
 
 **Commands**:
+
 ```bash
 # Get overall review status and summary
 gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/reviews \
@@ -50,11 +54,11 @@ gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/comments \
 
 ## Comment Severity Handling
 
-| Severity | Icon | Required? | Action |
-|----------|------|-----------|--------|
-| **Critical** | Red | YES - MUST FIX | Fix before merge, blocks PR |
-| **Minor** | Yellow | YES - SHOULD FIX | Affects code quality |
-| **Nitpick** | Blue | RECOMMENDED | Improve readability |
+| Severity     | Icon   | Required?        | Action                      |
+| ------------ | ------ | ---------------- | --------------------------- |
+| **Critical** | Red    | YES - MUST FIX   | Fix before merge, blocks PR |
+| **Minor**    | Yellow | YES - SHOULD FIX | Affects code quality        |
+| **Nitpick**  | Blue   | RECOMMENDED      | Improve readability         |
 
 ---
 
@@ -68,6 +72,7 @@ gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/comments \
 2. **Implement the suggested fix**
 
 3. **Commit with descriptive message**:
+
    ```bash
    git commit -m "fix: Address CodeRabbit review - [description]"
    ```
@@ -141,6 +146,7 @@ gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/comments \
 ## Pre-Merge Checks (from CodeRabbit Summary)
 
 All 5 must pass:
+
 - [ ] Title check
 - [ ] Description check
 - [ ] Linked Issues check
