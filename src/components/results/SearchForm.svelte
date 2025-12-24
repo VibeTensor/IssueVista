@@ -1,15 +1,19 @@
 <!--
   SearchForm Component
   Issue #35 - Extracted from ResultsList.svelte
+  Issue #62 - Added search history dropdown
 
   Search form with repository URL input, GitHub token input,
-  popular repo quick-select chips, and real-time URL validation.
+  popular repo quick-select chips, real-time URL validation,
+  and search history dropdown.
 -->
 
 <script lang="ts">
   import { onMount } from 'svelte';
   import { validateRepoUrl } from '../../lib/github-graphql';
-  import type { ValidationState } from '../../lib/types/results';
+  import { getHistory, removeFromHistory, clearHistory } from '../../lib/search-history';
+  import { SearchHistory } from '../shared';
+  import type { ValidationState, SearchHistoryItem } from '../../lib/types/results';
 
   interface Props {
     repoUrl: string;
@@ -49,6 +53,11 @@
   let validationTimeout: number | null = null;
   let repoUrlInput: HTMLInputElement;
 
+  // Search history state (Issue #62)
+  let showHistory = $state(false);
+  let historyItems = $state<SearchHistoryItem[]>([]);
+  let blurTimeout: number | null = null;
+
   /**
    * Handle repository URL input with debounced validation
    */
@@ -56,6 +65,11 @@
     const target = event.target as HTMLInputElement;
     const newUrl = target.value;
     onUrlChange(newUrl);
+
+    // Hide history when user types
+    if (newUrl.trim().length >= 5) {
+      showHistory = false;
+    }
 
     // Clear previous timeout
     if (validationTimeout) {
@@ -105,11 +119,90 @@
     const result = validateRepoUrl(url);
     validationState = result.state;
     validationMessage = result.message || '';
-    // Auto-search after a brief delay to let the UI update
+    // Hide history and auto-search after a brief delay
+    showHistory = false;
     setTimeout(() => onSearch(), 100);
   }
 
-  // Auto-focus the repository URL input on mount and cleanup timeout
+  /**
+   * Load search history from localStorage
+   */
+  function loadHistory() {
+    historyItems = getHistory();
+  }
+
+  /**
+   * Handle input focus - show history if input is empty
+   */
+  function handleInputFocus() {
+    // Clear any pending blur timeout
+    if (blurTimeout) {
+      clearTimeout(blurTimeout);
+      blurTimeout = null;
+    }
+    // Show history only when input is empty or very short
+    if (!repoUrl.trim() || repoUrl.trim().length < 5) {
+      loadHistory();
+      if (historyItems.length > 0) {
+        showHistory = true;
+      }
+    }
+  }
+
+  /**
+   * Handle input blur - hide history after delay
+   * Delay allows clicking on history items
+   */
+  function handleInputBlur() {
+    blurTimeout = window.setTimeout(() => {
+      showHistory = false;
+      blurTimeout = null;
+    }, 200);
+  }
+
+  /**
+   * Handle history item selection
+   */
+  function handleHistorySelect(item: SearchHistoryItem) {
+    onUrlChange(item.fullUrl);
+    // Validate immediately
+    const result = validateRepoUrl(item.fullUrl);
+    validationState = result.state;
+    validationMessage = result.message || '';
+    showHistory = false;
+    // Trigger search
+    setTimeout(() => onSearch(), 100);
+  }
+
+  /**
+   * Handle delete single history item
+   */
+  function handleHistoryDelete(owner: string, repo: string) {
+    removeFromHistory(owner, repo);
+    loadHistory();
+    // Close dropdown if no items left
+    if (historyItems.length === 0) {
+      showHistory = false;
+    }
+  }
+
+  /**
+   * Handle clear all history
+   */
+  function handleHistoryClear() {
+    clearHistory();
+    historyItems = [];
+    showHistory = false;
+  }
+
+  /**
+   * Handle close history dropdown
+   */
+  function handleHistoryClose() {
+    showHistory = false;
+  }
+
+  // Auto-focus the repository URL input on mount and cleanup timeouts
   onMount(() => {
     if (repoUrlInput) {
       repoUrlInput.focus();
@@ -117,6 +210,9 @@
     return () => {
       if (validationTimeout) {
         clearTimeout(validationTimeout);
+      }
+      if (blurTimeout) {
+        clearTimeout(blurTimeout);
       }
     };
   });
@@ -166,6 +262,8 @@
               : ''}"
           oninput={handleRepoUrlInput}
           onkeydown={handleKeydown}
+          onfocus={handleInputFocus}
+          onblur={handleInputBlur}
           aria-describedby="repoUrl-hint"
           aria-invalid={validationState === 'invalid'}
         />
@@ -204,6 +302,16 @@
             </svg>
           </div>
         {/if}
+
+        <!-- Search History Dropdown (Issue #62) -->
+        <SearchHistory
+          items={historyItems}
+          show={showHistory}
+          onSelect={handleHistorySelect}
+          onDelete={handleHistoryDelete}
+          onClear={handleHistoryClear}
+          onClose={handleHistoryClose}
+        />
       </div>
 
       <!-- Quick picks - compact chips -->

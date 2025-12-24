@@ -34,6 +34,7 @@
     GRAPHQL_MAX_PAGES,
     REST_MAX_PAGES
   } from '../../lib/loading-progress-utils';
+  import { addToHistory } from '../../lib/search-history';
   import { SearchForm, RateLimitDisplay, HelpPopup, IssueCard } from './index';
 
   // Core state
@@ -189,7 +190,9 @@
       );
       issues = result.issues;
       rateLimit = result.rateLimit;
-      // Note: Empty results (issues.length === 0) are handled by EmptyState component
+
+      // Add to search history (Issue #62)
+      addToHistory(parsed.owner, parsed.repo, repoUrl, result.issues.length);
     } catch (e: any) {
       // Handle abort separately
       if (e.name === 'AbortError' || abortController?.signal.aborted) {
