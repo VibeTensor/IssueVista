@@ -13,6 +13,7 @@
   <a href="https://github.com/VibeTensor/IssueFlow/actions"><img src="https://github.com/VibeTensor/IssueFlow/workflows/CI/badge.svg" alt="CI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://hacktoberfest.com/"><img src="https://img.shields.io/badge/Hacktoberfest-Friendly-blueviolet?logo=hacktoberfest" alt="Hacktoberfest"></a>
+  <img src="https://img.shields.io/badge/version-1.1.0-blue" alt="Version 1.1.0">
 </p>
 
 <p align="center">
@@ -68,12 +69,42 @@ Open http://localhost:4321
 | Rate limit | 60/hr | 5000/hr |
 | API | REST | GraphQL |
 
-**Additional features:**
-- Filter by zero-comment "easy" issues
-- Sort by comment count
-- Export to Markdown, CSV, or plain text
+### November 2025 Features
+
+#### Zero-Comment Issue Highlighting
+
+- Visual indicators for issues with no comments
+- Easy identification of untouched issues ideal for new contributors
+- Filter to show only zero-comment issues
+
+#### Smart Relative Time Display
+
+- Human-readable timestamps ("Today", "Yesterday", "3 days ago")
+- Freshness indicators (fresh, moderate, stale)
+- Hover tooltips showing exact date and time
+
+#### Auto-Focus and URL Validation
+
+- Input field auto-focuses on page load
+- Real-time GitHub URL validation
+- Clear error messages for invalid URLs
+
+#### Export Issues
+
+- Export to Markdown format
+- Export to CSV for spreadsheet analysis
+- Export to plain text
+
+#### Copy Issue Link
+
+- One-click copy of issue URL to clipboard
+- Visual feedback on successful copy
+
+### Core Features
+
 - Real-time rate limit display
 - Mobile-responsive design
+- Sort by comment count
 
 ## Tech Stack
 
@@ -83,6 +114,26 @@ Open http://localhost:4321
 - **API**: GitHub GraphQL + REST fallback
 - **Language**: TypeScript
 - **Hosting**: Cloudflare Pages
+
+## Project Structure
+
+```text
+IssueFlow/
+├── public/                 # Static assets (favicon, images)
+├── src/
+│   ├── components/
+│   │   ├── results/        # Issue display components
+│   │   └── shared/         # Reusable UI components
+│   ├── lib/                # Utility functions
+│   │   ├── github-graphql.ts
+│   │   ├── issue-utils.ts
+│   │   └── time-utils.ts
+│   └── pages/              # Astro pages
+├── tests/                  # Test files
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
+```
 
 ## Contributing
 
