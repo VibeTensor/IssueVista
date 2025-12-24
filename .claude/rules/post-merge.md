@@ -17,7 +17,8 @@ git log --oneline --graph -10
 ### CRITICAL: Verify Branch/Merge Pattern
 
 Expected pattern (CORRECT - used --merge):
-```
+
+```text
 *   abc1234 Merge pull request #XX from VibeTensor/branch-name
 |\
 | * def5678 commit message
@@ -26,12 +27,14 @@ Expected pattern (CORRECT - used --merge):
 ```
 
 Wrong pattern (INCORRECT - used --squash):
-```
+
+```text
 * abc1234 commit message (#XX)
 * previous-commit
 ```
 
 If you see the wrong pattern:
+
 - The merge was done with `--squash` instead of `--merge`
 - Follow recovery steps in `merge-policy.md`
 
@@ -40,6 +43,7 @@ If you see the wrong pattern:
 ## Step 13: Video Recording & Uplift Tracker Data (MANDATORY)
 
 ### Actions:
+
 1. Ask user: "Is the video recording turned off?"
 2. Wait for explicit confirmation that recording has stopped
 3. Once confirmed off, ask user for:
@@ -48,6 +52,7 @@ If you see the wrong pattern:
 4. Gather all issue-related links
 
 ### Prompt Template:
+
 ```
 "The PR has been merged successfully!
 
@@ -59,6 +64,7 @@ If you see the wrong pattern:
 ```
 
 ### Gather Links Using Commands:
+
 ```bash
 # Get PR commits
 gh pr view <PR_NUMBER> --json commits --jq '.commits[].oid'
@@ -68,7 +74,8 @@ gh issue view <ISSUE_NUMBER> --json title --jq '.title'
 ```
 
 ### Provide Uplift Tracker Data (COPY-PASTE READY):
-```
+
+```text
 ----------------------------------------------------------------
 UPLIFT TRACKER SUBMISSION DATA - Issue #XX
 ----------------------------------------------------------------
@@ -92,6 +99,7 @@ PERCEIVED EFFORT: [1-5 rating]
 ```
 
 ### IMPORTANT Format Rules:
+
 - NO bullet points or dashes before links
 - NO spaces before links
 - Each link on its own line
@@ -103,6 +111,7 @@ PERCEIVED EFFORT: [1-5 rating]
 ## Step 14: Update Uplift Tracker (MANDATORY)
 
 ### Actions:
+
 1. Navigate to Uplift Issue Tracker
 2. Find the issue in the list and click "Edit"
 3. Fill in all required fields:
@@ -117,14 +126,15 @@ PERCEIVED EFFORT: [1-5 rating]
 
 ### Field Definitions:
 
-| Field | Description |
-|-------|-------------|
-| Initial Implementation Time | Time from start to PR creation |
-| Post Review Time | Time spent on CodeRabbit/review fixes |
-| Est. if AI-disallowed | How long without AI (typically 4-7x actual) |
-| Perceived Effort | 1=very easy, 3=average, 5=very hard |
+| Field                       | Description                                 |
+| --------------------------- | ------------------------------------------- |
+| Initial Implementation Time | Time from start to PR creation              |
+| Post Review Time            | Time spent on CodeRabbit/review fixes       |
+| Est. if AI-disallowed       | How long without AI (typically 4-7x actual) |
+| Perceived Effort            | 1=very easy, 3=average, 5=very hard         |
 
 ### Confirmation:
+
 - Wait for user to confirm "Finish Issue" clicked
 - Issue should move to "Finished Issues" section
 - Verify completion status shows in tracker
@@ -134,12 +144,14 @@ PERCEIVED EFFORT: [1-5 rating]
 ## Step 15: Update Earnings Tracker CSV (MANDATORY)
 
 ### File Location:
+
 `.internal/trackers/december_2025_earnings_tracker.csv`
 
 ### Sections to Update:
 
 1. **ISSUES COMPLETED section** - Add new row:
-   ```
+
+   ```csv
    Issue#,Title,Time(min),Time(hrs),Earnings(USD),Earnings(INR),Date,Effort,PR#
    ```
 
@@ -162,7 +174,8 @@ PERCEIVED EFFORT: [1-5 rating]
    - Status: COMPLETED
 
 ### Calculation Formulas:
-```
+
+```text
 Time(hrs) = Time(min) / 60
 Earnings(USD) = Time(hrs) x 50
 Earnings(INR) = Earnings(USD) x 90
@@ -174,12 +187,14 @@ Progress % = Earned So Far / Target x 100
 ## Step 16: Update Loom Video Title
 
 ### Format:
-```
+
+```text
 [Your Name] | IssueFlow Issue #XX | [Issue Title] ([total]min)
 ```
 
 ### Example:
-```
+
+```text
 Pavan Kumar | IssueFlow Issue #38 | [DOCS] Update README with November 2025 features (81min)
 ```
 

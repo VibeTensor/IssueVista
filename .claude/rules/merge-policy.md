@@ -15,12 +15,12 @@ gh pr merge <PR_NUMBER> --rebase --delete-branch  # FORBIDDEN
 
 ## Why --merge is Required
 
-| Aspect | --merge (REQUIRED) | --squash (FORBIDDEN) |
-|--------|-------------------|---------------------|
-| Git graph | Shows branch pattern | Linear (no branches visible) |
-| History | Complete commit history | Single squashed commit |
-| Traceability | Can trace each commit | Loses individual commits |
-| Repository standard | Matches existing pattern | Violates conventions |
+| Aspect              | --merge (REQUIRED)       | --squash (FORBIDDEN)         |
+| ------------------- | ------------------------ | ---------------------------- |
+| Git graph           | Shows branch pattern     | Linear (no branches visible) |
+| History             | Complete commit history  | Single squashed commit       |
+| Traceability        | Can trace each commit    | Loses individual commits     |
+| Repository standard | Matches existing pattern | Violates conventions         |
 
 ---
 
@@ -33,6 +33,7 @@ git log --oneline --graph -5
 ```
 
 ### CORRECT Pattern (--merge used):
+
 ```
 *   abc1234 Merge pull request #XX from VibeTensor/branch-name
 |\
@@ -43,6 +44,7 @@ git log --oneline --graph -5
 ```
 
 ### WRONG Pattern (--squash used - VIOLATION):
+
 ```
 * abc1234 [TYPE] Description (#XX)
 * previous-commit
@@ -65,15 +67,18 @@ git log --oneline --graph -5
 If you accidentally used `--squash`:
 
 ### Step 1: Revert the squash commit
+
 ```bash
 git revert <squash-commit-sha>
 git push origin master
 ```
 
 ### Step 2: Identify the original commits
+
 Find the commits that were squashed (from PR history or reflog).
 
 ### Step 3: Recreate the branch
+
 ```bash
 git checkout -b <type>/<issue-number>-<description>-v2
 # Cherry-pick or recreate the original commits
@@ -81,11 +86,13 @@ git push -u origin <branch-name>
 ```
 
 ### Step 4: Create new PR
+
 ```bash
 gh pr create --title "[TYPE] Description (#ISSUE_NUMBER)" --body "..."
 ```
 
 ### Step 5: Merge correctly
+
 ```bash
 gh pr merge <NEW_PR_NUMBER> --merge --delete-branch
 ```

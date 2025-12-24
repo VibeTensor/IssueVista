@@ -106,3 +106,27 @@ export interface RateLimitDisplayProps {
   remaining: number;
   resetTime: string;
 }
+
+/**
+ * Search history item stored in localStorage
+ * Issue #62 - Search history with localStorage persistence
+ */
+export interface SearchHistoryItem {
+  owner: string;
+  repo: string;
+  fullUrl: string;
+  lastSearched: string;
+  searchCount: number;
+  issueCount?: number;
+}
+
+/**
+ * Props for SearchHistory component
+ */
+export interface SearchHistoryProps {
+  items: SearchHistoryItem[];
+  onSelect: (item: SearchHistoryItem) => void;
+  onDelete: (owner: string, repo: string) => void;
+  onClear: () => void;
+  onClose: () => void;
+}

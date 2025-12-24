@@ -3,6 +3,7 @@
 ## Svelte 5 Components
 
 ### Runes (REQUIRED)
+
 ```svelte
 <script lang="ts">
   // State
@@ -26,6 +27,7 @@
 ```
 
 ### Component Structure
+
 ```svelte
 <!--
   ComponentName
@@ -52,33 +54,38 @@
 ## TypeScript
 
 ### Strict Mode
+
 - `noImplicitAny`: true
 - `strictNullChecks`: true
 - All functions must have return types
 - All parameters must have types
 
 ### Naming Conventions
-| Type | Convention | Example |
-|------|------------|---------|
-| Variables | camelCase | `userName` |
-| Functions | camelCase | `fetchIssues()` |
-| Interfaces | PascalCase | `interface GitHubIssue` |
-| Types | PascalCase | `type IssueState` |
-| Constants | UPPER_SNAKE | `const MAX_RETRIES` |
-| Files | kebab-case | `github-graphql.ts` |
+
+| Type       | Convention  | Example                 |
+| ---------- | ----------- | ----------------------- |
+| Variables  | camelCase   | `userName`              |
+| Functions  | camelCase   | `fetchIssues()`         |
+| Interfaces | PascalCase  | `interface GitHubIssue` |
+| Types      | PascalCase  | `type IssueState`       |
+| Constants  | UPPER_SNAKE | `const MAX_RETRIES`     |
+| Files      | kebab-case  | `github-graphql.ts`     |
 
 ## ESLint Rules
 
 ### Zero Errors Required
+
 ```bash
 npm run lint  # Must show: 0 errors
 ```
 
 ### Warnings Allowed (for gradual adoption)
+
 - `@typescript-eslint/no-unused-vars` (warn)
 - `@typescript-eslint/no-explicit-any` (warn)
 
 ### Auto-fix Before Commit
+
 ```bash
 npm run lint:fix
 npm run format
@@ -100,6 +107,7 @@ Matches `.editorconfig`:
 ## Git Conventions
 
 ### Branch Naming
+
 ```
 <type>/<issue-number>-<short-description>
 
@@ -111,6 +119,7 @@ docs/38-update-readme
 ```
 
 ### Commit Messages
+
 ```
 [TYPE] Description (#ISSUE_NUMBER)
 
@@ -125,6 +134,7 @@ fix: Address CodeRabbit review - description
 ```
 
 ### Plain Text Standard
+
 - NO emojis in commits, PRs, or code comments
 - NO decorative unicode symbols
 - Standard ASCII text only
@@ -132,14 +142,17 @@ fix: Address CodeRabbit review - description
 ## Testing
 
 ### Unit Tests (Vitest)
+
 - File pattern: `tests/*.test.ts`
 - Run: `npm run test:unit`
 
 ### E2E Tests (Playwright)
+
 - File pattern: `tests/e2e/*.spec.ts`
 - Run: `npm run test:e2e`
 
 ### Before PR
+
 ```bash
 npm run build       # Must pass
 npm run lint        # 0 errors
