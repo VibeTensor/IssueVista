@@ -43,7 +43,7 @@ test.describe('Zero-Comment Issue Highlighting - E2E Tests', () => {
 
       // Check if we got results
       const resultsHeader = page.locator('h2:has-text("Unassigned")');
-      return await resultsHeader.count() > 0;
+      return (await resultsHeader.count()) > 0;
     } catch {
       // Timeout - no results loaded
       return false;

@@ -40,28 +40,34 @@ describe('Empty State Constants', () => {
 
   describe('EMPTY_STATE_CONFIGS', () => {
     it('should have all required variants', () => {
-      const variants: EmptyStateVariant[] = ['initial', 'no-results', 'error', 'rate-limited', 'success'];
-      variants.forEach(variant => {
+      const variants: EmptyStateVariant[] = [
+        'initial',
+        'no-results',
+        'error',
+        'rate-limited',
+        'success'
+      ];
+      variants.forEach((variant) => {
         expect(EMPTY_STATE_CONFIGS[variant]).toBeDefined();
       });
     });
 
     it('should have title for each variant', () => {
-      Object.values(EMPTY_STATE_CONFIGS).forEach(config => {
+      Object.values(EMPTY_STATE_CONFIGS).forEach((config) => {
         expect(config.title).toBeDefined();
         expect(config.title.length).toBeGreaterThan(0);
       });
     });
 
     it('should have description for each variant', () => {
-      Object.values(EMPTY_STATE_CONFIGS).forEach(config => {
+      Object.values(EMPTY_STATE_CONFIGS).forEach((config) => {
         expect(config.description).toBeDefined();
         expect(config.description.length).toBeGreaterThan(0);
       });
     });
 
     it('should have announcement for each variant', () => {
-      Object.values(EMPTY_STATE_CONFIGS).forEach(config => {
+      Object.values(EMPTY_STATE_CONFIGS).forEach((config) => {
         expect(config.announcement).toBeDefined();
         expect(config.announcement.length).toBeGreaterThan(0);
       });
@@ -70,7 +76,7 @@ describe('Empty State Constants', () => {
     it('should have primary action label for variants that need it', () => {
       // All variants except 'initial' have primary actions
       const variantsWithPrimaryAction = ['no-results', 'error', 'rate-limited', 'success'];
-      variantsWithPrimaryAction.forEach(variant => {
+      variantsWithPrimaryAction.forEach((variant) => {
         const config = EMPTY_STATE_CONFIGS[variant as keyof typeof EMPTY_STATE_CONFIGS];
         expect(config.primaryActionLabel).toBeDefined();
         expect(config.primaryActionLabel!.length).toBeGreaterThan(0);
@@ -635,7 +641,8 @@ describe('Edge Cases', () => {
     });
 
     it('should handle complex rate limit message', () => {
-      const complexMessage = 'GitHub API responded with status 403: rate limit exceeded for user. Reset at 2024-01-01T00:00:00Z';
+      const complexMessage =
+        'GitHub API responded with status 403: rate limit exceeded for user. Reset at 2024-01-01T00:00:00Z';
       expect(isRateLimitError(complexMessage)).toBe(true);
     });
   });

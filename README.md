@@ -46,6 +46,7 @@ Open http://localhost:4321
 ## Usage
 
 ### Without Token (Quick Search)
+
 1. Paste any GitHub repo URL
 2. Click "Find Issues"
 3. Browse unassigned issues
@@ -53,6 +54,7 @@ Open http://localhost:4321
 **Rate limit**: 60 requests/hour
 
 ### With GitHub Token (Recommended)
+
 1. [Generate a token](https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo) with `public_repo` scope
 2. Paste token in the app
 3. Get full PR filtering + 5000 requests/hour
@@ -61,13 +63,13 @@ Open http://localhost:4321
 
 ## Features
 
-| Feature | Without Token | With Token |
-|---------|--------------|------------|
-| Open issues | Yes | Yes |
-| Unassigned filter | Yes | Yes |
-| PR detection | No | Yes |
-| Rate limit | 60/hr | 5000/hr |
-| API | REST | GraphQL |
+| Feature           | Without Token | With Token |
+| ----------------- | ------------- | ---------- |
+| Open issues       | Yes           | Yes        |
+| Unassigned filter | Yes           | Yes        |
+| PR detection      | No            | Yes        |
+| Rate limit        | 60/hr         | 5000/hr    |
+| API               | REST          | GraphQL    |
 
 ### November 2025 Features
 

@@ -69,5 +69,8 @@ hours-breakdown.txt
 new-issues-summary.txt
 ISSUE_WORKFLOW.md
 
+# Internal documentation (research, trackers, planning)
+.internal/
+
 # Windows null file
 nul

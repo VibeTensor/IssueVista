@@ -91,20 +91,27 @@
 <button
   type="button"
   onclick={handleCopy}
-  class="inline-flex flex-row items-center justify-center gap-2 {showCopied ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600' : 'bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600'} text-white rounded-xl font-bold sketch-button transition-all shadow-md {className}"
+  class="inline-flex flex-row items-center justify-center gap-2 {showCopied
+    ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600'
+    : 'bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600'} text-white rounded-xl font-bold sketch-button transition-all shadow-md {className}"
   aria-label={ariaLabel}
   title={showCopied ? 'Copied!' : label}
 >
   {#if showCopied}
     <!-- Checkmark icon -->
     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
     </svg>
     <span class="truncate">Copied!</span>
   {:else}
     <!-- Link icon -->
     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+      />
     </svg>
     <span class="truncate">{label}</span>
   {/if}

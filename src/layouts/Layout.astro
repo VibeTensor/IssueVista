@@ -8,11 +8,11 @@ interface Props {
 
 const {
   title,
-  description = "Find unassigned open GitHub issues without pull requests. Discover open-source contribution opportunities with smart filtering for issues ready for your contribution."
+  description = 'Find unassigned open GitHub issues without pull requests. Discover open-source contribution opportunities with smart filtering for issues ready for your contribution.'
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const siteUrl = "https://issueflow.vibetensor.com";
+const siteUrl = 'https://issueflow.vibetensor.com';
 const ogImage = `${siteUrl}/og-image.png`;
 ---
 
@@ -50,7 +50,10 @@ const ogImage = `${siteUrl}/og-image.png`;
     <meta property="twitter:image" content={ogImage} />
 
     <!-- Keywords -->
-    <meta name="keywords" content="github, issues, open source, contribution, pull requests, hacktoberfest, github api, graphql, unassigned issues" />
+    <meta
+      name="keywords"
+      content="github, issues, open source, contribution, pull requests, hacktoberfest, github api, graphql, unassigned issues"
+    />
 
     <!-- Author -->
     <meta name="author" content="VibeTensor Private Limited" />

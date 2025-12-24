@@ -73,7 +73,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
       const exportButton = page.locator('button:has-text("Export")').first();
       const resultsHeader = page.locator('text=/^Results\\s*\\(\\d+\\)$/').first();
 
-      if (await exportButton.isVisible() && await resultsHeader.isVisible()) {
+      if ((await exportButton.isVisible()) && (await resultsHeader.isVisible())) {
         const buttonBox = await exportButton.boundingBox();
         const headerBox = await resultsHeader.boundingBox();
 
@@ -222,7 +222,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
         const dropdown = page.locator('[role="menu"]');
         const issueCard = page.locator('.issue-card').first();
 
-        if (await dropdown.isVisible() && await issueCard.isVisible()) {
+        if ((await dropdown.isVisible()) && (await issueCard.isVisible())) {
           const dropdownBox = await dropdown.boundingBox();
           const cardBox = await issueCard.boundingBox();
 
@@ -408,7 +408,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
 
       const exportButton = page.locator('button:has-text("Export")').first();
 
-      if (await exportButton.count() > 0) {
+      if ((await exportButton.count()) > 0) {
         await expect(exportButton).toBeVisible();
       }
     });
@@ -656,7 +656,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
       const issueCard = page.locator('.issue-card').first();
       const exportButton = page.locator('button:has-text("Export")').first();
 
-      if (await issueCard.isVisible() && await exportButton.isVisible()) {
+      if ((await issueCard.isVisible()) && (await exportButton.isVisible())) {
         // Both should be visible
         await expect(issueCard).toBeVisible();
         await expect(exportButton).toBeVisible();
@@ -679,7 +679,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
       const copyButton = page.locator('button[aria-label*="Copy issue link"]').first();
       const exportButton = page.locator('button:has-text("Export")').first();
 
-      if (await copyButton.isVisible() && await exportButton.isVisible()) {
+      if ((await copyButton.isVisible()) && (await exportButton.isVisible())) {
         // Both buttons should work independently
         await expect(copyButton).toBeVisible();
         await expect(exportButton).toBeVisible();
@@ -696,7 +696,7 @@ test.describe('Export Issues Feature - E2E Tests', () => {
       const resultsText = page.locator('text=/^Results\\s*\\(\\d+\\)$/');
       const exportButton = page.locator('button:has-text("Export")').first();
 
-      if (await resultsText.isVisible() && await exportButton.isVisible()) {
+      if ((await resultsText.isVisible()) && (await exportButton.isVisible())) {
         const resultsBox = await resultsText.boundingBox();
         const buttonBox = await exportButton.boundingBox();
 

@@ -20,11 +20,11 @@
  * Matches the visual/UX states in EmptyState.svelte
  */
 export type EmptyStateVariant =
-  | 'initial'      // First visit, no search yet
-  | 'no-results'   // Search completed, zero issues found
-  | 'error'        // API error, invalid repo, network failure
+  | 'initial' // First visit, no search yet
+  | 'no-results' // Search completed, zero issues found
+  | 'error' // API error, invalid repo, network failure
   | 'rate-limited' // GitHub API rate limit exceeded
-  | 'success';     // All issues reviewed (future use)
+  | 'success'; // All issues reviewed (future use)
 
 /**
  * Configuration for each empty state variant
@@ -89,14 +89,16 @@ export const EMPTY_STATE_CONFIGS: Record<EmptyStateVariant, EmptyStateConfig> = 
   },
   'no-results': {
     title: 'No issues found',
-    description: 'This repository has no unassigned issues without pull requests. Try another repository or adjust filters',
+    description:
+      'This repository has no unassigned issues without pull requests. Try another repository or adjust filters',
     primaryActionLabel: 'Clear Filters',
     secondaryActionLabel: 'Try another repo',
     announcement: 'No issues found for this repository.'
   },
   error: {
     title: 'Something went wrong',
-    description: "We couldn't fetch issues from this repository. Please check the URL and try again",
+    description:
+      "We couldn't fetch issues from this repository. Please check the URL and try again",
     primaryActionLabel: 'Retry',
     secondaryActionLabel: 'Report Issue',
     secondaryActionHref: ISSUES_URL,
@@ -155,20 +157,20 @@ export function isRateLimitError(error: Error | string | null): boolean {
   const lowerMessage = message.toLowerCase();
 
   // Check for explicit rate limit patterns
-  const hasRateLimitKeyword = (
+  const hasRateLimitKeyword =
     lowerMessage.includes('rate limit') ||
     lowerMessage.includes('rate_limit') ||
     lowerMessage.includes('api limit') ||
     lowerMessage.includes('limit exceeded') ||
-    lowerMessage.includes('quota exceeded')
-  );
+    lowerMessage.includes('quota exceeded');
 
   // 403 alone may be a different error (e.g., permission denied)
   // Only treat 403 as rate limit if combined with rate/limit/quota keywords
-  const is403RateLimited = (
+  const is403RateLimited =
     lowerMessage.includes('403') &&
-    (lowerMessage.includes('rate') || lowerMessage.includes('limit') || lowerMessage.includes('quota'))
-  );
+    (lowerMessage.includes('rate') ||
+      lowerMessage.includes('limit') ||
+      lowerMessage.includes('quota'));
 
   return hasRateLimitKeyword || is403RateLimited;
 }
@@ -214,9 +216,7 @@ export function isErrorState(error: unknown): boolean {
  *   resultsCount: 0
  * }); // 'initial'
  */
-export function detectEmptyStateVariant(
-  input: EmptyStateDetectionInput
-): EmptyStateVariant | null {
+export function detectEmptyStateVariant(input: EmptyStateDetectionInput): EmptyStateVariant | null {
   const { hasSearched, isLoading, error, resultsCount } = input;
 
   // Don't show empty state while loading

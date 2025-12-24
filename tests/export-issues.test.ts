@@ -32,22 +32,25 @@ interface GitHubIssue {
 }
 
 // Format issues function - mirrors the implementation in ResultsList.svelte
-function formatIssuesForExport(issuesToFormat: GitHubIssue[], format: 'markdown' | 'plain' | 'csv'): string {
+function formatIssuesForExport(
+  issuesToFormat: GitHubIssue[],
+  format: 'markdown' | 'plain' | 'csv'
+): string {
   if (issuesToFormat.length === 0) return '';
 
   switch (format) {
     case 'markdown':
-      return issuesToFormat.map(issue =>
-        `- [#${issue.number} ${issue.title.replace(/\]/g, '\\]')}](${issue.url})`
-      ).join('\n');
+      return issuesToFormat
+        .map((issue) => `- [#${issue.number} ${issue.title.replace(/\]/g, '\\]')}](${issue.url})`)
+        .join('\n');
 
     case 'plain':
-      return issuesToFormat.map(issue => issue.url).join('\n');
+      return issuesToFormat.map((issue) => issue.url).join('\n');
 
     case 'csv': {
       const header = 'Number,Title,URL';
-      const rows = issuesToFormat.map(issue =>
-        `${issue.number},"${issue.title.replace(/"/g, '""')}",${issue.url}`
+      const rows = issuesToFormat.map(
+        (issue) => `${issue.number},"${issue.title.replace(/"/g, '""')}",${issue.url}`
       );
       return [header, ...rows].join('\n');
     }
@@ -75,11 +78,13 @@ function createMockIssue(overrides: Partial<GitHubIssue> = {}): GitHubIssue {
 describe('Export Issues Functionality', () => {
   describe('Format Conversion - Markdown', () => {
     it('should format single issue as markdown', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Fix bug in login',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Fix bug in login',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'markdown');
 
@@ -88,39 +93,57 @@ describe('Export Issues Functionality', () => {
 
     it('should format multiple issues as markdown list', () => {
       const issues = [
-        createMockIssue({ number: 1, title: 'First issue', url: 'https://github.com/test/repo/issues/1' }),
-        createMockIssue({ number: 2, title: 'Second issue', url: 'https://github.com/test/repo/issues/2' }),
-        createMockIssue({ number: 3, title: 'Third issue', url: 'https://github.com/test/repo/issues/3' })
+        createMockIssue({
+          number: 1,
+          title: 'First issue',
+          url: 'https://github.com/test/repo/issues/1'
+        }),
+        createMockIssue({
+          number: 2,
+          title: 'Second issue',
+          url: 'https://github.com/test/repo/issues/2'
+        }),
+        createMockIssue({
+          number: 3,
+          title: 'Third issue',
+          url: 'https://github.com/test/repo/issues/3'
+        })
       ];
 
       const result = formatIssuesForExport(issues, 'markdown');
 
       expect(result).toBe(
         '- [#1 First issue](https://github.com/test/repo/issues/1)\n' +
-        '- [#2 Second issue](https://github.com/test/repo/issues/2)\n' +
-        '- [#3 Third issue](https://github.com/test/repo/issues/3)'
+          '- [#2 Second issue](https://github.com/test/repo/issues/2)\n' +
+          '- [#3 Third issue](https://github.com/test/repo/issues/3)'
       );
     });
 
     it('should handle special characters in markdown titles', () => {
-      const issues = [createMockIssue({
-        number: 99,
-        title: 'Fix [brackets] and (parentheses)',
-        url: 'https://github.com/test/repo/issues/99'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 99,
+          title: 'Fix [brackets] and (parentheses)',
+          url: 'https://github.com/test/repo/issues/99'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'markdown');
 
       // Brackets are escaped to prevent breaking markdown links
-      expect(result).toBe('- [#99 Fix [brackets\\] and (parentheses)](https://github.com/test/repo/issues/99)');
+      expect(result).toBe(
+        '- [#99 Fix [brackets\\] and (parentheses)](https://github.com/test/repo/issues/99)'
+      );
     });
 
     it('should escape closing brackets that could break markdown links', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Fix [foo](bar) issue',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Fix [foo](bar) issue',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'markdown');
 
@@ -131,9 +154,11 @@ describe('Export Issues Functionality', () => {
 
   describe('Format Conversion - Plain Text', () => {
     it('should format single issue as plain URL', () => {
-      const issues = [createMockIssue({
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'plain');
 
@@ -151,70 +176,82 @@ describe('Export Issues Functionality', () => {
 
       expect(result).toBe(
         'https://github.com/test/repo/issues/1\n' +
-        'https://github.com/test/repo/issues/2\n' +
-        'https://github.com/test/repo/issues/3'
+          'https://github.com/test/repo/issues/2\n' +
+          'https://github.com/test/repo/issues/3'
       );
     });
   });
 
   describe('Format Conversion - CSV', () => {
     it('should format single issue as CSV with header', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Fix bug',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Fix bug',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
       expect(result).toBe(
-        'Number,Title,URL\n' +
-        '42,"Fix bug",https://github.com/test/repo/issues/42'
+        'Number,Title,URL\n' + '42,"Fix bug",https://github.com/test/repo/issues/42'
       );
     });
 
     it('should format multiple issues as CSV', () => {
       const issues = [
-        createMockIssue({ number: 1, title: 'First', url: 'https://github.com/test/repo/issues/1' }),
-        createMockIssue({ number: 2, title: 'Second', url: 'https://github.com/test/repo/issues/2' })
+        createMockIssue({
+          number: 1,
+          title: 'First',
+          url: 'https://github.com/test/repo/issues/1'
+        }),
+        createMockIssue({
+          number: 2,
+          title: 'Second',
+          url: 'https://github.com/test/repo/issues/2'
+        })
       ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
       expect(result).toBe(
         'Number,Title,URL\n' +
-        '1,"First",https://github.com/test/repo/issues/1\n' +
-        '2,"Second",https://github.com/test/repo/issues/2'
+          '1,"First",https://github.com/test/repo/issues/1\n' +
+          '2,"Second",https://github.com/test/repo/issues/2'
       );
     });
 
     it('should escape double quotes in CSV titles', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Fix "quoted" text',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Fix "quoted" text',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
       expect(result).toBe(
-        'Number,Title,URL\n' +
-        '42,"Fix ""quoted"" text",https://github.com/test/repo/issues/42'
+        'Number,Title,URL\n' + '42,"Fix ""quoted"" text",https://github.com/test/repo/issues/42'
       );
     });
 
     it('should handle titles with commas in CSV', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Fix bug, add feature, update docs',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Fix bug, add feature, update docs',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
       expect(result).toBe(
         'Number,Title,URL\n' +
-        '42,"Fix bug, add feature, update docs",https://github.com/test/repo/issues/42'
+          '42,"Fix bug, add feature, update docs",https://github.com/test/repo/issues/42'
       );
     });
   });
@@ -230,11 +267,13 @@ describe('Export Issues Functionality', () => {
 
     it('should handle issue with very long title', () => {
       const longTitle = 'A'.repeat(500);
-      const issues = [createMockIssue({
-        number: 1,
-        title: longTitle,
-        url: 'https://github.com/test/repo/issues/1'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 1,
+          title: longTitle,
+          url: 'https://github.com/test/repo/issues/1'
+        })
+      ];
 
       const markdown = formatIssuesForExport(issues, 'markdown');
       const plain = formatIssuesForExport(issues, 'plain');
@@ -246,11 +285,13 @@ describe('Export Issues Functionality', () => {
     });
 
     it('should handle special characters in titles', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: '<script>alert("xss")</script>',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: '<script>alert("xss")</script>',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
@@ -259,11 +300,13 @@ describe('Export Issues Functionality', () => {
     });
 
     it('should handle newlines in titles for CSV', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: 'Line1\nLine2',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: 'Line1\nLine2',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const result = formatIssuesForExport(issues, 'csv');
 
@@ -272,11 +315,13 @@ describe('Export Issues Functionality', () => {
     });
 
     it('should handle unicode characters', () => {
-      const issues = [createMockIssue({
-        number: 42,
-        title: '🐛 Bug fix for 日本語 support',
-        url: 'https://github.com/test/repo/issues/42'
-      })];
+      const issues = [
+        createMockIssue({
+          number: 42,
+          title: '🐛 Bug fix for 日本語 support',
+          url: 'https://github.com/test/repo/issues/42'
+        })
+      ];
 
       const markdown = formatIssuesForExport(issues, 'markdown');
       const csv = formatIssuesForExport(issues, 'csv');
@@ -296,11 +341,13 @@ describe('Export Issues Functionality', () => {
 
   describe('Large Dataset Handling', () => {
     it('should handle 100 issues', () => {
-      const issues = Array.from({ length: 100 }, (_, i) => createMockIssue({
-        number: i + 1,
-        title: `Issue ${i + 1}`,
-        url: `https://github.com/test/repo/issues/${i + 1}`
-      }));
+      const issues = Array.from({ length: 100 }, (_, i) =>
+        createMockIssue({
+          number: i + 1,
+          title: `Issue ${i + 1}`,
+          url: `https://github.com/test/repo/issues/${i + 1}`
+        })
+      );
 
       const markdown = formatIssuesForExport(issues, 'markdown');
       const plain = formatIssuesForExport(issues, 'plain');
@@ -312,11 +359,13 @@ describe('Export Issues Functionality', () => {
     });
 
     it('should handle 500 issues', () => {
-      const issues = Array.from({ length: 500 }, (_, i) => createMockIssue({
-        number: i + 1,
-        title: `Issue ${i + 1}`,
-        url: `https://github.com/test/repo/issues/${i + 1}`
-      }));
+      const issues = Array.from({ length: 500 }, (_, i) =>
+        createMockIssue({
+          number: i + 1,
+          title: `Issue ${i + 1}`,
+          url: `https://github.com/test/repo/issues/${i + 1}`
+        })
+      );
 
       const markdown = formatIssuesForExport(issues, 'markdown');
 
@@ -335,7 +384,9 @@ describe('File Download Functionality', () => {
   let mockClick: ReturnType<typeof vi.fn<() => void>>;
 
   beforeEach(() => {
-    mockCreateObjectURL = vi.fn<(obj: Blob | MediaSource) => string>().mockReturnValue('blob:test-url');
+    mockCreateObjectURL = vi
+      .fn<(obj: Blob | MediaSource) => string>()
+      .mockReturnValue('blob:test-url');
     mockRevokeObjectURL = vi.fn<(url: string) => void>();
     mockAppendChild = vi.fn<(node: Node) => Node>();
     mockRemoveChild = vi.fn<(child: Node) => Node>();

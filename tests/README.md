@@ -134,46 +134,55 @@ npx vitest run -t "should have pulse animation class"
 #### Unit Tests (`help-button-animation.test.ts`)
 
 **CSS Animation Setup** (4 tests)
+
 - Verifies `help-button-pulse` class is applied
 - Checks positioning classes
 - Validates ARIA labels
 - Confirms button element type
 
 **Animation Properties** (4 tests)
+
 - Animation property definition
 - 2-second duration
 - ease-in-out timing function
 - Infinite iteration
 
 **Keyframes Animation** (4 tests)
+
 - pulse-scale keyframes definition
 - Scale transformation (1 to 1.05)
 - Box-shadow animation
 - Keyframe percentages (0%, 50%, 100%)
 
 **Hover Behavior** (2 tests)
+
 - Animation pauses on hover
 - Uses `animation-play-state: paused` (not `animation: none`)
 
 **Button Positioning** (4 tests)
+
 - Fixed positioning
 - Bottom-right placement
 - High z-index
 - Circular border-radius
 
 **Performance Considerations** (2 tests)
+
 - Uses hardware-accelerated transform
 - Pure CSS animation (no JavaScript)
 
 **Responsive Design** (1 test)
+
 - Responsive sizing classes (mobile and desktop)
 
 **User Experience** (3 tests)
+
 - Button is clickable (not disabled)
 - Proper ARIA label for accessibility
 - Visible content
 
 **Integration with Existing Styles** (4 tests)
+
 - Maintains sketch-button class
 - Maintains shadow-2xl class
 - Maintains transition-all class
@@ -184,36 +193,43 @@ npx vitest run -t "should have pulse animation class"
 #### E2E Tests (`help-button-animation.spec.ts`)
 
 **Visual Presence** (2 tests)
+
 - Button displays in bottom-right corner
 - Question mark icon is visible
 
 **Animation Presence** (4 tests)
+
 - help-button-pulse class applied
 - Active CSS animation
 - 2-second duration
 - Infinite iteration count
 
 **Hover Interaction** (3 tests)
+
 - Animation pauses on hover
 - Animation resumes when hover ends
 - Background color changes on hover
 
 **Click Functionality** (3 tests)
+
 - Opens help popup on click
 - Closes popup with close button
 - Maintains animation after popup interaction
 
 **Mobile Responsiveness** (3 tests)
+
 - Visible on mobile devices
 - Appropriate size on mobile
 - Animation works on mobile
 
 **Accessibility** (3 tests)
+
 - Proper ARIA label
 - Keyboard accessible
 - Sufficient color contrast
 
 **Performance** (2 tests)
+
 - No layout shifts during animation
 - Uses CSS transform (hardware accelerated)
 
@@ -365,6 +381,7 @@ xdg-open coverage/index.html # Linux
 ## Test Best Practices
 
 1. **Arrange-Act-Assert Pattern**
+
    ```typescript
    it('should do something', () => {
      // Arrange: Set up test data

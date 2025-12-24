@@ -169,7 +169,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       const issueBadge = page.locator('.issue-badge').first();
       const copyButton = page.locator('button[aria-label*="Copy issue link"]').first();
 
-      if (await issueBadge.isVisible() && await copyButton.isVisible()) {
+      if ((await issueBadge.isVisible()) && (await copyButton.isVisible())) {
         const badgeBox = await issueBadge.boundingBox();
         const buttonContainer = copyButton.locator('..'); // Parent container
         const containerBox = await buttonContainer.boundingBox();
@@ -379,7 +379,9 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       // Tab to navigate to copy button (may require multiple tabs)
       for (let i = 0; i < 10; i++) {
         await page.keyboard.press('Tab');
-        const focused = await page.evaluate(() => document.activeElement?.getAttribute('aria-label'));
+        const focused = await page.evaluate(() =>
+          document.activeElement?.getAttribute('aria-label')
+        );
         if (focused && focused.includes('Copy issue link')) {
           // Found the copy button
           await page.keyboard.press('Enter');
@@ -473,7 +475,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       const viewButton = page.locator('a[aria-label*="View issue"]').first();
       const copyButton = page.locator('button[aria-label*="Copy issue link"]').first();
 
-      if (await viewButton.isVisible() && await copyButton.isVisible()) {
+      if ((await viewButton.isVisible()) && (await copyButton.isVisible())) {
         // Both buttons should be visible
         await expect(viewButton).toBeVisible();
         await expect(copyButton).toBeVisible();
@@ -496,7 +498,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       const issueTitle = page.locator('.issue-card h3').first();
       const copyButton = page.locator('button[aria-label*="Copy issue link"]').first();
 
-      if (await issueTitle.isVisible() && await copyButton.isVisible()) {
+      if ((await issueTitle.isVisible()) && (await copyButton.isVisible())) {
         // Title should be clickable independently
         await expect(issueTitle).toBeVisible();
 

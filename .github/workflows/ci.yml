@@ -55,3 +55,9 @@ jobs:
           echo "Running TypeScript compiler check..."
           npx tsc --noEmit
           echo "TypeScript check passed successfully"
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check Prettier formatting
+        run: npm run format:check

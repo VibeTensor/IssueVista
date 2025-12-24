@@ -119,6 +119,7 @@ We welcome various types of contributions:
 ## Pull Request Process
 
 1. **Create a branch**
+
    ```bash
    git checkout -b feature/your-feature-name
    # or
@@ -132,18 +133,21 @@ We welcome various types of contributions:
    - Update documentation as needed
 
 3. **Test your changes**
+
    ```bash
    npm run build
    npm run preview
    ```
 
 4. **Commit your changes**
+
    ```bash
    git add .
    git commit -m "Description of changes"
    ```
 
 5. **Push to your fork**
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -168,21 +172,26 @@ We welcome various types of contributions:
 
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## How Has This Been Tested?
+
 Describe your testing process
 
 ## Screenshots (if applicable)
+
 Add screenshots here
 
 ## Checklist
+
 - [ ] My code follows the project's style guidelines
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code where necessary
@@ -250,11 +259,13 @@ function getData(a: any, b: any): any {
 Before submitting a PR, test your changes:
 
 1. **Build the project**
+
    ```bash
    npm run build
    ```
 
 2. **Preview production build**
+
    ```bash
    npm run preview
    ```
@@ -291,29 +302,36 @@ Before submitting a PR, test your changes:
 
 ```markdown
 ## Bug Description
+
 Clear description of the bug
 
 ## Steps to Reproduce
+
 1. Go to '...'
 2. Click on '...'
 3. Scroll down to '...'
 4. See error
 
 ## Expected Behavior
+
 What you expected to happen
 
 ## Actual Behavior
+
 What actually happened
 
 ## Screenshots
+
 Add screenshots if applicable
 
 ## Environment
+
 - OS: [e.g., Windows 11, macOS 14]
 - Browser: [e.g., Chrome 120, Safari 17]
 - Version: [e.g., 1.0.0]
 
 ## Additional Context
+
 Any other relevant information
 ```
 
@@ -331,18 +349,23 @@ We welcome feature requests! Please provide:
 
 ```markdown
 ## Feature Description
+
 Clear description of the feature
 
 ## Problem Statement
+
 What problem does this solve?
 
 ## Proposed Solution
+
 How should this feature work?
 
 ## Alternatives Considered
+
 What other solutions did you consider?
 
 ## Additional Context
+
 Mockups, examples, references
 ```
 

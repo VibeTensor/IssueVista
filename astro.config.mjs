@@ -10,10 +10,7 @@ const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
 
 export default defineConfig({
   site: 'https://issueflow.vibetensor.com',
-  integrations: [
-    UnoCSS({ injectReset: true }),
-    svelte()
-  ],
+  integrations: [UnoCSS({ injectReset: true }), svelte()],
   output: 'static',
   build: {
     inlineStylesheets: 'auto'

@@ -23,7 +23,9 @@
 </script>
 
 <div class="flex items-center gap-2" role="group" aria-labelledby="sort-label">
-  <label for="sort-comments" id="sort-label" class="text-sm font-semibold text-slate-400">Sort:</label>
+  <label for="sort-comments" id="sort-label" class="text-sm font-semibold text-slate-400"
+    >Sort:</label
+  >
   <select
     id="sort-comments"
     value={sortOrder}

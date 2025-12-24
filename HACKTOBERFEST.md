@@ -76,48 +76,48 @@ We have **33 issues** labeled for Hacktoberfest participation! Browse them all:
 
 These issues are perfect for newcomers:
 
-| Issue | Title | Labels |
-|-------|-------|--------|
-| [#5](https://github.com/VibeTensor/IssueFlow/issues/5) | Add copy button for repository URL input | `good first issue`, `enhancement` |
-| [#7](https://github.com/VibeTensor/IssueFlow/issues/7) | Add ESC key to close help popup | `good first issue`, `enhancement` |
-| [#8](https://github.com/VibeTensor/IssueFlow/issues/8) | Add loading skeleton cards placeholder | `good first issue`, `enhancement` |
-| [#9](https://github.com/VibeTensor/IssueFlow/issues/9) | Save last searched repository URL to localStorage | `good first issue`, `enhancement` |
-| [#18](https://github.com/VibeTensor/IssueFlow/issues/18) | Add clear button (X) inside repository URL input | `good first issue`, `enhancement` |
-| [#19](https://github.com/VibeTensor/IssueFlow/issues/19) | Add scroll-to-top button when scrolled down | `good first issue`, `enhancement` |
-| [#22](https://github.com/VibeTensor/IssueFlow/issues/22) | Implement dynamic page title with state-aware updates | `good first issue`, `enhancement` |
-| [#24](https://github.com/VibeTensor/IssueFlow/issues/24) | Add rich tooltips with smart positioning | `good first issue`, `enhancement` |
-| [#25](https://github.com/VibeTensor/IssueFlow/issues/25) | Add toast notification after copying issue link | `good first issue`, `enhancement` |
-| [#26](https://github.com/VibeTensor/IssueFlow/issues/26) | Add placeholder text that shows example repos | `good first issue`, `enhancement` |
-| [#27](https://github.com/VibeTensor/IssueFlow/issues/27) | Add keyboard shortcut hint (Enter) to search button | `good first issue`, `enhancement` |
-| [#28](https://github.com/VibeTensor/IssueFlow/issues/28) | Show total issues count in results summary | `good first issue`, `enhancement` |
-| [#29](https://github.com/VibeTensor/IssueFlow/issues/29) | Add visual indicator for authenticated state | `good first issue`, `enhancement` |
-| [#31](https://github.com/VibeTensor/IssueFlow/issues/31) | Add fade-in animation when issue cards appear | `good first issue`, `enhancement` |
-| [#46](https://github.com/VibeTensor/IssueFlow/issues/46) | Add CODE_OF_CONDUCT.md | `good first issue`, `documentation` |
-| [#48](https://github.com/VibeTensor/IssueFlow/issues/48) | Add .editorconfig for consistent formatting | `good first issue`, `enhancement` |
-| [#51](https://github.com/VibeTensor/IssueFlow/issues/51) | Add .github/FUNDING.yml for sponsorship | `good first issue`, `documentation` |
-| [#59](https://github.com/VibeTensor/IssueFlow/issues/59) | Add issue bookmarking and favorites | `good first issue`, `enhancement` |
-| [#61](https://github.com/VibeTensor/IssueFlow/issues/61) | Add language/topic filtering | `good first issue`, `enhancement` |
-| [#62](https://github.com/VibeTensor/IssueFlow/issues/62) | Implement search history with localStorage | `good first issue`, `enhancement` |
+| Issue                                                    | Title                                                 | Labels                              |
+| -------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------- |
+| [#5](https://github.com/VibeTensor/IssueFlow/issues/5)   | Add copy button for repository URL input              | `good first issue`, `enhancement`   |
+| [#7](https://github.com/VibeTensor/IssueFlow/issues/7)   | Add ESC key to close help popup                       | `good first issue`, `enhancement`   |
+| [#8](https://github.com/VibeTensor/IssueFlow/issues/8)   | Add loading skeleton cards placeholder                | `good first issue`, `enhancement`   |
+| [#9](https://github.com/VibeTensor/IssueFlow/issues/9)   | Save last searched repository URL to localStorage     | `good first issue`, `enhancement`   |
+| [#18](https://github.com/VibeTensor/IssueFlow/issues/18) | Add clear button (X) inside repository URL input      | `good first issue`, `enhancement`   |
+| [#19](https://github.com/VibeTensor/IssueFlow/issues/19) | Add scroll-to-top button when scrolled down           | `good first issue`, `enhancement`   |
+| [#22](https://github.com/VibeTensor/IssueFlow/issues/22) | Implement dynamic page title with state-aware updates | `good first issue`, `enhancement`   |
+| [#24](https://github.com/VibeTensor/IssueFlow/issues/24) | Add rich tooltips with smart positioning              | `good first issue`, `enhancement`   |
+| [#25](https://github.com/VibeTensor/IssueFlow/issues/25) | Add toast notification after copying issue link       | `good first issue`, `enhancement`   |
+| [#26](https://github.com/VibeTensor/IssueFlow/issues/26) | Add placeholder text that shows example repos         | `good first issue`, `enhancement`   |
+| [#27](https://github.com/VibeTensor/IssueFlow/issues/27) | Add keyboard shortcut hint (Enter) to search button   | `good first issue`, `enhancement`   |
+| [#28](https://github.com/VibeTensor/IssueFlow/issues/28) | Show total issues count in results summary            | `good first issue`, `enhancement`   |
+| [#29](https://github.com/VibeTensor/IssueFlow/issues/29) | Add visual indicator for authenticated state          | `good first issue`, `enhancement`   |
+| [#31](https://github.com/VibeTensor/IssueFlow/issues/31) | Add fade-in animation when issue cards appear         | `good first issue`, `enhancement`   |
+| [#46](https://github.com/VibeTensor/IssueFlow/issues/46) | Add CODE_OF_CONDUCT.md                                | `good first issue`, `documentation` |
+| [#48](https://github.com/VibeTensor/IssueFlow/issues/48) | Add .editorconfig for consistent formatting           | `good first issue`, `enhancement`   |
+| [#51](https://github.com/VibeTensor/IssueFlow/issues/51) | Add .github/FUNDING.yml for sponsorship               | `good first issue`, `documentation` |
+| [#59](https://github.com/VibeTensor/IssueFlow/issues/59) | Add issue bookmarking and favorites                   | `good first issue`, `enhancement`   |
+| [#61](https://github.com/VibeTensor/IssueFlow/issues/61) | Add language/topic filtering                          | `good first issue`, `enhancement`   |
+| [#62](https://github.com/VibeTensor/IssueFlow/issues/62) | Implement search history with localStorage            | `good first issue`, `enhancement`   |
 
 ### Intermediate Issues
 
 These require more experience:
 
-| Issue | Title | Labels |
-|-------|-------|--------|
-| [#11](https://github.com/VibeTensor/IssueFlow/issues/11) | Add light/dark theme toggle button | `enhancement` |
-| [#12](https://github.com/VibeTensor/IssueFlow/issues/12) | Show colored badge for good-first-issue label | `enhancement` |
-| [#36](https://github.com/VibeTensor/IssueFlow/issues/36) | Redesign header and add footer with branding | `enhancement`, `ui/ux` |
-| [#37](https://github.com/VibeTensor/IssueFlow/issues/37) | Update CHANGELOG and release v1.1.0 | `documentation`, `release` |
-| [#38](https://github.com/VibeTensor/IssueFlow/issues/38) | Update README with November 2025 features | `documentation` |
-| [#45](https://github.com/VibeTensor/IssueFlow/issues/45) | Add SECURITY.md for vulnerability disclosure | `documentation`, `security` |
-| [#47](https://github.com/VibeTensor/IssueFlow/issues/47) | Add test execution to GitHub Actions | `enhancement`, `ci/cd` |
-| [#49](https://github.com/VibeTensor/IssueFlow/issues/49) | Add ESLint and Prettier configuration | `enhancement`, `refactoring` |
-| [#52](https://github.com/VibeTensor/IssueFlow/issues/52) | Add hacktoberfest label to eligible issues | `documentation` |
-| [#60](https://github.com/VibeTensor/IssueFlow/issues/60) | Implement multi-repository search | `enhancement` |
-| [#63](https://github.com/VibeTensor/IssueFlow/issues/63) | Add contributor dashboard with stats | `enhancement` |
-| [#64](https://github.com/VibeTensor/IssueFlow/issues/64) | Convert to Progressive Web App | `enhancement`, `pwa` |
-| [#65](https://github.com/VibeTensor/IssueFlow/issues/65) | Add offline support with cached results | `enhancement`, `pwa` |
+| Issue                                                    | Title                                         | Labels                       |
+| -------------------------------------------------------- | --------------------------------------------- | ---------------------------- |
+| [#11](https://github.com/VibeTensor/IssueFlow/issues/11) | Add light/dark theme toggle button            | `enhancement`                |
+| [#12](https://github.com/VibeTensor/IssueFlow/issues/12) | Show colored badge for good-first-issue label | `enhancement`                |
+| [#36](https://github.com/VibeTensor/IssueFlow/issues/36) | Redesign header and add footer with branding  | `enhancement`, `ui/ux`       |
+| [#37](https://github.com/VibeTensor/IssueFlow/issues/37) | Update CHANGELOG and release v1.1.0           | `documentation`, `release`   |
+| [#38](https://github.com/VibeTensor/IssueFlow/issues/38) | Update README with November 2025 features     | `documentation`              |
+| [#45](https://github.com/VibeTensor/IssueFlow/issues/45) | Add SECURITY.md for vulnerability disclosure  | `documentation`, `security`  |
+| [#47](https://github.com/VibeTensor/IssueFlow/issues/47) | Add test execution to GitHub Actions          | `enhancement`, `ci/cd`       |
+| [#49](https://github.com/VibeTensor/IssueFlow/issues/49) | Add ESLint and Prettier configuration         | `enhancement`, `refactoring` |
+| [#52](https://github.com/VibeTensor/IssueFlow/issues/52) | Add hacktoberfest label to eligible issues    | `documentation`              |
+| [#60](https://github.com/VibeTensor/IssueFlow/issues/60) | Implement multi-repository search             | `enhancement`                |
+| [#63](https://github.com/VibeTensor/IssueFlow/issues/63) | Add contributor dashboard with stats          | `enhancement`                |
+| [#64](https://github.com/VibeTensor/IssueFlow/issues/64) | Convert to Progressive Web App                | `enhancement`, `pwa`         |
+| [#65](https://github.com/VibeTensor/IssueFlow/issues/65) | Add offline support with cached results       | `enhancement`, `pwa`         |
 
 ## Good First Issues
 

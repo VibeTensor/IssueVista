@@ -195,7 +195,7 @@ describe('filterZeroCommentIssues', () => {
       const issues = createMockIssues([0, 5, 0, 10, 0]);
       const result = filterZeroCommentIssues(issues);
       expect(result).toHaveLength(3);
-      expect(result.every(issue => issue.comments.totalCount === 0)).toBe(true);
+      expect(result.every((issue) => issue.comments.totalCount === 0)).toBe(true);
     });
 
     it('should return empty array if no zero-comment issues', () => {
@@ -247,7 +247,7 @@ describe('filterByCommentLevel', () => {
       const issues = createMockIssues([0, 3, 0, 10]);
       const result = filterByCommentLevel(issues, 'zero');
       expect(result).toHaveLength(2);
-      expect(result.every(issue => issue.comments.totalCount === 0)).toBe(true);
+      expect(result.every((issue) => issue.comments.totalCount === 0)).toBe(true);
     });
   });
 
@@ -256,7 +256,7 @@ describe('filterByCommentLevel', () => {
       const issues = createMockIssues([0, 1, 3, 5, 6, 10]);
       const result = filterByCommentLevel(issues, 'low');
       expect(result).toHaveLength(3);
-      expect(result.map(i => i.comments.totalCount)).toEqual([1, 3, 5]);
+      expect(result.map((i) => i.comments.totalCount)).toEqual([1, 3, 5]);
     });
   });
 
@@ -265,7 +265,7 @@ describe('filterByCommentLevel', () => {
       const issues = createMockIssues([0, 3, 6, 10, 100]);
       const result = filterByCommentLevel(issues, 'active');
       expect(result).toHaveLength(3);
-      expect(result.every(issue => issue.comments.totalCount >= 6)).toBe(true);
+      expect(result.every((issue) => issue.comments.totalCount >= 6)).toBe(true);
     });
   });
 
@@ -290,13 +290,13 @@ describe('sortByComments', () => {
     it('should sort issues by comment count ascending', () => {
       const issues = createMockIssues([10, 0, 5, 3]);
       const result = sortByComments(issues, 'asc');
-      expect(result.map(i => i.comments.totalCount)).toEqual([0, 3, 5, 10]);
+      expect(result.map((i) => i.comments.totalCount)).toEqual([0, 3, 5, 10]);
     });
 
     it('should use ascending as default order', () => {
       const issues = createMockIssues([10, 0, 5]);
       const result = sortByComments(issues);
-      expect(result.map(i => i.comments.totalCount)).toEqual([0, 5, 10]);
+      expect(result.map((i) => i.comments.totalCount)).toEqual([0, 5, 10]);
     });
   });
 
@@ -304,7 +304,7 @@ describe('sortByComments', () => {
     it('should sort issues by comment count descending', () => {
       const issues = createMockIssues([0, 10, 5, 3]);
       const result = sortByComments(issues, 'desc');
-      expect(result.map(i => i.comments.totalCount)).toEqual([10, 5, 3, 0]);
+      expect(result.map((i) => i.comments.totalCount)).toEqual([10, 5, 3, 0]);
     });
   });
 
@@ -330,7 +330,7 @@ describe('sortByComments', () => {
       const issues = createMockIssues([5, 5, 5]);
       const result = sortByComments(issues, 'asc');
       expect(result).toHaveLength(3);
-      expect(result.every(i => i.comments.totalCount === 5)).toBe(true);
+      expect(result.every((i) => i.comments.totalCount === 5)).toBe(true);
     });
   });
 
@@ -343,9 +343,9 @@ describe('sortByComments', () => {
 
     it('should not modify the original array order', () => {
       const issues = createMockIssues([10, 0, 5]);
-      const originalOrder = issues.map(i => i.comments.totalCount);
+      const originalOrder = issues.map((i) => i.comments.totalCount);
       sortByComments(issues, 'asc');
-      expect(issues.map(i => i.comments.totalCount)).toEqual(originalOrder);
+      expect(issues.map((i) => i.comments.totalCount)).toEqual(originalOrder);
     });
   });
 });

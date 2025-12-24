@@ -39,13 +39,19 @@ test.describe('Footer Component - E2E Tests', () => {
     test('should display Report Issue link', async ({ page }) => {
       const issueLink = page.locator('footer a[title="Report Issue"]');
       await expect(issueLink).toBeVisible();
-      await expect(issueLink).toHaveAttribute('href', 'https://github.com/VibeTensor/IssueFlow/issues');
+      await expect(issueLink).toHaveAttribute(
+        'href',
+        'https://github.com/VibeTensor/IssueFlow/issues'
+      );
     });
 
     test('should display Contribute link', async ({ page }) => {
       const contributeLink = page.locator('footer a[title="Contribute"]');
       await expect(contributeLink).toBeVisible();
-      await expect(contributeLink).toHaveAttribute('href', 'https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md');
+      await expect(contributeLink).toHaveAttribute(
+        'href',
+        'https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md'
+      );
     });
 
     test('should have all links open in new tab', async ({ page }) => {

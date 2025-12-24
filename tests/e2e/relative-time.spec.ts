@@ -54,7 +54,8 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
         const timeText = await timeElements.first().textContent();
 
         // Should match relative time patterns
-        const relativeTimePattern = /(Today|Yesterday|\d+\s+(minutes?|hours?|days?|weeks?|months?|years?)\s+ago|last\s+(week|month|year))/i;
+        const relativeTimePattern =
+          /(Today|Yesterday|\d+\s+(minutes?|hours?|days?|weeks?|months?|years?)\s+ago|last\s+(week|month|year))/i;
         expect(timeText).toMatch(relativeTimePattern);
       }
     });
@@ -69,7 +70,8 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
         const timeText = await timeElements.first().textContent();
 
         // Should NOT match absolute date patterns
-        const absoluteDatePattern = /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+\d{4}$/;
+        const absoluteDatePattern =
+          /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+\d{4}$/;
         expect(timeText).not.toMatch(absoluteDatePattern);
       }
     });
@@ -98,7 +100,8 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
 
       if (count > 0) {
         const titleAttr = await timeElements.first().getAttribute('title');
-        const monthPattern = /(January|February|March|April|May|June|July|August|September|October|November|December)/;
+        const monthPattern =
+          /(January|February|March|April|May|June|July|August|September|October|November|December)/;
         expect(titleAttr).toMatch(monthPattern);
       }
     });
@@ -158,17 +161,17 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
       const amberDot = page.locator('.bg-amber-500.rounded-full').first();
       const grayDot = page.locator('.bg-gray-400.rounded-full').first();
 
-      if (await greenDot.count() > 0) {
+      if ((await greenDot.count()) > 0) {
         const title = await greenDot.getAttribute('title');
         expect(title).toContain('Fresh');
       }
 
-      if (await amberDot.count() > 0) {
+      if ((await amberDot.count()) > 0) {
         const title = await amberDot.getAttribute('title');
         expect(title).toContain('Moderate');
       }
 
-      if (await grayDot.count() > 0) {
+      if ((await grayDot.count()) > 0) {
         const title = await grayDot.getAttribute('title');
         expect(title).toContain('Stale');
       }
@@ -226,8 +229,8 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
       if (count > 0) {
         // Check for freshness-related sr-only text
         const allTexts = await srOnlyElements.allTextContents();
-        const freshnessTexts = allTexts.filter(text =>
-          text.includes('Fresh') || text.includes('Moderate') || text.includes('Stale')
+        const freshnessTexts = allTexts.filter(
+          (text) => text.includes('Fresh') || text.includes('Moderate') || text.includes('Stale')
         );
 
         // If sr-only elements exist, at least some should be freshness-related
@@ -256,7 +259,7 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
       // Try to find and click list view button
       const listViewButton = page.locator('button[title="List view"]');
 
-      if (await listViewButton.count() > 0) {
+      if ((await listViewButton.count()) > 0) {
         await listViewButton.click();
         await page.waitForTimeout(500);
 
