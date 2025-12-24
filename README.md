@@ -71,27 +71,32 @@ Open http://localhost:4321
 
 ### November 2025 Features
 
-**Zero-Comment Issue Highlighting**
+#### Zero-Comment Issue Highlighting
+
 - Visual indicators for issues with no comments
 - Easy identification of untouched issues ideal for new contributors
 - Filter to show only zero-comment issues
 
-**Smart Relative Time Display**
+#### Smart Relative Time Display
+
 - Human-readable timestamps ("Today", "Yesterday", "3 days ago")
 - Freshness indicators (fresh, moderate, stale)
 - Hover tooltips showing exact date and time
 
-**Auto-Focus and URL Validation**
+#### Auto-Focus and URL Validation
+
 - Input field auto-focuses on page load
 - Real-time GitHub URL validation
 - Clear error messages for invalid URLs
 
-**Export Issues**
+#### Export Issues
+
 - Export to Markdown format
 - Export to CSV for spreadsheet analysis
 - Export to plain text
 
-**Copy Issue Link**
+#### Copy Issue Link
+
 - One-click copy of issue URL to clipboard
 - Visual feedback on successful copy
 
@@ -112,7 +117,7 @@ Open http://localhost:4321
 
 ## Project Structure
 
-```
+```text
 IssueFlow/
 ├── public/                 # Static assets (favicon, images)
 ├── src/
