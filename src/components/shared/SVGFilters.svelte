@@ -10,14 +10,38 @@
   <defs>
     <!-- Strong sketch filter for borders -->
     <filter id="sketch" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" result="noise" seed="3" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.05"
+        numOctaves="4"
+        result="noise"
+        seed="3"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="noise"
+        scale="2.5"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
     </filter>
 
     <!-- Light sketch filter for subtle effects -->
     <filter id="sketch-light" x="-50%" y="-50%" width="200%" height="200%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="noise" seed="5" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1" xChannelSelector="R" yChannelSelector="G" />
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.03"
+        numOctaves="2"
+        result="noise"
+        seed="5"
+      />
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="noise"
+        scale="1"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
     </filter>
   </defs>
 </svg>

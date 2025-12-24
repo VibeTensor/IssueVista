@@ -33,7 +33,9 @@ describe('Footer Constants', () => {
     });
 
     it('should have correct contributing URL', () => {
-      expect(CONTRIBUTING_URL).toBe('https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md');
+      expect(CONTRIBUTING_URL).toBe(
+        'https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md'
+      );
     });
 
     it('should have correct site URL', () => {

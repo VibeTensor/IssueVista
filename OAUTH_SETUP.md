@@ -5,11 +5,13 @@ This app now supports GitHub OAuth authentication using the **Device Flow**, whi
 ## Features
 
 ### Without Authentication
+
 - ✅ Uses REST API (60 requests/hour)
 - ✅ No setup required
 - ✅ Works immediately
 
 ### With OAuth (Recommended)
+
 - ✅ Uses GraphQL API (5000 requests/hour)
 - ✅ Faster performance
 - ✅ Better rate limits
@@ -32,11 +34,13 @@ This app now supports GitHub OAuth authentication using the **Device Flow**, whi
 ### Step 2: Configure Your App
 
 1. Create a `.env` file in the project root (copy from `.env.example`):
+
    ```bash
    cp .env.example .env
    ```
 
 2. Add your GitHub Client ID to `.env`:
+
    ```
    PUBLIC_GITHUB_CLIENT_ID=your_github_client_id_here
    ```
@@ -58,6 +62,7 @@ This app now supports GitHub OAuth authentication using the **Device Flow**, whi
 ## How It Works
 
 This app uses **GitHub's Device Flow OAuth**, which:
+
 - ✅ Works entirely client-side (no backend needed)
 - ✅ Doesn't expose client secrets
 - ✅ Provides a secure authentication flow
@@ -66,6 +71,7 @@ This app uses **GitHub's Device Flow OAuth**, which:
 ## Alternative: Manual Token
 
 If you prefer not to set up OAuth, you can still:
+
 1. Generate a [Personal Access Token](https://github.com/settings/tokens/new?description=GitHub%20Issues%20Finder&scopes=public_repo)
 2. Paste it in the "Personal Access Token" field
 3. Or use the app without any token (limited to 60 requests/hour)
@@ -80,6 +86,7 @@ If you prefer not to set up OAuth, you can still:
 ## Production Deployment
 
 For production:
+
 1. Update the **Homepage URL** in your GitHub OAuth app settings to your production domain
 2. Set the `PUBLIC_GITHUB_CLIENT_ID` environment variable on your hosting platform
 3. Deploy!
@@ -87,14 +94,17 @@ For production:
 ## Troubleshooting
 
 **"GitHub OAuth is not configured" error**
+
 - Make sure you've created a `.env` file with `PUBLIC_GITHUB_CLIENT_ID`
 - Restart your dev server after adding the `.env` file
 
 **Authentication times out**
+
 - Make sure you entered the code on GitHub within the time limit
 - Try signing in again to get a new code
 
 **Rate limit issues**
+
 - Without authentication: 60 requests/hour
 - With authentication: 5000 requests/hour
 - The app shows your remaining rate limit at the bottom

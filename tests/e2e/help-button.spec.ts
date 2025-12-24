@@ -55,9 +55,7 @@ test.describe('Help Button - Brand Styled FAB', () => {
     const helpButton = page.locator('.help-button');
 
     // Check background includes gradient (teal colors)
-    const bgStyle = await helpButton.evaluate(
-      (el) => getComputedStyle(el).backgroundImage
-    );
+    const bgStyle = await helpButton.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bgStyle).toContain('gradient');
   });
 
@@ -121,9 +119,7 @@ test.describe('Help Popup - Modal Dialog', () => {
     await expect(ctaButton).toBeVisible();
 
     // Check for teal gradient background
-    const bgStyle = await ctaButton.evaluate(
-      (el) => getComputedStyle(el).backgroundImage
-    );
+    const bgStyle = await ctaButton.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bgStyle).toContain('gradient');
   });
 
@@ -136,9 +132,7 @@ test.describe('Help Popup - Modal Dialog', () => {
     await expect(tokenLink).toBeVisible();
 
     // Check for teal color class
-    const hasClass = await tokenLink.evaluate((el) =>
-      el.classList.contains('text-teal-400')
-    );
+    const hasClass = await tokenLink.evaluate((el) => el.classList.contains('text-teal-400'));
     expect(hasClass).toBe(true);
   });
 

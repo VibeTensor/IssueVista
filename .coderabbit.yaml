@@ -22,11 +22,11 @@ reviews:
     prettier:
       enabled: false
   path_filters:
-    - "!**/*.lock"
-    - "!**/*.svg"
-    - "!**/dist/**"
-    - "!**/node_modules/**"
-    - "!**/.astro/**"
+    - '!**/*.lock'
+    - '!**/*.svg'
+    - '!**/dist/**'
+    - '!**/node_modules/**'
+    - '!**/.astro/**'
 
 chat:
   auto_reply: true

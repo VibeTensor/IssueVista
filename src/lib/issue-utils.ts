@@ -96,14 +96,11 @@ export function filterZeroCommentIssues(issues: GitHubIssue[]): GitHubIssue[] {
  * @param level - Comment level to filter by
  * @returns Filtered array containing only issues with specified comment level
  */
-export function filterByCommentLevel(
-  issues: GitHubIssue[],
-  level: CommentLevel
-): GitHubIssue[] {
+export function filterByCommentLevel(issues: GitHubIssue[], level: CommentLevel): GitHubIssue[] {
   if (!issues || !Array.isArray(issues)) {
     return [];
   }
-  return issues.filter(issue => getCommentLevel(issue) === level);
+  return issues.filter((issue) => getCommentLevel(issue) === level);
 }
 
 /**

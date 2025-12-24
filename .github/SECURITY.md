@@ -35,12 +35,12 @@ We will acknowledge receipt of your report and keep you informed of our progress
 
 ## Response Timeline
 
-| Severity | Initial Response | Fix Timeline     |
-| -------- | ---------------- | ---------------- |
-| Critical | 24 hours         | 24-72 hours      |
-| High     | 48 hours         | 1-2 weeks        |
-| Medium   | 7 business days  | 2-4 weeks        |
-| Low      | 14 business days | Next release     |
+| Severity | Initial Response | Fix Timeline |
+| -------- | ---------------- | ------------ |
+| Critical | 24 hours         | 24-72 hours  |
+| High     | 48 hours         | 1-2 weeks    |
+| Medium   | 7 business days  | 2-4 weeks    |
+| Low      | 14 business days | Next release |
 
 For Low severity issues, if no release is planned within 30 days, a patch release will be created.
 

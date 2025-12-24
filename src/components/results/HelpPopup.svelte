@@ -75,14 +75,31 @@
       <!-- Inner scrollable container - only scroll when needed -->
       <div class="help-popup-scroll h-full max-h-[85vh] md:max-h-[75vh] overflow-y-auto">
         <!-- Header -->
-        <div class="sticky top-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 flex items-center justify-between border-b border-slate-700/50 z-10">
+        <div
+          class="sticky top-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 flex items-center justify-between border-b border-slate-700/50 z-10"
+        >
           <div class="flex items-center gap-2 min-w-0">
-            <div class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm shadow-teal-500/20">
-              <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div
+              class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm shadow-teal-500/20"
+            >
+              <svg
+                class="w-3.5 h-3.5 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
-            <h2 id="help-dialog-title" class="text-base font-bold text-white truncate">How It Works</h2>
+            <h2 id="help-dialog-title" class="text-base font-bold text-white truncate">
+              How It Works
+            </h2>
           </div>
           <button
             bind:this={closeButtonRef}
@@ -90,8 +107,19 @@
             class="w-8 h-8 rounded-md hover:bg-slate-700/50 flex items-center justify-center transition-colors"
             aria-label="Close"
           >
-            <svg class="w-5 h-5 text-slate-400 hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              class="w-5 h-5 text-slate-400 hover:text-white transition-colors"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -101,16 +129,31 @@
           <!-- Step 1: Authentication -->
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
-              <div class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20">1</div>
+              <div
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+              >
+                1
+              </div>
               <div class="flex-1 min-w-0">
                 <h3 class="text-xs font-bold text-white mb-1">Authentication (Optional)</h3>
-                <p class="text-slate-400 text-[11px] mb-1.5">Without token: 60 req/hr · With token: 5000 req/hr</p>
+                <p class="text-slate-400 text-[11px] mb-1.5">
+                  Without token: 60 req/hr · With token: 5000 req/hr
+                </p>
 
                 <!-- Token Generation - Collapsed -->
                 <details class="bg-slate-800/40 rounded p-2">
-                  <summary class="text-[11px] text-teal-400 cursor-pointer hover:text-teal-300">How to create a token →</summary>
+                  <summary class="text-[11px] text-teal-400 cursor-pointer hover:text-teal-300"
+                    >How to create a token →</summary
+                  >
                   <ol class="mt-1.5 space-y-1 text-[11px] text-slate-300 list-decimal list-inside">
-                    <li>Click <a href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo" target="_blank" rel="noopener noreferrer" class="text-teal-400 hover:text-teal-300 underline">this link</a></li>
+                    <li>
+                      Click <a
+                        href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-teal-400 hover:text-teal-300 underline">this link</a
+                      >
+                    </li>
                     <li>Check <span class="text-white">"public_repo"</span> scope</li>
                     <li>Click <span class="text-green-400">"Generate token"</span></li>
                     <li>Copy & paste in the field above</li>
@@ -123,7 +166,11 @@
           <!-- Step 2: Enter Repository URL -->
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
-              <div class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20">2</div>
+              <div
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+              >
+                2
+              </div>
               <div class="flex-1 min-w-0">
                 <h3 class="text-xs font-bold text-white">Enter Repository URL</h3>
                 <p class="text-slate-400 text-[11px]">https://github.com/owner/repo</p>
@@ -134,7 +181,11 @@
           <!-- Step 3: Find Issues -->
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
-              <div class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20">3</div>
+              <div
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+              >
+                3
+              </div>
               <div class="flex-1 min-w-0">
                 <h3 class="text-xs font-bold text-white">Find Issues</h3>
                 <p class="text-slate-400 text-[11px]">Filters: open, unassigned, no linked PRs</p>
@@ -145,7 +196,11 @@
           <!-- Step 4: Start Contributing -->
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
-              <div class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20">4</div>
+              <div
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+              >
+                4
+              </div>
               <div class="flex-1 min-w-0">
                 <h3 class="text-xs font-bold text-white">Start Contributing</h3>
                 <p class="text-slate-400 text-[11px]">Click "View" to open on GitHub</p>
@@ -155,7 +210,9 @@
         </div>
 
         <!-- Footer -->
-        <div class="sticky bottom-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 border-t border-slate-700/50">
+        <div
+          class="sticky bottom-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 border-t border-slate-700/50"
+        >
           <button
             bind:this={ctaButtonRef}
             onclick={onClose}

@@ -1,8 +1,6 @@
 // GitHub OAuth configuration
 const GITHUB_CLIENT_ID = import.meta.env.PUBLIC_GITHUB_CLIENT_ID || '';
-const REDIRECT_URI = typeof window !== 'undefined'
-  ? `${window.location.origin}/auth/callback`
-  : '';
+const REDIRECT_URI = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '';
 
 export interface GitHubUser {
   login: string;
@@ -18,7 +16,9 @@ export class GitHubOAuth {
   static login(): void {
     if (!GITHUB_CLIENT_ID) {
       console.error('GitHub Client ID not configured');
-      alert('GitHub OAuth is not configured. Please set PUBLIC_GITHUB_CLIENT_ID in your .env file.');
+      alert(
+        'GitHub OAuth is not configured. Please set PUBLIC_GITHUB_CLIENT_ID in your .env file.'
+      );
       return;
     }
 
@@ -160,7 +160,7 @@ export class GitHubOAuth {
     }
 
     while (true) {
-      await new Promise(resolve => setTimeout(resolve, interval));
+      await new Promise((resolve) => setTimeout(resolve, interval));
 
       const response = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',

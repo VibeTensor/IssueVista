@@ -322,7 +322,7 @@ describe('Copy Button Functionality', () => {
         'https://github.com/VibeTensor/IssueFlow/issues/6'
       ];
 
-      validUrls.forEach(url => {
+      validUrls.forEach((url) => {
         expect(url).toMatch(/^https:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/\d+$/);
       });
     });
@@ -330,7 +330,7 @@ describe('Copy Button Functionality', () => {
     it('should handle different issue number formats', () => {
       const issueNumbers = [1, 42, 123, 9999, 100000];
 
-      issueNumbers.forEach(num => {
+      issueNumbers.forEach((num) => {
         expect(num).toBeGreaterThan(0);
         expect(Number.isInteger(num)).toBe(true);
       });
@@ -463,7 +463,7 @@ describe('Copy Button Functionality', () => {
 
     it('should determine correct button text based on state', () => {
       let copiedIssueNumber: number | null = null;
-      let currentIssue = 42;
+      const currentIssue = 42;
 
       let buttonText = copiedIssueNumber === currentIssue ? 'Copied!' : 'Copy';
       expect(buttonText).toBe('Copy');
@@ -475,7 +475,7 @@ describe('Copy Button Functionality', () => {
 
     it('should determine correct title based on state', () => {
       let copiedIssueNumber: number | null = null;
-      let currentIssue = 42;
+      const currentIssue = 42;
 
       let title = copiedIssueNumber === currentIssue ? 'Copied!' : 'Copy issue link';
       expect(title).toBe('Copy issue link');

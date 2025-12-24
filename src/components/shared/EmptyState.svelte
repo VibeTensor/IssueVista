@@ -13,14 +13,7 @@
 -->
 
 <script lang="ts">
-  import {
-    type EmptyStateVariant,
-    type EmptyStateConfig,
-    getEmptyStateConfig
-  } from '../../lib/empty-state-utils';
-
-  // Re-export type for consumers
-  export type { EmptyStateVariant };
+  import { type EmptyStateVariant, getEmptyStateConfig } from '../../lib/empty-state-utils';
 
   /**
    * Props Interface
@@ -71,54 +64,152 @@
 </script>
 
 <!-- Main container with ARIA live region for screen reader announcements -->
-<div
-  class="empty-state-container"
-  role="status"
-  aria-live="polite"
-  aria-atomic="true"
->
+<div class="empty-state-container" role="status" aria-live="polite" aria-atomic="true">
   <!-- Illustration (decorative, hidden from screen readers) -->
   {#if showIllustration}
     <div class="illustration" aria-hidden="true">
       {#if variant === 'initial'}
         <!-- Magnifying glass with code brackets -->
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="3" class="sketch-stroke"/>
-          <line x1="72" y1="72" x2="95" y2="95" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="sketch-stroke"/>
-          <text x="38" y="56" font-family="monospace" font-size="18" fill="currentColor" class="code-text">{'{ }'}</text>
+          <circle
+            cx="50"
+            cy="50"
+            r="30"
+            stroke="currentColor"
+            stroke-width="3"
+            class="sketch-stroke"
+          />
+          <line
+            x1="72"
+            y1="72"
+            x2="95"
+            y2="95"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
+          <text
+            x="38"
+            y="56"
+            font-family="monospace"
+            font-size="18"
+            fill="currentColor"
+            class="code-text">{'{ }'}</text
+          >
         </svg>
       {:else if variant === 'no-results'}
         <!-- Empty folder -->
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 35 L20 90 L100 90 L100 35 L65 35 L55 25 L20 25 Z" stroke="currentColor" stroke-width="3" fill="none" class="sketch-stroke"/>
-          <line x1="40" y1="60" x2="80" y2="60" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="sketch-stroke"/>
-          <line x1="50" y1="72" x2="70" y2="72" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="sketch-stroke"/>
+          <path
+            d="M20 35 L20 90 L100 90 L100 35 L65 35 L55 25 L20 25 Z"
+            stroke="currentColor"
+            stroke-width="3"
+            fill="none"
+            class="sketch-stroke"
+          />
+          <line
+            x1="40"
+            y1="60"
+            x2="80"
+            y2="60"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
+          <line
+            x1="50"
+            y1="72"
+            x2="70"
+            y2="72"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
         </svg>
       {:else if variant === 'error'}
         <!-- Warning triangle -->
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M60 20 L105 95 L15 95 Z" stroke="currentColor" stroke-width="3" fill="none" class="sketch-stroke"/>
-          <line x1="60" y1="45" x2="60" y2="65" stroke="currentColor" stroke-width="4" stroke-linecap="round" class="sketch-stroke"/>
-          <circle cx="60" cy="78" r="3" fill="currentColor"/>
+          <path
+            d="M60 20 L105 95 L15 95 Z"
+            stroke="currentColor"
+            stroke-width="3"
+            fill="none"
+            class="sketch-stroke"
+          />
+          <line
+            x1="60"
+            y1="45"
+            x2="60"
+            y2="65"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
+          <circle cx="60" cy="78" r="3" fill="currentColor" />
         </svg>
       {:else if variant === 'rate-limited'}
         <!-- Clock / hourglass -->
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="60" cy="60" r="40" stroke="currentColor" stroke-width="3" fill="none" class="sketch-stroke"/>
-          <line x1="60" y1="35" x2="60" y2="60" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="sketch-stroke"/>
-          <line x1="60" y1="60" x2="78" y2="70" stroke="currentColor" stroke-width="3" stroke-linecap="round" class="sketch-stroke"/>
-          <circle cx="60" cy="60" r="4" fill="currentColor"/>
+          <circle
+            cx="60"
+            cy="60"
+            r="40"
+            stroke="currentColor"
+            stroke-width="3"
+            fill="none"
+            class="sketch-stroke"
+          />
+          <line
+            x1="60"
+            y1="35"
+            x2="60"
+            y2="60"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
+          <line
+            x1="60"
+            y1="60"
+            x2="78"
+            y2="70"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            class="sketch-stroke"
+          />
+          <circle cx="60" cy="60" r="4" fill="currentColor" />
         </svg>
       {:else if variant === 'success'}
         <!-- Checkmark with celebration -->
         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="60" cy="60" r="40" stroke="currentColor" stroke-width="3" fill="none" class="sketch-stroke"/>
-          <path d="M40 60 L55 75 L85 45" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" class="sketch-stroke success-check"/>
+          <circle
+            cx="60"
+            cy="60"
+            r="40"
+            stroke="currentColor"
+            stroke-width="3"
+            fill="none"
+            class="sketch-stroke"
+          />
+          <path
+            d="M40 60 L55 75 L85 45"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="sketch-stroke success-check"
+          />
           <!-- Celebration dots -->
-          <circle cx="25" cy="30" r="3" fill="currentColor" class="celebration-dot"/>
-          <circle cx="95" cy="35" r="2" fill="currentColor" class="celebration-dot"/>
-          <circle cx="20" cy="80" r="2" fill="currentColor" class="celebration-dot"/>
-          <circle cx="100" cy="75" r="3" fill="currentColor" class="celebration-dot"/>
+          <circle cx="25" cy="30" r="3" fill="currentColor" class="celebration-dot" />
+          <circle cx="95" cy="35" r="2" fill="currentColor" class="celebration-dot" />
+          <circle cx="20" cy="80" r="2" fill="currentColor" class="celebration-dot" />
+          <circle cx="100" cy="75" r="3" fill="currentColor" class="celebration-dot" />
         </svg>
       {/if}
     </div>
@@ -134,26 +225,25 @@
   {#if showPrimaryAction || showSecondaryAction}
     <div class="empty-state-actions">
       {#if showPrimaryAction}
-        <button
-          type="button"
-          class="primary-action"
-          onclick={onPrimaryAction}
-        >
+        <button type="button" class="primary-action" onclick={onPrimaryAction}>
           {primaryLabel}
         </button>
       {/if}
 
       {#if showSecondaryAction}
-        <a
-          href={secondaryHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="secondary-action"
-        >
+        <a href={secondaryHref} target="_blank" rel="noopener noreferrer" class="secondary-action">
           {secondaryLabel}
           <svg class="external-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z" clip-rule="evenodd"/>
-            <path fill-rule="evenodd" d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z" clip-rule="evenodd"/>
+            <path
+              fill-rule="evenodd"
+              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+              clip-rule="evenodd"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+              clip-rule="evenodd"
+            />
           </svg>
         </a>
       {/if}
@@ -300,8 +390,13 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
     }
   }
 

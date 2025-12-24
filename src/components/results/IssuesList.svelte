@@ -83,7 +83,8 @@
       <!-- Left: Title and info -->
       <div class="text-center md:text-left">
         <h2 class="text-xl md:text-2xl font-bold text-white">
-          {displayedIssues.length} {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
+          {displayedIssues.length}
+          {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
           {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
             <span class="text-sm text-slate-400 font-normal ml-1">(from {issues.length})</span>
           {/if}
@@ -104,22 +105,14 @@
     </div>
 
     <!-- Filter and Sort Controls -->
-    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-3 border-t border-slate-700/50">
-      <FilterControls
-        enabled={showOnlyZeroComments}
-        {zeroCommentCount}
-        onToggle={onFilterToggle}
-      />
+    <div
+      class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-3 border-t border-slate-700/50"
+    >
+      <FilterControls enabled={showOnlyZeroComments} {zeroCommentCount} onToggle={onFilterToggle} />
 
-      <SortControls
-        {sortOrder}
-        onSortChange={onSortChange}
-      />
+      <SortControls {sortOrder} {onSortChange} />
 
-      <ClearFiltersButton
-        visible={hasActiveFilters}
-        onClear={onClearFilters}
-      />
+      <ClearFiltersButton visible={hasActiveFilters} onClear={onClearFilters} />
     </div>
   </div>
 </div>
@@ -127,17 +120,11 @@
 <!-- Issues grid -->
 <div class="grid gap-4">
   {#each displayedIssues as issue (issue.number)}
-    <IssueCard
-      {issue}
-      {copiedIssueNumber}
-      onCopy={onCopyIssue}
-    />
+    <IssueCard {issue} {copiedIssueNumber} onCopy={onCopyIssue} />
   {/each}
 </div>
 
 <!-- Success footer - Compact -->
 <div class="mt-6 text-center py-6">
-  <p class="text-sm text-slate-400">
-    Pick an issue and start contributing!
-  </p>
+  <p class="text-sm text-slate-400">Pick an issue and start contributing!</p>
 </div>

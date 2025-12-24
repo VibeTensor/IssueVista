@@ -24,22 +24,28 @@
   /**
    * Format issues for export in the specified format
    */
-  function formatIssuesForExport(issuesToFormat: GitHubIssue[], format: 'markdown' | 'plain' | 'csv'): string {
+  function formatIssuesForExport(
+    issuesToFormat: GitHubIssue[],
+    format: 'markdown' | 'plain' | 'csv'
+  ): string {
     if (issuesToFormat.length === 0) return '';
 
     switch (format) {
       case 'markdown':
-        return issuesToFormat.map(issue =>
-          `- [#${issue.number} ${issue.title.replace(/[\[\]]/g, '\\$&')}](${issue.url})`
-        ).join('\n');
+        return issuesToFormat
+          .map(
+            (issue) => `- [#${issue.number} ${issue.title.replace(/[[\]]/g, '\\$&')}](${issue.url})`
+          )
+          .join('\n');
 
       case 'plain':
-        return issuesToFormat.map(issue => issue.url).join('\n');
+        return issuesToFormat.map((issue) => issue.url).join('\n');
 
       case 'csv': {
         const header = 'Number,Title,URL';
-        const rows = issuesToFormat.map(issue =>
-          `${issue.number},"${issue.title.replace(/"/g, '""').replace(/\r?\n/g, ' ')}",${issue.url}`
+        const rows = issuesToFormat.map(
+          (issue) =>
+            `${issue.number},"${issue.title.replace(/"/g, '""').replace(/\r?\n/g, ' ')}",${issue.url}`
         );
         return [header, ...rows].join('\n');
       }
@@ -120,11 +126,21 @@
     aria-haspopup="true"
   >
     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+      />
     </svg>
     Export
-    <svg class="w-2.5 h-2.5 {showDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+    <svg
+      class="w-2.5 h-2.5 {showDropdown ? 'rotate-180' : ''}"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
   </button>
 
@@ -135,13 +151,28 @@
       onmouseleave={closeDropdown}
       onkeydown={(e) => e.key === 'Escape' && closeDropdown()}
     >
-      <button type="button" onclick={() => exportIssues('markdown')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+      <button
+        type="button"
+        onclick={() => exportIssues('markdown')}
+        class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white"
+        role="menuitem"
+      >
         Markdown (.md)
       </button>
-      <button type="button" onclick={() => exportIssues('plain')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+      <button
+        type="button"
+        onclick={() => exportIssues('plain')}
+        class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white"
+        role="menuitem"
+      >
         Plain Text (.txt)
       </button>
-      <button type="button" onclick={() => exportIssues('csv')} class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white" role="menuitem">
+      <button
+        type="button"
+        onclick={() => exportIssues('csv')}
+        class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white"
+        role="menuitem"
+      >
         CSV (.csv)
       </button>
     </div>

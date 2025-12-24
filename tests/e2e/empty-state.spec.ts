@@ -71,9 +71,7 @@ test.describe('EmptyState Component - E2E Tests', () => {
 
     test('should have floating animation on illustration', async ({ page }) => {
       const illustration = page.locator('.empty-state-container .illustration');
-      const animation = await illustration.evaluate(el =>
-        getComputedStyle(el).animation
-      );
+      const animation = await illustration.evaluate((el) => getComputedStyle(el).animation);
       expect(animation).toContain('float');
     });
   });
@@ -145,15 +143,15 @@ test.describe('EmptyState Component - E2E Tests', () => {
       // Focus the secondary action link directly
       const secondaryAction = page.locator('.empty-state-container .secondary-action');
 
-      if (await secondaryAction.count() > 0) {
+      if ((await secondaryAction.count()) > 0) {
         await secondaryAction.focus();
 
         // Verify the secondary action has focus
-        const isFocused = await secondaryAction.evaluate(el => el === document.activeElement);
+        const isFocused = await secondaryAction.evaluate((el) => el === document.activeElement);
         expect(isFocused).toBe(true);
 
         // Verify it's a focusable element (link or button)
-        const tagName = await secondaryAction.evaluate(el => el.tagName.toLowerCase());
+        const tagName = await secondaryAction.evaluate((el) => el.tagName.toLowerCase());
         expect(['a', 'button']).toContain(tagName);
       }
     });
@@ -162,11 +160,9 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const primaryButton = page.locator('.empty-state-container .primary-action');
 
       // If button exists, check its focusability
-      if (await primaryButton.count() > 0) {
+      if ((await primaryButton.count()) > 0) {
         await primaryButton.focus();
-        const outline = await primaryButton.evaluate(el =>
-          getComputedStyle(el).outlineColor
-        );
+        const outline = await primaryButton.evaluate((el) => getComputedStyle(el).outlineColor);
         // Should have some outline color (typically green #4ade80)
         expect(outline).toBeTruthy();
       }
@@ -221,9 +217,7 @@ test.describe('EmptyState Component - E2E Tests', () => {
       await page.waitForLoadState('networkidle');
 
       const illustration = page.locator('.empty-state-container .illustration');
-      const animationName = await illustration.evaluate(el =>
-        getComputedStyle(el).animationName
-      );
+      const animationName = await illustration.evaluate((el) => getComputedStyle(el).animationName);
 
       // Animation name should be 'none' when reduced motion is preferred
       expect(animationName).toBe('none');
@@ -267,8 +261,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       await page.waitForTimeout(500);
 
       // Check for various possible states after clicking search
-      const hasResults = await page.locator('.issue-card').count() > 0;
-      const hasEmptyState = await page.locator('.empty-state-container').count() > 0;
+      const hasResults = (await page.locator('.issue-card').count()) > 0;
+      const hasEmptyState = (await page.locator('.empty-state-container').count()) > 0;
       const buttonText = await searchButton.textContent();
       const hasLoadingText = buttonText?.includes('Searching') || buttonText?.includes('Loading');
       const hasDisabledButton = await searchButton.isDisabled();
@@ -286,8 +280,8 @@ test.describe('EmptyState Component - E2E Tests', () => {
       const count = await primaryButton.count();
       if (count > 0) {
         // Button should have proper styles
-        const backgroundColor = await primaryButton.evaluate(el =>
-          getComputedStyle(el).backgroundImage
+        const backgroundColor = await primaryButton.evaluate(
+          (el) => getComputedStyle(el).backgroundImage
         );
         expect(backgroundColor).toBeTruthy();
       }

@@ -185,8 +185,8 @@ export class GitHubAPI {
         lastRateLimit = data.rateLimit;
 
         // Filter out issues that have linked PRs
-        const issuesWithoutPRs = issues.nodes.filter(issue => {
-          const hasPR = issue.timelineItems.nodes.some(item => item.source?.number);
+        const issuesWithoutPRs = issues.nodes.filter((issue) => {
+          const hasPR = issue.timelineItems.nodes.some((item) => item.source?.number);
           return !hasPR;
         });
 
@@ -196,7 +196,9 @@ export class GitHubAPI {
         cursor = issues.pageInfo.endCursor;
         pageCount++;
 
-        console.log(`[PAGE] Fetched page ${pageCount}/${maxPages}, found ${issuesWithoutPRs.length} issues (${allIssues.length} total)`);
+        console.log(
+          `[PAGE] Fetched page ${pageCount}/${maxPages}, found ${issuesWithoutPRs.length} issues (${allIssues.length} total)`
+        );
       }
 
       // Report processing phase
@@ -241,7 +243,9 @@ export class GitHubAPI {
     onProgress?: ProgressCallback,
     signal?: AbortSignal
   ): Promise<GitHubIssue[]> {
-    console.log(`[REST] Fetching issues from ${owner}/${repo} via REST API (Fast mode - skipping PR checks)...`);
+    console.log(
+      `[REST] Fetching issues from ${owner}/${repo} via REST API (Fast mode - skipping PR checks)...`
+    );
     const allIssues: GitHubIssue[] = [];
     let page = 1;
     const perPage = 100;
@@ -288,12 +292,14 @@ export class GitHubAPI {
                 : 'soon';
               throw new Error(
                 `GitHub API rate limit exceeded. ` +
-                `Without authentication, you have 60 requests per hour. ` +
-                `Rate limit resets at ${resetTime}. ` +
-                `Sign in with GitHub or add a personal access token for 5000 requests/hour.`
+                  `Without authentication, you have 60 requests per hour. ` +
+                  `Rate limit resets at ${resetTime}. ` +
+                  `Sign in with GitHub or add a personal access token for 5000 requests/hour.`
               );
             }
-            throw new Error('GitHub API access denied (403). Please try authenticating with GitHub or using a personal access token.');
+            throw new Error(
+              'GitHub API access denied (403). Please try authenticating with GitHub or using a personal access token.'
+            );
           }
           throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
         }
@@ -333,7 +339,9 @@ export class GitHubAPI {
       progressState = toProcessingState(progressState, allIssues.length);
       onProgress?.(progressState);
 
-      console.log(`[OK] REST API: Found ${allIssues.length} unassigned issues (Note: PR filtering only available with token)`);
+      console.log(
+        `[OK] REST API: Found ${allIssues.length} unassigned issues (Note: PR filtering only available with token)`
+      );
 
       // Report complete
       progressState = toCompleteState(progressState, allIssues.length);
@@ -373,7 +381,7 @@ export class GitHubAPI {
 }
 
 export function parseRepoUrl(url: string): { owner: string; repo: string } | null {
-  const regex = /github\.com\/([^\/]+)\/([^\/]+)/;
+  const regex = /github\.com\/([^/]+)\/([^/]+)/;
   const match = url.match(regex);
 
   if (!match) return null;

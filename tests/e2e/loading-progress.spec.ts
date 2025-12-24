@@ -606,8 +606,15 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
       await expect(loadingContainer).not.toBeVisible();
 
       // Results or empty state should be visible
-      const hasResults = await page.locator('.issue-card').first().isVisible().catch(() => false);
-      const hasEmptyState = await page.locator('[data-testid="empty-state"]').isVisible().catch(() => false);
+      const hasResults = await page
+        .locator('.issue-card')
+        .first()
+        .isVisible()
+        .catch(() => false);
+      const hasEmptyState = await page
+        .locator('[data-testid="empty-state"]')
+        .isVisible()
+        .catch(() => false);
 
       expect(hasResults || hasEmptyState).toBe(true);
     });

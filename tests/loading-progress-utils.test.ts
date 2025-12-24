@@ -90,7 +90,7 @@ describe('Loading Progress Constants', () => {
         'cancelled',
         'error'
       ];
-      phases.forEach(phase => {
+      phases.forEach((phase) => {
         expect(PHASE_MESSAGES[phase]).toBeDefined();
         expect(typeof PHASE_MESSAGES[phase]).toBe('string');
       });

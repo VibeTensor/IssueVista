@@ -22,7 +22,8 @@ export const COMPANY_EMAIL = 'info@vibetensor.com';
 export const COMPANY_COUNTRY = 'India';
 
 // Default sharing configuration
-export const DEFAULT_SHARE_TEXT = 'Check out IssueFlow - Find unassigned GitHub issues for open-source contributions!';
+export const DEFAULT_SHARE_TEXT =
+  'Check out IssueFlow - Find unassigned GitHub issues for open-source contributions!';
 export const DEFAULT_HASHTAGS = 'opensource,github,hacktoberfest';
 
 /**

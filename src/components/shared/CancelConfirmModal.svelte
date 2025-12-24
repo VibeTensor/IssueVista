@@ -30,12 +30,7 @@
     onContinue: () => void;
   }
 
-  let {
-    show,
-    issuesLoaded,
-    onConfirm,
-    onContinue
-  }: Props = $props();
+  let { show, issuesLoaded, onConfirm, onContinue }: Props = $props();
 
   // Reference to the continue button for auto-focus
   let continueButtonRef: HTMLButtonElement | null = null;
@@ -51,9 +46,7 @@
 
     // Focus trap: Tab cycles between Continue and Cancel buttons
     if (event.key === 'Tab') {
-      const focusableElements = document.querySelectorAll(
-        '.cancel-modal button:not([disabled])'
-      );
+      const focusableElements = document.querySelectorAll('.cancel-modal button:not([disabled])');
       const firstElement = focusableElements[0] as HTMLElement;
       const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
@@ -106,11 +99,7 @@
 
 {#if show}
   <!-- Modal Backdrop -->
-  <div
-    class="modal-backdrop"
-    onclick={handleBackdropClick}
-    role="presentation"
-  >
+  <div class="modal-backdrop" onclick={handleBackdropClick} role="presentation">
     <!-- Modal Dialog -->
     <div
       class="cancel-modal"
@@ -122,7 +111,12 @@
       <!-- Warning Icon -->
       <div class="modal-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+          />
         </svg>
       </div>
 
@@ -132,7 +126,11 @@
       <!-- Issues Count Info Box -->
       <div class="issues-info">
         <svg class="info-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd"/>
+          <path
+            fill-rule="evenodd"
+            d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z"
+            clip-rule="evenodd"
+          />
         </svg>
         <span>
           <strong>{issuesLoaded}</strong> issue{issuesLoaded !== 1 ? 's' : ''} loaded so far
@@ -157,18 +155,22 @@
           bind:this={continueButtonRef}
         >
           <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+              clip-rule="evenodd"
+            />
           </svg>
           Continue Loading
         </button>
 
-        <button
-          type="button"
-          class="btn-cancel"
-          onclick={onConfirm}
-        >
+        <button type="button" class="btn-cancel" onclick={onConfirm}>
           <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
           </svg>
           {issuesLoaded > 0 ? 'Yes, Show Results' : 'Yes, Cancel'}
         </button>

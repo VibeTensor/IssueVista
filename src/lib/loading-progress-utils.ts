@@ -218,10 +218,7 @@ export function toFetchingState(
  * @param totalIssues - Total issues to process
  * @returns Updated state
  */
-export function toProcessingState(
-  prevState: ProgressState,
-  totalIssues: number
-): ProgressState {
+export function toProcessingState(prevState: ProgressState, totalIssues: number): ProgressState {
   return {
     ...prevState,
     issuesFound: totalIssues,
@@ -235,10 +232,7 @@ export function toProcessingState(
  * @param totalIssues - Final total issues
  * @returns Updated state
  */
-export function toCompleteState(
-  prevState: ProgressState,
-  totalIssues: number
-): ProgressState {
+export function toCompleteState(prevState: ProgressState, totalIssues: number): ProgressState {
   return {
     ...prevState,
     issuesFound: totalIssues,

@@ -14,7 +14,12 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../../lib/github-graphql';
-  import { countZeroCommentIssues, sortByComments, isZeroComment, type CommentSortOrder } from '../../lib/issue-utils';
+  import {
+    countZeroCommentIssues,
+    sortByComments,
+    isZeroComment,
+    type CommentSortOrder
+  } from '../../lib/issue-utils';
   import GitHubAuth from '../GitHubAuth.svelte';
   import { SVGFilters, EmptyState, LoadingProgress, CancelConfirmModal } from '../shared';
   import {
@@ -29,12 +34,7 @@
     GRAPHQL_MAX_PAGES,
     REST_MAX_PAGES
   } from '../../lib/loading-progress-utils';
-  import {
-    SearchForm,
-    RateLimitDisplay,
-    HelpPopup,
-    IssueCard
-  } from './index';
+  import { SearchForm, RateLimitDisplay, HelpPopup, IssueCard } from './index';
 
   // Core state
   let repoUrl = $state('');
@@ -84,12 +84,14 @@
   let zeroCommentCount = $derived(countZeroCommentIssues(issues));
 
   // Derived: detect which empty state variant to show (if any)
-  let emptyStateVariant = $derived(detectEmptyStateVariant({
-    hasSearched,
-    isLoading: loading,
-    error: error || null,
-    resultsCount: issues.length
-  }));
+  let emptyStateVariant = $derived(
+    detectEmptyStateVariant({
+      hasSearched,
+      isLoading: loading,
+      error: error || null,
+      resultsCount: issues.length
+    })
+  );
 
   // Initialize on mount
   onMount(() => {
@@ -244,7 +246,7 @@
 
   // Handle copy issue URL
   async function handleCopyIssue(issueNumber: number) {
-    const issue = issues.find(i => i.number === issueNumber);
+    const issue = issues.find((i) => i.number === issueNumber);
     if (!issue?.url) return;
 
     try {
@@ -327,23 +329,27 @@
 
     switch (format) {
       case 'markdown':
-        content = issues.map(issue =>
-          `- [#${issue.number} ${issue.title.replace(/[\[\]]/g, '\\$&')}](${issue.url})`
-        ).join('\n');
+        content = issues
+          .map(
+            (issue) => `- [#${issue.number} ${issue.title.replace(/[[\]]/g, '\\$&')}](${issue.url})`
+          )
+          .join('\n');
         downloadFile(content, `${repoName}-issues-${timestamp}.md`, 'text/markdown');
         break;
       case 'plain':
-        content = issues.map(issue => issue.url).join('\n');
+        content = issues.map((issue) => issue.url).join('\n');
         downloadFile(content, `${repoName}-issues-${timestamp}.txt`, 'text/plain');
         break;
-      case 'csv':
+      case 'csv': {
         const header = 'Number,Title,URL';
-        const rows = issues.map(issue =>
-          `${issue.number},"${issue.title.replace(/"/g, '""').replace(/\r?\n/g, ' ')}",${issue.url}`
+        const rows = issues.map(
+          (issue) =>
+            `${issue.number},"${issue.title.replace(/"/g, '""').replace(/\r?\n/g, ' ')}",${issue.url}`
         );
         content = [header, ...rows].join('\n');
         downloadFile(content, `${repoName}-issues-${timestamp}.csv`, 'text/csv');
         break;
+      }
     }
   }
 
@@ -375,27 +381,60 @@
 
 <!-- Split Layout: Sidebar + Main Content -->
 <div class="flex flex-col lg:flex-row min-h-screen">
-
   <!-- LEFT SIDEBAR - Sticky on desktop -->
-  <aside class="sidebar-panel lg:w-[300px] xl:w-[320px] lg:flex-shrink-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+  <aside
+    class="sidebar-panel lg:w-[300px] xl:w-[320px] lg:flex-shrink-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto"
+  >
     <div class="p-3 lg:p-4 space-y-3">
       <!-- Brand Header - Using favicon design -->
       <div class="brand-header text-center py-3">
         <!-- Logo - Issues flowing through pipeline (matches favicon.svg) -->
         <div class="logo-mark inline-flex items-center justify-center mb-2">
-          <svg class="w-14 h-14 lg:w-16 lg:h-16" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            class="w-14 h-14 lg:w-16 lg:h-16"
+            viewBox="0 0 128 128"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <!-- Background circle -->
-            <circle cx="64" cy="64" r="56" fill="#0d9488"/>
+            <circle cx="64" cy="64" r="56" fill="#0d9488" />
             <!-- Flowing S-curve path -->
-            <path d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64" stroke="#ffffff" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path
+              d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
+              stroke="#ffffff"
+              stroke-width="6"
+              fill="none"
+              stroke-linecap="round"
+            />
             <!-- Three issue nodes -->
-            <circle cx="32" cy="50" r="10" fill="#ffffff"/>
-            <circle cx="64" cy="64" r="12" fill="#ffffff"/>
-            <circle cx="96" cy="78" r="10" fill="#ffffff"/>
+            <circle cx="32" cy="50" r="10" fill="#ffffff" />
+            <circle cx="64" cy="64" r="12" fill="#ffffff" />
+            <circle cx="96" cy="78" r="10" fill="#ffffff" />
             <!-- Checkmarks inside -->
-            <path d="M 27 50 L 30 53 L 37 46" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 58 64 L 62 68 L 70 58" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M 91 78 L 94 81 L 101 74" stroke="#0d9488" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path
+              d="M 27 50 L 30 53 L 37 46"
+              stroke="#0d9488"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M 58 64 L 62 68 L 70 58"
+              stroke="#0d9488"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M 91 78 L 94 81 L 101 74"
+              stroke="#0d9488"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
         </div>
         <!-- Brand Text -->
@@ -421,14 +460,28 @@
       {#if import.meta.env.PUBLIC_GITHUB_CLIENT_ID}
         <GitHubAuth onAuthChange={handleAuthChange} />
       {:else if !isAuthenticated}
-        <div class="auth-prompt p-2.5 bg-gradient-to-r from-amber-500/10 to-teal-500/10 border border-amber-500/30 rounded-lg">
+        <div
+          class="auth-prompt p-2.5 bg-gradient-to-r from-amber-500/10 to-teal-500/10 border border-amber-500/30 rounded-lg"
+        >
           <div class="flex items-start gap-2">
-            <svg class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <svg
+              class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
             </svg>
             <div class="flex-1 min-w-0">
               <p class="text-[11px] text-slate-300 font-medium mb-1">Boost your rate limit</p>
-              <p class="text-[10px] text-slate-400 mb-2">Without token: <span class="text-slate-300">60 requests/hr</span></p>
+              <p class="text-[10px] text-slate-400 mb-2">
+                Without token: <span class="text-slate-300">60 requests/hr</span>
+              </p>
               <a
                 href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
                 target="_blank"
@@ -436,7 +489,9 @@
                 class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-teal-600 hover:bg-teal-500 text-white text-[10px] font-semibold rounded transition-colors"
               >
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                  />
                 </svg>
                 Generate Token (5000/hr)
               </a>
@@ -447,7 +502,10 @@
 
       <!-- Rate Limit -->
       {#if rateLimit.remaining !== undefined && rateLimit.remaining > 0}
-        <RateLimitDisplay remaining={rateLimit.remaining} resetTime={getResetTime(rateLimit.resetAt)} />
+        <RateLimitDisplay
+          remaining={rateLimit.remaining}
+          resetTime={getResetTime(rateLimit.resetAt)}
+        />
       {/if}
 
       <!-- Filter/Sort Controls - Compact inline design -->
@@ -457,27 +515,72 @@
           <button
             type="button"
             onclick={() => handleFilterToggle(!showOnlyZeroComments)}
-            class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-md transition-all {showOnlyZeroComments ? 'bg-emerald-500/20 border border-emerald-500/40' : 'bg-slate-700/40 border border-slate-600/30 hover:bg-slate-700/60'}"
+            class="w-full flex items-center justify-between px-2.5 py-1.5 rounded-md transition-all {showOnlyZeroComments
+              ? 'bg-emerald-500/20 border border-emerald-500/40'
+              : 'bg-slate-700/40 border border-slate-600/30 hover:bg-slate-700/60'}"
             aria-pressed={showOnlyZeroComments}
           >
             <div class="flex items-center gap-1.5">
-              <div class="w-4 h-4 rounded flex items-center justify-center {showOnlyZeroComments ? 'bg-emerald-500' : 'bg-slate-600'}">
-                <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+              <div
+                class="w-4 h-4 rounded flex items-center justify-center {showOnlyZeroComments
+                  ? 'bg-emerald-500'
+                  : 'bg-slate-600'}"
+              >
+                <svg
+                  class="w-2.5 h-2.5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="3"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
-              <span class="text-[10px] font-medium {showOnlyZeroComments ? 'text-emerald-300' : 'text-slate-300'}">Easy to Start</span>
+              <span
+                class="text-[10px] font-medium {showOnlyZeroComments
+                  ? 'text-emerald-300'
+                  : 'text-slate-300'}">Easy to Start</span
+              >
             </div>
-            <span class="text-[9px] font-bold px-1 py-0.5 rounded {showOnlyZeroComments ? 'bg-emerald-500/30 text-emerald-300' : 'bg-slate-600/50 text-slate-400'}">{zeroCommentCount}</span>
+            <span
+              class="text-[9px] font-bold px-1 py-0.5 rounded {showOnlyZeroComments
+                ? 'bg-emerald-500/30 text-emerald-300'
+                : 'bg-slate-600/50 text-slate-400'}">{zeroCommentCount}</span
+            >
           </button>
 
           <!-- Sort - Vertical layout with clear labels -->
           <div class="space-y-1.5">
             <span class="text-[10px] text-slate-300 font-medium">Sort by Comments</span>
             <div class="flex rounded bg-slate-800/60 p-0.5 border border-slate-700/40">
-              <button type="button" onclick={() => handleSortChange('default')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'default' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Default</button>
-              <button type="button" onclick={() => handleSortChange('asc')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'asc' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Fewest</button>
-              <button type="button" onclick={() => handleSortChange('desc')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder === 'desc' ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Most</button>
+              <button
+                type="button"
+                onclick={() => handleSortChange('default')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
+                'default'
+                  ? 'bg-slate-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Default</button
+              >
+              <button
+                type="button"
+                onclick={() => handleSortChange('asc')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
+                'asc'
+                  ? 'bg-slate-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Fewest</button
+              >
+              <button
+                type="button"
+                onclick={() => handleSortChange('desc')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
+                'desc'
+                  ? 'bg-slate-600 text-white'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Most</button
+              >
             </div>
           </div>
 
@@ -485,18 +588,37 @@
           <div class="space-y-1.5">
             <span class="text-[10px] text-slate-300 font-medium">Export As</span>
             <div class="flex rounded bg-slate-800/60 p-0.5 border border-slate-700/40">
-              <button type="button" onclick={() => exportIssues('markdown')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">Markdown</button>
-              <button type="button" onclick={() => exportIssues('plain')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">Text</button>
-              <button type="button" onclick={() => exportIssues('csv')} class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">CSV</button>
+              <button
+                type="button"
+                onclick={() => exportIssues('markdown')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all"
+                >Markdown</button
+              >
+              <button
+                type="button"
+                onclick={() => exportIssues('plain')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all"
+                >Text</button
+              >
+              <button
+                type="button"
+                onclick={() => exportIssues('csv')}
+                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all"
+                >CSV</button
+              >
             </div>
           </div>
 
           {#if showOnlyZeroComments || sortOrder !== 'default'}
-            <button type="button" onclick={handleClearFilters} class="text-[9px] text-amber-400 hover:text-amber-300 font-medium">Reset filters</button>
+            <button
+              type="button"
+              onclick={handleClearFilters}
+              class="text-[9px] text-amber-400 hover:text-amber-300 font-medium"
+              >Reset filters</button
+            >
           {/if}
         </div>
       {/if}
-
     </div>
   </aside>
 
@@ -516,7 +638,9 @@
       <div class="flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
         <div class="relative w-12 h-12 mb-4">
           <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
-          <div class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"></div>
+          <div
+            class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"
+          ></div>
         </div>
         <p class="text-slate-300 text-sm font-medium">Initializing...</p>
       </div>
@@ -526,7 +650,11 @@
     {#if emptyStateVariant && !loading}
       <div class="flex items-center justify-center min-h-[300px] lg:min-h-[400px]">
         <div class="max-w-sm">
-          <EmptyState variant={emptyStateVariant} onPrimaryAction={handleEmptyStatePrimaryAction} customDescription={emptyStateVariant === 'error' ? error : undefined} />
+          <EmptyState
+            variant={emptyStateVariant}
+            onPrimaryAction={handleEmptyStatePrimaryAction}
+            customDescription={emptyStateVariant === 'error' ? error : undefined}
+          />
         </div>
       </div>
     {/if}
@@ -536,17 +664,24 @@
       <div class="flex items-center justify-between mb-3">
         <div>
           <h2 class="text-base lg:text-lg font-bold text-white">
-            {displayedIssues.length} {displayedIssues.length === 1 ? 'Issue' : 'Issues'}
+            {displayedIssues.length}
+            {displayedIssues.length === 1 ? 'Issue' : 'Issues'}
             {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
               <span class="text-xs text-slate-500 font-normal">of {issues.length}</span>
             {/if}
           </h2>
-          <p class="text-[10px] text-slate-500">{#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}</p>
+          <p class="text-[10px] text-slate-500">
+            {#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}
+          </p>
         </div>
       </div>
 
       <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
-        Showing {displayedIssues.length} issues{showOnlyZeroComments ? ', filtered to easy issues' : ''}{sortOrder !== 'default' ? `, sorted by ${sortOrder === 'asc' ? 'fewest' : 'most'} comments` : ''}
+        Showing {displayedIssues.length} issues{showOnlyZeroComments
+          ? ', filtered to easy issues'
+          : ''}{sortOrder !== 'default'
+          ? `, sorted by ${sortOrder === 'asc' ? 'fewest' : 'most'} comments`
+          : ''}
       </div>
 
       <div class="space-y-2">
@@ -572,15 +707,17 @@
   title="How it works?"
 >
   <svg class="help-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
   </svg>
 </button>
 
 <!-- Help Popup -->
-<HelpPopup
-  show={showHelpPopup}
-  onClose={toggleHelpPopup}
-/>
+<HelpPopup show={showHelpPopup} onClose={toggleHelpPopup} />
 
 <!-- Cancel Confirmation Modal (Issue #23) -->
 <CancelConfirmModal
@@ -593,7 +730,9 @@
 <style>
   /* Global body styles */
   :global(body) {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
+      sans-serif;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
     background-attachment: fixed;
     min-height: 100vh;
@@ -632,20 +771,30 @@
 
   /* Keyframe Animations */
   @keyframes badge-pulse {
-    0%, 100% {
-      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4), 0 0 0 0 rgba(34, 197, 94, 0.4);
+    0%,
+    100% {
+      box-shadow:
+        0 2px 8px rgba(34, 197, 94, 0.4),
+        0 0 0 0 rgba(34, 197, 94, 0.4);
     }
     50% {
-      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4), 0 0 0 6px rgba(34, 197, 94, 0);
+      box-shadow:
+        0 2px 8px rgba(34, 197, 94, 0.4),
+        0 0 0 6px rgba(34, 197, 94, 0);
     }
   }
 
   @keyframes card-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
+    0%,
+    100% {
+      box-shadow:
+        0 0 20px rgba(34, 197, 94, 0.2),
+        0 8px 30px rgba(0, 0, 0, 0.4);
     }
     50% {
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.35), 0 8px 30px rgba(0, 0, 0, 0.4);
+      box-shadow:
+        0 0 30px rgba(34, 197, 94, 0.35),
+        0 8px 30px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -653,7 +802,9 @@
   :global(.zero-comment-highlight) {
     border: 2px solid rgba(34, 197, 94, 0.5);
     background: rgba(34, 197, 94, 0.08);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2), 0 8px 30px rgba(0, 0, 0, 0.4);
+    box-shadow:
+      0 0 20px rgba(34, 197, 94, 0.2),
+      0 8px 30px rgba(0, 0, 0, 0.4);
     animation: card-glow 3s ease-in-out infinite;
   }
 
@@ -684,7 +835,9 @@
     background: rgba(51, 65, 85, 0.5);
     border-radius: 0.75rem;
     border: 1px solid rgba(71, 85, 105, 0.5);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
   }
 
   :global(.filter-toggle-container):hover {
@@ -719,7 +872,11 @@
 
   /* Hover effect for issue cards */
   :global(.hover-effect) {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
   }
 
   :global(.hover-effect):hover {
@@ -867,8 +1024,13 @@
     }
 
     @keyframes logo-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
     }
   }
 
@@ -876,7 +1038,7 @@
   /* Positioned above footer (footer ~70px height) */
   .help-button {
     position: fixed !important;
-    bottom: 5rem !important;  /* Above footer */
+    bottom: 5rem !important; /* Above footer */
     right: 1rem !important;
     z-index: 40 !important;
 
@@ -930,7 +1092,8 @@
 
   /* Pulse glow animation - subtle */
   @keyframes help-glow {
-    0%, 100% {
+    0%,
+    100% {
       box-shadow: 0 3px 12px rgba(20, 184, 166, 0.35);
     }
     50% {
@@ -941,7 +1104,7 @@
   /* Tablet and up: Larger position offset */
   @media (min-width: 768px) {
     .help-button {
-      bottom: 5.5rem !important;  /* Above footer */
+      bottom: 5.5rem !important; /* Above footer */
       right: 1.5rem !important;
     }
   }
@@ -972,7 +1135,8 @@
 
   /* Smooth transitions */
   :global(*) {
-    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-property:
+      background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
   }
