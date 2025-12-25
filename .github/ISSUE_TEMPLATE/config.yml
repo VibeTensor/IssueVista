@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/VibeTensor/IssueFlow/discussions
+    about: Ask questions and discuss IssueFlow with the community
+  - name: Security Vulnerabilities
+    url: https://github.com/VibeTensor/IssueFlow/security/advisories/new
+    about: Report security vulnerabilities privately
+  - name: Documentation
+    url: https://github.com/VibeTensor/IssueFlow#readme
+    about: Read the project documentation

@@ -1,0 +1,14 @@
+# Funding platforms for IssueFlow
+# These are supported funding model platforms
+
+github: [ascender1729]
+# patreon: # Replace with your Patreon username
+# open_collective: # Replace with your Open Collective username
+# ko_fi: # Replace with your Ko-fi username
+# tidelift: # Replace with your Tidelift package name
+# community_bridge: # Replace with your Community Bridge project
+# liberapay: # Replace with your Liberapay username
+# issuehunt: # Replace with your IssueHunt username
+# lfx_crowdfunding: # Replace with your LFX Crowdfunding project
+# polar: # Replace with your Polar username
+custom: ['https://github.com/sponsors/VibeTensor']
