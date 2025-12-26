@@ -1,8 +1,13 @@
 # SOP Workflow Rules - Complete Implementation Guide
 
-## Document Version: 2.7
+## Document Version: 3.0
 
 This is the authoritative workflow for implementing GitHub issues. Every issue MUST follow these phases. DO NOT skip or combine phases.
+
+**Integrated with:**
+- ISO 21502:2020 Project Management Guidance
+- PMI PMBOK 7th Edition Agile Practices
+- See `project-management.md` for detailed PM integration
 
 ## Auto-Continue Rule (MANDATORY)
 
@@ -15,7 +20,43 @@ This is the authoritative workflow for implementing GitHub issues. Every issue M
 
 This rule applies to ALL phases and steps. Never wait indefinitely. Keep the workflow moving.
 
-## Pre-Implementation Phase (Steps 1-4)
+## Pre-Implementation Phase (Steps 0-4)
+
+### Step 0: Project Management Pre-Checks (MANDATORY)
+
+See `project-management.md` for detailed commands.
+
+#### 0A. Verify Issue in Project Board
+```bash
+gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
+```
+
+**Required Fields Must Be Set:**
+- [ ] Status = "Todo"
+- [ ] Sprint assigned (current or planned)
+- [ ] Priority (P0-P3)
+- [ ] Epic (feature category)
+- [ ] Story Points (1, 3, 5, 8, or 13)
+
+#### 0B. Check Sprint Alignment
+```bash
+gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") | {title, due_on}'
+```
+- [ ] Issue milestone matches current sprint
+- [ ] Priority aligns with sprint goals
+
+#### 0C. Risk Assessment (Complex Issues Only)
+For issues with Story Points >= 8:
+- Check `.github/RISK_REGISTER.md` for related risks
+- Note mitigation strategies in research file
+
+#### 0D. Update Status to "In Progress"
+```bash
+gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> \
+  --field-id PVTSSF_lADOCOaJzs4A6eQgzgqFXZA --single-select-option-id f75ad846
+```
+
+---
 
 ### Step 1: Read Issue Description
 
@@ -116,6 +157,22 @@ Update research document with:
 - Commands used
 - Issues encountered and solutions
 - Files modified
+
+#### C2. Mid-Implementation PM Check (After Phase 5 Only)
+
+After completing Phase 5 (Core Implementation):
+
+1. **Verify estimate accuracy:**
+   - Still on track for original story point estimate?
+   - If > 50% over estimate, consider splitting issue
+
+2. **Risk check:**
+   - Any new risks identified?
+   - Update `.github/RISK_REGISTER.md` if needed
+
+3. **Scope change detection:**
+   - If scope expanded, document in research file
+   - Update story points if estimate was significantly wrong
 
 #### D. Post-Phase: User Confirmation
 
@@ -267,8 +324,15 @@ Document all learnings, commands used, and statistics.
 
 ## Quick Reference Checklists
 
-### Pre-Implementation
+### Pre-Implementation (PM + Technical)
 
+**Project Management (Step 0):**
+- [ ] Verify issue in project board with all fields set
+- [ ] Check sprint alignment and milestone
+- [ ] Risk assessment (for complex issues)
+- [ ] Update status to "In Progress"
+
+**Technical (Steps 1-4):**
 - [ ] Read issue description
 - [ ] Read ALL CodeRabbit issue thread comments
 - [ ] Document suggestions in research file
@@ -301,9 +365,18 @@ Document all learnings, commands used, and statistics.
 
 ### Post-Merge
 
+**Git & Video:**
 - [ ] Local repo synced
 - [ ] Git graph verified (branch/merge pattern)
 - [ ] Video recording confirmed off
+
+**Trackers:**
 - [ ] Uplift Tracker updated (6/6 fields)
 - [ ] Earnings tracker CSV updated
 - [ ] Research file complete
+
+**Project Management (ISO 21502/PMI):**
+- [ ] Project board status = "Done" (auto-updated via workflow)
+- [ ] Lessons learned added (if applicable) - `.github/LESSONS_LEARNED.md`
+- [ ] Risk register updated (if new risks found) - `.github/RISK_REGISTER.md`
+- [ ] Sprint metrics tracked (velocity, completion)

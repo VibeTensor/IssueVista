@@ -1,8 +1,13 @@
 # Post-Merge Rules
 
-## Overview
+## Document Version: 2.0
 
 After every PR merge, these steps are MANDATORY. Do NOT skip any step.
+
+**Integrated with:**
+- ISO 21502:2020 Project Management Guidance
+- PMI PMBOK 7th Edition Agile Practices
+- See `project-management.md` for detailed PM integration
 
 ---
 
@@ -200,11 +205,103 @@ Pavan Kumar | IssueFlow Issue #38 | [DOCS] Update README with November 2025 feat
 
 ---
 
+## Step 17: Verify Project Board Status (ISO 21502)
+
+### Actions:
+
+The project workflow should auto-update status to "Done". Verify:
+
+```bash
+# Check issue status in project board
+gh project item-list 2 --owner VibeTensor --format json | findstr <ISSUE_NUMBER>
+```
+
+**If not auto-updated**, manually update:
+```bash
+gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> \
+  --field-id PVTSSF_lADOCOaJzs4A6eQgzgqFXZA --single-select-option-id 8e45e91f
+```
+
+---
+
+## Step 18: Update Lessons Learned (If Applicable)
+
+### When to Add Entry:
+
+Add entry to `.github/LESSONS_LEARNED.md` if ANY of these occurred:
+- Unexpected technical challenge encountered
+- New pattern or approach discovered
+- Tool or API limitation found
+- Process improvement identified
+- Estimate significantly different from actual
+
+### Entry Template:
+
+```markdown
+### LL-XXX: [Title]
+**Date:** YYYY-MM-DD
+**Sprint:** Sprint X
+**Category:** Technical / Process / Communication / Resource
+**Impact:** High / Medium / Low
+
+#### Context
+[What was the situation?]
+
+#### What Happened
+[Describe the event or outcome]
+
+#### Root Cause
+[Why did this happen?]
+
+#### Lesson Learned
+[What should be done differently?]
+
+#### Action Items
+- [ ] Action 1
+
+#### Applicable To
+[Future situations where this applies]
+```
+
+---
+
+## Step 19: Update Risk Register (If Applicable)
+
+### When to Update `.github/RISK_REGISTER.md`:
+
+1. **New risk discovered** during implementation
+2. **Existing risk mitigated** by this change
+3. **Risk escalated** (higher probability or impact)
+
+### Actions:
+
+- Add new risks with full template
+- Update status of mitigated risks
+- Close resolved risks with closure date
+
+---
+
+## Step 20: Sprint Metrics Update (End of Sprint)
+
+At the end of each sprint, capture:
+
+1. **Velocity**: Total story points completed
+2. **Commitment accuracy**: Completed / Committed
+3. **Carryover**: Stories moved to next sprint
+4. **Sprint goal achievement**: Yes/No
+
+Update in `.github/SPRINT_RETROSPECTIVE.md` using the retrospective template.
+
+---
+
 ## Post-Merge Checklist
 
+### Git & Verification (Steps 12)
 - [ ] `git pull origin master` completed
 - [ ] Git graph shows branch/merge pattern (`|\  | * |/`)
 - [ ] If linear pattern visible, merge was done wrong - follow recovery steps
+
+### Video & Trackers (Steps 13-16)
 - [ ] Video recording confirmed OFF (ask user)
 - [ ] Video link and duration collected from user
 - [ ] Complete Uplift Tracker data provided (issue URL, PR URL, commit URLs, video)
@@ -214,3 +311,9 @@ Pavan Kumar | IssueFlow Issue #38 | [DOCS] Update README with November 2025 feat
 - [ ] Loom video title updated with standard format
 - [ ] Earnings tracker CSV updated
 - [ ] Research file complete
+
+### Project Management - ISO 21502/PMI (Steps 17-20)
+- [ ] Project board status verified as "Done"
+- [ ] Lessons learned added (if unexpected challenges occurred)
+- [ ] Risk register updated (if new risks found or mitigated)
+- [ ] Sprint metrics tracked (at end of sprint)

@@ -67,14 +67,15 @@ tests/
 - `eslint.config.js` - ESLint flat config
 - `.prettierrc` - Prettier configuration
 
-## Modular Rules (v2.6)
+## Modular Rules (v3.0)
 
 See `.claude/rules/` for detailed rules:
 
-- @.claude/rules/sop-workflow.md - Complete 9-phase SOP implementation (16 steps)
+- @.claude/rules/sop-workflow.md - Complete 9-phase SOP implementation (20 steps)
+- @.claude/rules/project-management.md - ISO 21502/PMI PMBOK integration (NEW)
 - @.claude/rules/coderabbit.md - CodeRabbit review process (issue + PR threads)
 - @.claude/rules/merge-policy.md - Git merge requirements (--merge ONLY)
-- @.claude/rules/post-merge.md - Post-merge workflow (video, Uplift, earnings)
+- @.claude/rules/post-merge.md - Post-merge workflow (video, Uplift, earnings, PM docs)
 - @.claude/rules/testing.md - Testing requirements and commands
 - @.claude/rules/error-recovery.md - Error handling and recovery procedures
 - @.claude/rules/coding-standards.md - Code style guidelines (Svelte 5, TypeScript)
@@ -89,11 +90,35 @@ See `.claude/rules/` for detailed rules:
 - Earnings tracker: `.internal/trackers/december_2025_earnings_tracker.csv`
 - SOP document: `.internal/planning/SOP_ISSUE_IMPLEMENTATION.txt`
 
+## Pre-Issue Checklist (Step 0)
+
+1. Verify issue in project board with all fields set
+2. Check sprint alignment and milestone
+3. Risk assessment (for complex issues SP >= 8)
+4. Update status to "In Progress"
+
 ## Post-Merge Checklist
 
+**Git & Video:**
 1. Sync local: `git checkout master && git pull`
 2. Verify git graph shows branch/merge pattern
 3. Confirm video recording is off
+
+**Trackers:**
 4. Provide Uplift Tracker data (issue, PR, commits, video)
 5. Update Uplift Tracker (6/6 fields)
 6. Update earnings tracker CSV
+
+**Project Management (ISO 21502/PMI):**
+7. Verify project board status = "Done"
+8. Add lessons learned (if applicable)
+9. Update risk register (if new risks found)
+10. Track sprint metrics (at sprint end)
+
+## Project Management Documents
+
+| Document | Location | When to Update |
+|----------|----------|----------------|
+| Lessons Learned | `.github/LESSONS_LEARNED.md` | After unexpected challenges |
+| Risk Register | `.github/RISK_REGISTER.md` | When risks found/mitigated |
+| Sprint Retrospective | `.github/SPRINT_RETROSPECTIVE.md` | End of each sprint |
