@@ -178,3 +178,152 @@ export function formatRelativeTime(isoString: string): string {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }
 }
+
+/**
+ * Export types for search history
+ */
+export type ExportFormat = 'json' | 'csv';
+
+/**
+ * Export metadata structure for JSON exports
+ */
+interface ExportMetadata {
+  exportedAt: string;
+  version: string;
+  itemCount: number;
+  items: SearchHistoryItem[];
+}
+
+/**
+ * Escape a CSV field according to RFC 4180
+ * Fields containing commas, quotes, or newlines are enclosed in quotes
+ * Double quotes within fields are escaped by doubling them
+ */
+function escapeCsvField(field: string | number | undefined): string {
+  if (field === undefined || field === null) {
+    return '';
+  }
+
+  const stringValue = String(field);
+
+  // Check if field needs escaping
+  if (/[,"\n\r]/.test(stringValue)) {
+    // Escape double quotes by doubling them and wrap in quotes
+    return `"${stringValue.replace(/"/g, '""')}"`;
+  }
+
+  return stringValue;
+}
+
+/**
+ * Generate current date string for filename
+ * Format: YYYY-MM-DD
+ */
+function getDateString(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * Export search history to JSON format
+ * Returns a formatted JSON string with metadata
+ */
+export function exportToJSON(): string {
+  const history = getHistory();
+
+  const exportData: ExportMetadata = {
+    exportedAt: new Date().toISOString(),
+    version: '1.0',
+    itemCount: history.length,
+    items: history
+  };
+
+  return JSON.stringify(exportData, null, 2);
+}
+
+/**
+ * Export search history to CSV format
+ * Returns a CSV string with headers and UTF-8 BOM for Excel compatibility
+ */
+export function exportToCSV(): string {
+  const history = getHistory();
+
+  // UTF-8 BOM for Excel compatibility
+  const BOM = '\ufeff';
+
+  // CSV headers
+  const headers = ['Repository', 'URL', 'Last Searched', 'Search Count', 'Issue Count'];
+
+  // Build CSV rows
+  const rows = history.map((item) => {
+    const repoName = `${item.owner}/${item.repo}`;
+    return [
+      escapeCsvField(repoName),
+      escapeCsvField(item.fullUrl),
+      escapeCsvField(item.lastSearched),
+      escapeCsvField(item.searchCount),
+      escapeCsvField(item.issueCount)
+    ].join(',');
+  });
+
+  // Combine headers and rows
+  return BOM + headers.join(',') + '\n' + rows.join('\n');
+}
+
+/**
+ * Download search history as a file
+ * Triggers browser download with appropriate filename and MIME type
+ */
+export function downloadExport(format: ExportFormat): void {
+  if (!isBrowser()) {
+    console.warn('[SearchHistory] Cannot download: not in browser environment');
+    return;
+  }
+
+  const history = getHistory();
+
+  if (history.length === 0) {
+    console.warn('[SearchHistory] No history to export');
+    return;
+  }
+
+  let content: string;
+  let mimeType: string;
+  let extension: string;
+
+  if (format === 'json') {
+    content = exportToJSON();
+    mimeType = 'application/json';
+    extension = 'json';
+  } else {
+    content = exportToCSV();
+    mimeType = 'text/csv;charset=utf-8';
+    extension = 'csv';
+  }
+
+  const filename = `issueflow-search-history-${getDateString()}.${extension}`;
+
+  try {
+    // Create Blob and download
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+
+    // Create temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup: remove element and revoke URL to free memory
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('[SearchHistory] Failed to download export:', error);
+  }
+}

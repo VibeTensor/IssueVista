@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import type { SearchHistoryItem } from '../../lib/types/results';
-  import { formatRelativeTime } from '../../lib/search-history';
+  import { formatRelativeTime, downloadExport } from '../../lib/search-history';
 
   interface Props {
     items: SearchHistoryItem[];
@@ -93,14 +93,34 @@
     <!-- Header -->
     <div class="dropdown-header">
       <span class="header-title">Recent Searches</span>
-      <button
-        type="button"
-        class="clear-all-btn"
-        onclick={onClear}
-        aria-label="Clear all search history"
-      >
-        Clear all
-      </button>
+      <div class="header-actions">
+        <div class="export-group" role="group" aria-label="Export search history">
+          <button
+            type="button"
+            class="export-btn"
+            onclick={() => downloadExport('json')}
+            aria-label="Export search history as JSON"
+          >
+            JSON
+          </button>
+          <button
+            type="button"
+            class="export-btn"
+            onclick={() => downloadExport('csv')}
+            aria-label="Export search history as CSV"
+          >
+            CSV
+          </button>
+        </div>
+        <button
+          type="button"
+          class="clear-all-btn"
+          onclick={onClear}
+          aria-label="Clear all search history"
+        >
+          Clear all
+        </button>
+      </div>
     </div>
 
     <!-- History Items -->
@@ -203,6 +223,38 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #94a3b8;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .export-group {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+    padding-right: 0.5rem;
+    border-right: 1px solid rgba(71, 85, 105, 0.3);
+  }
+
+  .export-btn {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    color: #14b8a6;
+    background: transparent;
+    border: 1px solid rgba(20, 184, 166, 0.3);
+    cursor: pointer;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+  }
+
+  .export-btn:hover {
+    color: #2dd4bf;
+    background: rgba(20, 184, 166, 0.1);
+    border-color: rgba(20, 184, 166, 0.5);
   }
 
   .clear-all-btn {
