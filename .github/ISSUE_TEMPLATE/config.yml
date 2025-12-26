@@ -9,3 +9,9 @@ contact_links:
   - name: Documentation
     url: https://github.com/VibeTensor/IssueFlow#readme
     about: Read the project documentation
+  - name: Project Board
+    url: https://github.com/orgs/VibeTensor/projects/2
+    about: View project roadmap and sprint progress
+  - name: Contributing Guide
+    url: https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md
+    about: Learn how to contribute to IssueFlow
