@@ -50,7 +50,7 @@
     "graphql-request": "^7.2.0",
     "rough-notation": "^0.5.1",
     "svelte": "^5.39.11",
-    "unocss": "^66.5.3"
+    "unocss": "^66.5.11"
   },
   "engines": {
     "node": ">=18.0.0"
