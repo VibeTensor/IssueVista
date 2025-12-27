@@ -1,6 +1,6 @@
 # SOP Workflow Rules - Complete Implementation Guide
 
-## Document Version: 3.0
+## Document Version: 4.0
 
 This is the authoritative workflow for implementing GitHub issues. Every issue MUST follow these phases. DO NOT skip or combine phases.
 
@@ -10,16 +10,16 @@ This is the authoritative workflow for implementing GitHub issues. Every issue M
 - PMI PMBOK 7th Edition Agile Practices
 - See `project-management.md` for detailed PM integration
 
-## Auto-Continue Rule (MANDATORY)
+## Auto-Continue Rule (LIMITED APPLICATION)
 
-**CRITICAL:** If the user does not respond for more than 7 minutes after a phase completion:
+**IMPORTANT:** The auto-continue rule ONLY applies to non-blocking tasks, NOT user approvals.
 
-1. DO NOT ask for confirmation again
-2. DO NOT wait any longer
-3. AUTOMATICALLY continue to the next phase/step
-4. Keep working until the task is complete
+**For non-approval tasks:** If the user does not respond for more than 7 minutes:
 
-This rule applies to ALL phases and steps. Never wait indefinitely. Keep the workflow moving.
+1. Continue with research, web searches, documentation
+2. Keep working on the current phase
+
+**For user approvals (BLOCKING):** You MUST wait for explicit user approval. NO auto-continue for phase approvals. See "Mandatory User Approval Gate" section below.
 
 ## Pre-Implementation Phase (Steps 0-4)
 
@@ -132,13 +132,15 @@ FAILURE TO CREATE 9-PHASE PLAN = IMPLEMENTATION REJECTED
 
 CRITICAL: This step is NON-NEGOTIABLE. Web searches MUST be performed before EVERY phase.
 
-**Search Requirements by Complexity:**
+**Search Requirements by Complexity (MINIMUM 5 PER PHASE):**
 
 | Complexity        | Searches Per Phase | Total (9 Phases) | Example Issues               |
 | ----------------- | ------------------ | ---------------- | ---------------------------- |
-| Simple (1-3 SP)   | 2-3 searches       | 18-27 total      | Single file, docs, labels    |
-| Medium (5 SP)     | 3-5 searches       | 27-45 total      | New component, multi-file    |
-| Complex (8-13 SP) | 5-10 searches      | 45-90 total      | Major features, architecture |
+| Simple (1-3 SP)   | 5 searches minimum | 45 total minimum | Single file, docs, labels    |
+| Medium (5 SP)     | 5-7 searches       | 45-63 total      | New component, multi-file    |
+| Complex (8-13 SP) | 7-10 searches      | 63-90 total      | Major features, architecture |
+
+**CRITICAL: No phase may have fewer than 5 web searches. This is NON-NEGOTIABLE.**
 
 **Before EVERY Phase:**
 
@@ -215,7 +217,7 @@ After completing each phase:
 - Ask user to visually review the changes
 - Wait for explicit confirmation: "Proceed to next phase"
 
-**AUTO-CONTINUE RULE:** If the user does not respond within 7 minutes, automatically proceed to the next phase. Do not wait indefinitely.
+**NO AUTO-CONTINUE FOR APPROVALS.** You MUST wait for user approval before proceeding.
 
 Example prompt:
 
@@ -223,9 +225,271 @@ Example prompt:
 "Phase X complete. Changes made:
  - [List of changes]
  Research document updated.
- Please review and confirm to proceed to Phase X+1.
- (Auto-continuing in 7 minutes if no response)"
+ Web searches performed: [list 5+ searches]
+ Project board updated: Yes
+
+ Please review and reply 'approved' to proceed to Phase X+1."
 ```
+
+---
+
+## MANDATORY USER APPROVAL GATE (After Every Phase)
+
+**BLOCKING REQUIREMENT:** You MUST get explicit user approval before proceeding to the next phase.
+
+### Approval Request Format:
+
+1. Present complete summary of phase work
+2. List ALL web searches performed (minimum 5) with findings
+3. Show all files modified with code snippets
+4. Show research document updates
+5. Confirm project board was updated
+6. ASK: "Please review Phase X. Reply 'approved' or provide feedback."
+7. WAIT for user response (NO auto-continue)
+
+### If User Provides Feedback:
+
+- Address ALL feedback points
+- Re-present for approval
+- Repeat until user says "approved"
+
+**VIOLATION OF APPROVAL GATE = RESTART FROM PHASE 1**
+
+---
+
+## Mandatory Phase Cooldown (10 Minutes Minimum)
+
+After completing each phase AND receiving user approval:
+
+1. Record phase completion timestamp
+2. WAIT minimum 10 minutes before starting next phase
+3. Use cooldown time for:
+   - Reviewing phase outputs
+   - Updating project board
+   - Preparing for next phase web searches
+   - Updating research documentation
+
+### Cooldown Format in Research Document:
+
+```
+Phase X Completed: YYYY-MM-DD HH:MM
+User Approval Received: YYYY-MM-DD HH:MM
+Cooldown Started: YYYY-MM-DD HH:MM
+Next Phase Started: YYYY-MM-DD HH:MM (must be >= 10 min after approval)
+```
+
+**NO EXCEPTIONS to the 10-minute cooldown rule.**
+
+---
+
+## Project Board Phase Tracking (ISO 21502 Compliance)
+
+Update GitHub Project board at EACH phase transition:
+
+| Phase   | Status Field Value | Notes Field Update                       |
+| ------- | ------------------ | ---------------------------------------- |
+| Phase 1 | In Progress        | "Phase 1/9: Branch created"              |
+| Phase 2 | In Progress        | "Phase 2/9: Code audit complete"         |
+| Phase 3 | In Progress        | "Phase 3/9: Files identified"            |
+| Phase 4 | In Progress        | "Phase 4/9: Design complete"             |
+| Phase 5 | In Progress        | "Phase 5/9: Core implementation done"    |
+| Phase 6 | In Progress        | "Phase 6/9: Additional features done"    |
+| Phase 7 | In Progress        | "Phase 7/9: Documentation updated"       |
+| Phase 8 | In Progress        | "Phase 8/9: Committed and pushed"        |
+| Phase 9 | In Review          | "Phase 9/9: PR created, awaiting review" |
+
+### Command Template:
+
+```bash
+gh api graphql -f query='
+mutation {
+  updateProjectV2ItemFieldValue(input: {
+    projectId: "PVT_kwDODnRjuc4BLSUM"
+    itemId: "<ITEM_ID>"
+    fieldId: "<NOTES_FIELD_ID>"
+    value: { text: "Phase X/9: [description]" }
+  }) { projectV2Item { id } }
+}'
+```
+
+**FAILURE TO UPDATE PROJECT BOARD = SOP VIOLATION**
+
+---
+
+## Research Document Format (ISO 21502:2020 / PMI PMBOK Compliant)
+
+File: `.internal/research/issue_XX_research.txt`
+
+### Required Document Structure:
+
+```
+================================================================================
+ISSUE #XX RESEARCH DOCUMENT
+================================================================================
+Title: [Issue Title]
+Type: [FEATURE|FIX|CHORE|DOCS|REFACTOR|TEST]
+Author: @ascender1729
+Created: YYYY-MM-DD HH:MM
+Last Updated: YYYY-MM-DD HH:MM
+
+================================================================================
+1. PROJECT MANAGEMENT CONTEXT (ISO 21502:2020 Section 5.2)
+================================================================================
+
+1.1 Stakeholder Analysis:
+    - Primary: @ascender1729 (Developer/Maintainer)
+    - Secondary: [Other stakeholders if any]
+
+1.2 Risk Assessment:
+    - Technical Risks: [List]
+    - Schedule Risks: [List]
+    - Mitigation Strategies: [List]
+
+1.3 Resource Allocation:
+    - Estimated Story Points: X
+    - Estimated Duration: X hours
+    - Actual Duration: X hours (updated post-completion)
+
+================================================================================
+2. PHASE EXECUTION LOG (PMI PMBOK 7th Edition - Agile Practices)
+================================================================================
+
+PHASE 1: Setup & Branch Creation
+---------------------------------
+Started: YYYY-MM-DD HH:MM
+Completed: YYYY-MM-DD HH:MM
+Duration: XX minutes
+
+Web Searches (Minimum 5):
+1. Query: "[exact query]"
+   URL: [url]
+   Finding: [key insight]
+
+2. Query: "[exact query]"
+   URL: [url]
+   Finding: [key insight]
+
+[Continue for all 5+ searches]
+
+Implementation Summary:
+- Actions taken: [list]
+- Files created/modified: [list]
+- Commands executed: [list]
+
+User Approval:
+- Requested: YYYY-MM-DD HH:MM
+- Approved: YYYY-MM-DD HH:MM
+- Feedback: [if any]
+
+Project Board Updated: Yes/No
+Cooldown Period: [10 minutes observed]
+Next Phase Start: YYYY-MM-DD HH:MM
+
+[REPEAT STRUCTURE FOR ALL 9 PHASES]
+
+================================================================================
+3. QUALITY METRICS (ISO 21502:2020 Section 6.3)
+================================================================================
+
+- Total Web Searches: XX (Minimum 45 for 9 phases)
+- All Phases Completed: Yes/No
+- User Approvals Received: X/9
+- Cooldowns Observed: X/9
+- Build Status: Pass/Fail
+- Lint Status: 0 errors, X warnings
+- Test Status: Pass/Fail
+
+================================================================================
+4. LESSONS LEARNED (PMI PMBOK - Retrospective)
+================================================================================
+
+What Went Well:
+- [List items]
+
+What Could Be Improved:
+- [List items]
+
+Action Items for Future Issues:
+- [List items]
+
+================================================================================
+```
+
+---
+
+## SOP Violation Policy
+
+### Automatic Restart Required If:
+
+1. Web searches < 5 per phase
+2. User approval skipped for any phase
+3. Research document not updated after phase
+4. 9-phase plan not created before implementation
+5. Phase steps executed out of order
+6. Phase cooldown not observed (< 10 minutes between phases)
+7. Project board not updated at phase transitions
+
+### Violation Detection:
+
+- Self-check at each phase completion
+- User can flag violations at any time
+- Research document audit reveals missing entries
+
+### Restart Procedure:
+
+1. **Acknowledge violation explicitly** to user:
+   ```
+   "I deviated from SOP by [specific violation].
+   Reverting changes and restarting from Step 0."
+   ```
+
+2. **Revert all uncommitted changes:**
+   ```bash
+   git checkout -- .
+   ```
+
+3. **Delete feature branch if created:**
+   ```bash
+   git checkout master
+   git branch -D <branch-name>
+   ```
+
+4. **Return to master branch:**
+   ```bash
+   git checkout master
+   git pull origin master
+   ```
+
+5. **Restart from Step 0** (PM Pre-Checks)
+
+### Partial Restart (Minor Violations):
+
+For minor violations (e.g., only 4 searches instead of 5):
+
+1. Acknowledge the specific violation
+2. Complete the missing requirement immediately
+3. Continue from current phase (no full restart)
+4. Document the violation and correction in research file
+
+### SOP Violation Log:
+
+Track all violations in research document:
+
+```
+================================================================================
+SOP VIOLATIONS (If Any)
+================================================================================
+Violation 1:
+- Phase: X
+- Type: [Web searches | Approval | Documentation | Cooldown | Board]
+- Description: [What was missing]
+- Corrective Action: [What was done to fix]
+- Timestamp: YYYY-MM-DD HH:MM
+```
+
+**ZERO TOLERANCE for skipping user approvals.** This always requires full restart.
+
+---
 
 ## Post-Implementation Phase (Steps 5-6)
 
@@ -377,10 +641,12 @@ Document all learnings, commands used, and statistics.
 
 ### Each Phase
 
-- [ ] Web search (5-10 searches)
+- [ ] Web search (minimum 5 searches - NON-NEGOTIABLE)
 - [ ] Implement
 - [ ] Document in research file
-- [ ] User confirmation received (or auto-continue after 7 min)
+- [ ] Update project board with phase progress
+- [ ] User approval received (BLOCKING - no auto-continue)
+- [ ] 10-minute cooldown observed before next phase
 
 ### Pre-PR
 
