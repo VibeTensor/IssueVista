@@ -10,13 +10,13 @@ IssueFlow helps developers discover beginner-friendly GitHub issues. Whether you
 
 ### How to Use Discussions
 
-| Category | Purpose |
-|----------|---------|
+| Category          | Purpose                      |
+| ----------------- | ---------------------------- |
 | **Announcements** | Project updates and releases |
-| **Q&A** | Ask questions, get answers |
-| **Ideas** | Share feature suggestions |
-| **Show and Tell** | Share your contributions |
-| **General** | Everything else |
+| **Q&A**           | Ask questions, get answers   |
+| **Ideas**         | Share feature suggestions    |
+| **Show and Tell** | Share your contributions     |
+| **General**       | Everything else              |
 
 ### Quick Links
 
@@ -34,6 +34,7 @@ IssueFlow helps developers discover beginner-friendly GitHub issues. Whether you
 ### Introduce Yourself!
 
 Drop a comment below and tell us:
+
 - Your name and background
 - What brought you to IssueFlow
 - What you're hoping to contribute or learn
@@ -41,4 +42,5 @@ Drop a comment below and tell us:
 Looking forward to building together!
 
 ---
-*Maintained by [@ascender1729](https://github.com/ascender1729) | [VibeTensor](https://github.com/VibeTensor)*
+
+_Maintained by [@ascender1729](https://github.com/ascender1729) | [VibeTensor](https://github.com/VibeTensor)_

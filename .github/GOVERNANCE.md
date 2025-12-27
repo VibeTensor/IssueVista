@@ -5,12 +5,15 @@
 ### 1. Project Charter
 
 #### Vision
+
 To be the go-to tool for developers discovering beginner-friendly open source issues.
 
 #### Mission
+
 Provide an intuitive, accessible platform that connects new contributors with welcoming open source projects.
 
 #### Objectives
+
 1. Simplify GitHub issue discovery
 2. Filter issues by beginner-friendliness
 3. Provide AI-enhanced recommendations
@@ -49,12 +52,12 @@ Provide an intuitive, accessible platform that connects new contributors with we
 
 #### Decision Categories
 
-| Category | Authority | Process |
-|----------|-----------|---------|
-| Strategic | Project Owner | Proposal + Stakeholder input |
-| Architectural | Tech Lead | RFC + Review period |
-| Tactical | Maintainers | Discussion + Consensus |
-| Operational | Contributors | Self-directed within guidelines |
+| Category      | Authority     | Process                         |
+| ------------- | ------------- | ------------------------------- |
+| Strategic     | Project Owner | Proposal + Stakeholder input    |
+| Architectural | Tech Lead     | RFC + Review period             |
+| Tactical      | Maintainers   | Discussion + Consensus          |
+| Operational   | Contributors  | Self-directed within guidelines |
 
 #### Decision Process
 
@@ -65,6 +68,7 @@ Provide an intuitive, accessible platform that connects new contributors with we
 5. **Communication**: Decision documented and announced
 
 #### Voting (when needed)
+
 - Simple majority for minor decisions
 - 2/3 majority for significant changes
 - Unanimous for breaking changes
@@ -74,6 +78,7 @@ Provide an intuitive, accessible platform that connects new contributors with we
 ### 4. Roles and Responsibilities
 
 #### Project Owner
+
 - Set strategic direction
 - Final authority on disputes
 - Stakeholder management
@@ -81,6 +86,7 @@ Provide an intuitive, accessible platform that connects new contributors with we
 - Release approval
 
 #### Tech Lead
+
 - Technical architecture decisions
 - Code quality standards
 - Technology selection
@@ -88,6 +94,7 @@ Provide an intuitive, accessible platform that connects new contributors with we
 - Security responsibility
 
 #### Maintainers
+
 - Code review and approval
 - PR merging
 - Issue triage
@@ -95,6 +102,7 @@ Provide an intuitive, accessible platform that connects new contributors with we
 - Documentation oversight
 
 #### Contributors
+
 - Feature implementation
 - Bug fixes
 - Documentation improvements
@@ -113,6 +121,7 @@ Contributor → Regular Contributor → Maintainer → Tech Lead
 ```
 
 #### Becoming a Maintainer
+
 1. Consistent, quality contributions (minimum 5 merged PRs)
 2. Active community participation
 3. Demonstrated understanding of project goals
@@ -123,12 +132,14 @@ Contributor → Regular Contributor → Maintainer → Tech Lead
 ### 6. Conflict Resolution
 
 #### Process
+
 1. **Discussion**: Parties discuss directly
 2. **Mediation**: Maintainer mediates
 3. **Escalation**: Tech Lead reviews
 4. **Final Decision**: Project Owner decides
 
 #### Code of Conduct Violations
+
 - See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 - Report to project owner
 - Investigation within 48 hours
@@ -139,6 +150,7 @@ Contributor → Regular Contributor → Maintainer → Tech Lead
 ### 7. Change Control
 
 All significant changes require:
+
 1. GitHub Issue documenting the change
 2. Discussion period for community input
 3. Technical review
@@ -151,18 +163,19 @@ See [CHANGE_MANAGEMENT.md](./CHANGE_MANAGEMENT.md) for detailed process.
 
 ### 8. Communication Channels
 
-| Channel | Purpose | Authority |
-|---------|---------|-----------|
-| GitHub Issues | Bug reports, feature requests | All |
-| GitHub Discussions | Q&A, ideas, announcements | All |
-| Pull Requests | Code contributions | All |
-| Project Board | Task tracking | Maintainers+ |
+| Channel            | Purpose                       | Authority    |
+| ------------------ | ----------------------------- | ------------ |
+| GitHub Issues      | Bug reports, feature requests | All          |
+| GitHub Discussions | Q&A, ideas, announcements     | All          |
+| Pull Requests      | Code contributions            | All          |
+| Project Board      | Task tracking                 | Maintainers+ |
 
 ---
 
 ### 9. Transparency
 
 We commit to:
+
 - Public roadmap (GitHub Projects)
 - Open decision-making discussions
 - Documented processes
@@ -174,6 +187,7 @@ We commit to:
 ### 10. Amendment Process
 
 This governance document may be amended by:
+
 1. Proposal via GitHub Issue
 2. 14-day discussion period
 3. Tech Lead review
@@ -188,6 +202,6 @@ IssueFlow is licensed under the MIT License. All contributions must be compatibl
 
 ---
 
-*Document Version: 1.0*
-*Last Updated: December 26, 2025*
-*Compliant with: ISO 21502:2020 Section 5*
+_Document Version: 1.0_
+_Last Updated: December 26, 2025_
+_Compliant with: ISO 21502:2020 Section 5_

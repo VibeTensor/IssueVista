@@ -3,6 +3,7 @@
 ## PMI PMBOK Agile Practices
 
 ### Sprint Information
+
 - **Sprint Number:** Sprint X
 - **Sprint Goal:** [Goal statement]
 - **Sprint Dates:** YYYY-MM-DD to YYYY-MM-DD
@@ -13,14 +14,15 @@
 
 ## Sprint Metrics
 
-| Metric | Planned | Actual | Variance |
-|--------|---------|--------|----------|
-| Story Points Committed | X | Y | Z |
-| Stories Completed | X | Y | Z |
-| Bugs Fixed | X | Y | Z |
-| Velocity | X | Y | Z |
+| Metric                 | Planned | Actual | Variance |
+| ---------------------- | ------- | ------ | -------- |
+| Story Points Committed | X       | Y      | Z        |
+| Stories Completed      | X       | Y      | Z        |
+| Bugs Fixed             | X       | Y      | Z        |
+| Velocity               | X       | Y      | Z        |
 
 ### Burndown Summary
+
 ```
 Sprint Start: XX points
 Sprint End: XX points remaining
@@ -32,25 +34,31 @@ Completion Rate: XX%
 ## Retrospective Framework: Start-Stop-Continue
 
 ### What Should We START Doing?
+
 <!-- New practices to adopt -->
-| Suggestion | Priority | Owner | Target Sprint |
-|------------|----------|-------|---------------|
-| | High/Med/Low | @username | Sprint X |
-| | High/Med/Low | @username | Sprint X |
+
+| Suggestion | Priority     | Owner     | Target Sprint |
+| ---------- | ------------ | --------- | ------------- |
+|            | High/Med/Low | @username | Sprint X      |
+|            | High/Med/Low | @username | Sprint X      |
 
 ### What Should We STOP Doing?
+
 <!-- Practices to discontinue -->
+
 | Practice | Reason | Impact |
-|----------|--------|--------|
-| | | |
-| | | |
+| -------- | ------ | ------ |
+|          |        |        |
+|          |        |        |
 
 ### What Should We CONTINUE Doing?
+
 <!-- Practices that work well -->
+
 | Practice | Why It Works | Improvements |
-|----------|--------------|--------------|
-| | | |
-| | | |
+| -------- | ------------ | ------------ |
+|          |              |              |
+|          |              |              |
 
 ---
 
@@ -82,18 +90,18 @@ Completion Rate: XX%
 
 ## Action Items from This Retrospective
 
-| Action | Owner | Due Date | Status |
-|--------|-------|----------|--------|
-| | @username | YYYY-MM-DD | Pending |
-| | @username | YYYY-MM-DD | Pending |
+| Action | Owner     | Due Date   | Status  |
+| ------ | --------- | ---------- | ------- |
+|        | @username | YYYY-MM-DD | Pending |
+|        | @username | YYYY-MM-DD | Pending |
 
 ---
 
 ## Review of Previous Action Items
 
-| Action | Owner | Status | Notes |
-|--------|-------|--------|-------|
-| [From previous retro] | @username | Done/In Progress/Blocked | |
+| Action                | Owner     | Status                   | Notes |
+| --------------------- | --------- | ------------------------ | ----- |
+| [From previous retro] | @username | Done/In Progress/Blocked |       |
 
 ---
 
@@ -101,13 +109,13 @@ Completion Rate: XX%
 
 Rate 1-5 (1=Poor, 5=Excellent):
 
-| Dimension | Rating | Trend | Notes |
-|-----------|--------|-------|-------|
-| Collaboration | /5 | Up/Down/Stable | |
-| Technical Quality | /5 | Up/Down/Stable | |
-| Process Efficiency | /5 | Up/Down/Stable | |
-| Communication | /5 | Up/Down/Stable | |
-| Work-Life Balance | /5 | Up/Down/Stable | |
+| Dimension          | Rating | Trend          | Notes |
+| ------------------ | ------ | -------------- | ----- |
+| Collaboration      | /5     | Up/Down/Stable |       |
+| Technical Quality  | /5     | Up/Down/Stable |       |
+| Process Efficiency | /5     | Up/Down/Stable |       |
+| Communication      | /5     | Up/Down/Stable |       |
+| Work-Life Balance  | /5     | Up/Down/Stable |       |
 
 ---
 
@@ -136,5 +144,5 @@ Rate 1-5 (1=Poor, 5=Excellent):
 
 ---
 
-*Template Version: 1.0*
-*Compliant with: PMI PMBOK 7th Edition - Agile Practices*
+_Template Version: 1.0_
+_Compliant with: PMI PMBOK 7th Edition - Agile Practices_

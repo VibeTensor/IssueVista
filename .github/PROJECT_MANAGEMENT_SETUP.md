@@ -3,6 +3,7 @@
 ## Overview
 
 This guide documents the complete project management setup for IssueFlow, aligned with:
+
 - **ISO 21502:2020** - Project Management Guidance
 - **PMI PMBOK 7th Edition** - Agile Practices
 - **GitHub Best Practices** - Project Management
@@ -20,6 +21,7 @@ This guide documents the complete project management setup for IssueFlow, aligne
 Navigate to: https://github.com/orgs/VibeTensor/projects/2
 
 ### View 1: All Issues (Table)
+
 - **Layout:** Table
 - **Purpose:** Complete issue inventory
 - **Columns:** Title, Assignees, Status, Sprint, Priority, Epic, Effort, Story Points, Target Date, Labels
@@ -27,6 +29,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Filters:** None (show all)
 
 ### View 2: Kanban Board
+
 - **Layout:** Board
 - **Purpose:** Daily workflow management
 - **Group By:** Status
@@ -37,6 +40,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Card Fields:** Title, Assignees, Priority, Story Points
 
 ### View 3: Roadmap Timeline
+
 - **Layout:** Roadmap
 - **Purpose:** Release planning visualization
 - **Date Field:** Target Date
@@ -44,6 +48,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Zoom:** Month view
 
 ### View 4: Sprint Board (CREATE NEW)
+
 - **Layout:** Table
 - **Purpose:** Sprint planning and tracking
 - **Group By:** Sprint
@@ -52,6 +57,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Show:** Field sum for Story Points
 
 ### View 5: Priority Matrix (CREATE NEW)
+
 - **Layout:** Board
 - **Purpose:** Focus on critical items
 - **Group By:** Priority
@@ -59,6 +65,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Sorting:** By Story Points (descending)
 
 ### View 6: Epic Overview (CREATE NEW)
+
 - **Layout:** Table
 - **Purpose:** Feature-level planning
 - **Group By:** Epic
@@ -66,6 +73,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Show:** Field sum for Story Points per Epic
 
 ### View 7: Risk Dashboard (CREATE NEW)
+
 - **Layout:** Board
 - **Purpose:** Risk visibility
 - **Group By:** Risk Level
@@ -73,6 +81,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 - **Sorting:** By Priority
 
 ### View 8: My Items (CREATE NEW)
+
 - **Layout:** Table
 - **Purpose:** Personal task list
 - **Filter:** Assignee = @me
@@ -86,12 +95,14 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2
 Navigate to: https://github.com/orgs/VibeTensor/projects/2/insights
 
 ### Chart 1: Status Distribution (EXISTS)
+
 - **Type:** Column/Bar
 - **X-Axis:** Status
 - **Y-Axis:** Count
 - **Purpose:** Current workflow state
 
 ### Chart 2: Sprint Progress (CREATE NEW)
+
 - **Type:** Stacked Bar
 - **X-Axis:** Sprint
 - **Y-Axis:** Count
@@ -100,12 +111,14 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/insights
 - **Purpose:** Sprint completion tracking
 
 ### Chart 3: Priority Breakdown (CREATE NEW)
+
 - **Type:** Pie/Donut
 - **Group By:** Priority
 - **Y-Axis:** Count
 - **Purpose:** Priority distribution
 
 ### Chart 4: Epic Progress (CREATE NEW)
+
 - **Type:** Stacked Bar
 - **X-Axis:** Epic
 - **Y-Axis:** Story Points (sum)
@@ -113,12 +126,14 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/insights
 - **Purpose:** Feature completion tracking
 
 ### Chart 5: Effort Distribution (CREATE NEW)
+
 - **Type:** Bar
 - **X-Axis:** Effort
 - **Y-Axis:** Count
 - **Purpose:** Work sizing analysis
 
 ### Chart 6: Burnup Chart (CREATE NEW)
+
 - **Type:** Line (cumulative)
 - **X-Axis:** Date/Time
 - **Y-Axis:** Story Points (sum)
@@ -126,6 +141,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/insights
 - **Purpose:** Velocity tracking
 
 ### Chart 7: Category Breakdown (CREATE NEW)
+
 - **Type:** Pie
 - **Group By:** Category
 - **Y-Axis:** Count
@@ -138,6 +154,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/insights
 Navigate to: https://github.com/orgs/VibeTensor/projects/2/workflows
 
 ### Enabled Workflows (6)
+
 1. **Item Added** - Sets new items to "Todo"
 2. **Item Closed** - Sets status to "Done"
 3. **Pull Request Merged** - Sets status to "Done"
@@ -146,6 +163,7 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/workflows
 6. **Auto-Close Issue** - Closes when "Done"
 
 ### Recommended Additional Workflows
+
 7. **Auto-Archive** (ENABLE)
    - Trigger: Status = Done AND closed > 14 days
    - Action: Archive item
@@ -158,26 +176,28 @@ Navigate to: https://github.com/orgs/VibeTensor/projects/2/workflows
 
 ## Fields Reference
 
-| Field | Type | Options |
-|-------|------|---------|
-| Status | Single Select | Todo, In Progress, Done |
-| Sprint | Single Select | Backlog, Sprint 1-18 |
-| Priority | Single Select | P0-Critical, P1-High, P2-Medium, P3-Low |
-| Epic | Single Select | Core UI, Backend, PWA, AI Core, Multi-Agent, Advanced AI |
-| Effort | Single Select | XS(1), S(3), M(5), L(8), XL(13) |
-| Risk Level | Single Select | Low, Medium, High, Critical |
-| Category | Single Select | Feature, Bug, Enhancement, Documentation, Chore, Security |
-| Story Points | Number | 1, 3, 5, 8, 13 |
-| Target Date | Date | Sprint end dates |
-| Notes | Text | Free text |
+| Field        | Type          | Options                                                   |
+| ------------ | ------------- | --------------------------------------------------------- |
+| Status       | Single Select | Todo, In Progress, Done                                   |
+| Sprint       | Single Select | Backlog, Sprint 1-18                                      |
+| Priority     | Single Select | P0-Critical, P1-High, P2-Medium, P3-Low                   |
+| Epic         | Single Select | Core UI, Backend, PWA, AI Core, Multi-Agent, Advanced AI  |
+| Effort       | Single Select | XS(1), S(3), M(5), L(8), XL(13)                           |
+| Risk Level   | Single Select | Low, Medium, High, Critical                               |
+| Category     | Single Select | Feature, Bug, Enhancement, Documentation, Chore, Security |
+| Story Points | Number        | 1, 3, 5, 8, 13                                            |
+| Target Date  | Date          | Sprint end dates                                          |
+| Notes        | Text          | Free text                                                 |
 
 ---
 
 ## Status Updates
 
 Navigate to project settings to add status updates:
+
 - **Frequency:** Weekly
 - **Format:**
+
   ```
   ## Week of [DATE]
 
@@ -241,20 +261,20 @@ Navigate to project settings to add status updates:
 
 All documents are located in `.github/` directory:
 
-| Document | Description | ISO/PMI Reference |
-|----------|-------------|-------------------|
-| [GOVERNANCE.md](GOVERNANCE.md) | Project governance framework | ISO 21502 Section 5 |
-| [CHANGE_MANAGEMENT.md](CHANGE_MANAGEMENT.md) | Change control process | ISO 21502 Section 6.4 |
-| [RISK_REGISTER.md](RISK_REGISTER.md) | Risk identification and tracking | ISO 21502 Section 6.7 |
-| [STAKEHOLDER_REGISTER.md](STAKEHOLDER_REGISTER.md) | Stakeholder analysis | ISO 21502 Section 6.2 |
-| [COMMUNICATION_PLAN.md](COMMUNICATION_PLAN.md) | Communication strategy | ISO 21502 Section 6.5 |
-| [RACI_MATRIX.md](RACI_MATRIX.md) | Responsibility assignment | ISO 21502 Section 6.3 |
-| [WORK_BREAKDOWN_STRUCTURE.md](WORK_BREAKDOWN_STRUCTURE.md) | Scope decomposition | ISO 21502 Section 6.1 |
-| [SPRINT_PLANNING.md](SPRINT_PLANNING.md) | Sprint management guide | PMBOK Agile |
-| [SPRINT_RETROSPECTIVE.md](SPRINT_RETROSPECTIVE.md) | Retrospective template | PMBOK Agile |
-| [DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md) | Quality standards | PMBOK Quality |
-| [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) | Release process | ISO 21502 Section 6.8 |
-| [LESSONS_LEARNED.md](LESSONS_LEARNED.md) | Knowledge management | ISO 21502 Section 6.9 |
+| Document                                                   | Description                      | ISO/PMI Reference     |
+| ---------------------------------------------------------- | -------------------------------- | --------------------- |
+| [GOVERNANCE.md](GOVERNANCE.md)                             | Project governance framework     | ISO 21502 Section 5   |
+| [CHANGE_MANAGEMENT.md](CHANGE_MANAGEMENT.md)               | Change control process           | ISO 21502 Section 6.4 |
+| [RISK_REGISTER.md](RISK_REGISTER.md)                       | Risk identification and tracking | ISO 21502 Section 6.7 |
+| [STAKEHOLDER_REGISTER.md](STAKEHOLDER_REGISTER.md)         | Stakeholder analysis             | ISO 21502 Section 6.2 |
+| [COMMUNICATION_PLAN.md](COMMUNICATION_PLAN.md)             | Communication strategy           | ISO 21502 Section 6.5 |
+| [RACI_MATRIX.md](RACI_MATRIX.md)                           | Responsibility assignment        | ISO 21502 Section 6.3 |
+| [WORK_BREAKDOWN_STRUCTURE.md](WORK_BREAKDOWN_STRUCTURE.md) | Scope decomposition              | ISO 21502 Section 6.1 |
+| [SPRINT_PLANNING.md](SPRINT_PLANNING.md)                   | Sprint management guide          | PMBOK Agile           |
+| [SPRINT_RETROSPECTIVE.md](SPRINT_RETROSPECTIVE.md)         | Retrospective template           | PMBOK Agile           |
+| [DEFINITION_OF_DONE.md](DEFINITION_OF_DONE.md)             | Quality standards                | PMBOK Quality         |
+| [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md)               | Release process                  | ISO 21502 Section 6.8 |
+| [LESSONS_LEARNED.md](LESSONS_LEARNED.md)                   | Knowledge management             | ISO 21502 Section 6.9 |
 
 ---
 
@@ -302,16 +322,16 @@ All documents are located in `.github/` directory:
 
 ## Quick Reference
 
-| Task | Location |
-|------|----------|
-| View all issues | View 1: All Issues |
-| Daily work | View 2: Kanban Board |
-| Sprint planning | View 4: Sprint Board |
-| Release planning | View 3: Roadmap |
-| Risk review | View 7: Risk Dashboard |
-| My tasks | View 8: My Items |
-| Progress charts | Insights tab |
-| Automation | Workflows tab |
+| Task             | Location               |
+| ---------------- | ---------------------- |
+| View all issues  | View 1: All Issues     |
+| Daily work       | View 2: Kanban Board   |
+| Sprint planning  | View 4: Sprint Board   |
+| Release planning | View 3: Roadmap        |
+| Risk review      | View 7: Risk Dashboard |
+| My tasks         | View 8: My Items       |
+| Progress charts  | Insights tab           |
+| Automation       | Workflows tab          |
 
 ---
 
@@ -325,7 +345,7 @@ All documents are located in `.github/` directory:
 
 ---
 
-*Document Version: 2.0*
-*Last Updated: December 26, 2025*
-*Author: @ascender1729*
-*Compliance: ISO 21502:2020 (11/11), PMI PMBOK 7th Edition (9/9), GitHub Best Practices (9/9)*
+_Document Version: 2.0_
+_Last Updated: December 26, 2025_
+_Author: @ascender1729_
+_Compliance: ISO 21502:2020 (11/11), PMI PMBOK 7th Edition (9/9), GitHub Best Practices (9/9)_

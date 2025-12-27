@@ -9,6 +9,7 @@
 **Scope:** GitHub issue discovery platform with AI-enhanced recommendations
 
 #### In Scope
+
 - GitHub issue search and filtering
 - Beginner-friendly issue detection
 - Multi-repository support
@@ -18,6 +19,7 @@
 - Multi-agent AI features
 
 #### Out of Scope
+
 - Issue management/editing
 - Pull request automation
 - Repository hosting
@@ -156,56 +158,56 @@ IssueFlow v4.0
 
 ### 3. WBS Dictionary
 
-| WBS ID | Name | Description | Deliverable | Sprint |
-|--------|------|-------------|-------------|--------|
-| 1.0 | Core UI | User interface components | Working UI | 1-3 |
-| 2.0 | Backend | API and data layer | API integration | 4-5 |
-| 3.0 | PWA | Progressive web app features | Installable app | 6-7 |
-| 4.0 | AI Core | Basic AI features | AI recommendations | 8-11 |
-| 5.0 | Multi-Agent | Agent system | Agent coordination | 12-14 |
-| 6.0 | Advanced AI | Advanced AI features | Semantic search | 15-18 |
-| 7.0 | PM | Project management | Documentation | Ongoing |
+| WBS ID | Name        | Description                  | Deliverable        | Sprint  |
+| ------ | ----------- | ---------------------------- | ------------------ | ------- |
+| 1.0    | Core UI     | User interface components    | Working UI         | 1-3     |
+| 2.0    | Backend     | API and data layer           | API integration    | 4-5     |
+| 3.0    | PWA         | Progressive web app features | Installable app    | 6-7     |
+| 4.0    | AI Core     | Basic AI features            | AI recommendations | 8-11    |
+| 5.0    | Multi-Agent | Agent system                 | Agent coordination | 12-14   |
+| 6.0    | Advanced AI | Advanced AI features         | Semantic search    | 15-18   |
+| 7.0    | PM          | Project management           | Documentation      | Ongoing |
 
 ---
 
 ### 4. Milestone Mapping
 
-| Milestone | WBS Packages | Target Date |
-|-----------|--------------|-------------|
-| v1.0 - MVP | 1.0, 2.0 (partial), 7.0 (partial) | Sprint 3 |
-| v2.0 - AI | 3.0, 4.0 | Sprint 11 |
-| v3.0 - Multi-Agent | 5.0 | Sprint 14 |
-| v4.0 - Advanced | 6.0, 7.0 | Sprint 18 |
+| Milestone          | WBS Packages                      | Target Date |
+| ------------------ | --------------------------------- | ----------- |
+| v1.0 - MVP         | 1.0, 2.0 (partial), 7.0 (partial) | Sprint 3    |
+| v2.0 - AI          | 3.0, 4.0                          | Sprint 11   |
+| v3.0 - Multi-Agent | 5.0                               | Sprint 14   |
+| v4.0 - Advanced    | 6.0, 7.0                          | Sprint 18   |
 
 ---
 
 ### 5. Resource Allocation
 
-| WBS Package | Primary Resource | Effort (Story Points) |
-|-------------|------------------|----------------------|
-| 1.0 Core UI | @ascender1729 | 55 |
-| 2.0 Backend | @ascender1729 | 40 |
-| 3.0 PWA | Contributors | 35 |
-| 4.0 AI Core | @ascender1729 | 65 |
-| 5.0 Multi-Agent | @ascender1729 | 45 |
-| 6.0 Advanced AI | @ascender1729 | 55 |
-| 7.0 PM | All | Ongoing |
+| WBS Package     | Primary Resource | Effort (Story Points) |
+| --------------- | ---------------- | --------------------- |
+| 1.0 Core UI     | @ascender1729    | 55                    |
+| 2.0 Backend     | @ascender1729    | 40                    |
+| 3.0 PWA         | Contributors     | 35                    |
+| 4.0 AI Core     | @ascender1729    | 65                    |
+| 5.0 Multi-Agent | @ascender1729    | 45                    |
+| 6.0 Advanced AI | @ascender1729    | 55                    |
+| 7.0 PM          | All              | Ongoing               |
 
 ---
 
 ### 6. Dependencies
 
-| From | To | Type | Description |
-|------|-----|------|-------------|
-| 1.1 | 1.2 | FS | Search feeds results |
-| 2.1 | 1.2 | FS | API provides data |
-| 2.2 | 3.1 | FS | Cache enables offline |
-| 2.1 | 4.1 | FS | API data for AI |
-| 4.1 | 5.1 | FS | Basic AI for agents |
-| 5.1 | 6.1 | FS | Agents for advanced AI |
+| From | To  | Type | Description            |
+| ---- | --- | ---- | ---------------------- |
+| 1.1  | 1.2 | FS   | Search feeds results   |
+| 2.1  | 1.2 | FS   | API provides data      |
+| 2.2  | 3.1 | FS   | Cache enables offline  |
+| 2.1  | 4.1 | FS   | API data for AI        |
+| 4.1  | 5.1 | FS   | Basic AI for agents    |
+| 5.1  | 6.1 | FS   | Agents for advanced AI |
 
 ---
 
-*Document Version: 1.0*
-*Last Updated: December 26, 2025*
-*Compliant with: ISO 21502:2020 Section 6.1*
+_Document Version: 1.0_
+_Last Updated: December 26, 2025_
+_Compliant with: ISO 21502:2020 Section 6.1_

@@ -21,6 +21,7 @@
    */
   function handleBackdropKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
+      event.stopPropagation();
       onClose();
       return;
     }
@@ -54,7 +55,22 @@
       });
     }
   });
+
+  /**
+   * Global keydown handler for ESC key - works regardless of focus location
+   * Note: svelte:window must be at top level, not inside blocks, so we check show here
+   */
+  function handleGlobalKeydown(event: KeyboardEvent) {
+    if (show && event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      onClose();
+    }
+  }
 </script>
+
+<!-- Global ESC key handler - closes modal from anywhere when visible -->
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 {#if show}
   <!-- Backdrop -->
