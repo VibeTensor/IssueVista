@@ -366,7 +366,7 @@
           </span>
         {/if}
         {#if validationState === 'valid'}
-          <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+          <div class="absolute inset-y-0 right-0 pr-10 flex items-center pointer-events-none">
             <svg
               class="h-3.5 w-3.5 text-green-500"
               fill="none"
@@ -383,7 +383,7 @@
             </svg>
           </div>
         {:else if validationState === 'invalid'}
-          <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+          <div class="absolute inset-y-0 right-0 pr-10 flex items-center pointer-events-none">
             <svg
               class="h-3.5 w-3.5 text-red-500"
               fill="none"

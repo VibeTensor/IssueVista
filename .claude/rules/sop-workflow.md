@@ -439,7 +439,7 @@ Action Items for Future Issues:
 
 1. **Acknowledge violation explicitly** to user:
 
-   ```
+   ```text
    "I deviated from SOP by [specific violation].
    Reverting changes and restarting from Step 0."
    ```
