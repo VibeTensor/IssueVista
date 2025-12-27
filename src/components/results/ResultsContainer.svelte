@@ -1,7 +1,7 @@
 <!--
   ResultsContainer Component
   Issue #35 - Main orchestrator extracted from ResultsList.svelte
-  Issue #163 - Updated results header to show "Found X beginner-friendly issues"
+  Issue #163 - Updated results header to show "Found X available issues"
 
   Responsibilities:
   - State management (issues, loading, error, filters)
