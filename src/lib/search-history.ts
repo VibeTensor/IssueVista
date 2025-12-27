@@ -341,7 +341,7 @@ export function getLastSearchedRepo(): string | null {
 
   try {
     const stored = localStorage.getItem(LAST_REPO_KEY);
-    if (!stored || typeof stored !== 'string' || stored.trim() === '') {
+    if (!stored || stored.trim() === '') {
       return null;
     }
     return stored.trim();

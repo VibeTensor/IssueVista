@@ -16,7 +16,8 @@
     getHistory,
     removeFromHistory,
     clearHistory,
-    getLastSearchedRepo
+    getLastSearchedRepo,
+    clearLastSearchedRepo
   } from '../../lib/search-history';
   import { SearchHistory } from '../shared';
   import type { ValidationState, SearchHistoryItem } from '../../lib/types/results';
@@ -86,10 +87,11 @@
       clearTimeout(validationTimeout);
     }
 
-    // If empty, reset to idle immediately
+    // If empty, reset to idle immediately and clear saved repo (Issue #188)
     if (!newUrl.trim()) {
       validationState = 'idle';
       validationMessage = '';
+      clearLastSearchedRepo();
       return;
     }
 
@@ -266,6 +268,10 @@
       const lastRepo = getLastSearchedRepo();
       if (lastRepo) {
         onUrlChange(lastRepo);
+        // Validate immediately for consistent UX
+        const result = validateRepoUrl(lastRepo);
+        validationState = result.state;
+        validationMessage = result.message || '';
       }
     }
 
