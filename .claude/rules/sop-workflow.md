@@ -438,23 +438,27 @@ Action Items for Future Issues:
 ### Restart Procedure:
 
 1. **Acknowledge violation explicitly** to user:
+
    ```
    "I deviated from SOP by [specific violation].
    Reverting changes and restarting from Step 0."
    ```
 
 2. **Revert all uncommitted changes:**
+
    ```bash
    git checkout -- .
    ```
 
 3. **Delete feature branch if created:**
+
    ```bash
    git checkout master
    git branch -D <branch-name>
    ```
 
 4. **Return to master branch:**
+
    ```bash
    git checkout master
    git pull origin master

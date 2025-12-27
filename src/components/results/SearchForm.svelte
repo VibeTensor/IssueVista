@@ -215,7 +215,7 @@
     try {
       await navigator.clipboard.writeText(repoUrl);
       handleCopySuccess();
-    } catch (err) {
+    } catch {
       // Fallback for browsers without clipboard API or non-HTTPS contexts
       const textArea = document.createElement('textarea');
       textArea.value = repoUrl;
