@@ -58,6 +58,10 @@
   let historyItems = $state<SearchHistoryItem[]>([]);
   let blurTimeout: number | null = null;
 
+  // Copy URL state (Issue #161)
+  let copied = $state(false);
+  let copyTimeout: number | null = null;
+
   /**
    * Handle repository URL input with debounced validation
    */
@@ -202,6 +206,49 @@
     showHistory = false;
   }
 
+  /**
+   * Copy repository URL to clipboard (Issue #161)
+   */
+  async function handleCopyUrl() {
+    if (!repoUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(repoUrl);
+      handleCopySuccess();
+    } catch (err) {
+      // Fallback for browsers without clipboard API or non-HTTPS contexts
+      const textArea = document.createElement('textarea');
+      textArea.value = repoUrl;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+
+      try {
+        document.execCommand('copy');
+        handleCopySuccess();
+      } catch (e) {
+        console.error('Failed to copy URL:', e);
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+  }
+
+  /**
+   * Handle successful copy with visual feedback
+   */
+  function handleCopySuccess() {
+    copied = true;
+    if (copyTimeout) {
+      clearTimeout(copyTimeout);
+    }
+    copyTimeout = window.setTimeout(() => {
+      copied = false;
+      copyTimeout = null;
+    }, 2000);
+  }
+
   // Auto-focus the repository URL input on mount and cleanup timeouts
   onMount(() => {
     if (repoUrlInput) {
@@ -213,6 +260,9 @@
       }
       if (blurTimeout) {
         clearTimeout(blurTimeout);
+      }
+      if (copyTimeout) {
+        clearTimeout(copyTimeout);
       }
     };
   });
@@ -254,7 +304,7 @@
           type="text"
           value={repoUrl}
           placeholder="https://github.com/owner/repo"
-          class="sketch-input w-full pl-8 pr-8 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500 {validationState ===
+          class="sketch-input w-full pl-8 pr-14 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500 {validationState ===
           'valid'
             ? 'border-green-500/50'
             : validationState === 'invalid'
@@ -267,6 +317,54 @@
           aria-describedby="repoUrl-hint"
           aria-invalid={validationState === 'invalid'}
         />
+        <!-- Copy URL button (Issue #161) -->
+        {#if repoUrl.trim()}
+          <button
+            type="button"
+            onclick={handleCopyUrl}
+            class="absolute inset-y-0 right-6 flex items-center cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-slate-400 rounded"
+            aria-label="Copy repository URL to clipboard"
+            title={copied ? 'Copied!' : 'Copy URL'}
+          >
+            {#if copied}
+              <svg
+                class="h-3.5 w-3.5 text-green-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2.5"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            {:else}
+              <svg
+                class="h-3.5 w-3.5 text-slate-400 hover:text-slate-300 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                />
+              </svg>
+            {/if}
+          </button>
+          <!-- Screen reader announcement for copy status -->
+          <span role="status" aria-live="polite" class="sr-only">
+            {copied ? 'Repository URL copied to clipboard' : ''}
+          </span>
+        {/if}
         {#if validationState === 'valid'}
           <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
             <svg
