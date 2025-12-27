@@ -2,6 +2,7 @@
   SearchForm Component
   Issue #35 - Extracted from ResultsList.svelte
   Issue #62 - Added search history dropdown
+  Issue #162 - Updated placeholder with example repository suggestions
   Issue #188 - Load and pre-fill last searched repository
 
   Search form with repository URL input, GitHub token input,
@@ -324,7 +325,7 @@
           bind:this={repoUrlInput}
           type="text"
           value={repoUrl}
-          placeholder="https://github.com/owner/repo"
+          placeholder="Try: facebook/react, microsoft/vscode"
           class="sketch-input w-full pl-8 pr-14 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500 {validationState ===
           'valid'
             ? 'border-green-500/50'
