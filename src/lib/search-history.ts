@@ -1,14 +1,16 @@
 /**
  * Search History Utility
  * Issue #62 - Search history with localStorage persistence
+ * Issue #188 - Save and retrieve last searched repository
  *
  * Provides type-safe localStorage operations for storing and retrieving
- * search history items.
+ * search history items and last searched repository.
  */
 
 import type { SearchHistoryItem } from './types/results';
 
 const STORAGE_KEY = 'issueflow_search_history';
+const LAST_REPO_KEY = 'issueflow_last_searched_repo';
 const MAX_HISTORY_ITEMS = 20;
 
 /**
@@ -325,5 +327,61 @@ export function downloadExport(format: ExportFormat): void {
     URL.revokeObjectURL(url);
   } catch (error) {
     console.error('[SearchHistory] Failed to download export:', error);
+  }
+}
+
+/**
+ * Get the last searched repository URL from localStorage (Issue #188)
+ * Returns null if no last repo exists or if not in browser
+ */
+export function getLastSearchedRepo(): string | null {
+  if (!isBrowser()) {
+    return null;
+  }
+
+  try {
+    const stored = localStorage.getItem(LAST_REPO_KEY);
+    if (!stored || typeof stored !== 'string' || stored.trim() === '') {
+      return null;
+    }
+    return stored.trim();
+  } catch (error) {
+    console.error('[SearchHistory] Failed to get last searched repo:', error);
+    return null;
+  }
+}
+
+/**
+ * Save the last searched repository URL to localStorage (Issue #188)
+ */
+export function setLastSearchedRepo(url: string): void {
+  if (!isBrowser()) {
+    return;
+  }
+
+  if (!url || typeof url !== 'string' || url.trim() === '') {
+    console.warn('[SearchHistory] Invalid URL provided to setLastSearchedRepo');
+    return;
+  }
+
+  try {
+    localStorage.setItem(LAST_REPO_KEY, url.trim());
+  } catch (error) {
+    console.error('[SearchHistory] Failed to save last searched repo:', error);
+  }
+}
+
+/**
+ * Clear the last searched repository from localStorage (Issue #188)
+ */
+export function clearLastSearchedRepo(): void {
+  if (!isBrowser()) {
+    return;
+  }
+
+  try {
+    localStorage.removeItem(LAST_REPO_KEY);
+  } catch (error) {
+    console.error('[SearchHistory] Failed to clear last searched repo:', error);
   }
 }

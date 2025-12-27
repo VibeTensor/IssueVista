@@ -34,7 +34,7 @@
     GRAPHQL_MAX_PAGES,
     REST_MAX_PAGES
   } from '../../lib/loading-progress-utils';
-  import { addToHistory } from '../../lib/search-history';
+  import { addToHistory, setLastSearchedRepo } from '../../lib/search-history';
   import { SearchForm, RateLimitDisplay, HelpPopup, IssueCard } from './index';
 
   // Core state
@@ -193,6 +193,9 @@
 
       // Add to search history (Issue #62)
       addToHistory(parsed.owner, parsed.repo, repoUrl, result.issues.length);
+
+      // Save last searched repo (Issue #188)
+      setLastSearchedRepo(repoUrl);
     } catch (e: any) {
       // Handle abort separately
       if (e.name === 'AbortError' || abortController?.signal.aborted) {
