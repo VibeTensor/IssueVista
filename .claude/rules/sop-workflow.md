@@ -5,6 +5,7 @@
 This is the authoritative workflow for implementing GitHub issues. Every issue MUST follow these phases. DO NOT skip or combine phases.
 
 **Integrated with:**
+
 - ISO 21502:2020 Project Management Guidance
 - PMI PMBOK 7th Edition Agile Practices
 - See `project-management.md` for detailed PM integration
@@ -27,11 +28,13 @@ This rule applies to ALL phases and steps. Never wait indefinitely. Keep the wor
 See `project-management.md` for detailed commands.
 
 #### 0A. Verify Issue in Project Board
+
 ```bash
 gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
 ```
 
 **Required Fields Must Be Set:**
+
 - [ ] Status = "Todo"
 - [ ] Sprint assigned (current or planned)
 - [ ] Priority (P0-P3)
@@ -39,18 +42,23 @@ gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
 - [ ] Story Points (1, 3, 5, 8, or 13)
 
 #### 0B. Check Sprint Alignment
+
 ```bash
 gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") | {title, due_on}'
 ```
+
 - [ ] Issue milestone matches current sprint
 - [ ] Priority aligns with sprint goals
 
 #### 0C. Risk Assessment (Complex Issues Only)
+
 For issues with Story Points >= 8:
+
 - Check `.github/RISK_REGISTER.md` for related risks
 - Note mitigation strategies in research file
 
 #### 0D. Update Status to "In Progress"
+
 ```bash
 gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> \
   --field-id PVTSSF_lADOCOaJzs4A6eQgzgqFXZA --single-select-option-id f75ad846
@@ -120,26 +128,50 @@ FAILURE TO CREATE 9-PHASE PLAN = IMPLEMENTATION REJECTED
 
 ### For Each Phase, Follow A-D Cycle:
 
-#### A. Pre-Phase: Mandatory Web Research (5-10 Searches)
+#### A. Pre-Phase: Mandatory Web Research
 
-CRITICAL: This step is NON-NEGOTIABLE.
+CRITICAL: This step is NON-NEGOTIABLE. Web searches MUST be performed before EVERY phase.
 
-Before starting each phase:
+**Search Requirements by Complexity:**
 
-1. Identify 5-10 search queries relevant to the phase
-2. Execute each search using WebSearch tool
+| Complexity        | Searches Per Phase | Total (9 Phases) | Example Issues               |
+| ----------------- | ------------------ | ---------------- | ---------------------------- |
+| Simple (1-3 SP)   | 2-3 searches       | 18-27 total      | Single file, docs, labels    |
+| Medium (5 SP)     | 3-5 searches       | 27-45 total      | New component, multi-file    |
+| Complex (8-13 SP) | 5-10 searches      | 45-90 total      | Major features, architecture |
+
+**Before EVERY Phase:**
+
+1. Identify search queries relevant to the phase
+2. Execute searches using WebSearch tool
 3. Document in `issue_XX_research.txt`:
    - Exact search query used
    - URLs of relevant resources
    - Key insights extracted
 
-Thorough Thinking Requirement:
+**Search Categories Per Phase:**
+
+| Phase                    | Required Search Topics                           |
+| ------------------------ | ------------------------------------------------ |
+| Phase 1 (Setup)          | Git branching best practices, naming conventions |
+| Phase 2 (Research)       | Existing patterns, similar implementations       |
+| Phase 3 (Identify Files) | File structure patterns, component organization  |
+| Phase 4 (Design)         | Architecture patterns, best practices            |
+| Phase 5 (Core)           | Implementation patterns, edge cases, security    |
+| Phase 6 (Additional)     | Automation, testing patterns                     |
+| Phase 7 (Docs)           | Documentation standards, examples                |
+| Phase 8 (Commit)         | Commit message conventions                       |
+| Phase 9 (PR)             | PR best practices, review process                |
+
+**Thorough Thinking Requirement:**
 
 - Analyze all resources critically
 - Compare different approaches found
 - Identify consensus patterns
 - Note conflicts or trade-offs
 - Document rationale for final decision
+
+**FAILURE TO PERFORM WEB SEARCHES = PHASE NOT COMPLETE**
 
 #### B. Execute Phase
 
@@ -327,12 +359,14 @@ Document all learnings, commands used, and statistics.
 ### Pre-Implementation (PM + Technical)
 
 **Project Management (Step 0):**
+
 - [ ] Verify issue in project board with all fields set
 - [ ] Check sprint alignment and milestone
 - [ ] Risk assessment (for complex issues)
 - [ ] Update status to "In Progress"
 
 **Technical (Steps 1-4):**
+
 - [ ] Read issue description
 - [ ] Read ALL CodeRabbit issue thread comments
 - [ ] Document suggestions in research file
@@ -366,16 +400,19 @@ Document all learnings, commands used, and statistics.
 ### Post-Merge
 
 **Git & Video:**
+
 - [ ] Local repo synced
 - [ ] Git graph verified (branch/merge pattern)
 - [ ] Video recording confirmed off
 
 **Trackers:**
+
 - [ ] Uplift Tracker updated (6/6 fields)
 - [ ] Earnings tracker CSV updated
 - [ ] Research file complete
 
 **Project Management (ISO 21502/PMI):**
+
 - [ ] Project board status = "Done" (auto-updated via workflow)
 - [ ] Lessons learned added (if applicable) - `.github/LESSONS_LEARNED.md`
 - [ ] Risk register updated (if new risks found) - `.github/RISK_REGISTER.md`

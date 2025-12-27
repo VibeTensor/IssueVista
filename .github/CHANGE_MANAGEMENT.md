@@ -10,18 +10,19 @@ This document defines the change management process for IssueFlow, ensuring all 
 
 ### 2. Change Categories
 
-| Category | Description | Approval Level | Turnaround |
-|----------|-------------|----------------|------------|
-| **Critical** | Security vulnerabilities, data loss risks | Project Owner | 24 hours |
-| **Major** | Architecture changes, breaking changes | Project Owner + Review | 3-5 days |
-| **Standard** | New features, enhancements | Maintainer | 1-3 days |
-| **Minor** | Bug fixes, documentation, typos | Any Contributor | Same day |
+| Category     | Description                               | Approval Level         | Turnaround |
+| ------------ | ----------------------------------------- | ---------------------- | ---------- |
+| **Critical** | Security vulnerabilities, data loss risks | Project Owner          | 24 hours   |
+| **Major**    | Architecture changes, breaking changes    | Project Owner + Review | 3-5 days   |
+| **Standard** | New features, enhancements                | Maintainer             | 1-3 days   |
+| **Minor**    | Bug fixes, documentation, typos           | Any Contributor        | Same day   |
 
 ---
 
 ### 3. Change Request Process
 
 #### Step 1: Submit Change Request
+
 ```
 Create GitHub Issue using appropriate template:
 - Feature Request → [FEATURE]
@@ -31,7 +32,9 @@ Create GitHub Issue using appropriate template:
 ```
 
 #### Step 2: Impact Assessment
+
 **Technical Impact:**
+
 - [ ] Files affected (list all)
 - [ ] Dependencies impacted
 - [ ] Breaking changes (Y/N)
@@ -39,19 +42,22 @@ Create GitHub Issue using appropriate template:
 - [ ] Security considerations
 
 **Business Impact:**
+
 - [ ] User experience changes
 - [ ] Documentation updates required
 - [ ] Release notes needed
 
 #### Step 3: Review and Approval
-| Role | Responsibility |
-|------|----------------|
-| Submitter | Complete issue template, provide context |
-| Reviewer | Assess technical feasibility, impact |
-| Approver | Final authorization to proceed |
-| Implementer | Execute the change |
+
+| Role        | Responsibility                           |
+| ----------- | ---------------------------------------- |
+| Submitter   | Complete issue template, provide context |
+| Reviewer    | Assess technical feasibility, impact     |
+| Approver    | Final authorization to proceed           |
+| Implementer | Execute the change                       |
 
 #### Step 4: Implementation
+
 1. Create feature branch: `<type>/<issue-number>-<description>`
 2. Implement changes following coding standards
 3. Submit Pull Request with linked issue
@@ -60,12 +66,14 @@ Create GitHub Issue using appropriate template:
 6. Obtain approval
 
 #### Step 5: Verification
+
 - [ ] All acceptance criteria met
 - [ ] Tests pass
 - [ ] Documentation updated
 - [ ] No regression introduced
 
 #### Step 6: Deployment
+
 ```bash
 # Merge to master using --merge (never --squash)
 gh pr merge <PR_NUMBER> --merge --delete-branch
@@ -88,24 +96,30 @@ For critical security issues or production incidents:
 ### 5. Change Log Maintenance
 
 All changes are documented in:
+
 - `CHANGELOG.md` - User-facing changes
 - Git commit history - Technical changes
 - GitHub Releases - Version milestones
 
 ### Change Entry Format
+
 ```markdown
 ## [Version] - YYYY-MM-DD
 
 ### Added
+
 - New feature description (#issue)
 
 ### Changed
+
 - Modified behavior description (#issue)
 
 ### Fixed
+
 - Bug fix description (#issue)
 
 ### Security
+
 - Security fix description (#issue)
 ```
 
@@ -127,26 +141,26 @@ If a change causes issues:
 
 Track the following metrics:
 
-| Metric | Target | Frequency |
-|--------|--------|-----------|
-| Change success rate | >95% | Weekly |
-| Average review time | <48 hours | Weekly |
-| Rollback rate | <5% | Monthly |
-| Emergency changes | <10% of total | Monthly |
+| Metric              | Target        | Frequency |
+| ------------------- | ------------- | --------- |
+| Change success rate | >95%          | Weekly    |
+| Average review time | <48 hours     | Weekly    |
+| Rollback rate       | <5%           | Monthly   |
+| Emergency changes   | <10% of total | Monthly   |
 
 ---
 
 ### 8. Roles and Responsibilities
 
-| Role | Responsibilities |
-|------|------------------|
+| Role              | Responsibilities                          |
+| ----------------- | ----------------------------------------- |
 | **Project Owner** | Final approval authority, major decisions |
-| **Maintainer** | Technical review, standard approvals |
-| **Contributor** | Submit changes, address feedback |
-| **Reviewer** | Code review, impact assessment |
+| **Maintainer**    | Technical review, standard approvals      |
+| **Contributor**   | Submit changes, address feedback          |
+| **Reviewer**      | Code review, impact assessment            |
 
 ---
 
-*Document Version: 1.0*
-*Last Updated: December 26, 2025*
-*Compliant with: ISO 21502:2020 Section 6.4*
+_Document Version: 1.0_
+_Last Updated: December 26, 2025_
+_Compliant with: ISO 21502:2020 Section 6.4_

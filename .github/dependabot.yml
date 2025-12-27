@@ -1,27 +1,27 @@
 version: 2
 updates:
   # JavaScript/npm dependencies
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "[SECURITY]"
+      prefix: '[SECURITY]'
     labels:
-      - "security"
-      - "chore"
+      - 'security'
+      - 'chore'
     reviewers:
-      - "ascender1729"
+      - 'ascender1729'
 
   # GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     open-pull-requests-limit: 3
     commit-message:
-      prefix: "[CI/CD]"
+      prefix: '[CI/CD]'
     labels:
-      - "ci/cd"
-      - "chore"
+      - 'ci/cd'
+      - 'chore'

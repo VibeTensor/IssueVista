@@ -8,11 +8,11 @@ This document defines the project management touchpoints integrated with the SOP
 
 ## Overview: Three-Phase PM Integration
 
-| Phase | When | PM Actions Required |
-|-------|------|---------------------|
-| **PRE-ISSUE** | Before starting any issue | Verify, validate, update board |
-| **DURING-ISSUE** | While implementing | Status updates, risk tracking |
-| **POST-ISSUE** | After merge | Documentation, lessons learned |
+| Phase            | When                      | PM Actions Required            |
+| ---------------- | ------------------------- | ------------------------------ |
+| **PRE-ISSUE**    | Before starting any issue | Verify, validate, update board |
+| **DURING-ISSUE** | While implementing        | Status updates, risk tracking  |
+| **POST-ISSUE**   | After merge               | Documentation, lessons learned |
 
 ---
 
@@ -26,6 +26,7 @@ gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
 ```
 
 **Required Fields Must Be Set:**
+
 - [ ] Status (should be "Todo")
 - [ ] Sprint (current or planned)
 - [ ] Priority (P0-P3)
@@ -33,6 +34,7 @@ gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
 - [ ] Story Points (1, 3, 5, 8, or 13)
 
 **If fields are missing, set them:**
+
 ```bash
 # Get project item ID
 gh project item-list 2 --owner VibeTensor --format json | findstr <ISSUE_NUMBER>
@@ -49,6 +51,7 @@ gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") 
 ```
 
 **Verify:**
+
 - [ ] Issue milestone matches current sprint
 - [ ] Issue priority aligns with sprint goals
 - [ ] No blocking dependencies from other issues
@@ -56,6 +59,7 @@ gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") 
 ### Step 0C: Risk Assessment (For Complex Issues)
 
 **Check RISK_REGISTER.md for:**
+
 - Related technical risks
 - Mitigation strategies to follow
 - Contingency plans if needed
@@ -75,6 +79,7 @@ gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID> --field-id <STATUS
 ```
 
 **CLI Quick Reference:**
+
 ```bash
 # Project ID: PVT_kwDON8nFv84A6eQg
 # Status Field ID: PVTSSF_lADOCOaJzs4A6eQgzgqFXZA
@@ -130,6 +135,7 @@ gh project item-list 2 --owner VibeTensor --format json | findstr <ISSUE_NUMBER>
 ```
 
 If not auto-updated:
+
 ```bash
 gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> --field-id PVTSSF_lADOCOaJzs4A6eQgzgqFXZA --single-select-option-id 8e45e91f
 ```
@@ -137,35 +143,44 @@ gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> --field-id
 ### Step 18: Update Lessons Learned (If Applicable)
 
 **Add entry to `.github/LESSONS_LEARNED.md` when:**
+
 - [ ] Unexpected technical challenge encountered
 - [ ] New pattern or approach discovered
 - [ ] Tool limitation found
 - [ ] Process improvement identified
 
 **Entry Template:**
+
 ```markdown
 ### LL-XXX: [Title]
+
 **Date:** YYYY-MM-DD
 **Sprint:** Sprint X
 **Category:** Technical / Process / Communication / Resource
 **Impact:** High / Medium / Low
 
 #### Context
+
 [What was the situation?]
 
 #### What Happened
+
 [Describe the event or outcome]
 
 #### Root Cause
+
 [Why did this happen?]
 
 #### Lesson Learned
+
 [What should be done differently?]
 
 #### Action Items
+
 - [ ] Action 1
 
 #### Applicable To
+
 [Future situations where this applies]
 ```
 
@@ -190,6 +205,7 @@ If issue revealed or mitigated any risks:
 ## Quick Reference: Project Management CLI Commands
 
 ### View Project Board
+
 ```bash
 # List all items in project
 gh project item-list 2 --owner VibeTensor --limit 200
@@ -199,6 +215,7 @@ gh issue view <ISSUE_NUMBER> --json projectItems
 ```
 
 ### Update Issue Fields
+
 ```bash
 # Get field IDs
 gh project field-list 2 --owner VibeTensor
@@ -208,6 +225,7 @@ gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> --field-id
 ```
 
 ### View Sprint/Milestone
+
 ```bash
 # List milestones
 gh api repos/VibeTensor/IssueFlow/milestones
@@ -220,27 +238,27 @@ gh api repos/VibeTensor/IssueFlow/milestones/<NUMBER>
 
 ## Field IDs Reference
 
-| Field | Field ID | Type |
-|-------|----------|------|
-| Status | PVTSSF_lADOCOaJzs4A6eQgzgqFXZA | Single Select |
-| Sprint | PVTSSF_lADOCOaJzs4A6eQgzgqFXcY | Single Select |
-| Priority | PVTSSF_lADOCOaJzs4A6eQgzgqFXdo | Single Select |
-| Epic | PVTSSF_lADOCOaJzs4A6eQgzgqFXfA | Single Select |
-| Effort | PVTSSF_lADOCOaJzs4A6eQgzgqFXfk | Single Select |
-| Risk Level | PVTSSF_lADOCOaJzs4A6eQgzgqFXgQ | Single Select |
-| Category | PVTSSF_lADOCOaJzs4A6eQgzgqFXg4 | Single Select |
-| Story Points | PVTF_lADOCOaJzs4A6eQgzgqFa4o | Number |
-| Target Date | PVTF_lADOCOaJzs4A6eQgzgqFbRI | Date |
+| Field        | Field ID                       | Type          |
+| ------------ | ------------------------------ | ------------- |
+| Status       | PVTSSF_lADOCOaJzs4A6eQgzgqFXZA | Single Select |
+| Sprint       | PVTSSF_lADOCOaJzs4A6eQgzgqFXcY | Single Select |
+| Priority     | PVTSSF_lADOCOaJzs4A6eQgzgqFXdo | Single Select |
+| Epic         | PVTSSF_lADOCOaJzs4A6eQgzgqFXfA | Single Select |
+| Effort       | PVTSSF_lADOCOaJzs4A6eQgzgqFXfk | Single Select |
+| Risk Level   | PVTSSF_lADOCOaJzs4A6eQgzgqFXgQ | Single Select |
+| Category     | PVTSSF_lADOCOaJzs4A6eQgzgqFXg4 | Single Select |
+| Story Points | PVTF_lADOCOaJzs4A6eQgzgqFa4o   | Number        |
+| Target Date  | PVTF_lADOCOaJzs4A6eQgzgqFbRI   | Date          |
 
 ---
 
 ## Status Option IDs
 
-| Status | Option ID |
-|--------|-----------|
-| Todo | 98236657 |
-| In Progress | f75ad846 |
-| Done | 8e45e91f |
+| Status      | Option ID |
+| ----------- | --------- |
+| Todo        | 98236657  |
+| In Progress | f75ad846  |
+| Done        | 8e45e91f  |
 
 ---
 
@@ -248,11 +266,11 @@ gh api repos/VibeTensor/IssueFlow/milestones/<NUMBER>
 
 After completing issues, verify in project views:
 
-| View | What to Check |
-|------|---------------|
-| Kanban Board | Issue moved to Done column |
-| Sprint Board | Sprint story points updated |
-| Roadmap | Timeline reflects completion |
+| View            | What to Check                   |
+| --------------- | ------------------------------- |
+| Kanban Board    | Issue moved to Done column      |
+| Sprint Board    | Sprint story points updated     |
+| Roadmap         | Timeline reflects completion    |
 | Priority Matrix | Issue removed from active queue |
 
 ---
@@ -260,18 +278,21 @@ After completing issues, verify in project views:
 ## Compliance Checklist
 
 ### ISO 21502:2020 Requirements
+
 - [ ] Issue tracked in project management system
 - [ ] Risk assessment performed (for complex issues)
 - [ ] Lessons learned captured
 - [ ] Documentation updated
 
 ### PMI PMBOK Agile Requirements
+
 - [ ] Sprint backlog updated
 - [ ] Story points accurate
 - [ ] Definition of Done verified
 - [ ] Velocity data captured
 
 ### GitHub Best Practices
+
 - [ ] Issue closed with PR link
 - [ ] Labels accurate
 - [ ] Milestone assigned
@@ -279,6 +300,6 @@ After completing issues, verify in project views:
 
 ---
 
-*Document Version: 1.0*
-*Last Updated: December 26, 2025*
-*Compliant with: ISO 21502:2020, PMI PMBOK 7th Edition*
+_Document Version: 1.0_
+_Last Updated: December 26, 2025_
+_Compliant with: ISO 21502:2020, PMI PMBOK 7th Edition_

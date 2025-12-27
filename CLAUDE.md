@@ -100,25 +100,19 @@ See `.claude/rules/` for detailed rules:
 ## Post-Merge Checklist
 
 **Git & Video:**
+
 1. Sync local: `git checkout master && git pull`
 2. Verify git graph shows branch/merge pattern
 3. Confirm video recording is off
 
-**Trackers:**
-4. Provide Uplift Tracker data (issue, PR, commits, video)
-5. Update Uplift Tracker (6/6 fields)
-6. Update earnings tracker CSV
+**Trackers:** 4. Provide Uplift Tracker data (issue, PR, commits, video) 5. Update Uplift Tracker (6/6 fields) 6. Update earnings tracker CSV
 
-**Project Management (ISO 21502/PMI):**
-7. Verify project board status = "Done"
-8. Add lessons learned (if applicable)
-9. Update risk register (if new risks found)
-10. Track sprint metrics (at sprint end)
+**Project Management (ISO 21502/PMI):** 7. Verify project board status = "Done" 8. Add lessons learned (if applicable) 9. Update risk register (if new risks found) 10. Track sprint metrics (at sprint end)
 
 ## Project Management Documents
 
-| Document | Location | When to Update |
-|----------|----------|----------------|
-| Lessons Learned | `.github/LESSONS_LEARNED.md` | After unexpected challenges |
-| Risk Register | `.github/RISK_REGISTER.md` | When risks found/mitigated |
-| Sprint Retrospective | `.github/SPRINT_RETROSPECTIVE.md` | End of each sprint |
+| Document             | Location                          | When to Update              |
+| -------------------- | --------------------------------- | --------------------------- |
+| Lessons Learned      | `.github/LESSONS_LEARNED.md`      | After unexpected challenges |
+| Risk Register        | `.github/RISK_REGISTER.md`        | When risks found/mitigated  |
+| Sprint Retrospective | `.github/SPRINT_RETROSPECTIVE.md` | End of each sprint          |
