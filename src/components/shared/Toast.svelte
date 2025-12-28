@@ -8,23 +8,23 @@
 -->
 
 <script lang="ts">
-  import { SvelteMap } from 'svelte/reactivity';
   import { toasts, removeToast, type Toast } from '../../lib/toast';
 
-  // Track timeouts for cleanup - using SvelteMap for Svelte 5 reactivity
-  let timeouts: SvelteMap<string, number> = new SvelteMap();
+  // Track timeouts for cleanup - using plain Map to avoid reactivity loops
+  // SvelteMap would cause infinite $effect re-runs (read → write → re-trigger)
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity
+  const timeouts = new Map<string, number>();
 
   /**
    * Set up auto-dismiss timer for a toast
    */
   function scheduleRemoval(toast: Toast) {
-    // Clear existing timeout if any
-    const existingTimeout = timeouts.get(toast.id);
-    if (existingTimeout) {
-      window.clearTimeout(existingTimeout);
+    // Skip if already scheduled
+    if (timeouts.has(toast.id)) {
+      return;
     }
 
-    // Set new timeout
+    // Set timeout for auto-dismiss
     const timeoutId = window.setTimeout(() => {
       removeToast(toast.id);
       timeouts.delete(toast.id);
@@ -35,14 +35,17 @@
 
   // Schedule removal for each toast when store updates
   $effect(() => {
+    // Read toasts from store (this is the only reactive dependency)
     const currentToasts = $toasts;
-    currentToasts.forEach((toast) => {
-      if (!timeouts.has(toast.id)) {
-        scheduleRemoval(toast);
-      }
-    });
 
-    // Cleanup on unmount
+    // Schedule removal for new toasts (non-reactive Map operations)
+    currentToasts.forEach((toast) => {
+      scheduleRemoval(toast);
+    });
+  });
+
+  // Cleanup timeouts on component destroy
+  $effect(() => {
     return () => {
       timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
       timeouts.clear();
