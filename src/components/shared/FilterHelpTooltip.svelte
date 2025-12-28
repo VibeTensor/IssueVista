@@ -75,55 +75,61 @@
   });
 </script>
 
-<div class="filter-help-container relative inline-block">
-  <!-- Trigger button -->
-  <button
-    bind:this={triggerRef}
-    type="button"
-    class="help-trigger flex items-center justify-center w-6 h-6 rounded-full
-           text-slate-400 hover:text-slate-300 hover:bg-slate-700/50
-           focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-1 focus:ring-offset-slate-900
-           transition-colors"
-    onclick={toggleTooltip}
-    aria-describedby={show ? tooltipId : undefined}
-    aria-expanded={show}
-    aria-label="Filter syntax help"
-    title="Filter syntax help"
+<!-- Trigger button -->
+<button
+  bind:this={triggerRef}
+  type="button"
+  class="help-trigger flex items-center justify-center w-6 h-6 rounded-full
+         text-slate-400 hover:text-slate-300 hover:bg-slate-700/50
+         focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-1 focus:ring-offset-slate-900
+         transition-colors"
+  onclick={toggleTooltip}
+  aria-controls={tooltipId}
+  aria-expanded={show}
+  aria-label="Filter syntax help"
+  title="Filter syntax help"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-4 w-4"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    aria-hidden="true"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-4 w-4"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </button>
+    <path
+      fill-rule="evenodd"
+      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+      clip-rule="evenodd"
+    />
+  </svg>
+</button>
 
-  <!-- Tooltip popover -->
-  {#if show}
+<!-- Modal dialog - rendered at document body level for proper centering -->
+{#if show}
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div
+    class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    onclick={closeTooltip}
+  >
     <div
       bind:this={tooltipRef}
       id={tooltipId}
-      role="tooltip"
-      class="help-tooltip absolute z-[100] top-full left-0 mt-2
-             w-72 p-4 rounded-lg
-             bg-slate-800 border border-slate-600 shadow-xl shadow-black/30
-             text-sm text-slate-300"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="filter-help-title"
+      class="help-modal w-full max-w-sm p-4 rounded-xl
+               bg-slate-800 border border-slate-600 shadow-2xl shadow-black/50
+               text-sm text-slate-300"
+      onclick={(e) => e.stopPropagation()}
     >
       <!-- Header -->
       <div class="flex items-center justify-between mb-3">
-        <h3 class="font-semibold text-white">Filter Syntax Help</h3>
+        <h3 id="filter-help-title" class="font-semibold text-white">Filter Syntax Help</h3>
         <button
           type="button"
           class="close-btn p-1 rounded hover:bg-slate-700
-                 focus:outline-none focus:ring-1 focus:ring-teal-500
-                 text-slate-400 hover:text-slate-300 transition-colors"
+                   focus:outline-none focus:ring-1 focus:ring-teal-500
+                   text-slate-400 hover:text-slate-300 transition-colors"
           onclick={closeTooltip}
           aria-label="Close help"
         >
@@ -238,5 +244,5 @@
         Press <kbd class="px-1 py-0.5 rounded bg-slate-700 text-slate-400 font-mono">Esc</kbd> to close
       </p>
     </div>
-  {/if}
-</div>
+  </div>
+{/if}

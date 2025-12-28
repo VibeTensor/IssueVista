@@ -41,7 +41,6 @@
   let selectedFilterType = $state<FilterType | null>(null);
   let filterValueInput = $state('');
   let isNegated = $state(false);
-  let addMenuRef = $state<HTMLDivElement | null>(null);
   let valueInputRef = $state<HTMLInputElement | null>(null);
 
   // Filter types for the dropdown
@@ -134,17 +133,6 @@
   }
 
   /**
-   * Handle click outside to close menu
-   */
-  function handleClickOutside(event: MouseEvent): void {
-    if (addMenuRef && !addMenuRef.contains(event.target as Node)) {
-      if (showAddMenu && !selectedFilterType) {
-        resetAddForm();
-      }
-    }
-  }
-
-  /**
    * Parse query string and update chips
    * @internal Reserved for future use when query input is added
    */
@@ -155,16 +143,6 @@
       onChipsChange?.(chips);
     }
   }
-
-  // Close menu on outside click
-  $effect(() => {
-    if (showAddMenu) {
-      document.addEventListener('click', handleClickOutside);
-      return () => {
-        document.removeEventListener('click', handleClickOutside);
-      };
-    }
-  });
 </script>
 
 <div class="filter-builder flex flex-wrap items-center gap-2">
@@ -208,21 +186,141 @@
     {/each}
   </div>
 
-  <!-- Add filter button and menu -->
-  <div class="relative" bind:this={addMenuRef}>
-    {#if !showAddMenu}
+  <!-- Add filter button -->
+  <div>
+    <button
+      type="button"
+      class="add-filter-btn flex items-center gap-1 px-2 py-1 rounded-md text-sm
+             bg-slate-800/50 border border-slate-600 border-dashed
+             text-slate-400 hover:text-slate-300 hover:border-slate-500
+             focus:outline-none focus:ring-1 focus:ring-teal-500
+             transition-colors"
+      onclick={(e) => {
+        e.stopPropagation();
+        showAddMenu = true;
+      }}
+      {disabled}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span>Add Filter</span>
+    </button>
+  </div>
+</div>
+
+<!-- Add filter modal - rendered at document body level for proper centering -->
+{#if showAddMenu}
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+    onclick={resetAddForm}
+    onkeydown={handleAddMenuKeydown}
+  >
+    <div
+      class="add-filter-menu flex flex-wrap items-center gap-2 p-3 rounded-lg
+             bg-slate-800 border border-slate-600 shadow-2xl shadow-black/50
+             max-w-md w-full"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Add filter"
+      onclick={(e) => e.stopPropagation()}
+    >
+      <!-- Negation toggle -->
       <button
         type="button"
-        class="add-filter-btn flex items-center gap-1 px-2 py-1 rounded-md text-sm
-               bg-slate-800/50 border border-slate-600 border-dashed
-               text-slate-400 hover:text-slate-300 hover:border-slate-500
+        class="negate-btn px-2 py-1 rounded text-xs font-medium flex-shrink-0
+             {isNegated
+          ? 'bg-red-900/50 text-red-300 border border-red-700'
+          : 'bg-slate-700 text-slate-400 border border-slate-600'}
+             hover:bg-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500
+             transition-colors"
+        onclick={() => (isNegated = !isNegated)}
+        aria-pressed={isNegated}
+        title="Toggle NOT operator"
+      >
+        NOT
+      </button>
+
+      <!-- Filter type dropdown -->
+      {#if !selectedFilterType}
+        <div class="filter-type-select flex flex-wrap gap-1">
+          {#each filterTypes as type (type)}
+            <button
+              type="button"
+              class="type-btn px-2 py-1 rounded text-xs
+                   bg-slate-700 text-slate-300 border border-slate-600
+                   hover:bg-slate-600 hover:text-white
+                   focus:outline-none focus:ring-1 focus:ring-teal-500
+                   transition-colors"
+              onclick={() => selectFilterType(type)}
+            >
+              {FILTER_TYPE_LABELS[type]}
+            </button>
+          {/each}
+        </div>
+      {:else}
+        <!-- Selected type and value input -->
+        <span
+          class="selected-type px-2 py-1 rounded text-xs font-medium flex-shrink-0
+               bg-teal-900/50 text-teal-300 border border-teal-700"
+        >
+          {FILTER_TYPE_LABELS[selectedFilterType]}:
+        </span>
+
+        <input
+          bind:this={valueInputRef}
+          bind:value={filterValueInput}
+          type="text"
+          class="value-input px-2 py-1 rounded text-sm w-28 sm:w-32 min-w-0
+               bg-slate-900 text-white border border-slate-600
                focus:outline-none focus:ring-1 focus:ring-teal-500
-               transition-colors"
-        onclick={(e) => {
-          e.stopPropagation();
-          showAddMenu = true;
-        }}
-        {disabled}
+               placeholder:text-slate-500"
+          placeholder={selectedFilterType === 'state'
+            ? 'open or closed'
+            : selectedFilterType === 'is'
+              ? 'open, closed, issue, pr'
+              : 'Enter value...'}
+          onkeydown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              addChip();
+            }
+          }}
+        />
+
+        <button
+          type="button"
+          class="confirm-btn px-2 py-1 rounded text-xs flex-shrink-0
+               bg-teal-600 text-white
+               hover:bg-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-400
+               transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          onclick={addChip}
+          disabled={!filterValueInput.trim()}
+        >
+          Add
+        </button>
+      {/if}
+
+      <!-- Cancel button -->
+      <button
+        type="button"
+        class="cancel-btn p-1 rounded text-slate-400 flex-shrink-0
+             hover:text-slate-300 hover:bg-slate-700
+             focus:outline-none focus:ring-1 focus:ring-teal-500
+             transition-colors"
+        onclick={resetAddForm}
+        aria-label="Cancel"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -233,122 +331,11 @@
         >
           <path
             fill-rule="evenodd"
-            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
             clip-rule="evenodd"
           />
         </svg>
-        <span>Add Filter</span>
       </button>
-    {:else}
-      <!-- Add filter menu -->
-      <div
-        class="add-filter-menu flex items-center gap-2 p-2 rounded-md
-               bg-slate-800 border border-slate-600 shadow-lg"
-        role="menu"
-        onkeydown={handleAddMenuKeydown}
-      >
-        <!-- Negation toggle -->
-        <button
-          type="button"
-          class="negate-btn px-2 py-1 rounded text-xs font-medium
-                 {isNegated
-            ? 'bg-red-900/50 text-red-300 border border-red-700'
-            : 'bg-slate-700 text-slate-400 border border-slate-600'}
-                 hover:bg-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500
-                 transition-colors"
-          onclick={() => (isNegated = !isNegated)}
-          aria-pressed={isNegated}
-          title="Toggle NOT operator"
-        >
-          NOT
-        </button>
-
-        <!-- Filter type dropdown -->
-        {#if !selectedFilterType}
-          <div class="filter-type-select flex gap-1">
-            {#each filterTypes as type (type)}
-              <button
-                type="button"
-                class="type-btn px-2 py-1 rounded text-xs
-                       bg-slate-700 text-slate-300 border border-slate-600
-                       hover:bg-slate-600 hover:text-white
-                       focus:outline-none focus:ring-1 focus:ring-teal-500
-                       transition-colors"
-                onclick={() => selectFilterType(type)}
-                role="menuitem"
-              >
-                {FILTER_TYPE_LABELS[type]}
-              </button>
-            {/each}
-          </div>
-        {:else}
-          <!-- Selected type and value input -->
-          <span
-            class="selected-type px-2 py-1 rounded text-xs font-medium
-                   bg-teal-900/50 text-teal-300 border border-teal-700"
-          >
-            {FILTER_TYPE_LABELS[selectedFilterType]}:
-          </span>
-
-          <input
-            bind:this={valueInputRef}
-            bind:value={filterValueInput}
-            type="text"
-            class="value-input px-2 py-1 rounded text-sm w-32
-                   bg-slate-900 text-white border border-slate-600
-                   focus:outline-none focus:ring-1 focus:ring-teal-500
-                   placeholder:text-slate-500"
-            placeholder={selectedFilterType === 'state'
-              ? 'open or closed'
-              : selectedFilterType === 'is'
-                ? 'open, closed, issue, pr'
-                : 'Enter value...'}
-            onkeydown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                addChip();
-              }
-            }}
-          />
-
-          <button
-            type="button"
-            class="confirm-btn px-2 py-1 rounded text-xs
-                   bg-teal-600 text-white
-                   hover:bg-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-400
-                   transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            onclick={addChip}
-            disabled={!filterValueInput.trim()}
-          >
-            Add
-          </button>
-        {/if}
-
-        <!-- Cancel button -->
-        <button
-          type="button"
-          class="cancel-btn p-1 rounded text-slate-400
-                 hover:text-slate-300 hover:bg-slate-700
-                 focus:outline-none focus:ring-1 focus:ring-teal-500
-                 transition-colors"
-          onclick={resetAddForm}
-          aria-label="Cancel"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
-    {/if}
+    </div>
   </div>
-</div>
+{/if}

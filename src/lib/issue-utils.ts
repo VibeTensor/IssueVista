@@ -305,3 +305,69 @@ export function sortByPreferences(
 export function getDefaultDirection(sortBy: SortOption): SortDirection {
   return DEFAULT_DIRECTIONS[sortBy];
 }
+
+// ============================================================================
+// Issue #125: Body Preview Functions
+// ============================================================================
+
+/**
+ * Get a preview of the issue body text
+ * Strips markdown formatting and truncates to specified length
+ *
+ * @param issue - GitHub issue object
+ * @param maxLength - Maximum length of preview (default 200)
+ * @returns Truncated plain text preview of issue body
+ */
+export function getBodyPreview(issue: GitHubIssue, maxLength: number = 200): string {
+  if (!issue || !issue.body) {
+    return 'No description provided.';
+  }
+
+  // Strip common markdown elements
+  const text = issue.body
+    // Remove code blocks
+    .replace(/```[\s\S]*?```/g, '[code]')
+    // Remove inline code
+    .replace(/`[^`]+`/g, '[code]')
+    // Remove images
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    // Remove links but keep text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    // Remove headers
+    .replace(/^#{1,6}\s+/gm, '')
+    // Remove bold/italic markers
+    .replace(/[*_]{1,2}([^*_]+)[*_]{1,2}/g, '$1')
+    // Remove blockquotes
+    .replace(/^>\s+/gm, '')
+    // Remove horizontal rules
+    .replace(/^[-*_]{3,}\s*$/gm, '')
+    // Remove HTML tags
+    .replace(/<[^>]+>/g, '')
+    // Normalize whitespace
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  // Truncate at word boundary
+  const truncated = text.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+
+  if (lastSpace > maxLength * 0.7) {
+    return truncated.slice(0, lastSpace) + '...';
+  }
+
+  return truncated + '...';
+}
+
+/**
+ * Check if an issue has a body/description
+ *
+ * @param issue - GitHub issue object
+ * @returns true if the issue has a non-empty body
+ */
+export function hasBody(issue: GitHubIssue): boolean {
+  return Boolean(issue?.body?.trim());
+}

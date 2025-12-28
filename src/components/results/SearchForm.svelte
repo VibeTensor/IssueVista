@@ -512,7 +512,7 @@
     <!-- Advanced Filters Section (Issue #121) -->
     <div>
       <div class="flex items-center justify-between mb-1.5">
-        <label class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+        <span class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
           <svg
             class="h-3.5 w-3.5 text-slate-500"
             fill="none"
@@ -529,7 +529,7 @@
           </svg>
           Advanced Filters
           <span class="text-slate-500 text-[10px] font-normal">(optional)</span>
-        </label>
+        </span>
         <FilterHelpTooltip bind:show={showFilterHelp} onClose={() => (showFilterHelp = false)} />
       </div>
       <FilterBuilder
