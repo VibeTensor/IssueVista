@@ -3,6 +3,7 @@
   Issue #35 - Main orchestrator extracted from ResultsList.svelte
   Issue #122 - Smart search result sorting with relevance score
   Issue #163 - Updated results header to show "Found X available issues"
+  Issue #172 - Added loading skeleton cards during search
 
   Responsibilities:
   - State management (issues, loading, error, filters, sorting)
@@ -11,7 +12,7 @@
   - Layout composition
   - Sort preference persistence to localStorage
 
-  Composes: SearchForm, RateLimitDisplay, IssuesList, HelpPopup, SVGFilters
+  Composes: SearchForm, RateLimitDisplay, IssuesList, HelpPopup, SVGFilters, IssueCardSkeleton
 -->
 
 <script lang="ts">
@@ -41,7 +42,7 @@
     REST_MAX_PAGES
   } from '../../lib/loading-progress-utils';
   import { addToHistory, setLastSearchedRepo } from '../../lib/search-history';
-  import { SearchForm, RateLimitDisplay, HelpPopup, IssueCard } from './index';
+  import { SearchForm, RateLimitDisplay, HelpPopup, IssueCard, IssueCardSkeleton } from './index';
 
   // Core state
   let repoUrl = $state('');
@@ -667,25 +668,37 @@
 
   <!-- RIGHT MAIN PANEL -->
   <main class="flex-1 min-w-0 p-3 lg:p-4 lg:overflow-y-auto pb-20">
-    <!-- Loading State - centered in right panel (Issue #23) -->
+    <!-- Loading State - centered in right panel (Issue #23, #172) -->
     {#if loading && progressState}
-      <div class="flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
-        <LoadingProgress
-          {progressState}
-          onCancelRequest={handleCancelRequest}
-          startTime={searchStartTime ?? undefined}
-        />
+      <div class="loading-container" aria-busy="true" aria-label="Loading issues">
+        <div class="flex flex-col items-center justify-center mb-4">
+          <LoadingProgress
+            {progressState}
+            onCancelRequest={handleCancelRequest}
+            startTime={searchStartTime ?? undefined}
+          />
+        </div>
+        <!-- Skeleton cards for visual content preview (Issue #172) -->
+        <div class="grid grid-cols-1 gap-2">
+          <IssueCardSkeleton count={4} showLabels={true} />
+        </div>
       </div>
     {:else if loading}
       <!-- Fallback spinner if progressState not yet initialized -->
-      <div class="flex flex-col items-center justify-center min-h-[300px] lg:min-h-[400px]">
-        <div class="relative w-12 h-12 mb-4">
-          <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
-          <div
-            class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"
-          ></div>
+      <div class="loading-container" aria-busy="true" aria-label="Initializing search">
+        <div class="flex flex-col items-center justify-center mb-4">
+          <div class="relative w-12 h-12 mb-4">
+            <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
+            <div
+              class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"
+            ></div>
+          </div>
+          <p class="text-slate-300 text-sm font-medium">Initializing...</p>
         </div>
-        <p class="text-slate-300 text-sm font-medium">Initializing...</p>
+        <!-- Skeleton cards for visual content preview (Issue #172) -->
+        <div class="grid grid-cols-1 gap-2">
+          <IssueCardSkeleton count={4} showLabels={true} />
+        </div>
       </div>
     {/if}
 
