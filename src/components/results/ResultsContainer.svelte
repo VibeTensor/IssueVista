@@ -1,13 +1,15 @@
 <!--
   ResultsContainer Component
   Issue #35 - Main orchestrator extracted from ResultsList.svelte
+  Issue #122 - Smart search result sorting with relevance score
   Issue #163 - Updated results header to show "Found X available issues"
 
   Responsibilities:
-  - State management (issues, loading, error, filters)
+  - State management (issues, loading, error, filters, sorting)
   - API calls coordination
   - Event handling from child components
   - Layout composition
+  - Sort preference persistence to localStorage
 
   Composes: SearchForm, RateLimitDisplay, IssuesList, HelpPopup, SVGFilters
 -->
@@ -17,10 +19,13 @@
   import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../../lib/github-graphql';
   import {
     countZeroCommentIssues,
-    sortByComments,
     isZeroComment,
-    type CommentSortOrder
+    sortIssues,
+    getDefaultDirection
   } from '../../lib/issue-utils';
+  import type { SortOption, SortDirection } from '../../lib/types/sorting';
+  import { SORT_OPTION_LABELS, DEFAULT_SORT_PREFERENCES } from '../../lib/types/sorting';
+  import { getSortPreferences, setSortPreferences } from '../../lib/sort-preferences';
   import GitHubAuth from '../GitHubAuth.svelte';
   import { SVGFilters, EmptyState, LoadingProgress, CancelConfirmModal } from '../shared';
   import {
@@ -63,9 +68,12 @@
 
   // Filter state
   let showOnlyZeroComments = $state(false);
-  let sortOrder = $state<CommentSortOrder | 'default'>('default');
 
-  // Derived: filtered and sorted issues
+  // Sort state (Issue #122)
+  let sortBy = $state<SortOption>(DEFAULT_SORT_PREFERENCES.sortBy);
+  let sortDirection = $state<SortDirection>(DEFAULT_SORT_PREFERENCES.direction);
+
+  // Derived: filtered and sorted issues (Issue #122)
   let displayedIssues = $derived.by(() => {
     let result = issues;
 
@@ -74,10 +82,8 @@
       result = result.filter(isZeroComment);
     }
 
-    // Apply sort by comments
-    if (sortOrder !== 'default') {
-      result = sortByComments(result, sortOrder);
-    }
+    // Apply sorting (Issue #122)
+    result = sortIssues(result, sortBy, sortDirection);
 
     return result;
   });
@@ -103,6 +109,11 @@
       isAuthenticated = true;
     }
     updateRateLimit();
+
+    // Load sort preferences from localStorage (Issue #122)
+    const savedPrefs = getSortPreferences();
+    sortBy = savedPrefs.sortBy;
+    sortDirection = savedPrefs.direction;
   });
 
   // Cleanup on component destroy
@@ -163,7 +174,7 @@
 
     const parsed = parseRepoUrl(repoUrl);
     if (!parsed) {
-      error = 'Invalid GitHub repository URL. Format: https://github.com/owner/repo';
+      error = 'Invalid repository. Use owner/repo (e.g., facebook/react) or full GitHub URL';
       loading = false;
       progressState = null;
       return;
@@ -228,15 +239,28 @@
     showOnlyZeroComments = enabled;
   }
 
-  // Handle sort change
-  function handleSortChange(order: CommentSortOrder | 'default') {
-    sortOrder = order;
+  // Handle sort option change (Issue #122)
+  function handleSortOptionChange(option: SortOption) {
+    sortBy = option;
+    // Set default direction for the selected option
+    sortDirection = getDefaultDirection(option);
+    // Persist to localStorage
+    setSortPreferences({ sortBy, direction: sortDirection });
+  }
+
+  // Handle sort direction toggle (Issue #122)
+  function handleSortDirectionToggle() {
+    sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    // Persist to localStorage
+    setSortPreferences({ sortBy, direction: sortDirection });
   }
 
   // Handle clear filters
   function handleClearFilters() {
     showOnlyZeroComments = false;
-    sortOrder = 'default';
+    sortBy = DEFAULT_SORT_PREFERENCES.sortBy;
+    sortDirection = DEFAULT_SORT_PREFERENCES.direction;
+    setSortPreferences(DEFAULT_SORT_PREFERENCES);
   }
 
   // Handle EmptyState primary action based on variant
@@ -561,34 +585,50 @@
             >
           </button>
 
-          <!-- Sort - Vertical layout with clear labels -->
+          <!-- Sort - Dropdown + Direction Toggle (Issue #122) -->
           <div class="space-y-1.5">
-            <span class="text-[10px] text-slate-300 font-medium">Sort by Comments</span>
-            <div class="flex rounded bg-slate-800/60 p-0.5 border border-slate-700/40">
+            <span class="text-[10px] text-slate-300 font-medium">Sort by</span>
+            <div class="flex gap-1.5">
+              <!-- Sort Option Dropdown -->
+              <select
+                class="sort-dropdown flex-1 px-2 py-1.5 text-[10px] font-medium rounded bg-slate-800/60 border border-slate-700/40 text-white focus:outline-none focus:border-teal-500/50"
+                aria-label="Sort by"
+                onchange={(e) => handleSortOptionChange(e.currentTarget.value as SortOption)}
+              >
+                {#each Object.entries(SORT_OPTION_LABELS) as [value, label] (value)}
+                  <option {value} selected={sortBy === value}>{label}</option>
+                {/each}
+              </select>
+              <!-- Direction Toggle Button -->
               <button
                 type="button"
-                onclick={() => handleSortChange('default')}
-                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
-                'default'
-                  ? 'bg-slate-600 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Default</button
+                onclick={handleSortDirectionToggle}
+                class="px-2 py-1.5 rounded bg-slate-800/60 border border-slate-700/40 text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all"
+                aria-label="Toggle sort direction: currently {sortDirection === 'asc'
+                  ? 'ascending'
+                  : 'descending'}"
+                title={sortDirection === 'asc' ? 'Ascending' : 'Descending'}
               >
-              <button
-                type="button"
-                onclick={() => handleSortChange('asc')}
-                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
-                'asc'
-                  ? 'bg-slate-600 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Fewest</button
-              >
-              <button
-                type="button"
-                onclick={() => handleSortChange('desc')}
-                class="flex-1 px-2 py-1.5 text-[10px] font-medium rounded transition-all {sortOrder ===
-                'desc'
-                  ? 'bg-slate-600 text-white'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}">Most</button
-              >
+                {#if sortDirection === 'asc'}
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                {:else}
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                {/if}
+              </button>
             </div>
           </div>
 
@@ -617,7 +657,7 @@
             </div>
           </div>
 
-          {#if showOnlyZeroComments || sortOrder !== 'default'}
+          {#if showOnlyZeroComments || sortBy !== DEFAULT_SORT_PREFERENCES.sortBy || sortDirection !== DEFAULT_SORT_PREFERENCES.direction}
             <button
               type="button"
               onclick={handleClearFilters}
@@ -687,10 +727,10 @@
       <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
         Found {displayedIssues.length} available {displayedIssues.length === 1
           ? 'issue'
-          : 'issues'}{showOnlyZeroComments ? ', filtered to easy issues' : ''}{sortOrder !==
-        'default'
-          ? `, sorted by ${sortOrder === 'asc' ? 'fewest' : 'most'} comments`
-          : ''}
+          : 'issues'}{showOnlyZeroComments ? ', filtered to easy issues' : ''}, sorted by {SORT_OPTION_LABELS[
+          sortBy
+        ]}
+        {sortDirection === 'asc' ? 'ascending' : 'descending'}
       </div>
 
       <div class="space-y-2">

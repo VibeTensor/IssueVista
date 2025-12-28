@@ -1,10 +1,15 @@
 /**
- * Issue Utilities for Issue #20
+ * Issue Utilities for Issue #20, #122
  * Zero-comment issue detection, filtering, and sorting helpers
  * Helps identify easy entry points for new contributors
+ *
+ * Issue #122: Added smart sorting by relevance, date, comments, reactions
  */
 
 import type { GitHubIssue } from './github-graphql';
+import type { SortOption, SortDirection, SortPreferences } from './types/sorting';
+import { DEFAULT_DIRECTIONS } from './types/sorting';
+import { calculateRelevanceScore, getTotalReactionCount } from './relevance-scoring';
 
 // Thresholds for comment activity levels
 const LOW_COMMENT_THRESHOLD = 5;
@@ -156,4 +161,147 @@ export function hasZeroCommentIssues(issues: GitHubIssue[]): boolean {
     return false;
   }
   return issues.some(isZeroComment);
+}
+
+// ============================================================================
+// Issue #122: Smart Sorting Functions
+// ============================================================================
+
+/**
+ * Sort issues by creation date
+ * Returns a new sorted array without modifying the original
+ *
+ * @param issues - Array of GitHub issues
+ * @param direction - Sort direction: 'asc' (oldest first) or 'desc' (newest first)
+ * @returns New sorted array
+ */
+export function sortByDate(
+  issues: GitHubIssue[],
+  direction: SortDirection = 'desc'
+): GitHubIssue[] {
+  if (!issues || !Array.isArray(issues)) {
+    return [];
+  }
+
+  return [...issues].sort((a, b) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+
+    if (direction === 'asc') {
+      return dateA - dateB;
+    }
+    return dateB - dateA;
+  });
+}
+
+/**
+ * Sort issues by total reaction count
+ * Returns a new sorted array without modifying the original
+ *
+ * @param issues - Array of GitHub issues
+ * @param direction - Sort direction: 'asc' (fewest first) or 'desc' (most first)
+ * @returns New sorted array
+ */
+export function sortByReactions(
+  issues: GitHubIssue[],
+  direction: SortDirection = 'desc'
+): GitHubIssue[] {
+  if (!issues || !Array.isArray(issues)) {
+    return [];
+  }
+
+  return [...issues].sort((a, b) => {
+    const reactionsA = getTotalReactionCount(a);
+    const reactionsB = getTotalReactionCount(b);
+
+    if (direction === 'asc') {
+      return reactionsA - reactionsB;
+    }
+    return reactionsB - reactionsA;
+  });
+}
+
+/**
+ * Sort issues by relevance score
+ * Returns a new sorted array without modifying the original
+ *
+ * @param issues - Array of GitHub issues
+ * @param direction - Sort direction: 'asc' (lowest first) or 'desc' (highest first)
+ * @returns New sorted array
+ */
+export function sortByRelevance(
+  issues: GitHubIssue[],
+  direction: SortDirection = 'desc'
+): GitHubIssue[] {
+  if (!issues || !Array.isArray(issues)) {
+    return [];
+  }
+
+  return [...issues].sort((a, b) => {
+    const scoreA = calculateRelevanceScore(a);
+    const scoreB = calculateRelevanceScore(b);
+
+    if (direction === 'asc') {
+      return scoreA - scoreB;
+    }
+    return scoreB - scoreA;
+  });
+}
+
+/**
+ * Sort issues by the specified option and direction
+ * Unified sorting function that delegates to specific sort functions
+ *
+ * @param issues - Array of GitHub issues
+ * @param sortBy - Sort option: 'relevance', 'date', 'comments', 'reactions'
+ * @param direction - Sort direction: 'asc' or 'desc'
+ * @returns New sorted array
+ */
+export function sortIssues(
+  issues: GitHubIssue[],
+  sortBy: SortOption,
+  direction: SortDirection
+): GitHubIssue[] {
+  if (!issues || !Array.isArray(issues)) {
+    return [];
+  }
+
+  switch (sortBy) {
+    case 'relevance':
+      return sortByRelevance(issues, direction);
+    case 'date':
+      return sortByDate(issues, direction);
+    case 'comments':
+      // Convert to CommentSortOrder type expected by sortByComments
+      return sortByComments(issues, direction);
+    case 'reactions':
+      return sortByReactions(issues, direction);
+    default:
+      return [...issues];
+  }
+}
+
+/**
+ * Sort issues using sort preferences object
+ * Convenience wrapper for sortIssues
+ *
+ * @param issues - Array of GitHub issues
+ * @param preferences - Sort preferences object
+ * @returns New sorted array
+ */
+export function sortByPreferences(
+  issues: GitHubIssue[],
+  preferences: SortPreferences
+): GitHubIssue[] {
+  return sortIssues(issues, preferences.sortBy, preferences.direction);
+}
+
+/**
+ * Get the default sort direction for a sort option
+ *
+ * @param sortBy - Sort option
+ * @returns Default direction for that option
+ */
+export function getDefaultDirection(sortBy: SortOption): SortDirection {
+  return DEFAULT_DIRECTIONS[sortBy];
 }

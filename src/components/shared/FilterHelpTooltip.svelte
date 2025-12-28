@@ -111,7 +111,7 @@
       bind:this={tooltipRef}
       id={tooltipId}
       role="tooltip"
-      class="help-tooltip absolute z-50 top-full left-0 mt-2
+      class="help-tooltip absolute z-[100] top-full left-0 mt-2
              w-72 p-4 rounded-lg
              bg-slate-800 border border-slate-600 shadow-xl shadow-black/30
              text-sm text-slate-300"

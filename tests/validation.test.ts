@@ -147,7 +147,7 @@ describe('validateRepoUrl', () => {
     it('should show error hint for invalid URL', () => {
       const result = validateRepoUrl('invalid-url');
       expect(result.message).toBeDefined();
-      expect(result.message).toContain('valid GitHub URL');
+      expect(result.message).toContain('GitHub URL');
     });
 
     it('should have no message for idle state', () => {

@@ -35,6 +35,13 @@ export interface GitHubIssue {
       };
     }>;
   };
+  /** Reaction data for relevance scoring (Issue #122) */
+  reactionGroups?: Array<{
+    content: string;
+    reactors: {
+      totalCount: number;
+    };
+  }>;
 }
 
 export interface IssuesResponse {
@@ -104,6 +111,12 @@ query FindAvailableIssues($owner: String!, $repo: String!, $cursor: String) {
                 }
               }
             }
+          }
+        }
+        reactionGroups {
+          content
+          reactors {
+            totalCount
           }
         }
       }
@@ -381,15 +394,32 @@ export class GitHubAPI {
 }
 
 export function parseRepoUrl(url: string): { owner: string; repo: string } | null {
-  const regex = /github\.com\/([^/]+)\/([^/]+)/;
-  const match = url.match(regex);
+  const trimmed = url.trim();
 
-  if (!match) return null;
+  // First try full GitHub URL format: github.com/owner/repo
+  const urlRegex = /github\.com\/([^/]+)\/([^/]+)/;
+  const urlMatch = trimmed.match(urlRegex);
 
-  return {
-    owner: match[1],
-    repo: match[2].replace(/\.git$/, '')
-  };
+  if (urlMatch) {
+    return {
+      owner: urlMatch[1],
+      repo: urlMatch[2].replace(/\.git$/, '')
+    };
+  }
+
+  // Then try shorthand format: owner/repo (e.g., facebook/react)
+  // Must have exactly one slash, no spaces, and valid characters
+  const shorthandRegex = /^([a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)\/([a-zA-Z0-9._-]+)$/;
+  const shorthandMatch = trimmed.match(shorthandRegex);
+
+  if (shorthandMatch) {
+    return {
+      owner: shorthandMatch[1],
+      repo: shorthandMatch[2].replace(/\.git$/, '')
+    };
+  }
+
+  return null;
 }
 
 // Validation result interface
@@ -431,6 +461,6 @@ export function validateRepoUrl(url: string): ValidationResult {
   return {
     isValid: false,
     state: 'invalid',
-    message: 'Enter a valid GitHub URL (e.g., https://github.com/owner/repo)'
+    message: 'Enter owner/repo (e.g., facebook/react) or full GitHub URL'
   };
 }

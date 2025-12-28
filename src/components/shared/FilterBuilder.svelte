@@ -218,7 +218,10 @@
                text-slate-400 hover:text-slate-300 hover:border-slate-500
                focus:outline-none focus:ring-1 focus:ring-teal-500
                transition-colors"
-        onclick={() => (showAddMenu = true)}
+        onclick={(e) => {
+          e.stopPropagation();
+          showAddMenu = true;
+        }}
         {disabled}
       >
         <svg
