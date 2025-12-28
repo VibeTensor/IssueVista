@@ -5,10 +5,11 @@
   Issue #162 - Updated placeholder with example repository suggestions
   Issue #188 - Load and pre-fill last searched repository
   Issue #166 - Added keyboard shortcut hint for Enter key
+  Issue #121 - Added advanced search filters with FilterBuilder and FilterHelpTooltip
 
   Search form with repository URL input, GitHub token input,
   popular repo quick-select chips, real-time URL validation,
-  search history dropdown, and keyboard shortcut hint.
+  search history dropdown, advanced filter builder, and keyboard shortcut hint.
 -->
 
 <script lang="ts">
@@ -21,8 +22,9 @@
     getLastSearchedRepo,
     clearLastSearchedRepo
   } from '../../lib/search-history';
-  import { SearchHistory } from '../shared';
+  import { SearchHistory, FilterBuilder, FilterHelpTooltip } from '../shared';
   import type { ValidationState, SearchHistoryItem } from '../../lib/types/results';
+  import type { FilterChip } from '../../lib/types/filters';
 
   interface Props {
     repoUrl: string;
@@ -33,6 +35,14 @@
     onUrlChange: (url: string) => void;
     onTokenChange: (token: string) => void;
     onShowHelp: () => void;
+    /** Current filter chips for advanced search (Issue #121) */
+    filterChips?: FilterChip[];
+    /** Current filter query string (Issue #121) */
+    filterQuery?: string;
+    /** Callback when filter chips change (Issue #121) */
+    onFilterChipsChange?: (chips: FilterChip[]) => void;
+    /** Callback when filter query changes (Issue #121) */
+    onFilterQueryChange?: (query: string) => void;
   }
 
   let {
@@ -43,7 +53,11 @@
     onSearch,
     onUrlChange,
     onTokenChange,
-    onShowHelp
+    onShowHelp: _onShowHelp,
+    filterChips = [],
+    filterQuery = '',
+    onFilterChipsChange,
+    onFilterQueryChange
   }: Props = $props();
 
   // Popular repositories for quick selection
@@ -70,6 +84,9 @@
   // Copy URL state (Issue #161)
   let copied = $state(false);
   let copyTimeout: number | null = null;
+
+  // Filter help tooltip state (Issue #121)
+  let showFilterHelp = $state(false);
 
   /**
    * Handle repository URL input with debounced validation
@@ -490,6 +507,38 @@
           oninput={handleTokenInput}
         />
       </div>
+    </div>
+
+    <!-- Advanced Filters Section (Issue #121) -->
+    <div>
+      <div class="flex items-center justify-between mb-1.5">
+        <label class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+          <svg
+            class="h-3.5 w-3.5 text-slate-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+            />
+          </svg>
+          Advanced Filters
+          <span class="text-slate-500 text-[10px] font-normal">(optional)</span>
+        </label>
+        <FilterHelpTooltip bind:show={showFilterHelp} onClose={() => (showFilterHelp = false)} />
+      </div>
+      <FilterBuilder
+        chips={filterChips}
+        query={filterQuery}
+        onChipsChange={onFilterChipsChange}
+        onQueryChange={onFilterQueryChange}
+        disabled={loading}
+      />
     </div>
 
     <!-- Search Button - Brand Primary Action -->
