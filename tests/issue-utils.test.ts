@@ -27,6 +27,7 @@ function createMockIssue(commentCount: number, number: number = 1): GitHubIssue 
     number,
     title: `Test Issue #${number}`,
     url: `https://github.com/test/repo/issues/${number}`,
+    body: `This is the body of test issue #${number}`,
     createdAt: '2025-11-29T00:00:00Z',
     updatedAt: '2025-11-29T00:00:00Z',
     comments: { totalCount: commentCount },
