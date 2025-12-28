@@ -27,6 +27,7 @@
   import type { SortOption, SortDirection } from '../../lib/types/sorting';
   import { SORT_OPTION_LABELS, DEFAULT_SORT_PREFERENCES } from '../../lib/types/sorting';
   import { getSortPreferences, setSortPreferences } from '../../lib/sort-preferences';
+  import { showCopiedToast } from '../../lib/toast';
   import GitHubAuth from '../GitHubAuth.svelte';
   import { SVGFilters, EmptyState, LoadingProgress, CancelConfirmModal } from '../shared';
   import {
@@ -284,6 +285,7 @@
     try {
       await navigator.clipboard.writeText(issue.url);
       copiedIssueNumber = issueNumber;
+      showCopiedToast();
 
       if (copyFeedbackTimeout) {
         clearTimeout(copyFeedbackTimeout);

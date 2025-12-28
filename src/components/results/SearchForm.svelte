@@ -24,6 +24,7 @@
     clearLastSearchedRepo
   } from '../../lib/search-history';
   import { SearchHistory, FilterBuilder, FilterHelpTooltip } from '../shared';
+  import { showCopiedToast } from '../../lib/toast';
   import type { ValidationState, SearchHistoryItem } from '../../lib/types/results';
   import type { FilterChip } from '../../lib/types/filters';
 
@@ -267,6 +268,7 @@
    */
   function handleCopySuccess() {
     copied = true;
+    showCopiedToast();
     if (copyTimeout) {
       clearTimeout(copyTimeout);
     }

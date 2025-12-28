@@ -7,6 +7,7 @@
  * Issue #62 - Added SearchHistory component
  * Issue #121 - Added FilterBuilder and FilterHelpTooltip components
  * Issue #178 - Added ScrollToTop component
+ * Issue #174 - Added Toast component
  */
 
 export { default as SVGFilters } from './SVGFilters.svelte';
@@ -19,3 +20,4 @@ export { default as SearchHistory } from './SearchHistory.svelte';
 export { default as FilterBuilder } from './FilterBuilder.svelte';
 export { default as FilterHelpTooltip } from './FilterHelpTooltip.svelte';
 export { default as ScrollToTop } from './ScrollToTop.svelte';
+export { default as Toast } from './Toast.svelte';
