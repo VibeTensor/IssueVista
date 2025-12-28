@@ -5,6 +5,17 @@ All notable changes to IssueFlow will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Toast Notification System** (#174): Visual feedback for copy actions
+  - Brief "Copied to clipboard!" toast notification
+  - 2-second auto-dismiss with fade animation
+  - Accessible with aria-live region (WCAG 2.1 4.1.3 compliant)
+  - prefers-reduced-motion support
+  - Teal gradient styling matching brand design
+
 ## [1.1.0] - 2025-11-30
 
 ### Added

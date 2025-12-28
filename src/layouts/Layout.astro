@@ -1,5 +1,5 @@
 ---
-import { Footer, SVGFilters, ScrollToTop } from '../components/shared';
+import { Footer, SVGFilters, ScrollToTop, Toast } from '../components/shared';
 
 interface Props {
   title: string;
@@ -103,6 +103,7 @@ const ogImage = `${siteUrl}/og-image.png`;
   <body>
     <SVGFilters />
     <slot />
+    <Toast client:idle />
     <ScrollToTop client:idle />
     <Footer client:visible />
   </body>

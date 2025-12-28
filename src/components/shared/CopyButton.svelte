@@ -8,6 +8,7 @@
 
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { showCopiedToast } from '../../lib/toast';
 
   interface Props {
     text: string;
@@ -74,6 +75,7 @@
   function handleCopySuccess() {
     internalCopied = true;
     onCopy?.();
+    showCopiedToast();
 
     // Clear previous timeout if exists
     if (copyTimeout) {
