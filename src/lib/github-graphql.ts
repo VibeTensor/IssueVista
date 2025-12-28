@@ -16,6 +16,7 @@ export interface GitHubIssue {
   number: number;
   title: string;
   url: string;
+  body: string;
   createdAt: string;
   updatedAt: string;
   comments: { totalCount: number };
@@ -81,6 +82,7 @@ query FindAvailableIssues($owner: String!, $repo: String!, $cursor: String) {
         number
         title
         url
+        body
         createdAt
         updatedAt
         comments { totalCount }
@@ -330,6 +332,7 @@ export class GitHubAPI {
             number: issue.number,
             title: issue.title,
             url: issue.html_url,
+            body: issue.body || '',
             createdAt: issue.created_at,
             updatedAt: issue.updated_at,
             comments: { totalCount: issue.comments },

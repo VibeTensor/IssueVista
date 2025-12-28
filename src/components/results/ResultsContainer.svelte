@@ -921,6 +921,7 @@
 
   /* Hover effect for issue cards */
   :global(.hover-effect) {
+    transform-origin: center center;
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease,
@@ -929,8 +930,94 @@
   }
 
   :global(.hover-effect):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(20, 184, 166, 0.15);
+    border-color: rgba(20, 184, 166, 0.3);
+  }
+
+  /* Card flip animation - Issue #125 */
+  :global(.card-flip-container) {
+    perspective: 1000px;
+    position: relative;
+  }
+
+  /* Ensure flipped card appears above other cards */
+  :global(.card-flip-container:has(.flipped)) {
+    z-index: 20;
+  }
+
+  :global(.card-flip-inner) {
+    position: relative;
+    width: 100%;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
+    /* GPU optimization: will-change applied only during potential interaction */
+  }
+
+  :global(.card-flip-container:hover) :global(.card-flip-inner),
+  :global(.card-flip-container:focus-within) :global(.card-flip-inner) {
+    will-change: transform;
+  }
+
+  :global(.card-flip-inner.flipped) {
+    transform: rotateY(180deg);
+  }
+
+  :global(.card-front),
+  :global(.card-back) {
+    width: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  :global(.card-front) {
+    position: relative;
+  }
+
+  :global(.card-back) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+  }
+
+  /* Flip button styling */
+  :global(.flip-button) {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.375rem;
+    border-radius: 9999px;
+    background: rgba(51, 65, 85, 0.8);
+    color: rgb(148, 163, 184);
+    border: none;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+    z-index: 10;
+  }
+
+  :global(.flip-button):hover {
+    background: rgb(71, 85, 105);
+    color: white;
+  }
+
+  :global(.flip-button):active {
+    transform: scale(0.95);
+  }
+
+  :global(.flip-button):focus-visible {
+    outline: 2px solid #14b8a6;
+    outline-offset: 2px;
+  }
+
+  /* Flip button pressed state indicator */
+  :global(.flip-button[aria-pressed='true']) {
+    background: rgb(20, 184, 166);
+    color: white;
   }
 
   /* Sketch button */
@@ -1194,7 +1281,8 @@
   @media (prefers-reduced-motion: reduce) {
     .logo-mark svg circle,
     :global(.easy-start-badge),
-    :global(.zero-comment-highlight) {
+    :global(.zero-comment-highlight),
+    :global(.animate-pulse) {
       animation: none;
     }
 
@@ -1202,8 +1290,20 @@
     :global(.toggle-knob),
     :global(.filter-toggle-container),
     :global(.hover-effect),
-    :global(.sort-dropdown) {
+    :global(.sort-dropdown),
+    :global(.card-flip-inner),
+    :global(.flip-button) {
       transition: none;
+    }
+
+    /* Disable scale on hover, keep shadow only */
+    :global(.hover-effect):hover {
+      transform: translateY(-2px);
+    }
+
+    /* Instant flip without animation */
+    :global(.card-flip-inner.flipped) {
+      transform: rotateY(180deg);
     }
   }
 
