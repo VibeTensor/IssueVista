@@ -49,12 +49,10 @@
 
   // Sync chips to query when chips change externally
   $effect(() => {
-    if (chips.length > 0) {
-      const newQuery = chipsToQuery(chips);
-      if (newQuery !== query) {
-        query = newQuery;
-        onQueryChange?.(newQuery);
-      }
+    const newQuery = chipsToQuery(chips);
+    if (newQuery !== query) {
+      query = newQuery;
+      onQueryChange?.(newQuery);
     }
   });
 
@@ -171,42 +169,44 @@
 
 <div class="filter-builder flex flex-wrap items-center gap-2">
   <!-- Existing filter chips -->
-  {#each chips as chip (chip.id)}
-    <div
-      class="filter-chip group flex items-center gap-1 px-2 py-1 rounded-md text-sm
-             {chip.negated
-        ? 'bg-red-900/30 border border-red-700/50 text-red-300'
-        : 'bg-slate-700/50 border border-slate-600 text-slate-300'}
-             hover:bg-slate-600/50 transition-colors"
-      role="listitem"
-    >
-      <span class="chip-label">{chip.displayLabel}</span>
-      <button
-        type="button"
-        class="chip-remove ml-1 p-0.5 rounded hover:bg-slate-500/50
-               focus:outline-none focus:ring-1 focus:ring-teal-500
-               opacity-60 group-hover:opacity-100 transition-opacity"
-        onclick={() => removeChip(chip.id)}
-        aria-label="Remove filter: {chip.displayLabel}"
-        {disabled}
+  <div role="list" class="contents" aria-label="Active filters">
+    {#each chips as chip (chip.id)}
+      <div
+        class="filter-chip group flex items-center gap-1 px-2 py-1 rounded-md text-sm
+               {chip.negated
+          ? 'bg-red-900/30 border border-red-700/50 text-red-300'
+          : 'bg-slate-700/50 border border-slate-600 text-slate-300'}
+               hover:bg-slate-600/50 transition-colors"
+        role="listitem"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3.5 w-3.5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden="true"
+        <span class="chip-label">{chip.displayLabel}</span>
+        <button
+          type="button"
+          class="chip-remove ml-1 p-0.5 rounded hover:bg-slate-500/50
+                 focus:outline-none focus:ring-1 focus:ring-teal-500
+                 opacity-60 group-hover:opacity-100 transition-opacity"
+          onclick={() => removeChip(chip.id)}
+          aria-label="Remove filter: {chip.displayLabel}"
+          {disabled}
         >
-          <path
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <span class="sr-only">Remove filter</span>
-      </button>
-    </div>
-  {/each}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-3.5 w-3.5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="sr-only">Remove filter</span>
+        </button>
+      </div>
+    {/each}
+  </div>
 
   <!-- Add filter button and menu -->
   <div class="relative" bind:this={addMenuRef}>

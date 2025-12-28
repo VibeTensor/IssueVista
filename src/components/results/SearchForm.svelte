@@ -53,7 +53,7 @@
     onSearch,
     onUrlChange,
     onTokenChange,
-    onShowHelp,
+    onShowHelp: _onShowHelp,
     filterChips = [],
     filterQuery = '',
     onFilterChipsChange,
