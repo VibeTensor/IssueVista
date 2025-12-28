@@ -83,11 +83,11 @@
         ? 'zero-comment-highlight'
         : ''}"
     >
-      <!-- Flip button -->
+      <!-- Flip button on front - positioned at bottom to avoid Copy/View buttons -->
       {#if issueHasBody}
         <button
           type="button"
-          class="flip-button"
+          class="flip-button flip-button-front"
           onclick={toggleFlip}
           aria-label={isFlipped ? 'Show issue front' : 'Show issue details'}
           aria-pressed={isFlipped}
@@ -345,10 +345,10 @@
 
     <!-- Back of card (issue details) - Issue #125 -->
     <div class="card-back sketch-card {isEasyIssue ? 'zero-comment-highlight' : ''}">
-      <!-- Flip button on back -->
+      <!-- Flip button on back - positioned at top -->
       <button
         type="button"
-        class="flip-button"
+        class="flip-button flip-button-back"
         onclick={toggleFlip}
         aria-label="Show issue front"
         aria-pressed={isFlipped}
