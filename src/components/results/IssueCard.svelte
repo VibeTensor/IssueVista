@@ -136,8 +136,7 @@
               {#if isGoodFirstIssue}
                 <span
                   class="text-[10px] text-white bg-emerald-600 px-1.5 py-0.5 rounded-full font-medium"
-                  title="Great for first-time contributors"
-                  >Beginner</span
+                  title="Great for first-time contributors">Beginner</span
                 >
               {/if}
             </div>
@@ -260,8 +259,7 @@
               {#if isGoodFirstIssue}
                 <span
                   class="text-[10px] text-white bg-emerald-600 px-1.5 py-0.5 rounded-full font-medium"
-                  title="Great for first-time contributors"
-                  >Good First Issue</span
+                  title="Great for first-time contributors">Good First Issue</span
                 >
               {/if}
             </div>
