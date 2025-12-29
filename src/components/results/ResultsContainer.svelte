@@ -29,6 +29,13 @@
   import { SORT_OPTION_LABELS, DEFAULT_SORT_PREFERENCES } from '../../lib/types/sorting';
   import { getSortPreferences, setSortPreferences } from '../../lib/sort-preferences';
   import { showCopiedToast } from '../../lib/toast';
+  import {
+    readStateFromUrl,
+    updateUrlWithState,
+    copyShareableUrl,
+    hasUrlState,
+    type SearchState
+  } from '../../lib/url-state';
   import GitHubAuth from '../GitHubAuth.svelte';
   import { SVGFilters, EmptyState, LoadingProgress, CancelConfirmModal, TagCloud } from '../shared';
   import { detectEmptyStateVariant } from '../../lib/empty-state-utils';
@@ -77,6 +84,10 @@
   // Labels expansion state
   let showAllLabels = $state(false);
   const COLLAPSED_LABEL_COUNT = 6;
+
+  // URL state tracking (Issue #140)
+  let urlStateInitialized = $state(false);
+  let isUpdatingFromUrl = $state(false);
 
   // Derived: filtered and sorted issues (Issue #122, #137)
   let displayedIssues = $derived.by(() => {
@@ -138,6 +149,67 @@
     }
     // Abort any in-progress search
     abortController?.abort();
+  });
+
+  // Issue #140: Read URL state on mount and restore filters
+  $effect(() => {
+    // Only run once on initial mount
+    if (urlStateInitialized) return;
+
+    if (hasUrlState()) {
+      isUpdatingFromUrl = true;
+      const urlState = readStateFromUrl();
+
+      // Apply URL state to component state
+      if (urlState.repoUrl) {
+        repoUrl = urlState.repoUrl;
+      }
+      if (urlState.labelFilter !== undefined) {
+        labelFilter = urlState.labelFilter;
+      }
+      if (urlState.sortBy !== undefined) {
+        sortBy = urlState.sortBy;
+      }
+      if (urlState.sortDirection !== undefined) {
+        sortDirection = urlState.sortDirection;
+      }
+      if (urlState.showOnlyZeroComments !== undefined) {
+        showOnlyZeroComments = urlState.showOnlyZeroComments;
+      }
+
+      // Auto-trigger search if repo URL is present
+      if (urlState.repoUrl) {
+        // Use setTimeout to ensure state is fully applied before search
+        setTimeout(() => {
+          handleSearch();
+          isUpdatingFromUrl = false;
+        }, 0);
+      } else {
+        isUpdatingFromUrl = false;
+      }
+    }
+
+    urlStateInitialized = true;
+  });
+
+  // Issue #140: Update URL when filter/sort state changes (after initial load)
+  $effect(() => {
+    // Skip during URL initialization to prevent loops
+    if (!urlStateInitialized || isUpdatingFromUrl) return;
+
+    // Only update URL if we have searched (have a repo URL)
+    if (!repoUrl || !hasSearched) return;
+
+    // Build current state and update URL
+    const currentState: SearchState = {
+      repoUrl,
+      labelFilter,
+      sortBy,
+      sortDirection,
+      showOnlyZeroComments
+    };
+
+    updateUrlWithState(currentState);
   });
 
   // Handle authentication changes
@@ -287,6 +359,24 @@
     sortBy = DEFAULT_SORT_PREFERENCES.sortBy;
     sortDirection = DEFAULT_SORT_PREFERENCES.direction;
     setSortPreferences(DEFAULT_SORT_PREFERENCES);
+  }
+
+  // Handle share URL copy (Issue #140)
+  async function handleShareUrl() {
+    const currentState: SearchState = {
+      repoUrl,
+      labelFilter,
+      sortBy,
+      sortDirection,
+      showOnlyZeroComments
+    };
+
+    const success = await copyShareableUrl(currentState);
+    if (success) {
+      showCopiedToast();
+    } else {
+      console.warn('Failed to copy shareable URL to clipboard');
+    }
   }
 
   // Handle EmptyState primary action based on variant
@@ -733,6 +823,28 @@
                   CSV
                 </button>
               </div>
+            </div>
+
+            <!-- Share URL Row (Issue #140) -->
+            <div class="control-row mt-2">
+              <span class="filter-label">Share</span>
+              <button
+                type="button"
+                onclick={handleShareUrl}
+                class="share-btn"
+                aria-label="Copy shareable URL to clipboard"
+                title="Copy shareable URL with current filters"
+              >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  />
+                </svg>
+                Copy URL
+              </button>
             </div>
           </div>
 
@@ -1478,6 +1590,39 @@
   .export-btn:hover {
     background: rgba(51, 65, 85, 0.6);
     color: white;
+  }
+
+  /* Share button (Issue #140) */
+  .share-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: rgb(148, 163, 184);
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .share-btn:hover {
+    background: rgba(20, 184, 166, 0.2);
+    border-color: rgba(20, 184, 166, 0.4);
+    color: rgb(94, 234, 212);
+  }
+
+  .share-btn:active {
+    transform: scale(0.98);
+  }
+
+  .share-btn:focus-visible {
+    outline: 2px solid #14b8a6;
+    outline-offset: 2px;
   }
 
   /* Reset button */
