@@ -52,20 +52,32 @@ function resolveTheme(theme: Theme): ResolvedTheme {
 
 /**
  * Apply theme to the document
+ * Optimized for instant switching without transitions
  */
 function applyTheme(resolved: ResolvedTheme): void {
   if (typeof document === 'undefined') return;
 
   const root = document.documentElement;
 
+  // Add transitioning class to disable CSS transitions during switch
+  root.classList.add('theme-transitioning');
+
+  // Apply theme class change
   if (resolved === 'dark') {
     root.classList.add('dark');
   } else {
     root.classList.remove('dark');
   }
 
-  // Update color-scheme for native UI elements (scrollbars, form controls)
+  // Update color-scheme for native UI elements
   root.style.colorScheme = resolved;
+
+  // Remove transitioning class after paint to re-enable transitions
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      root.classList.remove('theme-transitioning');
+    });
+  });
 }
 
 /**

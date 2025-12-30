@@ -991,34 +991,37 @@
 />
 
 <style>
-  /* Global body styles */
+  /* Global body styles - uses CSS variables for theme support */
   :global(body) {
     font-family:
       -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
       sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    background: var(
+      --theme-body-gradient,
+      linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
+    );
     background-attachment: fixed;
     min-height: 100vh;
   }
 
-  /* Sidebar panel - clean background, no overlay */
+  /* Sidebar panel - uses CSS variables for theme support */
   .sidebar-panel {
-    background: #0f172a;
+    background: var(--theme-bg-primary, #0f172a);
   }
 
   @media (min-width: 1024px) {
     .sidebar-panel {
-      border-right: 1px solid rgba(71, 85, 105, 0.3);
+      border-right: 1px solid var(--theme-border, rgba(71, 85, 105, 0.3));
     }
   }
 
-  /* Sketch card - hand-drawn borders */
+  /* Sketch card - hand-drawn borders with theme support */
   :global(.sketch-card) {
-    background: rgba(30, 41, 59, 0.7);
+    background: var(--theme-bg-card, rgba(30, 41, 59, 0.7));
     backdrop-filter: blur(16px);
     border-radius: 12px;
     position: relative;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--theme-card-shadow, 0 8px 30px rgba(0, 0, 0, 0.4));
   }
 
   :global(.sketch-card)::before {
@@ -1026,7 +1029,7 @@
     position: absolute;
     inset: -2px;
     background: transparent;
-    border: 2px solid rgba(148, 163, 184, 0.25);
+    border: 2px solid var(--theme-border, rgba(148, 163, 184, 0.25));
     border-radius: inherit;
     filter: url(#sketch);
     pointer-events: none;
@@ -1363,14 +1366,14 @@
 
   /* ====== FILTER CARD COMPONENT STYLES ====== */
 
-  /* Main filter card container */
+  /* Main filter card container - uses CSS variables for theme support */
   .filter-card {
-    background: rgba(30, 41, 59, 0.6);
+    background: var(--theme-bg-card, rgba(30, 41, 59, 0.6));
     backdrop-filter: blur(12px);
     border-radius: 12px;
-    border: 1px solid rgba(71, 85, 105, 0.4);
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
     padding: 0.75rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--theme-card-shadow, 0 4px 20px rgba(0, 0, 0, 0.3));
   }
 
   /* Easy to Start toggle button */
@@ -1381,16 +1384,16 @@
     width: 100%;
     padding: 0.625rem 0.75rem;
     border-radius: 8px;
-    border: 1px solid rgba(71, 85, 105, 0.4);
-    background: rgba(51, 65, 85, 0.3);
-    color: rgb(203, 213, 225);
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.3));
+    color: var(--theme-text-secondary, rgb(203, 213, 225));
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .filter-toggle:hover {
-    background: rgba(51, 65, 85, 0.5);
-    border-color: rgba(71, 85, 105, 0.6);
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.5));
+    border-color: var(--theme-border-hover, rgba(71, 85, 105, 0.6));
   }
 
   .filter-toggle.active {
@@ -1404,8 +1407,8 @@
     width: 1rem;
     height: 1rem;
     border-radius: 4px;
-    border: 2px solid rgba(100, 116, 139, 0.5);
-    background: rgba(30, 41, 59, 0.5);
+    border: 2px solid var(--theme-border, rgba(100, 116, 139, 0.5));
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.5));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1424,8 +1427,8 @@
     font-weight: 700;
     padding: 0.25rem 0.5rem;
     border-radius: 9999px;
-    background: rgba(51, 65, 85, 0.6);
-    color: rgb(148, 163, 184);
+    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.6));
+    color: var(--theme-text-muted, rgb(148, 163, 184));
   }
 
   .toggle-count.active {
@@ -1436,7 +1439,7 @@
   /* Divider between sections */
   .filter-divider {
     height: 1px;
-    background: rgba(71, 85, 105, 0.3);
+    background: var(--theme-border, rgba(71, 85, 105, 0.3));
     margin: 0.625rem 0;
   }
 
@@ -1457,7 +1460,7 @@
   .filter-label {
     font-size: 0.625rem;
     font-weight: 600;
-    color: rgb(148, 163, 184);
+    color: var(--theme-text-muted, rgb(148, 163, 184));
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -1487,7 +1490,7 @@
     gap: 0.375rem;
   }
 
-  /* Dropdown trigger button */
+  /* Dropdown trigger button - uses CSS variables for theme support */
   .dropdown-trigger {
     width: 100%;
     display: flex;
@@ -1496,29 +1499,29 @@
     padding: 0.375rem 0.5rem;
     font-size: 0.625rem;
     font-weight: 500;
-    color: rgb(226, 232, 240);
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(71, 85, 105, 0.5);
+    color: var(--theme-text-primary, rgb(226, 232, 240));
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.8));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.5));
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .dropdown-trigger:hover {
-    background: rgba(51, 65, 85, 0.6);
-    border-color: rgba(100, 116, 139, 0.5);
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
+    border-color: var(--theme-border-hover, rgba(100, 116, 139, 0.5));
   }
 
-  /* Dropdown menu */
+  /* Dropdown menu - uses CSS variables for theme support */
   .dropdown-menu {
     position: absolute;
     z-index: 50;
     margin-top: 0.25rem;
     width: 100%;
-    background: rgb(30, 41, 59);
-    border: 1px solid rgba(71, 85, 105, 0.6);
+    background: var(--theme-dropdown-bg, rgb(30, 41, 59));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.6));
     border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--theme-dropdown-shadow, 0 8px 24px rgba(0, 0, 0, 0.4));
     overflow: hidden;
   }
 
@@ -1529,7 +1532,7 @@
     font-size: 0.625rem;
     font-weight: 500;
     text-align: left;
-    color: rgb(203, 213, 225);
+    color: var(--theme-text-secondary, rgb(203, 213, 225));
     background: transparent;
     border: none;
     cursor: pointer;
@@ -1537,8 +1540,8 @@
   }
 
   .dropdown-option:hover {
-    background: rgba(51, 65, 85, 0.8);
-    color: white;
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.8));
+    color: var(--theme-text-primary, white);
   }
 
   .dropdown-option.selected {
@@ -1546,33 +1549,33 @@
     color: rgb(94, 234, 212);
   }
 
-  /* Icon button (sort direction) */
+  /* Icon button (sort direction) - uses CSS variables */
   .icon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.375rem;
-    background: rgba(30, 41, 59, 0.8);
-    border: 1px solid rgba(71, 85, 105, 0.5);
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.8));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.5));
     border-radius: 6px;
-    color: rgb(148, 163, 184);
+    color: var(--theme-text-muted, rgb(148, 163, 184));
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .icon-btn:hover {
-    background: rgba(51, 65, 85, 0.6);
-    color: white;
-    border-color: rgba(100, 116, 139, 0.5);
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
+    color: var(--theme-text-primary, white);
+    border-color: var(--theme-border-hover, rgba(100, 116, 139, 0.5));
   }
 
-  /* Export buttons container */
+  /* Export buttons container - uses CSS variables */
   .export-buttons {
     flex: 1;
     display: flex;
     gap: 0.25rem;
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(71, 85, 105, 0.4);
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
     border-radius: 6px;
     padding: 0.125rem;
   }
@@ -1583,7 +1586,7 @@
     padding: 0.25rem 0.375rem;
     font-size: 0.5625rem;
     font-weight: 600;
-    color: rgb(148, 163, 184);
+    color: var(--theme-text-muted, rgb(148, 163, 184));
     background: transparent;
     border: none;
     border-radius: 4px;
@@ -1592,11 +1595,11 @@
   }
 
   .export-btn:hover {
-    background: rgba(51, 65, 85, 0.6);
-    color: white;
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
+    color: var(--theme-text-primary, white);
   }
 
-  /* Share button (Issue #140) */
+  /* Share button (Issue #140) - uses CSS variables */
   .share-btn {
     flex: 1;
     display: flex;
@@ -1606,9 +1609,9 @@
     padding: 0.375rem 0.75rem;
     font-size: 0.625rem;
     font-weight: 600;
-    color: rgb(148, 163, 184);
-    background: rgba(30, 41, 59, 0.6);
-    border: 1px solid rgba(71, 85, 105, 0.4);
+    color: var(--theme-text-muted, rgb(148, 163, 184));
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;

@@ -167,19 +167,41 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       /* ========================================
-         SMOOTH THEME TRANSITIONS
+         SMOOTH THEME TRANSITIONS (Performance Optimized)
+         Only apply to key container elements, not every element
          ======================================== */
 
-      html,
-      html *,
-      html *::before,
-      html *::after {
+      html {
+        transition: background-color 0.15s ease-out;
+      }
+
+      body {
         transition:
-          background-color 0.3s ease,
-          background 0.3s ease,
-          color 0.3s ease,
-          border-color 0.3s ease,
-          box-shadow 0.3s ease;
+          background-color 0.15s ease-out,
+          color 0.15s ease-out;
+      }
+
+      /* Only transition main layout containers */
+      main,
+      aside,
+      footer,
+      .sketch-card,
+      .filter-card,
+      .help-popup-wrapper,
+      .cancel-modal,
+      .loading-progress-container,
+      .empty-state-container {
+        transition:
+          background-color 0.15s ease-out,
+          border-color 0.15s ease-out;
+      }
+
+      /* Instant theme switching - disable all transitions during theme change */
+      html.theme-transitioning,
+      html.theme-transitioning *,
+      html.theme-transitioning *::before,
+      html.theme-transitioning *::after {
+        transition: none !important;
       }
 
       /* ========================================
@@ -254,25 +276,73 @@ const ogImage = `${siteUrl}/og-image.png`;
         background: #f1f5f9 !important;
       }
 
-      /* Text color overrides */
-      html:not(.dark) [class*='text-white'] {
+      /* Text color overrides - HIGH SPECIFICITY */
+      html:not(.dark) .text-white,
+      html:not(.dark) [class*='text-white'],
+      html:not(.dark) [class~='text-white'] {
         color: #1e293b !important;
       }
 
+      html:not(.dark) .text-slate-200,
       html:not(.dark) [class*='text-slate-2'] {
         color: #334155 !important;
       }
 
+      html:not(.dark) .text-slate-300,
       html:not(.dark) [class*='text-slate-3'] {
         color: #475569 !important;
       }
 
+      html:not(.dark) .text-slate-400,
       html:not(.dark) [class*='text-slate-4'] {
         color: #64748b !important;
       }
 
+      html:not(.dark) .text-slate-500,
       html:not(.dark) [class*='text-slate-5'] {
         color: #64748b !important;
+      }
+
+      /* Ensure h1, h2, h3 headings are dark in light mode - HIGHEST SPECIFICITY */
+      html:not(.dark) h1.text-white,
+      html:not(.dark) h1[class*='text-white'],
+      html:not(.dark) h1 {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) h2.text-white,
+      html:not(.dark) h2[class*='text-white'],
+      html:not(.dark) h2 {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) h3.text-white,
+      html:not(.dark) h3[class*='text-white'],
+      html:not(.dark) h3 {
+        color: #1e293b !important;
+      }
+
+      /* Brand header text (IssueFlow title) - CRITICAL */
+      html:not(.dark) .brand-header h1,
+      html:not(.dark) .brand-header h1.text-white,
+      html:not(.dark) .brand-header [class*='text-white'],
+      html:not(.dark) aside h1 {
+        color: #0f172a !important;
+      }
+
+      html:not(.dark) .brand-header p,
+      html:not(.dark) .brand-header [class*='text-slate-5'],
+      html:not(.dark) aside .brand-header p {
+        color: #64748b !important;
+      }
+
+      /* Sidebar panel text */
+      html:not(.dark) .sidebar-panel h1,
+      html:not(.dark) .sidebar-panel .text-white,
+      html:not(.dark) aside .text-white,
+      html:not(.dark) aside h1,
+      html:not(.dark) aside [class*='text-white'] {
+        color: #1e293b !important;
       }
 
       /* Border color overrides */
@@ -312,6 +382,23 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) [class*='card-back'] {
         background: #ffffff !important;
         background-color: #ffffff !important;
+      }
+
+      /* Ensure flipped card back is interactive */
+      .card-flip-inner.flipped .card-back {
+        pointer-events: auto !important;
+      }
+
+      .card-flip-inner.flipped .card-front {
+        pointer-events: none !important;
+      }
+
+      .card-flip-inner:not(.flipped) .card-back {
+        pointer-events: none !important;
+      }
+
+      .card-flip-inner:not(.flipped) .card-front {
+        pointer-events: auto !important;
       }
 
       /* ========================================
@@ -503,6 +590,591 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       /* ========================================
+         ISSUE CARD SPECIFIC OVERRIDES
+         ======================================== */
+
+      /* Issue number badge - all variations */
+      html:not(.dark) .card-front span[class*='bg-slate-7'],
+      html:not(.dark) .card-back span[class*='bg-slate-7'],
+      html:not(.dark) span[class*='rounded'][class*='bg-slate-7'],
+      html:not(.dark) span.bg-slate-700,
+      html:not(.dark) span[class*='bg-slate-700'] {
+        background: #e2e8f0 !important;
+        background-color: #e2e8f0 !important;
+        color: #1e293b !important;
+      }
+
+      /* Issue title links - all h3 in cards */
+      html:not(.dark) .card-front h3,
+      html:not(.dark) .card-back h3,
+      html:not(.dark) .card-front h3 a,
+      html:not(.dark) .card-back h3 a,
+      html:not(.dark) h3[class*='text-white'],
+      html:not(.dark) h3[class*='text-white'] a,
+      html:not(.dark) .sketch-card h3,
+      html:not(.dark) .sketch-card h3 a {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .card-front h3 a:hover,
+      html:not(.dark) .card-back h3 a:hover,
+      html:not(.dark) .sketch-card h3 a:hover {
+        color: #334155 !important;
+      }
+
+      /* Issue metadata text (dates, comments) - all text-slate variations */
+      html:not(.dark) .card-front [class*='text-slate-4'],
+      html:not(.dark) .card-back [class*='text-slate-4'],
+      html:not(.dark) .card-front [class*='text-xs'][class*='text-slate'],
+      html:not(.dark) .card-back [class*='text-xs'][class*='text-slate'],
+      html:not(.dark) .sketch-card [class*='text-slate-4'],
+      html:not(.dark) .sketch-card [class*='text-\[10px\]'],
+      html:not(.dark) .sketch-card time {
+        color: #64748b !important;
+      }
+
+      /* Additional label overflow count */
+      html:not(.dark) span[class*='bg-slate-7/50'],
+      html:not(.dark) span[class*='bg-slate-700/50'] {
+        background: #e2e8f0 !important;
+        background-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      /* Card back body preview text */
+      html:not(.dark) .card-back p[class*='text-slate-3'],
+      html:not(.dark) .card-back p {
+        color: #475569 !important;
+      }
+
+      /* Card back border and footer */
+      html:not(.dark) .card-back [class*='border-slate-7'],
+      html:not(.dark) .card-back [class*='border-slate'] {
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Card back footer text */
+      html:not(.dark) .card-back span[class*='text-slate-5'] {
+        color: #64748b !important;
+      }
+
+      /* Easy to Start / Easy badges text - Keep green but ensure visibility */
+      html:not(.dark) span[class*='text-green-4'],
+      html:not(.dark) .card-front span[class*='text-green'] {
+        color: #16a34a !important;
+      }
+
+      /* Easy badge background */
+      html:not(.dark) span[class*='bg-green-500/15'],
+      html:not(.dark) span[class*='bg-green-5'] {
+        background: rgba(22, 163, 74, 0.15) !important;
+      }
+
+      /* ========================================
+         FILTER CARD SPECIFIC OVERRIDES
+         ======================================== */
+
+      /* Filter card container */
+      html:not(.dark) .filter-card {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+      }
+
+      /* Filter toggle button */
+      html:not(.dark) .filter-toggle {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .filter-toggle:hover {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Toggle checkbox */
+      html:not(.dark) .toggle-checkbox {
+        background: #ffffff !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Toggle count badge */
+      html:not(.dark) .toggle-count {
+        background: #f1f5f9 !important;
+        color: #64748b !important;
+      }
+
+      /* Filter divider */
+      html:not(.dark) .filter-divider {
+        background: #e2e8f0 !important;
+      }
+
+      /* Filter labels (LABELS, SORT, EXPORT, SHARE text) */
+      html:not(.dark) .filter-label {
+        color: #64748b !important;
+      }
+
+      /* Dropdown trigger */
+      html:not(.dark) .dropdown-trigger {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .dropdown-trigger:hover {
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Dropdown menu */
+      html:not(.dark) .dropdown-menu {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Dropdown option */
+      html:not(.dark) .dropdown-option {
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .dropdown-option:hover {
+        background: #f1f5f9 !important;
+        color: #1e293b !important;
+      }
+
+      /* Icon button */
+      html:not(.dark) .icon-btn {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .icon-btn:hover {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+      }
+
+      /* Export buttons container */
+      html:not(.dark) .export-buttons {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Export button */
+      html:not(.dark) .export-btn {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .export-btn:hover {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+      }
+
+      /* Share button */
+      html:not(.dark) .share-btn {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .share-btn:hover {
+        background: rgba(13, 148, 136, 0.1) !important;
+        border-color: rgba(13, 148, 136, 0.3) !important;
+        color: #0d9488 !important;
+      }
+
+      /* ========================================
+         SEARCH FORM SPECIFIC OVERRIDES
+         ======================================== */
+
+      /* Search form labels */
+      html:not(.dark) label[class*='text-slate-3'],
+      html:not(.dark) [class*='text-xs'][class*='font-medium'][class*='text-slate-3'] {
+        color: #334155 !important;
+      }
+
+      /* Input backgrounds - more aggressive targeting */
+      html:not(.dark) input[class*='bg-slate-8'],
+      html:not(.dark) input.sketch-input,
+      html:not(.dark) [id='repoUrl'],
+      html:not(.dark) [id='token'] {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Quick pick chips - component specific */
+      html:not(.dark) .quick-pick-chip {
+        background: #f1f5f9 !important;
+        border-color: #e2e8f0 !important;
+        color: #475569 !important;
+      }
+
+      html:not(.dark) .quick-pick-chip:hover:not(:disabled) {
+        background: #e2e8f0 !important;
+        border-color: #cbd5e1 !important;
+        color: #334155 !important;
+      }
+
+      /* Keyboard shortcut hint */
+      html:not(.dark) kbd {
+        background: #f1f5f9 !important;
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      /* Rate limit and hint text */
+      html:not(.dark) span[class*='text-slate-5'][class*='text-'],
+      html:not(.dark) [class*='text-\\[10px\\]'][class*='text-slate-5'] {
+        color: #64748b !important;
+      }
+
+      /* Auth prompt container */
+      html:not(.dark) .auth-prompt,
+      html:not(.dark) [class*='auth-prompt'] {
+        background: linear-gradient(
+          to right,
+          rgba(251, 191, 36, 0.1),
+          rgba(20, 184, 166, 0.1)
+        ) !important;
+        border-color: rgba(251, 191, 36, 0.3) !important;
+      }
+
+      /* ========================================
+         FLIP BUTTON OVERRIDES
+         ======================================== */
+
+      html:not(.dark) .flip-button {
+        background: #f1f5f9 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .flip-button:hover {
+        background: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      /* ========================================
+         LOADING PROGRESS MODAL
+         ======================================== */
+
+      html:not(.dark) .loading-container {
+        background: transparent !important;
+      }
+
+      /* Progress bar track */
+      html:not(.dark) [class*='bg-slate-7'][role='progressbar'],
+      html:not(.dark) [class*='bg-slate-7'][aria-valuenow] {
+        background: #e2e8f0 !important;
+      }
+
+      /* Cancel search modal */
+      html:not(.dark) [class*='modal'] [class*='bg-slate'],
+      html:not(.dark) [role='dialog'] [class*='bg-slate'] {
+        background: #ffffff !important;
+      }
+
+      /* ========================================
+         TAG CLOUD / LABEL CHIPS IN FILTER
+         ======================================== */
+
+      html:not(.dark) [class*='tag-cloud'] button,
+      html:not(.dark) .filter-section button[class*='rounded'] {
+        background: #f1f5f9 !important;
+        color: #475569 !important;
+      }
+
+      html:not(.dark) [class*='tag-cloud'] button:hover,
+      html:not(.dark) .filter-section button[class*='rounded']:hover {
+        background: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      /* ========================================
+         RESULTS HEADER
+         ======================================== */
+
+      /* "Found X available issues" heading */
+      html:not(.dark) main h2[class*='text-white'],
+      html:not(.dark) main h2[class*='font-bold'] {
+        color: #0f172a !important;
+      }
+
+      /* "Open & unassigned" subtext */
+      html:not(.dark) main p[class*='text-slate-5'],
+      html:not(.dark) main p[class*='text-\\[10px\\]'] {
+        color: #64748b !important;
+      }
+
+      /* "Pick an issue and start contributing" footer text */
+      html:not(.dark) main .mt-6 p[class*='text-slate-5'] {
+        color: #64748b !important;
+      }
+
+      /* ========================================
+         HELP POPUP / MODAL OVERRIDES
+         ======================================== */
+
+      /* Help popup wrapper */
+      html:not(.dark) .help-popup-wrapper,
+      html:not(.dark) .sketch-container {
+        background: #ffffff !important;
+      }
+
+      /* Help popup header and footer */
+      html:not(.dark) .help-popup-scroll > div:first-child,
+      html:not(.dark) [class*='bg-slate-9'][class*='backdrop-blur'] {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Help popup content area */
+      html:not(.dark) .help-popup-scroll [class*='bg-slate-9'] {
+        background: #fafafa !important;
+      }
+
+      /* Help popup title - "How It Works" */
+      html:not(.dark) .help-popup-scroll h2[class*='text-white'],
+      html:not(.dark) .help-popup-scroll h2.text-white,
+      html:not(.dark) .help-popup-wrapper h2 {
+        color: #1e293b !important;
+      }
+
+      /* Help popup step titles - "Authentication", "Enter Repository URL", etc */
+      html:not(.dark) .help-popup-scroll h3[class*='text-white'],
+      html:not(.dark) .help-popup-scroll h3.text-white,
+      html:not(.dark) .help-popup-wrapper h3 {
+        color: #1e293b !important;
+      }
+
+      /* Help popup body text - descriptions under each step */
+      html:not(.dark) .help-popup-scroll p[class*='text-slate-4'],
+      html:not(.dark) .help-popup-scroll p.text-slate-400,
+      html:not(.dark) .help-popup-scroll [class*='text-slate-3'],
+      html:not(.dark) .help-popup-wrapper p {
+        color: #475569 !important;
+      }
+
+      /* Help popup close button icon */
+      html:not(.dark) .help-popup-scroll button[aria-label='Close'] svg {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .help-popup-scroll button[aria-label='Close']:hover {
+        background: #f1f5f9 !important;
+      }
+
+      html:not(.dark) .help-popup-scroll button[aria-label='Close']:hover svg {
+        color: #1e293b !important;
+      }
+
+      /* Help popup details/summary - token creation section */
+      html:not(.dark) .help-popup-scroll details {
+        background: #e2e8f0 !important;
+      }
+
+      /* Details list text */
+      html:not(.dark) .help-popup-scroll details ol,
+      html:not(.dark) .help-popup-scroll details li,
+      html:not(.dark) .help-popup-scroll details .text-slate-300 {
+        color: #334155 !important;
+      }
+
+      /* "public_repo" text inside details */
+      html:not(.dark) .help-popup-scroll details .text-white {
+        color: #1e293b !important;
+        font-weight: 600;
+      }
+
+      /* "Generate token" green text inside details */
+      html:not(.dark) .help-popup-scroll details .text-green-400 {
+        color: #16a34a !important;
+      }
+
+      /* Help popup sticky footer background */
+      html:not(.dark) .help-popup-scroll > div:last-child {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* ========================================
+         AUTH PROMPT - 60/hr and Get 5000/hr button
+         ======================================== */
+
+      /* "60/hr" rate limit text */
+      html:not(.dark) .text-slate-400[class*='text-\\[10px\\]'],
+      html:not(.dark) span.text-slate-400[class*='text-'],
+      html:not(.dark) [class*='auth'] .text-slate-400 {
+        color: #475569 !important;
+      }
+
+      /* Auth prompt container background */
+      html:not(.dark) [class*='bg-gradient-to-r'][class*='from-amber'],
+      html:not(.dark) [class*='auth-prompt'],
+      html:not(.dark) div[class*='from-amber-500/10'] {
+        background: linear-gradient(
+          to right,
+          rgba(251, 191, 36, 0.12),
+          rgba(13, 148, 136, 0.08)
+        ) !important;
+        border-color: rgba(251, 191, 36, 0.35) !important;
+      }
+
+      /* "Get 5000/hr" button - ensure white text on teal */
+      html:not(.dark) a[class*='bg-teal-6'],
+      html:not(.dark) a.bg-teal-600 {
+        background: #0d9488 !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) a[class*='bg-teal-6']:hover,
+      html:not(.dark) a.bg-teal-600:hover {
+        background: #14b8a6 !important;
+        color: #ffffff !important;
+      }
+
+      /* ========================================
+         FILTER BUILDER / FILTER HELP TOOLTIP
+         ======================================== */
+
+      /* Filter builder container */
+      html:not(.dark) [class*='filter-builder'],
+      html:not(.dark) [class*='FilterBuilder'] {
+        background: #ffffff !important;
+      }
+
+      /* Filter help tooltip popup */
+      html:not(.dark) .filter-help-tooltip,
+      html:not(.dark) [class*='FilterHelpTooltip'] {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Filter chip inputs and buttons */
+      html:not(.dark) [class*='filter-chip'],
+      html:not(.dark) button[class*='filter'][class*='chip'] {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* ========================================
+         COPY BUTTON STATES
+         ======================================== */
+
+      /* Copy button default */
+      html:not(.dark) button[class*='bg-slate-7']:not([class*='bg-green']):not(:hover) {
+        background: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) button[class*='bg-slate-7']:hover:not([class*='bg-green']) {
+        background: #cbd5e1 !important;
+        color: #1e293b !important;
+      }
+
+      /* ========================================
+         SKELETON LOADING CARDS
+         ======================================== */
+
+      html:not(.dark) .skeleton-card,
+      html:not(.dark) [class*='skeleton'] {
+        background: #f1f5f9 !important;
+      }
+
+      html:not(.dark) [class*='animate-pulse'][class*='bg-slate'] {
+        background: #e2e8f0 !important;
+      }
+
+      /* ========================================
+         EMPTY STATE COMPONENT
+         ======================================== */
+
+      html:not(.dark) .empty-state-container {
+        background: rgba(226, 232, 240, 0.6) !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      html:not(.dark) .empty-state-container::before {
+        border-color: #cbd5e1 !important;
+      }
+
+      html:not(.dark) .empty-state-title,
+      html:not(.dark) [class*='empty-state'] h2,
+      html:not(.dark) [class*='empty-state'] h3,
+      html:not(.dark) [class*='EmptyState'] h3 {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .empty-state-description,
+      html:not(.dark) [class*='empty-state'] p,
+      html:not(.dark) [class*='EmptyState'] p {
+        color: #475569 !important;
+      }
+
+      html:not(.dark) .empty-state-container .illustration {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .primary-action {
+        background: #475569 !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) .primary-action:hover {
+        background: #334155 !important;
+        color: #ffffff !important;
+      }
+
+      /* All teal/green gradient buttons should have white text */
+      html:not(.dark) button[class*='bg-gradient'],
+      html:not(.dark) button[class*='from-teal'],
+      html:not(.dark) button[class*='bg-teal'],
+      html:not(.dark) button[class*='bg-green'] {
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) button[class*='bg-gradient']:hover,
+      html:not(.dark) button[class*='from-teal']:hover,
+      html:not(.dark) button[class*='bg-teal']:hover,
+      html:not(.dark) button[class*='bg-green']:hover {
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) .secondary-action {
+        color: #0d9488 !important;
+      }
+
+      html:not(.dark) .secondary-action:hover {
+        color: #0f766e !important;
+      }
+
+      /* ========================================
+         SEARCH HISTORY DROPDOWN
+         ======================================== */
+
+      html:not(.dark) .search-history-dropdown,
+      html:not(.dark) [class*='SearchHistory'] {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      html:not(.dark) .search-history-dropdown [class*='text-slate'],
+      html:not(.dark) [class*='SearchHistory'] [class*='text-slate'] {
+        color: #475569 !important;
+      }
+
+      html:not(.dark) .search-history-dropdown button:hover,
+      html:not(.dark) [class*='SearchHistory'] button:hover {
+        background: #f1f5f9 !important;
+      }
+
+      /* ========================================
          ISSUE LABELS (keep original colors)
          ======================================== */
 
@@ -561,11 +1233,17 @@ const ogImage = `${siteUrl}/og-image.png`;
          LINKS
          ======================================== */
 
-      html:not(.dark) a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not([class*='bg-']) {
+      html:not(.dark)
+        a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not(
+          [class*='bg-']
+        ) {
         color: #2563eb;
       }
 
-      html:not(.dark) a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not([class*='bg-']):hover {
+      html:not(.dark)
+        a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not(
+          [class*='bg-']
+        ):hover {
         color: #1d4ed8;
       }
 
@@ -617,6 +1295,386 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       /* ========================================
+         MAIN CONTENT AREA (RIGHT PANEL) - CRITICAL
+         ======================================== */
+
+      /* Main right panel background */
+      html:not(.dark) main {
+        background: #f8fafc !important;
+        background-color: #f8fafc !important;
+      }
+
+      /* Main container and flex layout */
+      html:not(.dark) .flex.flex-col.lg\:flex-row {
+        background: #f1f5f9 !important;
+      }
+
+      /* Results header - "Found X available issues" */
+      html:not(.dark) main h2,
+      html:not(.dark) main h2.text-white,
+      html:not(.dark) main h2[class*='text-white'],
+      html:not(.dark) main h2[class*='font-bold'],
+      html:not(.dark) main .text-base.font-bold,
+      html:not(.dark) main .text-lg.font-bold {
+        color: #0f172a !important;
+      }
+
+      /* Results subtext - "Open, unassigned, no PRs" */
+      html:not(.dark) main p.text-slate-500,
+      html:not(.dark) main p[class*='text-slate-5'],
+      html:not(.dark) main p[class*='text-\[10px\]'] {
+        color: #64748b !important;
+      }
+
+      /* Loading container and spinner text */
+      html:not(.dark) .loading-container p,
+      html:not(.dark) [aria-busy='true'] p {
+        color: #334155 !important;
+      }
+
+      /* ========================================
+         FLIP BUTTON - BOTH THEMES
+         ======================================== */
+
+      /* Light mode flip button - visible and clickable */
+      html:not(.dark) .flip-button {
+        background: #475569 !important;
+        background-color: #475569 !important;
+        color: #ffffff !important;
+        border: none !important;
+        z-index: 20 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+
+      html:not(.dark) .flip-button:hover {
+        background: #334155 !important;
+        background-color: #334155 !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) .flip-button[aria-pressed='true'] {
+        background: #0d9488 !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) .flip-button-front,
+      html:not(.dark) .flip-button-back {
+        background: #475569 !important;
+        color: #ffffff !important;
+        z-index: 20 !important;
+        pointer-events: auto !important;
+      }
+
+      html:not(.dark) .flip-button-front:hover,
+      html:not(.dark) .flip-button-back:hover {
+        background: #334155 !important;
+        color: #ffffff !important;
+      }
+
+      /* Dark mode flip button - ensure visibility */
+      html.dark .flip-button {
+        background: rgba(71, 85, 105, 0.9) !important;
+        color: #e2e8f0 !important;
+        z-index: 20 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+      }
+
+      html.dark .flip-button:hover {
+        background: rgba(100, 116, 139, 1) !important;
+        color: #ffffff !important;
+      }
+
+      html.dark .flip-button[aria-pressed='true'] {
+        background: #14b8a6 !important;
+        color: #ffffff !important;
+      }
+
+      html.dark .flip-button-front,
+      html.dark .flip-button-back {
+        z-index: 20 !important;
+        pointer-events: auto !important;
+      }
+
+      /* ========================================
+         TEAL/GREEN BUTTONS - CONSISTENT LIGHT MODE
+         Theme Toggle, Help FAB, Find Issues Button
+         ======================================== */
+
+      /* Help FAB button - keep teal but adjust shadow */
+      html:not(.dark) .help-button {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25) !important;
+      }
+
+      html:not(.dark) .help-button:hover {
+        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+      }
+
+      /* Theme toggle button - adjust for light mode visibility */
+      html:not(.dark) .theme-toggle-btn,
+      html:not(.dark) .theme-toggle,
+      html:not(.dark) [class*='theme-toggle'],
+      html:not(.dark) button[aria-label*='Switch to dark'],
+      html:not(.dark) button[aria-label*='Switch to light'],
+      html:not(.dark) button[title*='Switch to'] {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25) !important;
+        border: none !important;
+      }
+
+      html:not(.dark) .theme-toggle-btn:hover,
+      html:not(.dark) .theme-toggle:hover,
+      html:not(.dark) [class*='theme-toggle']:hover,
+      html:not(.dark) button[aria-label*='Switch to dark']:hover,
+      html:not(.dark) button[aria-label*='Switch to light']:hover,
+      html:not(.dark) button[title*='Switch to']:hover {
+        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+      }
+
+      /* Find Issues button - primary action */
+      html:not(.dark) button[type='submit'][class*='bg-teal'],
+      html:not(.dark) button[type='submit'][class*='from-teal'],
+      html:not(.dark) .find-issues-btn,
+      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-teal'] {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3) !important;
+      }
+
+      html:not(.dark) button[type='submit'][class*='bg-teal']:hover,
+      html:not(.dark) button[type='submit'][class*='from-teal']:hover,
+      html:not(.dark) .find-issues-btn:hover,
+      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-teal']:hover {
+        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4) !important;
+      }
+
+      /* Get 5000/hr link button */
+      html:not(.dark) a[class*='bg-teal'] {
+        background: #0d9488 !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) a[class*='bg-teal']:hover {
+        background: #0f766e !important;
+      }
+
+      /* ========================================
+         ADVANCED FILTERS - FULL LIGHT MODE SUPPORT
+         ======================================== */
+
+      /* Filter card main container */
+      html:not(.dark) .filter-card {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+      }
+
+      /* Filter toggle (Easy to Start) */
+      html:not(.dark) .filter-toggle {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .filter-toggle:hover {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      html:not(.dark) .filter-toggle.active {
+        background: rgba(34, 197, 94, 0.1) !important;
+        border-color: rgba(34, 197, 94, 0.4) !important;
+        color: #16a34a !important;
+      }
+
+      /* Toggle checkbox */
+      html:not(.dark) .toggle-checkbox {
+        background: #ffffff !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      html:not(.dark) .toggle-checkbox.checked {
+        background: #22c55e !important;
+        border-color: #22c55e !important;
+      }
+
+      /* Toggle count badge */
+      html:not(.dark) .toggle-count {
+        background: #f1f5f9 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .toggle-count.active {
+        background: rgba(34, 197, 94, 0.15) !important;
+        color: #16a34a !important;
+      }
+
+      /* Filter divider */
+      html:not(.dark) .filter-divider {
+        background: #e2e8f0 !important;
+      }
+
+      /* Filter labels */
+      html:not(.dark) .filter-label {
+        color: #64748b !important;
+      }
+
+      /* Filter action buttons (Clear, Show more) */
+      html:not(.dark) .filter-action-btn {
+        color: #0d9488 !important;
+      }
+
+      html:not(.dark) .filter-action-btn:hover {
+        color: #0f766e !important;
+      }
+
+      html:not(.dark) .filter-action-btn.text-amber-400 {
+        color: #d97706 !important;
+      }
+
+      html:not(.dark) .filter-action-btn.text-amber-400:hover {
+        color: #b45309 !important;
+      }
+
+      /* Dropdown trigger */
+      html:not(.dark) .dropdown-trigger {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .dropdown-trigger:hover {
+        background: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Dropdown menu */
+      html:not(.dark) .dropdown-menu {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+      }
+
+      /* Dropdown options */
+      html:not(.dark) .dropdown-option {
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .dropdown-option:hover {
+        background: #f1f5f9 !important;
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .dropdown-option.selected {
+        background: rgba(13, 148, 136, 0.15) !important;
+        color: #0d9488 !important;
+      }
+
+      /* Icon button (sort direction) */
+      html:not(.dark) .icon-btn {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .icon-btn:hover {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+        border-color: #cbd5e1 !important;
+      }
+
+      /* Export buttons container */
+      html:not(.dark) .export-buttons {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Export button */
+      html:not(.dark) .export-btn {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .export-btn:hover {
+        background: #f1f5f9 !important;
+        color: #334155 !important;
+      }
+
+      /* Share button */
+      html:not(.dark) .share-btn {
+        background: #f8fafc !important;
+        border-color: #e2e8f0 !important;
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .share-btn:hover {
+        background: rgba(13, 148, 136, 0.1) !important;
+        border-color: rgba(13, 148, 136, 0.3) !important;
+        color: #0d9488 !important;
+      }
+
+      /* Reset button */
+      html:not(.dark) .reset-btn {
+        color: #d97706 !important;
+      }
+
+      html:not(.dark) .reset-btn:hover {
+        color: #b45309 !important;
+      }
+
+      /* ========================================
+         BODY GRADIENT OVERRIDE FOR LIGHT MODE
+         ======================================== */
+
+      html:not(.dark) body {
+        background: #f1f5f9 !important;
+        background-image: none !important;
+      }
+
+      /* ========================================
+         SIDEBAR IN LIGHT MODE
+         ======================================== */
+
+      html:not(.dark) .sidebar-panel,
+      html:not(.dark) aside {
+        background: #ffffff !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      /* Brand header in light mode */
+      html:not(.dark) .brand-header {
+        border-color: #e2e8f0 !important;
+      }
+
+      html:not(.dark) .brand-header h1 {
+        color: #0f172a !important;
+      }
+
+      html:not(.dark) .brand-header p {
+        color: #64748b !important;
+      }
+
+      /* Auth prompt in light mode */
+      html:not(.dark) .auth-prompt {
+        background: linear-gradient(
+          to right,
+          rgba(251, 191, 36, 0.08),
+          rgba(13, 148, 136, 0.08)
+        ) !important;
+        border-color: rgba(251, 191, 36, 0.25) !important;
+      }
+
+      html:not(.dark) .auth-prompt span {
+        color: #64748b !important;
+      }
+
+      /* ========================================
          EXPORT MENU
          ======================================== */
 
@@ -635,6 +1693,210 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       html:not(.dark) [class*='filter'][class*='bg-slate'] {
         background: #f1f5f9 !important;
+      }
+
+      /* ========================================
+         CANCEL CONFIRM MODAL - LIGHT MODE
+         ======================================== */
+
+      html:not(.dark) .cancel-modal {
+        background: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+      }
+
+      html:not(.dark) .cancel-modal::before {
+        border-color: rgba(203, 213, 225, 0.5) !important;
+      }
+
+      /* Warning icon in light mode */
+      html:not(.dark) .modal-icon {
+        background: rgba(251, 191, 36, 0.12) !important;
+        color: #d97706 !important;
+      }
+
+      html:not(.dark) .modal-title {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .issues-info {
+        background: rgba(226, 232, 240, 0.7) !important;
+        color: #475569 !important;
+      }
+
+      html:not(.dark) .issues-info .info-icon {
+        color: #0d9488 !important;
+      }
+
+      html:not(.dark) .issues-info strong {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .modal-description {
+        color: #475569 !important;
+      }
+
+      /* Continue Loading button - teal with white text */
+      html:not(.dark) .btn-continue {
+        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        color: #ffffff !important;
+      }
+
+      html:not(.dark) .btn-continue:hover {
+        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+        color: #ffffff !important;
+      }
+
+      /* Yes, Show Results button - amber/orange for light mode */
+      html:not(.dark) .btn-cancel {
+        color: #b45309 !important;
+        background: rgba(251, 191, 36, 0.15) !important;
+        border-color: rgba(217, 119, 6, 0.4) !important;
+      }
+
+      html:not(.dark) .btn-cancel:hover {
+        background: rgba(251, 191, 36, 0.25) !important;
+        border-color: rgba(217, 119, 6, 0.6) !important;
+        color: #92400e !important;
+      }
+
+      /* ========================================
+         LOADING PROGRESS COMPONENT - LIGHT MODE
+         ======================================== */
+
+      html:not(.dark) .loading-progress-container {
+        background: rgba(241, 245, 249, 0.95) !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+      }
+
+      html:not(.dark) .loading-progress-container::before {
+        border-color: rgba(203, 213, 225, 0.5) !important;
+      }
+
+      html:not(.dark) .progress-track {
+        background: rgba(226, 232, 240, 0.8) !important;
+      }
+
+      html:not(.dark) .progress-percentage {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .status-message {
+        color: #1e293b !important;
+      }
+
+      html:not(.dark) .detail-row {
+        background: rgba(226, 232, 240, 0.6) !important;
+      }
+
+      html:not(.dark) .issues-count,
+      html:not(.dark) .estimated-time {
+        color: #475569 !important;
+      }
+
+      html:not(.dark) .separator {
+        color: #94a3b8 !important;
+      }
+
+      html:not(.dark) .cancel-button {
+        color: #b45309 !important;
+        background: rgba(251, 191, 36, 0.15) !important;
+        border-color: rgba(217, 119, 6, 0.4) !important;
+      }
+
+      html:not(.dark) .cancel-button:hover {
+        background: rgba(251, 191, 36, 0.25) !important;
+        border-color: rgba(217, 119, 6, 0.6) !important;
+      }
+
+      /* ========================================
+         FILTER HELP TOOLTIP - LIGHT MODE
+         ======================================== */
+
+      /* Help trigger button */
+      html:not(.dark) .help-trigger {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .help-trigger:hover {
+        color: #475569 !important;
+        background: rgba(100, 116, 139, 0.15) !important;
+      }
+
+      /* Help modal background */
+      html:not(.dark) .help-modal {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-color: rgba(203, 213, 225, 0.6) !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+        color: #475569 !important;
+      }
+
+      /* Modal title */
+      html:not(.dark) .help-modal h3 {
+        color: #1e293b !important;
+      }
+
+      /* Close button */
+      html:not(.dark) .help-modal .close-btn {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .help-modal .close-btn:hover {
+        background: rgba(100, 116, 139, 0.15) !important;
+        color: #334155 !important;
+      }
+
+      /* Section headers */
+      html:not(.dark) .help-modal h4 {
+        color: #64748b !important;
+      }
+
+      /* Operator code blocks */
+      html:not(.dark) .help-modal .operators code {
+        background: rgba(226, 232, 240, 0.8) !important;
+        color: #0d9488 !important;
+      }
+
+      html:not(.dark) .help-modal .operators span {
+        color: #475569 !important;
+      }
+
+      /* Example code blocks */
+      html:not(.dark) .help-modal .examples code {
+        background: rgba(241, 245, 249, 0.9) !important;
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .help-modal .examples p {
+        color: #64748b !important;
+      }
+
+      /* Filter types code blocks */
+      html:not(.dark) .help-modal .filter-types code {
+        background: rgba(226, 232, 240, 0.8) !important;
+        color: #334155 !important;
+      }
+
+      /* Footer border and link */
+      html:not(.dark) .help-modal .footer {
+        border-color: rgba(203, 213, 225, 0.5) !important;
+      }
+
+      html:not(.dark) .help-modal .footer a {
+        color: #0d9488 !important;
+      }
+
+      html:not(.dark) .help-modal .footer a:hover {
+        color: #0f766e !important;
+      }
+
+      /* Keyboard hint */
+      html:not(.dark) .help-modal p:last-child {
+        color: #64748b !important;
+      }
+
+      html:not(.dark) .help-modal kbd {
+        background: rgba(226, 232, 240, 0.8) !important;
+        color: #475569 !important;
       }
 
       /* ========================================
