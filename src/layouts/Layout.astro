@@ -519,10 +519,10 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       /* ========================================
          DROPDOWNS, MENUS, POPUPS
-         Note: Excludes cancel-modal elements which have their own styles
+         Note: Excludes cancel-modal elements and context-menu which have their own styles
          ======================================== */
 
-      html:not(.dark) [role='menu'],
+      html:not(.dark) [role='menu']:not(.context-menu),
       html:not(.dark) [role='listbox'],
       html:not(.dark) [class*='dropdown'],
       html:not(.dark) [class*='popup'],
@@ -531,7 +531,8 @@ const ogImage = `${siteUrl}/og-image.png`;
           .modal-description
         ):not(.modal-actions):not(.modal-backdrop):not(.help-modal),
       html:not(.dark) [class*='tooltip']:not([role='tooltip']),
-      html:not(.dark) [class*='menu'] {
+      html:not(.dark)
+        [class*='menu']:not(.context-menu):not(.menu-item):not(.menu-icon):not(.menu-label) {
         background: #ffffff !important;
         background-color: #ffffff !important;
         border-color: #e2e8f0 !important;
@@ -1993,6 +1994,106 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) .help-modal kbd {
         background: rgba(226, 232, 240, 0.8) !important;
         color: #475569 !important;
+      }
+
+      /* ========================================
+         CONTEXT MENU - Issue #139 Quick Actions
+         ======================================== */
+
+      /* Context menu container - both themes */
+      .context-menu {
+        position: fixed !important;
+        z-index: 9999 !important;
+        min-width: 160px !important;
+        padding: 0.25rem !important;
+        border-radius: 0.5rem !important;
+        outline: none !important;
+      }
+
+      /* Dark mode context menu */
+      html.dark .context-menu {
+        background: rgba(30, 41, 59, 0.95) !important;
+        backdrop-filter: blur(8px) !important;
+        border: 1px solid rgba(71, 85, 105, 0.5) !important;
+        box-shadow:
+          0 10px 15px -3px rgba(0, 0, 0, 0.3),
+          0 4px 6px -4px rgba(0, 0, 0, 0.2) !important;
+      }
+
+      /* Light mode context menu */
+      html:not(.dark) .context-menu {
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(8px) !important;
+        border: 1px solid rgba(203, 213, 225, 0.8) !important;
+        box-shadow:
+          0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Menu items - both themes */
+      .context-menu .menu-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+        padding: 0.5rem 0.75rem !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0.375rem !important;
+        font-size: 0.75rem !important;
+        font-weight: 500 !important;
+        text-align: left !important;
+        cursor: pointer !important;
+        transition: background-color 150ms ease !important;
+      }
+
+      /* Dark mode menu items */
+      html.dark .context-menu .menu-item {
+        color: #e2e8f0 !important;
+      }
+
+      html.dark .context-menu .menu-item:hover,
+      html.dark .context-menu .menu-item.focused {
+        background: rgba(71, 85, 105, 0.5) !important;
+        color: #fff !important;
+      }
+
+      /* Light mode menu items */
+      html:not(.dark) .context-menu .menu-item {
+        color: #334155 !important;
+      }
+
+      html:not(.dark) .context-menu .menu-item:hover,
+      html:not(.dark) .context-menu .menu-item.focused {
+        background: rgba(226, 232, 240, 0.8) !important;
+        color: #0f172a !important;
+      }
+
+      /* Menu icon container */
+      .context-menu .menu-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 1rem !important;
+        height: 1rem !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* SVG icons in context menu */
+      .context-menu .menu-icon .icon,
+      .context-menu .menu-icon svg {
+        width: 1rem !important;
+        height: 1rem !important;
+      }
+
+      /* Bookmarked icon color */
+      .context-menu .menu-icon .icon.bookmarked {
+        color: #fbbf24 !important;
+      }
+
+      /* Menu label */
+      .context-menu .menu-label {
+        flex: 1 !important;
       }
 
       /* ========================================
