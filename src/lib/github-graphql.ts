@@ -371,7 +371,13 @@ export class GitHubAPI {
   ): Promise<PagedIssuesResponse> {
     // For REST API, cursor is the page number encoded as string
     // First page: cursor is null/undefined, subsequent: cursor is page number
-    const page = cursor ? parseInt(cursor, 10) : 1;
+    let page = 1;
+    if (cursor) {
+      const parsed = parseInt(cursor, 10);
+      // Validate it's a valid page number (REST cursors are numeric strings)
+      // GraphQL cursors are base64 and would parse to NaN
+      page = Number.isNaN(parsed) || parsed < 1 ? 1 : parsed;
+    }
     const perPage = 100;
 
     console.log(`[REST] Fetching page ${page} from ${owner}/${repo}`);
