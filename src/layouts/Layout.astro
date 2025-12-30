@@ -526,7 +526,10 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) [role='listbox'],
       html:not(.dark) [class*='dropdown'],
       html:not(.dark) [class*='popup'],
-      html:not(.dark) [class*='modal']:not(.cancel-modal):not(.modal-icon):not(.modal-title):not(.modal-description):not(.modal-actions):not(.modal-backdrop):not(.help-modal),
+      html:not(.dark)
+        [class*='modal']:not(.cancel-modal):not(.modal-icon):not(.modal-title):not(
+          .modal-description
+        ):not(.modal-actions):not(.modal-backdrop):not(.help-modal),
       html:not(.dark) [class*='tooltip']:not([role='tooltip']),
       html:not(.dark) [class*='menu'] {
         background: #ffffff !important;
