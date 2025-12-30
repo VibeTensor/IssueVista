@@ -3,6 +3,7 @@
   Issue #35 - Extracted from ResultsList.svelte
   Issue #125 - Added flip animation to show issue details
   Issue #181 - Added "Good First Issue" badge for beginner-friendly issues
+  Issue #139 - Added quick actions context menu (right-click/long-press)
 
   Displays a single GitHub issue with:
   - Issue number badge
@@ -14,12 +15,15 @@
   - "Easy to Start" badge for zero-comment issues
   - "Good First Issue" badge for issues with good-first-issue label
   - Flip animation to reveal issue body preview
+  - Context menu with Copy Link, Open in New Tab, Bookmark actions
 -->
 
 <script lang="ts">
   import type { GitHubIssue } from '../../lib/github-graphql';
   import { getRelativeTime, getExactDateTime, getFreshnessLevel } from '../../lib/time-utils';
   import { isZeroComment, getBodyPreview, hasBody } from '../../lib/issue-utils';
+  import { ContextMenu } from '../shared';
+  import { longpress } from '../../lib/longpress';
 
   interface Props {
     issue: GitHubIssue;
@@ -31,6 +35,9 @@
 
   // Flip state for card animation - Issue #125
   let isFlipped = $state(false);
+
+  // Context menu state - Issue #139
+  let contextMenu = $state<{ x: number; y: number } | null>(null);
 
   /**
    * Format a date string as relative time for display
@@ -51,6 +58,28 @@
    */
   function toggleFlip() {
     isFlipped = !isFlipped;
+  }
+
+  /**
+   * Handle right-click context menu - Issue #139
+   */
+  function handleContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    contextMenu = { x: event.clientX, y: event.clientY };
+  }
+
+  /**
+   * Handle long-press on touch devices - Issue #139
+   */
+  function handleLongpress(event: CustomEvent<{ clientX: number; clientY: number }>) {
+    contextMenu = { x: event.detail.clientX, y: event.detail.clientY };
+  }
+
+  /**
+   * Close context menu - Issue #139
+   */
+  function closeContextMenu() {
+    contextMenu = null;
   }
 
   /**
@@ -89,8 +118,13 @@
   </div>
 {/if}
 
-<!-- Flip container wrapper - Issue #125 -->
-<div class="card-flip-container">
+<!-- Flip container wrapper - Issue #125, #139 -->
+<div
+  class="card-flip-container"
+  oncontextmenu={handleContextMenu}
+  use:longpress
+  onlongpress={handleLongpress}
+>
   <div class="card-flip-inner {isFlipped ? 'flipped' : ''}">
     <!-- Front of card (original content) -->
     <div
@@ -433,3 +467,8 @@
     </div>
   </div>
 </div>
+
+<!-- Context Menu - Issue #139 -->
+{#if contextMenu}
+  <ContextMenu x={contextMenu.x} y={contextMenu.y} {issue} onClose={closeContextMenu} />
+{/if}
