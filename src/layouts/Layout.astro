@@ -1,5 +1,12 @@
 ---
-import { Footer, Header, SVGFilters, ScrollToTop, Toast, ThemeToggle } from '../components/shared';
+import {
+  Footer,
+  Header,
+  SVGFilters,
+  ScrollToTop,
+  Toast,
+  ThemeSelector
+} from '../components/shared';
 
 interface Props {
   title: string;
@@ -62,28 +69,45 @@ const ogImage = `${siteUrl}/og-image.png`;
     <meta name="theme-color" content="#0d9488" />
     <meta name="msapplication-TileColor" content="#0d9488" />
 
-    <!-- Issue #180 - Theme Detection Script (blocking to prevent FOUC) -->
+    <!-- Issue #180, #142 - Theme Detection Script (blocking to prevent FOUC) -->
     <script is:inline>
       (function () {
-        const STORAGE_KEY = 'issueflow-theme';
-        const stored = localStorage.getItem(STORAGE_KEY);
-        let theme = 'light';
+        const PRESET_KEY = 'issueflow-theme-preset';
+        const LEGACY_KEY = 'issueflow-theme';
+        const DARK_PRESETS = ['dark', 'midnight', 'ocean', 'forest', 'sunset'];
 
-        if (stored === 'dark') {
-          theme = 'dark';
-        } else if (stored === 'light') {
-          theme = 'light';
-        } else {
-          // System preference fallback
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            theme = 'dark';
+        // Get stored preset with legacy fallback
+        let preset = localStorage.getItem(PRESET_KEY);
+        if (!preset) {
+          const legacy = localStorage.getItem(LEGACY_KEY);
+          if (legacy === 'dark' || legacy === 'light' || legacy === 'system') {
+            preset = legacy;
           }
         }
 
-        if (theme === 'dark') {
+        // Default to system if no valid preset
+        if (!preset) preset = 'system';
+
+        // Resolve system preference
+        let resolved = preset;
+        if (preset === 'system') {
+          resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        // Apply dark class for UnoCSS compatibility
+        if (DARK_PRESETS.includes(resolved) || DARK_PRESETS.includes(preset)) {
           document.documentElement.classList.add('dark');
         }
-        document.documentElement.style.colorScheme = theme;
+
+        // Apply preset-specific class for custom color palettes
+        if (preset !== 'light' && preset !== 'dark' && preset !== 'system') {
+          document.documentElement.classList.add('theme-' + preset);
+        }
+
+        // Set color-scheme for native UI elements
+        const isDark =
+          DARK_PRESETS.includes(preset) || (preset === 'system' && resolved === 'dark');
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
       })();
     </script>
 
@@ -150,6 +174,8 @@ const ogImage = `${siteUrl}/og-image.png`;
         --theme-text-muted: #94a3b8;
         --theme-border: rgba(148, 163, 184, 0.25);
         --theme-shadow: rgba(0, 0, 0, 0.4);
+        --theme-accent: #14b8a6;
+        --theme-accent-hover: #2dd4bf;
       }
 
       html:not(.dark) {
@@ -164,6 +190,84 @@ const ogImage = `${siteUrl}/og-image.png`;
         --theme-text-muted: #64748b;
         --theme-border: rgba(203, 213, 225, 0.5);
         --theme-shadow: rgba(0, 0, 0, 0.08);
+        --theme-accent: #0d9488;
+        --theme-accent-hover: #0f766e;
+      }
+
+      /* ========================================
+         THEME PRESET: MIDNIGHT (Issue #142)
+         Deep indigo/purple dark theme
+         ======================================== */
+      html.theme-midnight {
+        --theme-bg-primary: #0a0a1a;
+        --theme-bg-secondary: #12122a;
+        --theme-bg-tertiary: #1a1a3a;
+        --theme-bg-card: rgba(18, 18, 42, 0.8);
+        --theme-bg-input: rgba(18, 18, 42, 0.9);
+        --theme-text-primary: #e8e8f0;
+        --theme-text-secondary: #c8c8d8;
+        --theme-text-muted: #8888aa;
+        --theme-border: rgba(136, 136, 170, 0.25);
+        --theme-shadow: rgba(0, 0, 0, 0.5);
+        --theme-accent: #6366f1;
+        --theme-accent-hover: #818cf8;
+      }
+
+      /* ========================================
+         THEME PRESET: OCEAN (Issue #142)
+         Deep blue oceanic theme
+         ======================================== */
+      html.theme-ocean {
+        --theme-bg-primary: #0a1628;
+        --theme-bg-secondary: #0f2744;
+        --theme-bg-tertiary: #163860;
+        --theme-bg-card: rgba(15, 39, 68, 0.8);
+        --theme-bg-input: rgba(15, 39, 68, 0.9);
+        --theme-text-primary: #e0f2fe;
+        --theme-text-secondary: #bae6fd;
+        --theme-text-muted: #7dd3fc;
+        --theme-border: rgba(125, 211, 252, 0.25);
+        --theme-shadow: rgba(0, 0, 0, 0.5);
+        --theme-accent: #0ea5e9;
+        --theme-accent-hover: #38bdf8;
+      }
+
+      /* ========================================
+         THEME PRESET: FOREST (Issue #142)
+         Deep green nature theme
+         ======================================== */
+      html.theme-forest {
+        --theme-bg-primary: #0a1a0f;
+        --theme-bg-secondary: #0f2a16;
+        --theme-bg-tertiary: #163a20;
+        --theme-bg-card: rgba(15, 42, 22, 0.8);
+        --theme-bg-input: rgba(15, 42, 22, 0.9);
+        --theme-text-primary: #dcfce7;
+        --theme-text-secondary: #bbf7d0;
+        --theme-text-muted: #86efac;
+        --theme-border: rgba(134, 239, 172, 0.25);
+        --theme-shadow: rgba(0, 0, 0, 0.5);
+        --theme-accent: #22c55e;
+        --theme-accent-hover: #4ade80;
+      }
+
+      /* ========================================
+         THEME PRESET: SUNSET (Issue #142)
+         Warm orange/red dark theme
+         ======================================== */
+      html.theme-sunset {
+        --theme-bg-primary: #1a0a0a;
+        --theme-bg-secondary: #2a1010;
+        --theme-bg-tertiary: #3a1818;
+        --theme-bg-card: rgba(42, 16, 16, 0.8);
+        --theme-bg-input: rgba(42, 16, 16, 0.9);
+        --theme-text-primary: #fef2f2;
+        --theme-text-secondary: #fecaca;
+        --theme-text-muted: #fca5a5;
+        --theme-border: rgba(252, 165, 165, 0.25);
+        --theme-shadow: rgba(0, 0, 0, 0.5);
+        --theme-accent: #f97316;
+        --theme-accent-hover: #fb923c;
       }
 
       /* ========================================
@@ -2128,7 +2232,7 @@ const ogImage = `${siteUrl}/og-image.png`;
     <slot />
     <Toast client:idle />
     <ScrollToTop client:idle />
-    <ThemeToggle client:idle />
+    <ThemeSelector client:idle />
     <Footer client:visible />
   </body>
 </html>

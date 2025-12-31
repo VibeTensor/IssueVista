@@ -12,6 +12,7 @@
  * Issue #180 - Added ThemeToggle component
  * Issue #139 - Added ContextMenu component
  * Issue #190 - Added Header component
+ * Issue #142 - Added ThemeSelector component
  */
 
 export { default as SVGFilters } from './SVGFilters.svelte';
@@ -28,4 +29,5 @@ export { default as ScrollToTop } from './ScrollToTop.svelte';
 export { default as Toast } from './Toast.svelte';
 export { default as TagCloud } from './TagCloud.svelte';
 export { default as ThemeToggle } from './ThemeToggle.svelte';
+export { default as ThemeSelector } from './ThemeSelector.svelte';
 export { default as ContextMenu } from './ContextMenu.svelte';
