@@ -89,6 +89,22 @@ function escapeRegExp(str: string): string {
 }
 
 /**
+ * Escape HTML special characters to prevent XSS attacks
+ * @param str - String to escape
+ * @returns HTML-escaped string safe for rendering
+ */
+function escapeHtml(str: string): string {
+  const htmlEscapes: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+  return str.replace(/[&<>"']/g, (char) => htmlEscapes[char]);
+}
+
+/**
  * Get the list of popular repository suggestions
  * @returns Array of popular repository suggestions with score 0
  */
@@ -198,8 +214,11 @@ export function rankSuggestions(
  * @returns HTML string with matching portions wrapped in <mark>
  */
 export function highlightMatch(text: string, query: string): string {
+  // Escape HTML first to prevent XSS from localStorage manipulation
+  const escapedText = escapeHtml(text);
+
   if (!query || query.trim() === '') {
-    return text;
+    return escapedText;
   }
 
   // Escape special regex characters in query
@@ -210,5 +229,5 @@ export function highlightMatch(text: string, query: string): string {
 
   // Replace matches with highlighted version
   // $1 preserves the original case of the matched text
-  return text.replace(regex, '<mark class="autocomplete-highlight">$1</mark>');
+  return escapedText.replace(regex, '<mark class="autocomplete-highlight">$1</mark>');
 }

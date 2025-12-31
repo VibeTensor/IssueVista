@@ -241,7 +241,7 @@
             {/if}
 
             <div class="item-details">
-              <!-- Safe: content is from sanitized repo names only, not user input -->
+              <!-- Safe: highlightMatch() escapes HTML before inserting <mark> tags -->
               <span class="repo-name"
                 >{@html highlightMatch(suggestion.displayName, filterText)}</span
               >
