@@ -7,9 +7,8 @@
   Shows warning styling when remaining requests are low.
 
   Accessibility features:
-  - role="status" for semantic live region
-  - aria-live="polite" for non-intrusive announcements
-  - aria-atomic="true" for full context on updates
+  - role="status" for semantic live region (implicit aria-live="polite" and aria-atomic="true")
+  - aria-label for descriptive context
   - Screen reader warning when rate limit is low
 -->
 
@@ -29,8 +28,6 @@
 {#if showDisplay}
   <div
     role="status"
-    aria-live="polite"
-    aria-atomic="true"
     aria-label="GitHub API rate limit status"
     class="text-xs text-center lg:text-left"
   >
