@@ -30,14 +30,14 @@
   let difficultyResult = $derived(calculateDifficulty(issue));
 
   // Generate detailed tooltip text
-  let tooltipText = $derived(() => {
+  let tooltipText = $derived.by(() => {
     const { score, level } = difficultyResult;
     const levelCapitalized = level.charAt(0).toUpperCase() + level.slice(1);
     return `Complexity: ${score}% (${levelCapitalized}) - Based on labels, comments, and body length`;
   });
 
   // Determine gradient color based on score
-  let gradientClass = $derived(() => {
+  let gradientClass = $derived.by(() => {
     const { score } = difficultyResult;
     if (score <= 33) {
       // Easy: Green gradient
@@ -62,13 +62,13 @@
   aria-valuemin={0}
   aria-valuemax={100}
   aria-label="Issue complexity: {difficultyResult.score}%"
-  title={showTooltip ? tooltipText() : undefined}
+  title={showTooltip ? tooltipText : undefined}
 >
   <!-- Track (background) -->
   <div class="h-1.5 rounded-full {trackClass} overflow-hidden">
     <!-- Fill (progress) -->
     <div
-      class="h-full rounded-full bg-gradient-to-r {gradientClass()} transition-all duration-300"
+      class="h-full rounded-full bg-gradient-to-r {gradientClass} transition-all duration-300"
       style="width: {difficultyResult.score}%"
     ></div>
   </div>
