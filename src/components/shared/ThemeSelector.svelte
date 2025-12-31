@@ -88,6 +88,18 @@
   // Toggle panel
   function togglePanel(): void {
     isOpen = !isOpen;
+    if (isOpen) {
+      // Focus active preset or first preset after panel renders
+      setTimeout(() => {
+        const buttons = panelRef?.querySelectorAll<HTMLButtonElement>('[data-preset]');
+        if (buttons && buttons.length > 0) {
+          const activeButton = panelRef?.querySelector<HTMLButtonElement>(
+            `[data-preset="${themeState.preset}"]`
+          );
+          (activeButton || buttons[0]).focus();
+        }
+      }, 0);
+    }
   }
 
   // Select a preset
@@ -222,6 +234,7 @@
           data-preset={preset.id}
           role="radio"
           aria-checked={themeState.preset === preset.id}
+          tabindex={themeState.preset === preset.id ? 0 : -1}
           onclick={() => selectPreset(preset.id)}
         >
           <span class="preset-icon" style="--accent: {preset.colors.accent}">
