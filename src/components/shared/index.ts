@@ -11,10 +11,12 @@
  * Issue #137 - Added TagCloud component
  * Issue #180 - Added ThemeToggle component
  * Issue #139 - Added ContextMenu component
+ * Issue #190 - Added Header component
  */
 
 export { default as SVGFilters } from './SVGFilters.svelte';
 export { default as CopyButton } from './CopyButton.svelte';
+export { default as Header } from './Header.svelte';
 export { default as Footer } from './Footer.svelte';
 export { default as EmptyState } from './EmptyState.svelte';
 export { default as LoadingProgress } from './LoadingProgress.svelte';

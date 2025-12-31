@@ -1,5 +1,5 @@
 ---
-import { Footer, SVGFilters, ScrollToTop, Toast, ThemeToggle } from '../components/shared';
+import { Footer, Header, SVGFilters, ScrollToTop, Toast, ThemeToggle } from '../components/shared';
 
 interface Props {
   title: string;
@@ -469,6 +469,23 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) [class*='quick-pick']:hover:not(:disabled) {
         background: #cbd5e1 !important;
         background-color: #cbd5e1 !important;
+      }
+
+      /* ========================================
+         HEADER
+         Issue #190 - Redesign header and footer branding
+         ======================================== */
+
+      html:not(.dark) header,
+      html:not(.dark) .header,
+      html:not(.dark) [class*='header']:not([class*='internetMessageHeaders']) {
+        background: #f1f5f9 !important;
+        background-color: #f1f5f9 !important;
+        border-bottom-color: #e2e8f0 !important;
+      }
+
+      html:not(.dark) .tagline {
+        color: #64748b !important;
       }
 
       /* ========================================
@@ -2112,6 +2129,7 @@ const ogImage = `${siteUrl}/og-image.png`;
   </head>
   <body>
     <SVGFilters />
+    <Header client:load />
     <slot />
     <Toast client:idle />
     <ScrollToTop client:idle />

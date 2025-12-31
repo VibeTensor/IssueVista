@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Header Branding** (#190): Site header with IssueFlow branding
+  - Sticky header with product name, version badge, and tagline
+  - GitHub repository and star links in navigation
+  - Matches Footer component styling (dark/light mode support)
+  - Responsive design with hidden tagline on mobile
+  - Accessible with ARIA labels and semantic HTML
+
 - **Search Autocomplete** (#129): Intelligent suggestions while typing
   - Combines search history with popular repository suggestions
   - Prefix-based filtering with case-insensitive matching
