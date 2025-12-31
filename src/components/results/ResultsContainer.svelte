@@ -18,6 +18,7 @@
 
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
+  import { SvelteSet } from 'svelte/reactivity';
   import { fly } from 'svelte/transition';
   import {
     GitHubAPI,
@@ -44,7 +45,15 @@
     type SearchState
   } from '../../lib/url-state';
   import GitHubAuth from '../GitHubAuth.svelte';
-  import { SVGFilters, EmptyState, LoadingProgress, CancelConfirmModal, TagCloud } from '../shared';
+  import {
+    SVGFilters,
+    EmptyState,
+    LoadingProgress,
+    CancelConfirmModal,
+    TagCloud,
+    LanguageChips
+  } from '../shared';
+  import { extractLanguagesFromIssues, filterIssuesByLanguages } from '../../lib/language-utils';
   import { detectEmptyStateVariant } from '../../lib/empty-state-utils';
   import {
     type ProgressState,
@@ -83,6 +92,7 @@
   // Filter state
   let showOnlyZeroComments = $state(false);
   let labelFilter = $state<string | null>(null);
+  let selectedLanguages: Set<string> = new SvelteSet(); // Issue #153
 
   // Sort state (Issue #122)
   let sortBy = $state<SortOption>(DEFAULT_SORT_PREFERENCES.sortBy);
@@ -111,7 +121,7 @@
   let statsLoading = $state(false);
   let parsedRepoName = $state('');
 
-  // Derived: filtered and sorted issues (Issue #122, #137)
+  // Derived: filtered and sorted issues (Issue #122, #137, #153)
   let displayedIssues = $derived.by(() => {
     let result = issues;
 
@@ -127,6 +137,11 @@
       );
     }
 
+    // Apply language filter (Issue #153)
+    if (selectedLanguages.size > 0) {
+      result = filterIssuesByLanguages(result, selectedLanguages);
+    }
+
     // Apply sorting (Issue #122)
     result = sortIssues(result, sortBy, sortDirection);
 
@@ -138,6 +153,9 @@
 
   // Derived: aggregated label frequencies for tag cloud (Issue #137)
   let aggregatedLabels = $derived(aggregateLabelFrequencies(displayedIssues));
+
+  // Derived: aggregated language frequencies for language chips (Issue #153)
+  let aggregatedLanguages = $derived(extractLanguagesFromIssues(issues));
 
   // Derived: detect which empty state variant to show (if any)
   let emptyStateVariant = $derived(
@@ -447,6 +465,17 @@
     }
   }
 
+  // Handle language chip toggle (Issue #153)
+  function handleLanguageToggle(language: string): void {
+    const newSet = new SvelteSet(selectedLanguages);
+    if (newSet.has(language)) {
+      newSet.delete(language);
+    } else {
+      newSet.add(language);
+    }
+    selectedLanguages = newSet;
+  }
+
   // Handle sort option change (Issue #122)
   function handleSortOptionChange(option: SortOption) {
     sortBy = option;
@@ -463,10 +492,11 @@
     setSortPreferences({ sortBy, direction: sortDirection });
   }
 
-  // Handle clear filters
-  function handleClearFilters() {
+  // Handle clear filters (Issue #153: added language selection)
+  function handleClearFilters(): void {
     showOnlyZeroComments = false;
     labelFilter = null;
+    selectedLanguages = new SvelteSet();
     sortBy = DEFAULT_SORT_PREFERENCES.sortBy;
     sortDirection = DEFAULT_SORT_PREFERENCES.direction;
     setSortPreferences(DEFAULT_SORT_PREFERENCES);
@@ -826,6 +856,31 @@
             </div>
           {/if}
 
+          <!-- Language Filter Chips (Issue #153) -->
+          {#if aggregatedLanguages.length > 0}
+            <div class="filter-divider"></div>
+            <div class="filter-section">
+              <div class="filter-section-header">
+                <span class="filter-label">Languages</span>
+                {#if selectedLanguages.size > 0}
+                  <button
+                    type="button"
+                    onclick={() => (selectedLanguages = new SvelteSet())}
+                    class="filter-action-btn text-amber-400 hover:text-amber-300"
+                  >
+                    Clear ({selectedLanguages.size})
+                  </button>
+                {/if}
+              </div>
+              <LanguageChips
+                languages={aggregatedLanguages}
+                {selectedLanguages}
+                onLanguageToggle={handleLanguageToggle}
+                maxChips={8}
+              />
+            </div>
+          {/if}
+
           <!-- Divider -->
           <div class="filter-divider"></div>
 
@@ -959,8 +1014,8 @@
             </div>
           </div>
 
-          <!-- Reset filters -->
-          {#if showOnlyZeroComments || labelFilter || sortBy !== DEFAULT_SORT_PREFERENCES.sortBy || sortDirection !== DEFAULT_SORT_PREFERENCES.direction}
+          <!-- Reset filters (Issue #153: added selectedLanguages) -->
+          {#if showOnlyZeroComments || labelFilter || selectedLanguages.size > 0 || sortBy !== DEFAULT_SORT_PREFERENCES.sortBy || sortDirection !== DEFAULT_SORT_PREFERENCES.direction}
             <div class="filter-divider"></div>
             <button type="button" onclick={handleClearFilters} class="reset-btn">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -72,6 +72,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Responsive sizing for mobile and desktop layouts
   - Light mode support with CSS overrides
 
+- **Language Filter Chips** (#153): Multi-select programming language filters
+  - Extracts languages from issue labels automatically
+  - GitHub Linguist colors for 40+ programming languages
+  - Devicon CDN icons with graceful fallback to colored dots
+  - Multi-select toggle with visual selected state
+  - Frequency count badges showing issues per language
+  - ARIA listbox pattern with multiselectable support
+  - Keyboard navigation (Tab, Space/Enter to toggle)
+  - Clear button to reset language selections
+  - Integrated in sidebar filter panel below Labels
+  - SvelteSet for optimal reactive state management
+  - maxChips prop to limit displayed languages (default: 8)
+  - prefers-reduced-motion support for animations
+
 - **Search Autocomplete** (#129): Intelligent suggestions while typing
   - Combines search history with popular repository suggestions
   - Prefix-based filtering with case-insensitive matching
