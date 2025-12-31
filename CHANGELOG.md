@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Enhanced Dark Mode with Custom Themes** (#142): Multiple theme presets
+  - 6 theme presets: Light, Dark, Midnight, Ocean, Forest, Sunset
+  - Each dark theme has unique color palette (indigo, blue, green, orange)
+  - ThemeSelector popover UI with floating trigger button
+  - System preference toggle for automatic theme detection
+  - CSS custom properties for consistent theming across components
+  - Full keyboard navigation (arrow keys, Enter, Escape)
+  - ARIA radiogroup pattern for accessibility (WCAG 2.1 compliant)
+  - Click-outside-to-close behavior
+  - localStorage persistence with legacy migration support
+
 - **Authentication State Indicator** (#187): Visual auth status in header
   - Emerald pulsing dot when authenticated with GitHub
   - CSS tooltip on hover showing "Authenticated with GitHub"

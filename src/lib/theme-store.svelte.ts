@@ -1,60 +1,80 @@
 /**
  * Theme Store
  * Issue #180 - Add light/dark theme toggle
+ * Issue #142 - Enhanced Dark Mode with Custom Themes
  *
  * Provides theme state management using Svelte 5 $state runes.
- * Supports light, dark, and system themes with localStorage persistence.
+ * Supports multiple theme presets with localStorage persistence.
  */
 
+import { type ThemePreset, DARK_PRESETS, getPresetConfig, isDarkPreset } from './theme-presets';
+
 /**
- * Available theme options
+ * Legacy theme type for backward compatibility
  */
 export type Theme = 'light' | 'dark' | 'system';
 
 /**
- * Resolved theme (actual applied theme)
+ * Resolved theme (actual applied base theme for UnoCSS)
  */
 export type ResolvedTheme = 'light' | 'dark';
 
 /**
- * localStorage key for theme persistence
+ * localStorage keys
  */
-const STORAGE_KEY = 'issueflow-theme';
+const LEGACY_STORAGE_KEY = 'issueflow-theme';
+const PRESET_STORAGE_KEY = 'issueflow-theme-preset';
 
 /**
  * Theme state using Svelte 5 $state rune
  * Uses object wrapper to maintain reactivity on export
  */
 export const themeState = $state({
-  /** User's selected theme preference */
-  current: 'system' as Theme,
-  /** Actually applied theme (resolved from current + system preference) */
-  resolved: 'light' as ResolvedTheme
+  /** Selected theme preset */
+  preset: 'system' as ThemePreset,
+  /** Resolved base theme for UnoCSS dark: variant */
+  resolved: 'dark' as ResolvedTheme,
+  /** Whether system preference is being used */
+  useSystemPreference: true
 });
 
 /**
  * Get the system's preferred color scheme
  */
 function getSystemTheme(): ResolvedTheme {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 /**
- * Resolve theme preference to actual theme
+ * Resolve preset to base theme (light or dark)
  */
-function resolveTheme(theme: Theme): ResolvedTheme {
-  if (theme === 'system') {
+function resolvePresetToBase(preset: ThemePreset): ResolvedTheme {
+  if (preset === 'system') {
     return getSystemTheme();
   }
-  return theme;
+  return isDarkPreset(preset) ? 'dark' : 'light';
 }
 
 /**
- * Apply theme to the document
- * Optimized for instant switching without transitions
+ * Remove all theme-related classes from document
  */
-function applyTheme(resolved: ResolvedTheme): void {
+function clearThemeClasses(): void {
+  if (typeof document === 'undefined') return;
+
+  const root = document.documentElement;
+  root.classList.remove('dark');
+  root.classList.remove('theme-midnight');
+  root.classList.remove('theme-ocean');
+  root.classList.remove('theme-forest');
+  root.classList.remove('theme-sunset');
+}
+
+/**
+ * Apply theme preset to the document
+ * Handles both dark class for UnoCSS and preset-specific classes
+ */
+function applyPreset(preset: ThemePreset, resolved: ResolvedTheme): void {
   if (typeof document === 'undefined') return;
 
   const root = document.documentElement;
@@ -62,11 +82,18 @@ function applyTheme(resolved: ResolvedTheme): void {
   // Add transitioning class to disable CSS transitions during switch
   root.classList.add('theme-transitioning');
 
-  // Apply theme class change
+  // Clear existing theme classes
+  clearThemeClasses();
+
+  // Apply dark class for UnoCSS compatibility
   if (resolved === 'dark') {
     root.classList.add('dark');
-  } else {
-    root.classList.remove('dark');
+  }
+
+  // Apply preset-specific class for custom color palettes
+  const actualPreset = preset === 'system' ? resolved : preset;
+  if (actualPreset !== 'light' && actualPreset !== 'dark') {
+    root.classList.add(`theme-${actualPreset}`);
   }
 
   // Update color-scheme for native UI elements
@@ -81,42 +108,100 @@ function applyTheme(resolved: ResolvedTheme): void {
 }
 
 /**
- * Get the current theme preference
+ * Get the current theme preset
  */
-export function getTheme(): Theme {
-  return themeState.current;
+export function getPreset(): ThemePreset {
+  return themeState.preset;
 }
 
 /**
- * Get the resolved (applied) theme
+ * Get the current theme preference (legacy compatibility)
+ */
+export function getTheme(): Theme {
+  const preset = themeState.preset;
+  if (preset === 'light' || preset === 'dark' || preset === 'system') {
+    return preset;
+  }
+  // Map other presets to dark since they're all dark-based
+  return 'dark';
+}
+
+/**
+ * Get the resolved (applied) base theme
  */
 export function getResolvedTheme(): ResolvedTheme {
   return themeState.resolved;
 }
 
 /**
- * Set theme preference and persist to localStorage
+ * Set theme preset and persist to localStorage
  */
-export function setTheme(theme: Theme): void {
-  themeState.current = theme;
-  themeState.resolved = resolveTheme(theme);
+export function setPreset(preset: ThemePreset): void {
+  themeState.preset = preset;
+  themeState.useSystemPreference = preset === 'system';
+  themeState.resolved = resolvePresetToBase(preset);
 
   // Persist to localStorage
   if (typeof localStorage !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, theme);
+    localStorage.setItem(PRESET_STORAGE_KEY, preset);
+    // Also update legacy key for backward compatibility
+    if (preset === 'light' || preset === 'dark' || preset === 'system') {
+      localStorage.setItem(LEGACY_STORAGE_KEY, preset);
+    } else {
+      // For other presets, store 'dark' in legacy key
+      localStorage.setItem(LEGACY_STORAGE_KEY, 'dark');
+    }
   }
 
   // Apply to document
-  applyTheme(themeState.resolved);
+  applyPreset(preset, themeState.resolved);
+}
+
+/**
+ * Set theme preference (legacy compatibility)
+ */
+export function setTheme(theme: Theme): void {
+  setPreset(theme);
 }
 
 /**
  * Toggle between light and dark themes
- * If currently on system, switches to opposite of resolved theme
+ * If currently on a preset, switches to opposite base theme
  */
 export function toggleTheme(): void {
   const newTheme: Theme = themeState.resolved === 'dark' ? 'light' : 'dark';
-  setTheme(newTheme);
+  setPreset(newTheme);
+}
+
+/**
+ * Cycle through presets in order
+ */
+export function cyclePreset(): void {
+  const presets: ThemePreset[] = ['light', 'dark', 'midnight', 'ocean', 'forest', 'sunset'];
+  const currentIndex = presets.indexOf(themeState.preset);
+  const nextIndex = (currentIndex + 1) % presets.length;
+  setPreset(presets[nextIndex]);
+}
+
+/**
+ * Migrate from legacy storage format if needed
+ */
+function migrateLegacyStorage(): ThemePreset | null {
+  if (typeof localStorage === 'undefined') return null;
+
+  // Check for new preset key first
+  const preset = localStorage.getItem(PRESET_STORAGE_KEY) as ThemePreset | null;
+  if (preset) return preset;
+
+  // Fall back to legacy key
+  const legacy = localStorage.getItem(LEGACY_STORAGE_KEY) as Theme | null;
+  if (legacy && ['light', 'dark', 'system'].includes(legacy)) {
+    // Migrate to new format
+    localStorage.setItem(PRESET_STORAGE_KEY, legacy);
+    return legacy;
+  }
+
+  return null;
 }
 
 /**
@@ -127,16 +212,29 @@ export function toggleTheme(): void {
 export function initTheme(): () => void {
   if (typeof localStorage === 'undefined') return () => {};
 
-  const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
+  // Get stored preset with migration support
+  const storedPreset = migrateLegacyStorage();
 
-  if (stored && ['light', 'dark', 'system'].includes(stored)) {
-    themeState.current = stored;
+  const validPresets: ThemePreset[] = [
+    'light',
+    'dark',
+    'midnight',
+    'ocean',
+    'forest',
+    'sunset',
+    'system'
+  ];
+
+  if (storedPreset && validPresets.includes(storedPreset)) {
+    themeState.preset = storedPreset;
+    themeState.useSystemPreference = storedPreset === 'system';
   } else {
-    themeState.current = 'system';
+    themeState.preset = 'system';
+    themeState.useSystemPreference = true;
   }
 
-  themeState.resolved = resolveTheme(themeState.current);
-  applyTheme(themeState.resolved);
+  themeState.resolved = resolvePresetToBase(themeState.preset);
+  applyPreset(themeState.preset, themeState.resolved);
 
   // Listen for system preference changes
   let cleanup: () => void = () => {};
@@ -144,9 +242,9 @@ export function initTheme(): () => void {
   if (typeof window !== 'undefined') {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = (e: MediaQueryListEvent) => {
-      if (themeState.current === 'system') {
+      if (themeState.useSystemPreference) {
         themeState.resolved = e.matches ? 'dark' : 'light';
-        applyTheme(themeState.resolved);
+        applyPreset(themeState.preset, themeState.resolved);
       }
     };
 
@@ -156,3 +254,7 @@ export function initTheme(): () => void {
 
   return cleanup;
 }
+
+// Re-export types and utilities from theme-presets for convenience
+export type { ThemePreset };
+export { getPresetConfig, isDarkPreset, getAvailablePresets } from './theme-presets';
