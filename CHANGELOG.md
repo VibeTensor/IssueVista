@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Authentication State Indicator** (#187): Visual auth status in header
+  - Emerald pulsing dot when authenticated with GitHub
+  - CSS tooltip on hover showing "Authenticated with GitHub"
+  - Cross-tab sync via storage event listener
+  - Same-tab sync via custom event dispatch
+  - Accessible with role="status" and sr-only text (WCAG 2.1 compliant)
+  - prefers-reduced-motion support (disables pulse animation)
+
 - **Header Branding** (#190): Site header with IssueFlow branding
   - Sticky header with product name, version badge, and tagline
   - GitHub repository and star links in navigation

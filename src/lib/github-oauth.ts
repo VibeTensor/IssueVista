@@ -73,6 +73,7 @@ export class GitHubOAuth {
   static logout(): void {
     localStorage.removeItem('github_token');
     localStorage.removeItem('github_user');
+    this.dispatchAuthChange();
   }
 
   /**
@@ -102,6 +103,7 @@ export class GitHubOAuth {
    */
   static async saveAuth(token: string): Promise<void> {
     localStorage.setItem('github_token', token);
+    this.dispatchAuthChange();
 
     try {
       const user = await this.getUser(token);
@@ -118,6 +120,16 @@ export class GitHubOAuth {
     const state = Math.random().toString(36).substring(7);
     localStorage.setItem('github_oauth_state', state);
     return state;
+  }
+
+  /**
+   * Dispatch custom event for same-tab auth state changes
+   * Used by Header component to update auth indicator - Issue #187
+   */
+  private static dispatchAuthChange(): void {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('issueflow:auth-change'));
+    }
   }
 
   /**

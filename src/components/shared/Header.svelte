@@ -1,14 +1,43 @@
 <!--
   Header Component - Site branding header
-  Left: IssueFlow branding with version | Right: GitHub link
+  Left: IssueFlow branding with version and auth indicator | Right: GitHub link
   Issue #190 - Redesign header and footer branding
+  Issue #187 - Add authentication state indicator
   Uses UnoCSS utility classes for styling
 -->
 
 <script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
   import { REPO_URL, COMPANY_SHORT } from '../../lib/footer-utils';
+  import { GitHubOAuth } from '../../lib/github-oauth';
 
   const version: string = __APP_VERSION__;
+
+  // Authentication state - Issue #187
+  let isAuthenticated = $state(false);
+
+  onMount(() => {
+    isAuthenticated = GitHubOAuth.isAuthenticated();
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('issueflow:auth-change', handleAuthChange);
+  });
+
+  onDestroy(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('issueflow:auth-change', handleAuthChange);
+    }
+  });
+
+  function handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'github_token') {
+      isAuthenticated = !!event.newValue;
+    }
+  }
+
+  function handleAuthChange(): void {
+    isAuthenticated = GitHubOAuth.isAuthenticated();
+  }
 </script>
 
 <header
@@ -19,6 +48,24 @@
     <!-- Left: Branding -->
     <div class="flex items-center gap-1 sm:gap-1.5">
       <span class="text-sm font-bold text-teal-300">IssueFlow</span>
+      <!-- Auth state indicator - Issue #187 -->
+      {#if isAuthenticated}
+        <span class="group relative inline-flex items-center" role="status" aria-atomic="true">
+          <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
+            <span
+              class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping motion-reduce:animate-none"
+            ></span>
+            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+          </span>
+          <span class="sr-only">Authenticated with GitHub</span>
+          <span
+            class="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 text-[0.5625rem] text-white bg-slate-800 rounded whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-150 pointer-events-none z-50"
+            aria-hidden="true"
+          >
+            Authenticated with GitHub
+          </span>
+        </span>
+      {/if}
       <span
         class="font-mono text-[0.5625rem] font-semibold text-teal-500 bg-teal-500/15 px-1 py-0.5 rounded-sm"
         >v{version}</span
