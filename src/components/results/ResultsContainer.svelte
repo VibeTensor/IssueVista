@@ -19,7 +19,12 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { fly } from 'svelte/transition';
-  import { GitHubAPI, parseRepoUrl, type GitHubIssue } from '../../lib/github-graphql';
+  import {
+    GitHubAPI,
+    parseRepoUrl,
+    type GitHubIssue,
+    type RepoStats
+  } from '../../lib/github-graphql';
   import {
     countZeroCommentIssues,
     isZeroComment,
@@ -49,7 +54,7 @@
     REST_MAX_PAGES
   } from '../../lib/loading-progress-utils';
   import { addToHistory, setLastSearchedRepo } from '../../lib/search-history';
-  import { SearchForm, HelpPopup, IssueCard, IssueCardSkeleton } from './index';
+  import { SearchForm, HelpPopup, IssueCard, IssueCardSkeleton, RepoStatsPanel } from './index';
   import { infiniteScroll } from '../../lib/infinite-scroll';
 
   // Core state
@@ -100,6 +105,11 @@
   let totalCountAccurate = $state(true); // GraphQL provides accurate count, REST does not
   let loadMoreError = $state(false);
   let loadMoreLastCall = $state(0); // Debounce protection
+
+  // Repository stats state (Issue #147)
+  let repoStats = $state<RepoStats | null>(null);
+  let statsLoading = $state(false);
+  let parsedRepoName = $state('');
 
   // Derived: filtered and sorted issues (Issue #122, #137)
   let displayedIssues = $derived.by(() => {
@@ -268,6 +278,11 @@
     totalCountAccurate = true;
     loadMoreError = false;
 
+    // Reset repo stats state (Issue #147)
+    repoStats = null;
+    statsLoading = true;
+    parsedRepoName = '';
+
     // Create new AbortController
     abortController = new AbortController();
     searchStartTime = Date.now();
@@ -298,31 +313,42 @@
     try {
       const api = new GitHubAPI(githubToken || undefined);
 
-      // Issue #131: Use fetchIssuesPage for initial load (enables infinite scroll)
-      const result = await api.fetchIssuesPage(
-        parsed.owner,
-        parsed.repo,
-        null, // No cursor for first page
-        abortController.signal
-      );
+      // Store parsed repo name for display (Issue #147)
+      parsedRepoName = `${parsed.owner}/${parsed.repo}`;
 
-      issues = result.issues;
-      rateLimit = result.rateLimit;
-      hasMorePages = result.pageInfo.hasNextPage;
-      nextCursor = result.pageInfo.endCursor;
-      totalIssueCount = result.totalCount;
-      totalCountAccurate = result.totalCountAccurate;
+      // Issue #131: Use fetchIssuesPage for initial load (enables infinite scroll)
+      // Issue #147: Fetch repo stats in parallel
+      const [issuesResult, statsResult] = await Promise.all([
+        api.fetchIssuesPage(
+          parsed.owner,
+          parsed.repo,
+          null, // No cursor for first page
+          abortController.signal
+        ),
+        api.fetchRepoStats(parsed.owner, parsed.repo)
+      ]);
+
+      issues = issuesResult.issues;
+      rateLimit = issuesResult.rateLimit;
+      hasMorePages = issuesResult.pageInfo.hasNextPage;
+      nextCursor = issuesResult.pageInfo.endCursor;
+      totalIssueCount = issuesResult.totalCount;
+      totalCountAccurate = issuesResult.totalCountAccurate;
+
+      // Set repo stats (Issue #147)
+      repoStats = statsResult;
+      statsLoading = false;
 
       // Update progress state for first page
       progressState = {
         ...progressState!,
         currentPage: 1,
-        issuesFound: result.issues.length,
+        issuesFound: issuesResult.issues.length,
         status: 'complete'
       };
 
       // Add to search history (Issue #62)
-      addToHistory(parsed.owner, parsed.repo, repoUrl, result.issues.length);
+      addToHistory(parsed.owner, parsed.repo, repoUrl, issuesResult.issues.length);
 
       // Save last searched repo (Issue #188)
       setLastSearchedRepo(repoUrl);
@@ -336,6 +362,7 @@
       }
     } finally {
       loading = false;
+      statsLoading = false; // Issue #147
       abortController = null;
       searchStartTime = null;
       // Keep progressState for potential cancelled state display
@@ -1003,6 +1030,9 @@
 
     <!-- Issues List -->
     {#if issues.length > 0 && !emptyStateVariant && !loading}
+      <!-- Repository Stats Panel (Issue #147) -->
+      <RepoStatsPanel stats={repoStats} loading={statsLoading} repoName={parsedRepoName} />
+
       <div class="flex items-center justify-between mb-3">
         <div>
           <h2 class="text-base lg:text-lg font-bold text-white">

@@ -40,6 +40,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - aria-label for descriptive screen reader context
   - Screen reader warning when API rate limit is low (<10 requests)
 
+- **Repository Statistics Summary Panel** (#147): Collapsible stats display
+  - Stars, forks, open issues, and watchers count at a glance
+  - Number formatting with K/M suffix for large numbers
+  - Collapsible panel with smooth expand/collapse animation
+  - Loading skeleton with shimmer effect during fetch
+  - Language badge showing primary repository language
+  - Parallel API fetch (stats load alongside issues)
+  - Graceful fallback (panel hidden if stats unavailable)
+  - Full keyboard navigation (Enter/Space to toggle)
+  - ARIA accessibility (aria-expanded, aria-controls)
+  - Responsive 2-column grid on mobile devices
+  - prefers-reduced-motion support
+
 - **Search Autocomplete** (#129): Intelligent suggestions while typing
   - Combines search history with popular repository suggestions
   - Prefix-based filtering with case-insensitive matching

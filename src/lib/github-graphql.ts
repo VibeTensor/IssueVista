@@ -603,6 +603,38 @@ export class GitHubAPI {
       return { remaining: 0, resetAt: new Date().toISOString() };
     }
   }
+
+  /**
+   * Fetch repository statistics (Issue #147)
+   * Returns stars, forks, issues count, and other metadata
+   */
+  async fetchRepoStats(owner: string, repo: string): Promise<RepoStats | null> {
+    try {
+      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers: this.token ? { Authorization: `Bearer ${this.token}` } : {}
+      });
+
+      if (!response.ok) {
+        console.warn(`[STATS] Failed to fetch repo stats: ${response.status}`);
+        return null;
+      }
+
+      const data = await response.json();
+
+      return {
+        stargazersCount: data.stargazers_count ?? 0,
+        forksCount: data.forks_count ?? 0,
+        openIssuesCount: data.open_issues_count ?? 0,
+        watchersCount: data.subscribers_count ?? 0,
+        description: data.description ?? null,
+        language: data.language ?? null,
+        updatedAt: data.updated_at ?? new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('[STATS] Error fetching repo stats:', error);
+      return null;
+    }
+  }
 }
 
 export function parseRepoUrl(url: string): { owner: string; repo: string } | null {
@@ -641,6 +673,20 @@ export interface ValidationResult {
   owner?: string;
   repo?: string;
   message?: string;
+}
+
+/**
+ * Repository statistics interface
+ * Issue #147 - Repository Statistics Summary Panel
+ */
+export interface RepoStats {
+  stargazersCount: number;
+  forksCount: number;
+  openIssuesCount: number;
+  watchersCount: number;
+  description: string | null;
+  language: string | null;
+  updatedAt: string;
 }
 
 // Real-time URL validation function
