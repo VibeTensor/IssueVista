@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Search Autocomplete** (#129): Intelligent suggestions while typing
+  - Combines search history with popular repository suggestions
+  - Prefix-based filtering with case-insensitive matching
+  - Text highlighting for matching portions
+  - History items ranked by recency (clock icon)
+  - Popular repos shown with trending icon (fire)
+  - Screen reader announcements via aria-live region
+  - "No matches" empty state with helpful hint
+  - Full keyboard navigation (arrow keys, Enter, Escape)
+  - WAI-ARIA combobox pattern for accessibility
+
 - **Infinite Scroll** (#131): Seamless pagination for large result sets
   - IntersectionObserver-based scroll detection with 200px preload
   - Cursor-based pagination for GraphQL API

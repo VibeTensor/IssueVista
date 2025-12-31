@@ -97,16 +97,15 @@
 
   /**
    * Handle repository URL input with debounced validation
+   * Issue #129: Keep dropdown visible for autocomplete filtering
    */
   function handleRepoUrlInput(event: Event) {
     const target = event.target as HTMLInputElement;
     const newUrl = target.value;
     onUrlChange(newUrl);
 
-    // Hide history when user types
-    if (newUrl.trim().length >= 5) {
-      showHistory = false;
-    }
+    // Issue #129: Keep dropdown visible while typing for autocomplete
+    // The SearchHistory component handles filtering via filterText prop
 
     // Clear previous timeout
     if (validationTimeout) {
@@ -170,7 +169,8 @@
   }
 
   /**
-   * Handle input focus - show history if input is empty
+   * Handle input focus - show autocomplete dropdown
+   * Issue #129: Always show suggestions (history + popular) when focused
    */
   function handleInputFocus() {
     // Clear any pending blur timeout
@@ -178,13 +178,9 @@
       clearTimeout(blurTimeout);
       blurTimeout = null;
     }
-    // Show history only when input is empty or very short
-    if (!repoUrl.trim() || repoUrl.trim().length < 5) {
-      loadHistory();
-      if (historyItems.length > 0) {
-        showHistory = true;
-      }
-    }
+    // Issue #129: Always load history and show dropdown for autocomplete
+    loadHistory();
+    showHistory = true;
   }
 
   /**
@@ -382,6 +378,11 @@
           onblur={handleInputBlur}
           aria-describedby="repoUrl-hint"
           aria-invalid={validationState === 'invalid'}
+          aria-autocomplete="list"
+          aria-controls="search-history-listbox"
+          aria-expanded={showHistory}
+          role="combobox"
+          aria-haspopup="listbox"
         />
         <!-- Clear input button (Issue #177) -->
         {#if repoUrl.trim()}
@@ -461,10 +462,11 @@
         {/if}
         <!-- Validation icons removed - validation state shown in label area above -->
 
-        <!-- Search History Dropdown (Issue #62) -->
+        <!-- Search History Dropdown (Issue #62, Issue #129: Autocomplete) -->
         <SearchHistory
           items={historyItems}
           show={showHistory}
+          filterText={repoUrl}
           onSelect={handleHistorySelect}
           onDelete={handleHistoryDelete}
           onClear={handleHistoryClear}
