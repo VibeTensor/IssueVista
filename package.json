@@ -47,7 +47,7 @@
     "@astrojs/svelte": "^7.2.0",
     "@unocss/astro": "^66.5.3",
     "astro": "^5.14.3",
-    "graphql-request": "^7.2.0",
+    "graphql-request": "^7.4.0",
     "rough-notation": "^0.5.1",
     "svelte": "^5.39.11",
     "unocss": "^66.5.3"
