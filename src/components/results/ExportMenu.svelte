@@ -36,11 +36,15 @@
   let menuRef: HTMLDivElement | null = $state(null);
 
   // Menu items configuration for keyboard navigation
-  const menuItems: Array<{ id: 'markdown' | 'plain' | 'csv'; label: string }> = [
-    { id: 'markdown', label: 'Markdown (.md)' },
-    { id: 'plain', label: 'Plain Text (.txt)' },
-    { id: 'csv', label: 'CSV (.csv)' }
+  // Each item has a unique elementId for aria-activedescendant
+  const menuItems: Array<{ id: 'markdown' | 'plain' | 'csv'; label: string; elementId: string }> = [
+    { id: 'markdown', label: 'Markdown (.md)', elementId: 'export-menu-item-markdown' },
+    { id: 'plain', label: 'Plain Text (.txt)', elementId: 'export-menu-item-plain' },
+    { id: 'csv', label: 'CSV (.csv)', elementId: 'export-menu-item-csv' }
   ];
+
+  // Derived: current focused item's element ID for aria-activedescendant
+  let activeDescendantId = $derived(menuItems[focusedIndex]?.elementId ?? '');
 
   /**
    * Format issues for export in the specified format
@@ -282,11 +286,13 @@
       class="export-menu absolute left-0 top-full mt-1 w-36 bg-slate-800 rounded shadow-lg border border-slate-700 overflow-hidden z-50"
       role="menu"
       aria-label="Export formats"
+      aria-activedescendant={activeDescendantId}
       tabindex="-1"
       onkeydown={handleMenuKeyDown}
     >
       {#each menuItems as item, index (item.id)}
         <button
+          id={item.elementId}
           type="button"
           onclick={() => exportIssues(item.id)}
           onmouseenter={() => (focusedIndex = index)}
@@ -313,7 +319,8 @@
   }
 
   .export-menu:focus {
-    outline: none;
+    outline: 2px solid transparent; /* Remove default but keep space */
+    box-shadow: 0 0 0 1px rgb(100 116 139 / 0.5); /* subtle slate ring */
   }
 
   /* Reduced motion preference */
@@ -322,7 +329,7 @@
       transition: none;
     }
 
-    :global(.chevron-icon) {
+    .chevron-icon {
       transition: none !important;
     }
   }
