@@ -298,7 +298,7 @@
           type="button"
           onclick={() => exportIssues(item.id)}
           onmouseenter={() => (focusedIndex = index)}
-          class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-150 ease motion-reduce:transition-none"
+          class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-150 motion-reduce:transition-none"
           class:bg-slate-700={focusedIndex === index}
           class:text-white={focusedIndex === index}
           role="menuitem"
