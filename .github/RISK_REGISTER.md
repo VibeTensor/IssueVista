@@ -256,14 +256,14 @@ Integrate risk management into sprint ceremonies to ensure proactive risk identi
 
 #### Current Sprint Risk Exposure
 
-| Risk ID   | Risk Title               | Sprint Exposure | Mitigation Status    | Action Required     |
-| --------- | ------------------------ | --------------- | -------------------- | ------------------- |
-| RISK-001  | GitHub API Rate Limits   | Low             | Caching implemented  | Monitor only        |
-| RISK-002  | Dependency Vulnerabilities | Medium        | Dependabot active    | Weekly audit        |
-| RISK-003  | AI Integration Complexity | Low            | Not in current sprint| N/A                 |
-| RISK-004  | Svelte 5 Breaking Changes | Low            | Version pinned       | Monitor releases    |
-| RISK-005  | Contributor Availability  | High           | Solo development     | Seek co-maintainers |
-| RISK-006  | Developer Burnout         | Critical       | Velocity cap set     | Enforce limits      |
+| Risk ID  | Risk Title                 | Sprint Exposure | Mitigation Status     | Action Required     |
+| -------- | -------------------------- | --------------- | --------------------- | ------------------- |
+| RISK-001 | GitHub API Rate Limits     | Low             | Caching implemented   | Monitor only        |
+| RISK-002 | Dependency Vulnerabilities | Medium          | Dependabot active     | Weekly audit        |
+| RISK-003 | AI Integration Complexity  | Low             | Not in current sprint | N/A                 |
+| RISK-004 | Svelte 5 Breaking Changes  | Low             | Version pinned        | Monitor releases    |
+| RISK-005 | Contributor Availability   | High            | Solo development      | Seek co-maintainers |
+| RISK-006 | Developer Burnout          | Critical        | Velocity cap set      | Enforce limits      |
 
 ### Sprint Planning Risk Checklist
 
@@ -299,6 +299,7 @@ When planning complex stories (5+ SP), document risk exposure:
 | RISK-00X | High/Med/Low | [Strategy] |
 
 **Acceptance Criteria Risk Impact:**
+
 - AC1: [Risk consideration]
 - AC2: [Risk consideration]
 ```

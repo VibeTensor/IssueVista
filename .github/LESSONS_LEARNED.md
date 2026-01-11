@@ -165,6 +165,7 @@ Implementing a comprehensive light/dark theme system with custom theme presets r
 #### What Happened
 
 Initial approach using Tailwind dark mode classes became unwieldy with multiple theme variants. Switching to CSS custom properties (CSS variables) enabled:
+
 - Runtime theme switching without page reload
 - Support for multiple theme presets beyond light/dark
 - Reduced bundle size by avoiding duplicate utility classes
@@ -177,6 +178,7 @@ Tailwind's utility-first approach works well for binary dark mode but doesn't sc
 #### Lesson Learned
 
 For theme systems with more than 2 variants, use CSS custom properties as the foundation:
+
 1. Define semantic color tokens (--color-bg-primary, --color-text-primary)
 2. Map tokens to theme-specific values in :root and [data-theme="dark"]
 3. Use UnoCSS/Tailwind for layout, spacing, and responsive design
@@ -209,6 +211,7 @@ Implementing search history required complex state management with localStorage 
 #### What Happened
 
 Svelte 5 runes ($state, $derived, $effect) provided cleaner patterns than Svelte 4 stores:
+
 - `$state()` for reactive arrays with automatic tracking
 - `$effect()` for localStorage sync without explicit subscriptions
 - `$derived()` for computed values like filtered/sorted history
@@ -221,6 +224,7 @@ Svelte 4 stores required verbose boilerplate for complex state. Runes provide mo
 #### Lesson Learned
 
 Svelte 5 runes best practices:
+
 1. Use `$state()` for any mutable data, including arrays and objects
 2. Use `$effect()` for side effects (localStorage, API calls, DOM manipulation)
 3. Use `$derived()` for any computed values to avoid recalculation
@@ -253,11 +257,13 @@ Adding visual badges for "Good First Issue" required careful accessibility consi
 #### What Happened
 
 Initial badge design relied solely on color, which failed:
+
 - Color contrast requirements (WCAG 2.1 AA: 4.5:1 ratio)
 - Color blindness accessibility (8% of males affected)
 - Screen reader announcement of badge meaning
 
 Solution implemented:
+
 - Added aria-label describing badge purpose
 - Used icon + text combination, not color alone
 - Ensured 4.5:1 contrast ratio in both themes
@@ -270,6 +276,7 @@ Visual design often prioritizes aesthetics over accessibility. Badges are partic
 #### Lesson Learned
 
 Badge/label accessibility checklist:
+
 1. Never rely on color alone to convey meaning
 2. Include text or aria-label describing the badge
 3. Test contrast ratios in all theme variants
@@ -303,11 +310,13 @@ Adding keyboard shortcut hints (like "Press Enter to search") required balancing
 #### What Happened
 
 First implementation showed shortcuts always, leading to:
+
 - Visual noise for experienced users
 - Accessibility concerns with too much on-screen text
 - Inconsistent placement across components
 
 Improved approach:
+
 - Show hints only when input is focused
 - Use subtle, dismissible hint styling
 - Consistent positioning (inside input, right-aligned)
@@ -320,6 +329,7 @@ No established pattern for keyboard hint UX in the codebase. Each implementation
 #### Lesson Learned
 
 Keyboard shortcut hint best practices:
+
 1. Context-sensitive visibility (show on focus/hover)
 2. Consistent visual language across all shortcuts
 3. Use `<kbd>` element for semantic meaning
@@ -353,11 +363,13 @@ Implementing infinite scroll for potentially thousands of GitHub issues required
 #### What Happened
 
 Initial infinite scroll loaded all items into DOM, causing:
+
 - Memory issues with 500+ items
 - Scroll jank and dropped frames
 - Mobile browser crashes
 
 Virtual list solution:
+
 - Only render visible items + buffer
 - Recycle DOM nodes during scroll
 - Maintain scroll position accuracy
@@ -370,6 +382,7 @@ Naive infinite scroll implementations don't account for DOM node limits. Each is
 #### Lesson Learned
 
 Virtual list implementation requirements:
+
 1. Calculate visible viewport and buffer zones
 2. Use CSS transforms for scroll position (not margin/padding)
 3. Handle resize and orientation changes
@@ -403,11 +416,13 @@ Sprint 2 achieved 89 story points in 6 days, requiring 19+ hour workdays with mi
 #### What Happened
 
 While the sprint was technically successful:
+
 - 38 issues completed in December
 - All CI checks passing
 - High code quality maintained
 
 The cost was unsustainable:
+
 - 4-5 hours sleep per night for 12 days
 - Physical and mental exhaustion
 - Reduced code review thoroughness toward sprint end
@@ -420,6 +435,7 @@ Aggressive target (INR 10.5 Lakh in 12 days) required unsustainable pace. No vel
 #### Lesson Learned
 
 Sustainable velocity guidelines:
+
 1. Maximum 50 SP/week for solo developer
 2. Cap at 10 hours/day (50 hours/week)
 3. Include buffer for CodeRabbit review cycles
@@ -454,12 +470,14 @@ Implementing intelligent autocomplete for repository search combined multiple da
 #### What Happened
 
 Challenges encountered:
+
 - Race conditions between local and API suggestions
 - Keyboard navigation conflicts with input behavior
 - Mobile virtual keyboard interactions
 - Debouncing without perceived latency
 
 Solutions applied:
+
 - Priority-based suggestion merging (local first, then API)
 - Aria-activedescendant for accessible keyboard navigation
 - Touch-friendly hit targets for mobile
@@ -472,6 +490,7 @@ Autocomplete is deceptively complex, combining async data fetching, keyboard han
 #### Lesson Learned
 
 Autocomplete implementation checklist:
+
 1. Define clear priority order for suggestion sources
 2. Implement proper debouncing (150-300ms typical)
 3. Use aria-activedescendant, not focus, for option highlighting
