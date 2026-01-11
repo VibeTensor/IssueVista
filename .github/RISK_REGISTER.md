@@ -198,14 +198,117 @@
 
 ---
 
+### RISK-006: Developer Burnout
+
+| Attribute       | Value         |
+| --------------- | ------------- |
+| **Category**    | Resource      |
+| **Probability** | 4 - High      |
+| **Impact**      | 4 - Major     |
+| **Risk Score**  | 16 (Critical) |
+| **Status**      | Active        |
+| **Owner**       | @ascender1729 |
+
+**Description:** Intensive development sprints with 19+ hour workdays and minimal sleep pose significant burnout risk.
+
+**Triggers:**
+
+- Sprint velocity exceeding 50 SP/week
+- Consecutive high-intensity sprints
+- Sleep deprivation (<6 hours/night)
+- Deadline pressure without buffer
+
+**Mitigation Strategy:**
+
+- Cap sustainable velocity at 50 SP/week
+- Limit workdays to 10 hours maximum
+- Mandatory recovery sprint after intensive periods
+- Regular health check in retrospectives
+
+**Contingency Plan:**
+
+- Immediate workload reduction if burnout symptoms appear
+- Delegate tasks to contributors
+- Extend deadlines rather than compromise health
+
+**Lessons Learned Reference:** LL-009 (Sustainable Development Velocity)
+
+---
+
 ## Risk Summary Dashboard
 
-| Risk Level | Count | Trend  |
-| ---------- | ----- | ------ |
-| Critical   | 1     | Stable |
-| High       | 1     | Stable |
-| Medium     | 3     | Stable |
-| Low        | 0     | -      |
+| Risk Level | Count | Trend   |
+| ---------- | ----- | ------- |
+| Critical   | 2     | +1 (Up) |
+| High       | 1     | Stable  |
+| Medium     | 3     | Stable  |
+| Low        | 0     | -       |
+
+---
+
+## Sprint-Risk Integration (ISO 21502:2020 Section 6.7.3)
+
+### Purpose
+
+Integrate risk management into sprint ceremonies to ensure proactive risk identification, monitoring, and mitigation throughout the development lifecycle.
+
+### Sprint Risk Tracking
+
+#### Current Sprint Risk Exposure
+
+| Risk ID   | Risk Title               | Sprint Exposure | Mitigation Status    | Action Required     |
+| --------- | ------------------------ | --------------- | -------------------- | ------------------- |
+| RISK-001  | GitHub API Rate Limits   | Low             | Caching implemented  | Monitor only        |
+| RISK-002  | Dependency Vulnerabilities | Medium        | Dependabot active    | Weekly audit        |
+| RISK-003  | AI Integration Complexity | Low            | Not in current sprint| N/A                 |
+| RISK-004  | Svelte 5 Breaking Changes | Low            | Version pinned       | Monitor releases    |
+| RISK-005  | Contributor Availability  | High           | Solo development     | Seek co-maintainers |
+| RISK-006  | Developer Burnout         | Critical       | Velocity cap set     | Enforce limits      |
+
+### Sprint Planning Risk Checklist
+
+Before each sprint, review:
+
+- [ ] Which active risks apply to planned stories?
+- [ ] Are mitigation strategies in place?
+- [ ] Is sprint velocity sustainable (<=50 SP/week)?
+- [ ] Are there new risks from planned features?
+- [ ] Is buffer time allocated for risk response?
+
+### Sprint Retrospective Risk Review
+
+After each sprint, assess:
+
+- [ ] Did any risks materialize?
+- [ ] Were mitigation strategies effective?
+- [ ] Are there new risks to add to register?
+- [ ] Should any risk scores be updated?
+- [ ] Are closed risks properly documented?
+
+### Risk-to-Story Mapping Template
+
+When planning complex stories (5+ SP), document risk exposure:
+
+```markdown
+**Story:** #XXX - [Title]
+**Story Points:** X
+
+**Risk Assessment:**
+| Risk ID | Exposure | Mitigation Applied |
+|---------|----------|-------------------|
+| RISK-00X | High/Med/Low | [Strategy] |
+
+**Acceptance Criteria Risk Impact:**
+- AC1: [Risk consideration]
+- AC2: [Risk consideration]
+```
+
+### Historical Sprint Risk Summary
+
+| Sprint   | Risks Active | Risks Triggered | New Risks Added | Risks Closed |
+| -------- | ------------ | --------------- | --------------- | ------------ |
+| Sprint 1 | 5            | 0               | 0               | 0            |
+| Sprint 2 | 5            | 1 (RISK-005)    | 1 (RISK-006)    | 0            |
 
 ---
 
@@ -227,6 +330,6 @@
 
 ---
 
-_Document Version: 1.0_
-_Last Updated: December 26, 2025_
+_Document Version: 2.0_
+_Last Updated: January 9, 2026_
 _Compliant with: ISO 21502:2020 Section 6.7_

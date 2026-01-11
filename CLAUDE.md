@@ -111,8 +111,33 @@ See `.claude/rules/` for detailed rules:
 
 ## Project Management Documents
 
-| Document             | Location                          | When to Update              |
-| -------------------- | --------------------------------- | --------------------------- |
-| Lessons Learned      | `.github/LESSONS_LEARNED.md`      | After unexpected challenges |
-| Risk Register        | `.github/RISK_REGISTER.md`        | When risks found/mitigated  |
-| Sprint Retrospective | `.github/SPRINT_RETROSPECTIVE.md` | End of each sprint          |
+| Document                    | Location                                   | When to Update                    |
+| --------------------------- | ------------------------------------------ | --------------------------------- |
+| Lessons Learned             | `.github/LESSONS_LEARNED.md`               | After unexpected challenges       |
+| Risk Register               | `.github/RISK_REGISTER.md`                 | When risks found/mitigated        |
+| Sprint Retrospective        | `.github/SPRINT_RETROSPECTIVE.md`          | Template - use for new sprints    |
+| Sprint Retrospectives Archive | `.github/SPRINT_RETROSPECTIVES_ARCHIVE.md` | After each sprint completion      |
+
+## ISO 21502:2020 Compliance Status
+
+| Requirement                  | Document                              | Status    |
+| ---------------------------- | ------------------------------------- | --------- |
+| Governance (Section 5)       | `.github/GOVERNANCE.md`               | Compliant |
+| Scope Management (6.1)       | `.github/WORK_BREAKDOWN_STRUCTURE.md` | Compliant |
+| Stakeholder Management (6.2) | `.github/STAKEHOLDER_REGISTER.md`     | Compliant |
+| Resource Management (6.3)    | `.github/RACI_MATRIX.md`              | Compliant |
+| Change Management (6.4)      | `.github/CHANGE_MANAGEMENT.md`        | Compliant |
+| Communication (6.5)          | `.github/COMMUNICATION_PLAN.md`       | Compliant |
+| Risk Management (6.7)        | `.github/RISK_REGISTER.md`            | Compliant |
+| Knowledge Management (6.9)   | `.github/LESSONS_LEARNED.md`          | Compliant |
+
+## Sprint Metrics Summary
+
+| Metric             | Sprint 1       | Sprint 2       | Average  |
+| ------------------ | -------------- | -------------- | -------- |
+| Story Points       | 32 SP          | 89 SP          | 60.5 SP  |
+| Issues Completed   | 9              | 29             | 19       |
+| Commitment Accuracy| 91%            | 105%           | 98%      |
+| Team Health        | 4.0/5          | 4.0/5          | 4.0/5    |
+
+See `.github/SPRINT_RETROSPECTIVES_ARCHIVE.md` for detailed velocity trends and retrospective data.
