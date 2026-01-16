@@ -44,7 +44,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@astrojs/svelte": "^7.2.0",
+    "@astrojs/svelte": "^7.2.5",
     "@unocss/astro": "^66.5.3",
     "astro": "^5.14.3",
     "graphql-request": "^7.4.0",
