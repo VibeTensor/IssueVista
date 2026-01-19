@@ -1,4 +1,4 @@
-# Code Style Guide 
+# Code Style Guide
 
 This guide documents the coding conventions used in IssueFlow.
 
@@ -6,14 +6,14 @@ This guide documents the coding conventions used in IssueFlow.
 
 ### Naming Conventions
 
-|Type| Conventions | Example |
-|----|-------------|---------|
-| Variables|camelCase| userName, issueCount|
-|Functions|camelCase|fetchIssue(), handleClick()|
-|Interfaces|PascalCase|interface GitHubIssue|
-|Types|PascalCase|type IssueState|
-|Constants|UPPER_SNAKE_CASE|const MAX_ReTRIES =3|
-|Files|kebab-case|github-graphql.ts|
+| Type       | Conventions      | Example                     |
+| ---------- | ---------------- | --------------------------- |
+| Variables  | camelCase        | userName, issueCount        |
+| Functions  | camelCase        | fetchIssue(), handleClick() |
+| Interfaces | PascalCase       | interface GitHubIssue       |
+| Types      | PascalCase       | type IssueState             |
+| Constants  | UPPER_SNAKE_CASE | const MAX_ReTRIES =3        |
+| Files      | kebab-case       | github-graphql.ts           |
 
 ### Type Annotations
 
@@ -29,29 +29,28 @@ This guide documents the coding conventions used in IssueFlow.
 IssueFlow uses Svelte 5 runes for reactivity:
 
 ```svelte
-
 <script lang="ts">
-    // State - use $state
-    let count = $state(0);
+  // State - use $state
+  let count = $state(0);
 
-    // Derived values - use $derived
-    let doubled = $derived(count * 2);
+  // Derived values - use $derived
+  let doubled = $derived(count * 2);
 
-    // Side effects - use $effect
-    $effect(() => {
-        console.log('Count changed:', count);
-    });
+  // Side effects - use $effect
+  $effect(() => {
+    console.log('Count changed:', count);
+  });
 
-    //Props - use $props
-    interface Props {
-        title:string;
-        diabled?: boolean;
-    }
-    let {title, diabled = false} : Props = $props();
+  //Props - use $props
+  interface Props {
+    title: string;
+    diabled?: boolean;
+  }
+  let { title, diabled = false }: Props = $props();
 </script>
 ```
 
-### Component Structure Order 
+### Component Structure Order
 
 1. Script tag with lang = "ts"
 2. Imports
@@ -65,21 +64,24 @@ IssueFlow uses Svelte 5 runes for reactivity:
 10. Style tag
 
 ## CSS/UnoCSS Guidelines
+
 - Use UnoCSS utility classes (Tailwind-compatiable)
 - Avoid inline styles
 - use CSS variables for theming
 
 ## File Naming Conventions
-|Type|Convention|Example|
-|----|----------|-------|
-|Svelte Components|PascalCase| SearchBar.svelte|
-|Astro Pages| kebab-case| index.astro|
-|TypeScript Utilites| kebab-case|github-graphql.ts|
-|Test Files|kebab-case.test|search.test.ts|
+
+| Type                | Convention      | Example           |
+| ------------------- | --------------- | ----------------- |
+| Svelte Components   | PascalCase      | SearchBar.svelte  |
+| Astro Pages         | kebab-case      | index.astro       |
+| TypeScript Utilites | kebab-case      | github-graphql.ts |
+| Test Files          | kebab-case.test | search.test.ts    |
 
 ##Linting and Formatting
 
 Run before every commit:
+
 ```bash
 npm run lint
 npm run lint:fix
@@ -91,6 +93,7 @@ npm run format
 Format : [TYPE] Description (#ISSUE_NUMBER)
 
 Types:
+
 - [FEATURE] - New functionality
 - [FIX] - Bug fix
 - [DOCS] - Documentation
