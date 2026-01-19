@@ -4,7 +4,8 @@
 
   Displays issues as a force-directed graph grouped by label clusters.
   Features:
-  - D3 force simulation for layout
+  - Server-side layout computation (Cloudflare Workers) for low-end devices
+  - Client-side fallback for offline/error cases
   - Zoom and pan controls
   - Click cluster to focus
   - Hover for issue details
@@ -20,8 +21,35 @@
     getNodesInCluster,
     getNodesBoundingBox,
     type ClusterNode,
-    type ClusterData
+    type ClusterData,
+    type Cluster
   } from '../../lib/clustering-utils';
+
+  // Server-side API response types
+  interface ServerClusterNode {
+    id: string;
+    cluster: string;
+    color: string;
+    x: number;
+    y: number;
+    radius: number;
+    issue: {
+      number: number;
+      title: string;
+      url: string;
+      commentCount: number;
+    };
+  }
+
+  interface ServerLayoutResponse {
+    clusters: Cluster[];
+    nodes: ServerClusterNode[];
+    meta: {
+      totalIssues: number;
+      processedIssues: number;
+      computeTimeMs: number;
+    };
+  }
 
   interface Props {
     /** Array of issues to visualize */
@@ -32,9 +60,11 @@
     height?: number;
     /** Callback when a node is clicked */
     onNodeClick?: (issue: GitHubIssue) => void;
+    /** Use server-side layout computation (default: true) */
+    useServerLayout?: boolean;
   }
 
-  let { issues, width = 800, height = 600, onNodeClick }: Props = $props();
+  let { issues, width = 800, height = 600, onNodeClick, useServerLayout = true }: Props = $props();
 
   // DOM references
   let svgElement: SVGSVGElement;
@@ -50,14 +80,17 @@
   let clusterData = $state<ClusterData>({ clusters: [], nodes: [] });
   let hoveredNode = $state<ClusterNode | null>(null);
   let selectedCluster = $state<string | null>(null);
-  let isSimulationRunning = $state(false);
+  let isLoading = $state(false);
+  let loadingMessage = $state('');
   let tooltipPosition = $state({ x: 0, y: 0 });
+  let serverLayoutUsed = $state(false);
 
   // Derived: clusters with positions
   let positionedClusters = $derived(calculateClusterPositions(clusterData.clusters, width, height));
 
   // Debounce timer for $effect
   let initDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+  let abortController: AbortController | null = null;
 
   // Node radius based on comment count
   function getNodeRadius(node: ClusterNode): number {
@@ -66,15 +99,90 @@
     return baseRadius + Math.min(comments, 5) * 0.4;
   }
 
-  // Initialize D3 visualization
-  function initializeVisualization() {
-    if (!svgElement) return;
+  /**
+   * Fetch layout from server-side Cloudflare Worker
+   */
+  async function fetchServerLayout(): Promise<ServerLayoutResponse | null> {
+    try {
+      abortController = new AbortController();
+      const timeoutId = setTimeout(() => abortController?.abort(), 5000); // 5s timeout
 
-    // Stop any existing simulation before reinitializing (performance fix)
-    if (simulation) {
-      simulation.stop();
+      const response = await fetch('/api/cluster-layout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          issues: issues.map((i) => ({
+            number: i.number,
+            title: i.title,
+            url: i.url,
+            labels: i.labels,
+            comments: i.comments
+          })),
+          width,
+          height,
+          maxNodes: 30
+        }),
+        signal: abortController.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        console.warn('Server layout API returned error:', response.status);
+        return null;
+      }
+
+      return await response.json();
+    } catch (error) {
+      if ((error as Error).name === 'AbortError') {
+        console.warn('Server layout request timed out, using client-side fallback');
+      } else {
+        console.warn('Server layout fetch failed:', error);
+      }
+      return null;
     }
+  }
 
+  /**
+   * Convert server response to ClusterData format
+   */
+  function serverResponseToClusterData(
+    response: ServerLayoutResponse,
+    originalIssues: GitHubIssue[]
+  ): ClusterData {
+    // Create issue lookup map
+    const issueMap = new Map(originalIssues.map((i) => [i.number, i]));
+
+    // Convert server nodes to ClusterNode format
+    const nodes: ClusterNode[] = response.nodes.map((serverNode) => {
+      const originalIssue = issueMap.get(serverNode.issue.number);
+      return {
+        id: serverNode.id,
+        cluster: serverNode.cluster,
+        color: serverNode.color,
+        x: serverNode.x,
+        y: serverNode.y,
+        issue:
+          originalIssue ||
+          ({
+            number: serverNode.issue.number,
+            title: serverNode.issue.title,
+            url: serverNode.issue.url,
+            comments: { totalCount: serverNode.issue.commentCount }
+          } as GitHubIssue)
+      };
+    });
+
+    return {
+      clusters: response.clusters,
+      nodes
+    };
+  }
+
+  /**
+   * Client-side layout computation (fallback)
+   */
+  function computeClientSideLayout(): void {
     // Limit nodes for performance (max 30 issues in visualization)
     const maxNodes = 30;
     const limitedIssues = issues.length > maxNodes ? issues.slice(0, maxNodes) : issues;
@@ -84,6 +192,90 @@
 
     if (clusterData.nodes.length === 0) return;
 
+    // Get cluster positions
+    const clusters = calculateClusterPositions(clusterData.clusters, width, height);
+    const clusterMap = new Map(clusters.map((c) => [c.name, c]));
+
+    // Position nodes in circle pattern around their cluster center
+    const nodesPerCluster: Record<string, ClusterNode[]> = {};
+    for (const node of clusterData.nodes) {
+      const existing = nodesPerCluster[node.cluster] ?? [];
+      existing.push(node);
+      nodesPerCluster[node.cluster] = existing;
+    }
+
+    for (const [clusterName, clusterNodes] of Object.entries(nodesPerCluster)) {
+      const center = clusterMap.get(clusterName);
+      if (!center) continue;
+
+      const cx = center.x!;
+      const cy = center.y!;
+      const nodeCount = clusterNodes.length;
+      const radius = 20 + nodeCount * 4;
+
+      clusterNodes.forEach((node, i) => {
+        if (nodeCount === 1) {
+          node.x = cx;
+          node.y = cy;
+        } else {
+          const angle = (i / nodeCount) * 2 * Math.PI;
+          node.x = cx + radius * Math.cos(angle);
+          node.y = cy + radius * Math.sin(angle);
+        }
+      });
+    }
+  }
+
+  /**
+   * Initialize visualization (tries server-side first, then falls back to client)
+   */
+  async function initializeVisualization() {
+    if (!svgElement || issues.length === 0) return;
+
+    // Stop any existing simulation before reinitializing
+    if (simulation) {
+      simulation.stop();
+    }
+
+    // Cancel any pending server request
+    if (abortController) {
+      abortController.abort();
+    }
+
+    isLoading = true;
+    serverLayoutUsed = false;
+
+    // Try server-side layout first (faster for low-end devices)
+    if (useServerLayout) {
+      loadingMessage = 'Computing layout...';
+      const serverResponse = await fetchServerLayout();
+
+      if (serverResponse && serverResponse.nodes.length > 0) {
+        clusterData = serverResponseToClusterData(serverResponse, issues);
+        serverLayoutUsed = true;
+        console.log(`Server layout computed in ${serverResponse.meta.computeTimeMs}ms`);
+      }
+    }
+
+    // Fallback to client-side if server failed or disabled
+    if (!serverLayoutUsed) {
+      loadingMessage = 'Rendering...';
+      computeClientSideLayout();
+    }
+
+    isLoading = false;
+    loadingMessage = '';
+
+    if (clusterData.nodes.length === 0) return;
+
+    // Render the visualization
+    renderVisualization();
+  }
+
+  /**
+   * Render the D3 visualization with pre-computed positions
+   */
+  function renderVisualization() {
     // Clear previous content
     d3.select(svgElement).selectAll('*').remove();
 
@@ -103,63 +295,10 @@
     // Create main group for zoom/pan
     g = svg.append('g');
 
-    // Get cluster positions
-    const clusters = calculateClusterPositions(clusterData.clusters, width, height);
-    const clusterMap = new Map(clusters.map((c) => [c.name, c]));
-
-    // Initialize node positions near their cluster center
-    for (const node of clusterData.nodes) {
-      const cluster = clusterMap.get(node.cluster);
-      if (cluster) {
-        node.x = cluster.x! + (Math.random() - 0.5) * 100;
-        node.y = cluster.y! + (Math.random() - 0.5) * 100;
-      } else {
-        node.x = width / 2 + (Math.random() - 0.5) * 100;
-        node.y = height / 2 + (Math.random() - 0.5) * 100;
-      }
-    }
-
-    // Use STATIC layout (no animation) for instant performance
-    // Instead of expensive force simulation, position nodes in a grid within clusters
-    const nodesPerCluster: Record<string, ClusterNode[]> = {};
-    for (const node of clusterData.nodes) {
-      const existing = nodesPerCluster[node.cluster] ?? [];
-      existing.push(node);
-      nodesPerCluster[node.cluster] = existing;
-    }
-
-    // Position nodes in a circle pattern around their cluster center
-    for (const [clusterName, nodes] of Object.entries(nodesPerCluster)) {
-      const center = clusterMap.get(clusterName);
-      if (!center) continue;
-
-      const cx = center.x!;
-      const cy = center.y!;
-      const nodeCount = nodes.length;
-      const radius = 20 + nodeCount * 4; // Expand radius based on node count
-
-      nodes.forEach((node, i) => {
-        if (nodeCount === 1) {
-          node.x = cx;
-          node.y = cy;
-        } else {
-          const angle = (i / nodeCount) * 2 * Math.PI;
-          node.x = cx + radius * Math.cos(angle);
-          node.y = cy + radius * Math.sin(angle);
-        }
-      });
-    }
-
-    // Create minimal simulation just for collision avoidance (runs only a few ticks)
-    simulation = d3
-      .forceSimulation<ClusterNode>(clusterData.nodes)
-      .force(
-        'collision',
-        d3.forceCollide<ClusterNode>().radius((d) => getNodeRadius(d) + 2)
-      )
-      .alphaDecay(0.5) // Extremely fast decay
-      .velocityDecay(0.8) // Very high friction
-      .alphaMin(0.5); // Stop almost immediately
+    // Get cluster positions for labels
+    const clusters = serverLayoutUsed
+      ? clusterData.clusters
+      : calculateClusterPositions(clusterData.clusters, width, height);
 
     // Draw cluster labels
     const clusterLabels = g
@@ -202,12 +341,13 @@
       .attr('font-size', '10px')
       .text((d) => `${d.count} issue${d.count !== 1 ? 's' : ''}`);
 
-    // Draw nodes with accessibility attributes
-    const nodes = g
-      .selectAll('.node')
+    // Draw nodes with pre-computed positions and accessibility attributes
+    g.selectAll('.node')
       .data(clusterData.nodes)
       .join('circle')
       .attr('class', 'node')
+      .attr('cx', (d) => d.x ?? 0)
+      .attr('cy', (d) => d.y ?? 0)
       .attr('r', (d) => getNodeRadius(d))
       .attr('fill', (d) => `#${d.color}`)
       .attr('stroke', '#1e293b')
@@ -218,7 +358,6 @@
       .style('cursor', 'pointer')
       .on('mouseenter', (event, d) => {
         hoveredNode = d;
-        // Calculate tooltip position near the node
         const nodeX = d.x ?? 0;
         const nodeY = d.y ?? 0;
         tooltipPosition = {
@@ -236,47 +375,13 @@
         if (onNodeClick) {
           onNodeClick(d.issue);
         }
-      })
-      .call(
-        d3
-          .drag<SVGCircleElement, ClusterNode>()
-          .on('start', dragStarted)
-          .on('drag', dragged)
-          .on('end', dragEnded)
-      );
-
-    // Track simulation state and update positions on tick
-    isSimulationRunning = true;
-    simulation.on('tick', () => {
-      nodes.attr('cx', (d) => d.x!).attr('cy', (d) => d.y!);
-    });
-    simulation.on('end', () => {
-      isSimulationRunning = false;
-    });
+      });
 
     // Click on background to reset zoom
     svg.on('click', () => {
       selectedCluster = null;
       resetZoom();
     });
-  }
-
-  // Drag handlers
-  function dragStarted(event: d3.D3DragEvent<SVGCircleElement, ClusterNode, ClusterNode>) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    event.subject.fx = event.subject.x;
-    event.subject.fy = event.subject.y;
-  }
-
-  function dragged(event: d3.D3DragEvent<SVGCircleElement, ClusterNode, ClusterNode>) {
-    event.subject.fx = event.x;
-    event.subject.fy = event.y;
-  }
-
-  function dragEnded(event: d3.D3DragEvent<SVGCircleElement, ClusterNode, ClusterNode>) {
-    if (!event.active) simulation.alphaTarget(0);
-    event.subject.fx = null;
-    event.subject.fy = null;
   }
 
   // Focus on a specific cluster
@@ -341,6 +446,9 @@
     if (simulation) {
       simulation.stop();
     }
+    if (abortController) {
+      abortController.abort();
+    }
   });
 </script>
 
@@ -388,11 +496,11 @@
   <svg bind:this={svgElement} {width} {height} viewBox="0 0 {width} {height}" class="cluster-svg">
   </svg>
 
-  <!-- Simulation Running Indicator -->
-  {#if isSimulationRunning}
-    <div class="simulation-indicator">
+  <!-- Loading Indicator -->
+  {#if isLoading}
+    <div class="loading-indicator">
       <span class="pulse-dot"></span>
-      <span>Arranging nodes...</span>
+      <span>{loadingMessage || 'Loading...'}</span>
     </div>
   {/if}
 
@@ -430,8 +538,8 @@
     /* No transitions - critical for performance */
   }
 
-  /* Simulation Running Indicator */
-  .simulation-indicator {
+  /* Loading Indicator */
+  .loading-indicator {
     position: absolute;
     bottom: 12px;
     right: 12px;
