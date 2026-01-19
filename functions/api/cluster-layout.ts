@@ -6,6 +6,17 @@
  * Free tier: 100,000 requests/day
  */
 
+// Cloudflare Pages Function types (inline to avoid type conflicts)
+interface EventContext {
+  request: Request;
+  env: Record<string, unknown>;
+  params: Record<string, string>;
+  waitUntil(promise: Promise<unknown>): void;
+  passThroughOnException(): void;
+}
+
+type PagesFunction = (context: EventContext) => Promise<Response> | Response;
+
 interface GitHubIssueMinimal {
   number: number;
   title: string;
