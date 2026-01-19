@@ -65,7 +65,7 @@ This document defines procedures for managing AI chat transcripts to maintain pr
 
 ### CRITICAL Keywords (Auto-Remove if Found)
 
-```
+```text
 BANKS: axis, sbi, icici, kotak, hdfc, pnb, canara, yes bank, idbi,
        bank of baroda, indusind, federal, rbl, bandhan
 
@@ -345,7 +345,7 @@ done
 
 ### Emergency: Accidentally Shared Sensitive Info
 
-1. Contact METR immediately (info@metr.org)
+1. Contact METR immediately ([info@metr.org](mailto:info@metr.org))
 2. Request deletion of specific files
 3. Rotate any exposed credentials
 4. Update passwords if shared
