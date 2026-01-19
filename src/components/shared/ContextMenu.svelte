@@ -156,8 +156,8 @@
    * Open issue in new tab
    */
   function openInNewTab() {
-    // Use noopener for security
-    window.open(issue.url, '_blank', 'noopener');
+    // Use noopener,noreferrer for security
+    window.open(issue.url, '_blank', 'noopener,noreferrer');
     onClose();
   }
 

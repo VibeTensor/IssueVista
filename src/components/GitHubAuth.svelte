@@ -26,8 +26,8 @@
       userCode = result.user_code;
       verificationUri = result.verification_uri;
 
-      // Open verification URL in new tab
-      window.open(verificationUri, '_blank');
+      // Open verification URL in new tab (noopener,noreferrer for security)
+      window.open(verificationUri, '_blank', 'noopener,noreferrer');
 
       // Start polling for completion
       polling = true;

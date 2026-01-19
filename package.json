@@ -47,6 +47,7 @@
     "@astrojs/svelte": "^7.2.5",
     "@unocss/astro": "^66.5.3",
     "astro": "^5.16.11",
+    "d3": "^7.9.0",
     "graphql-request": "^7.4.0",
     "rough-notation": "^0.5.1",
     "svelte": "^5.39.11",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.56.1",
+    "@types/d3": "^7.4.3",
     "@vitest/ui": "^4.0.17",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",

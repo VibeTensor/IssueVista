@@ -1,0 +1,183 @@
+---
+/**
+ * Demo page for ClusterView component
+ * Issue #154 - Topic Cluster Visualization
+ *
+ * This is a temporary demo page for manual testing.
+ * Access at: http://localhost:4321/cluster-demo
+ */
+import Layout from '../layouts/Layout.astro';
+import { ClusterView } from '../components/visualization';
+---
+
+<Layout title="Cluster View Demo - IssueFlow">
+  <main class="demo-container">
+    <h1>Topic Cluster Visualization Demo</h1>
+    <p class="description">
+      This demo shows issues grouped by their primary label in a force-directed graph.
+      <br />
+      <strong>Features:</strong> Zoom (buttons or scroll), Pan (drag background), Click cluster label
+      to focus, Hover nodes for details, Drag nodes to reposition.
+    </p>
+
+    <div class="cluster-wrapper">
+      <ClusterView
+        client:load
+        issues={[
+          {
+            number: 1,
+            title: 'Fix authentication bug in login flow',
+            url: 'https://github.com/test/repo/issues/1',
+            body: 'Users are unable to login when using OAuth',
+            createdAt: '2024-01-15T10:00:00Z',
+            updatedAt: '2024-01-15T10:00:00Z',
+            comments: { totalCount: 5 },
+            labels: { nodes: [{ name: 'bug', color: 'd73a4a', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 2,
+            title: 'Memory leak in data processing',
+            url: 'https://github.com/test/repo/issues/2',
+            body: 'Memory usage increases over time',
+            createdAt: '2024-01-14T10:00:00Z',
+            updatedAt: '2024-01-14T10:00:00Z',
+            comments: { totalCount: 3 },
+            labels: { nodes: [{ name: 'bug', color: 'd73a4a', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 3,
+            title: 'Add dark mode support',
+            url: 'https://github.com/test/repo/issues/3',
+            body: 'Implement dark mode theme',
+            createdAt: '2024-01-13T10:00:00Z',
+            updatedAt: '2024-01-13T10:00:00Z',
+            comments: { totalCount: 8 },
+            labels: { nodes: [{ name: 'enhancement', color: 'a2eeef', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 4,
+            title: 'Add keyboard shortcuts',
+            url: 'https://github.com/test/repo/issues/4',
+            body: 'Support keyboard navigation',
+            createdAt: '2024-01-12T10:00:00Z',
+            updatedAt: '2024-01-12T10:00:00Z',
+            comments: { totalCount: 2 },
+            labels: { nodes: [{ name: 'enhancement', color: 'a2eeef', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 5,
+            title: 'Improve accessibility',
+            url: 'https://github.com/test/repo/issues/5',
+            body: 'Add ARIA labels and screen reader support',
+            createdAt: '2024-01-11T10:00:00Z',
+            updatedAt: '2024-01-11T10:00:00Z',
+            comments: { totalCount: 1 },
+            labels: { nodes: [{ name: 'enhancement', color: 'a2eeef', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 6,
+            title: 'Update README documentation',
+            url: 'https://github.com/test/repo/issues/6',
+            body: 'Add installation and usage instructions',
+            createdAt: '2024-01-10T10:00:00Z',
+            updatedAt: '2024-01-10T10:00:00Z',
+            comments: { totalCount: 0 },
+            labels: { nodes: [{ name: 'documentation', color: '0075ca', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 7,
+            title: 'Add API documentation',
+            url: 'https://github.com/test/repo/issues/7',
+            body: 'Document all API endpoints',
+            createdAt: '2024-01-09T10:00:00Z',
+            updatedAt: '2024-01-09T10:00:00Z',
+            comments: { totalCount: 0 },
+            labels: { nodes: [{ name: 'documentation', color: '0075ca', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 8,
+            title: 'Help wanted: translations',
+            url: 'https://github.com/test/repo/issues/8',
+            body: 'Looking for contributors to help with translations',
+            createdAt: '2024-01-08T10:00:00Z',
+            updatedAt: '2024-01-08T10:00:00Z',
+            comments: { totalCount: 12 },
+            labels: { nodes: [{ name: 'help wanted', color: '008672', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 9,
+            title: 'Good first issue: fix typo',
+            url: 'https://github.com/test/repo/issues/9',
+            body: 'Simple typo fix in the header',
+            createdAt: '2024-01-07T10:00:00Z',
+            updatedAt: '2024-01-07T10:00:00Z',
+            comments: { totalCount: 0 },
+            labels: { nodes: [{ name: 'good first issue', color: '7057ff', description: null }] },
+            timelineItems: { nodes: [] }
+          },
+          {
+            number: 10,
+            title: 'Unlabeled issue example',
+            url: 'https://github.com/test/repo/issues/10',
+            body: 'This issue has no labels',
+            createdAt: '2024-01-06T10:00:00Z',
+            updatedAt: '2024-01-06T10:00:00Z',
+            comments: { totalCount: 0 },
+            labels: { nodes: [] },
+            timelineItems: { nodes: [] }
+          }
+        ]}
+        width={800}
+        height={600}
+      />
+    </div>
+
+    <p class="back-link">
+      <a href="/">← Back to IssueFlow</a>
+    </p>
+  </main>
+</Layout>
+
+<style>
+  .demo-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  h1 {
+    color: #14b8a6;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .cluster-wrapper {
+    margin: 1.5rem 0;
+  }
+
+  .back-link {
+    margin-top: 1.5rem;
+  }
+
+  .back-link a {
+    color: #14b8a6;
+    text-decoration: none;
+  }
+
+  .back-link a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -8,7 +8,76 @@ This is the authoritative workflow for implementing GitHub issues. Every issue M
 
 - ISO 21502:2020 Project Management Guidance
 - PMI PMBOK 7th Edition Agile Practices
+- Claude Code Plugins & Skills System
 - See `project-management.md` for detailed PM integration
+
+---
+
+## Claude Code Tools & Plugins Reference
+
+### Built-in Tools (Always Available)
+
+| Tool           | Purpose                                               | When to Use                        |
+| -------------- | ----------------------------------------------------- | ---------------------------------- |
+| **WebSearch**  | Search the internet for documentation, best practices | Research phases, finding solutions |
+| **WebFetch**   | Fetch and extract content from specific URLs          | Deep-diving into documentation     |
+| **Task**       | Launch specialized agents (Explore, Plan, etc.)       | Codebase exploration, architecture |
+| **Glob/Grep**  | Find files and search code                            | Locating files and patterns        |
+| **Read/Write** | Read and write files                                  | Code implementation                |
+| **Edit**       | Edit existing files                                   | Code modifications                 |
+| **Bash**       | Execute shell commands                                | Git, npm, build commands           |
+
+### MCP Tools (Context-Dependent)
+
+| Tool                    | Purpose                              | When to Use                    |
+| ----------------------- | ------------------------------------ | ------------------------------ |
+| **getDiagnostics**      | Check IDE for TypeScript/lint errors | Before committing, after edits |
+| **executeCode**         | Run Python in Jupyter kernel         | Data analysis, quick tests     |
+| **ms365-outlook/gmail** | Email integration                    | Communication tasks            |
+
+### Claude Code Skills (Available in This Project)
+
+The following skills are available and should be used when applicable:
+
+| Skill                               | Trigger            | Purpose                                            | When to Use                   |
+| ----------------------------------- | ------------------ | -------------------------------------------------- | ----------------------------- |
+| **code-review:code-review**         | `/code-review`     | Code review for pull requests                      | After creating PR, for review |
+| **feature-dev:feature-dev**         | `/feature-dev`     | Guided feature development with architecture focus | Starting new features         |
+| **frontend-design:frontend-design** | `/frontend-design` | Create production-grade frontend interfaces        | Building UI components, pages |
+
+**How to Use Skills:**
+
+1. **Slash Command**: Type `/skill-name` to invoke directly
+2. **Automatic**: Skills auto-invoke based on task context
+3. **Skill Tool**: Use `Skill` tool with skill name parameter
+
+**Example Usage:**
+
+```bash
+# For PR code review
+/code-review
+
+# For feature development with architecture
+/feature-dev
+
+# For frontend UI work
+/frontend-design
+```
+
+### Claude Code Plugins (Custom Extensions)
+
+Plugins extend Claude Code with:
+
+- **Slash Commands**: Custom commands (e.g., `/my-plugin:hello`)
+- **Agent Skills**: Auto-invoked capabilities based on task context
+- **Hooks**: Event handlers for tool calls
+- **MCP/LSP Servers**: External tool integrations
+
+**To create custom plugins:**
+
+```bash
+claude --plugin-dir ./my-plugin
+```
 
 ## Auto-Continue Rule (LIMITED APPLICATION)
 
@@ -93,9 +162,18 @@ Actions:
 - Identify related issues suggested
 - Document all findings in `issue_XX_research.txt`
 
-### Step 3: Web Search for Context (5-10 Searches)
+### Step 3: Research Using Claude Tools & Web Search (5-10 Searches)
 
-Categories to cover:
+**Use ALL available research tools:**
+
+#### 3A. Claude Built-in Tools (MANDATORY)
+
+- **WebSearch**: Search for documentation, best practices, similar implementations
+- **WebFetch**: Fetch specific documentation pages, API references, tutorials
+- **Task (Explore agent)**: Explore codebase patterns and similar implementations
+- **getDiagnostics (IDE)**: Check for existing code issues before implementing
+
+#### 3B. Web Search Categories (5-10 searches):
 
 - Official documentation (1-2 searches)
 - Best practices guides (1-2 searches)
@@ -104,13 +182,24 @@ Categories to cover:
 - Performance optimizations (1 search)
 - Edge cases/pitfalls (1 search as needed)
 
+#### 3C. WebFetch for Documentation
+
+When you find relevant URLs, use WebFetch to extract key information:
+
+```text
+Examples:
+- WebFetch official API docs for detailed method signatures
+- WebFetch library documentation for configuration options
+- WebFetch tutorial pages for implementation patterns
+```
+
 Create research file immediately: `.internal/research/issue_XX_research.txt`
 
 ### Step 4: Create 9-Phase Implementation Plan (MANDATORY)
 
 CRITICAL: You MUST create a 9-phase plan for EVERY issue. This is NON-NEGOTIABLE.
 
-```
+```text
 Phase 1: Setup & Branch Creation
 Phase 2: Research & Audit Existing Code
 Phase 3: Identify Affected Files/Components
@@ -128,9 +217,19 @@ FAILURE TO CREATE 9-PHASE PLAN = IMPLEMENTATION REJECTED
 
 ### For Each Phase, Follow A-D Cycle:
 
-#### A. Pre-Phase: Mandatory Web Research
+#### A. Pre-Phase: Mandatory Research (Claude Tools + Web Search)
 
-CRITICAL: This step is NON-NEGOTIABLE. Web searches MUST be performed before EVERY phase.
+CRITICAL: This step is NON-NEGOTIABLE. Research MUST be performed before EVERY phase using ALL available tools.
+
+**Research Tools to Use:**
+
+| Tool           | When to Use                                         | Example                                       |
+| -------------- | --------------------------------------------------- | --------------------------------------------- |
+| WebSearch      | Find documentation, best practices, patterns        | "D3.js force graph Svelte 5 integration 2026" |
+| WebFetch       | Extract detailed info from specific URLs            | Fetch d3js.org API docs for zoom behavior     |
+| Task/Explore   | Find similar code patterns in current codebase      | "How are other visualizations implemented?"   |
+| getDiagnostics | Check existing TypeScript/lint issues before coding | Check IDE for pre-existing errors             |
+| Read           | Study existing code files for patterns              | Read similar components for conventions       |
 
 **Search Requirements by Complexity (MINIMUM 5 PER PHASE):**
 
@@ -140,30 +239,34 @@ CRITICAL: This step is NON-NEGOTIABLE. Web searches MUST be performed before EVE
 | Medium (5 SP)     | 5-7 searches       | 45-63 total      | New component, multi-file    |
 | Complex (8-13 SP) | 7-10 searches      | 63-90 total      | Major features, architecture |
 
-**CRITICAL: No phase may have fewer than 5 web searches. This is NON-NEGOTIABLE.**
+**CRITICAL: No phase may have fewer than 5 research actions (WebSearch + WebFetch + Explore combined).**
 
 **Before EVERY Phase:**
 
-1. Identify search queries relevant to the phase
-2. Execute searches using WebSearch tool
-3. Document in `issue_XX_research.txt`:
-   - Exact search query used
-   - URLs of relevant resources
+1. Identify what information you need for the phase
+2. Use appropriate Claude tools:
+   - **WebSearch**: For broad discovery and finding relevant resources
+   - **WebFetch**: For deep-diving into specific documentation URLs
+   - **Task (Explore)**: For finding patterns in the codebase
+   - **getDiagnostics**: For checking IDE-level issues
+3. Document ALL research in `issue_XX_research.txt`:
+   - Tool used (WebSearch/WebFetch/Explore/getDiagnostics)
+   - Query or URL used
    - Key insights extracted
 
-**Search Categories Per Phase:**
+**Research Categories Per Phase:**
 
-| Phase                    | Required Search Topics                           |
-| ------------------------ | ------------------------------------------------ |
-| Phase 1 (Setup)          | Git branching best practices, naming conventions |
-| Phase 2 (Research)       | Existing patterns, similar implementations       |
-| Phase 3 (Identify Files) | File structure patterns, component organization  |
-| Phase 4 (Design)         | Architecture patterns, best practices            |
-| Phase 5 (Core)           | Implementation patterns, edge cases, security    |
-| Phase 6 (Additional)     | Automation, testing patterns                     |
-| Phase 7 (Docs)           | Documentation standards, examples                |
-| Phase 8 (Commit)         | Commit message conventions                       |
-| Phase 9 (PR)             | PR best practices, review process                |
+| Phase                    | Required Research Topics                        | Tools to Use              |
+| ------------------------ | ----------------------------------------------- | ------------------------- |
+| Phase 1 (Setup)          | Git branching, naming conventions               | WebSearch, Read           |
+| Phase 2 (Research)       | Existing patterns in codebase                   | Explore, Read, WebSearch  |
+| Phase 3 (Identify Files) | File structure patterns, component organization | Explore, Glob, WebSearch  |
+| Phase 4 (Design)         | Architecture patterns, best practices           | WebSearch, WebFetch       |
+| Phase 5 (Core)           | Implementation patterns, edge cases, security   | WebSearch, WebFetch, Read |
+| Phase 6 (Additional)     | Testing patterns, automation                    | WebSearch, getDiagnostics |
+| Phase 7 (Docs)           | Documentation standards, examples               | WebSearch, WebFetch       |
+| Phase 8 (Commit)         | Commit message conventions                      | Read (git log), WebSearch |
+| Phase 9 (PR)             | PR best practices, review process               | WebSearch                 |
 
 **Thorough Thinking Requirement:**
 
@@ -173,7 +276,7 @@ CRITICAL: This step is NON-NEGOTIABLE. Web searches MUST be performed before EVE
 - Note conflicts or trade-offs
 - Document rationale for final decision
 
-**FAILURE TO PERFORM WEB SEARCHES = PHASE NOT COMPLETE**
+**FAILURE TO PERFORM RESEARCH = PHASE NOT COMPLETE**
 
 #### B. Execute Phase
 
@@ -360,16 +463,16 @@ Started: YYYY-MM-DD HH:MM
 Completed: YYYY-MM-DD HH:MM
 Duration: XX minutes
 
-Web Searches (Minimum 5):
-1. Query: "[exact query]"
-   URL: [url]
+Research Actions (Minimum 5 - using WebSearch, WebFetch, Explore, getDiagnostics):
+1. Tool: [WebSearch/WebFetch/Explore/getDiagnostics/Read]
+   Query/URL: "[exact query or URL]"
    Finding: [key insight]
 
-2. Query: "[exact query]"
-   URL: [url]
+2. Tool: [WebSearch/WebFetch/Explore/getDiagnostics/Read]
+   Query/URL: "[exact query or URL]"
    Finding: [key insight]
 
-[Continue for all 5+ searches]
+[Continue for all 5+ research actions]
 
 Implementation Summary:
 - Actions taken: [list]
@@ -391,7 +494,12 @@ Next Phase Start: YYYY-MM-DD HH:MM
 3. QUALITY METRICS (ISO 21502:2020 Section 6.3)
 ================================================================================
 
-- Total Web Searches: XX (Minimum 45 for 9 phases)
+- Total Research Actions: XX (Minimum 45 for 9 phases)
+  - WebSearch: XX
+  - WebFetch: XX
+  - Task/Explore: XX
+  - getDiagnostics: XX
+  - Read (code study): XX
 - All Phases Completed: Yes/No
 - User Approvals Received: X/9
 - Cooldowns Observed: X/9
@@ -638,16 +746,17 @@ Document all learnings, commands used, and statistics.
 - [ ] Read issue description
 - [ ] Read ALL CodeRabbit issue thread comments
 - [ ] Document suggestions in research file
-- [ ] Web search (5-10 searches)
+- [ ] Research using Claude tools (WebSearch, WebFetch, Explore, getDiagnostics)
+- [ ] Web search (5-10 searches total)
 - [ ] Create 9-phase plan
 - [ ] Start video recording
 - [ ] Start time tracking
 
 ### Each Phase
 
-- [ ] Web search (minimum 5 searches - NON-NEGOTIABLE)
+- [ ] Research (minimum 5 actions using WebSearch/WebFetch/Explore/getDiagnostics/Read)
 - [ ] Implement
-- [ ] Document in research file
+- [ ] Document in research file (tool used, query, finding)
 - [ ] Update project board with phase progress
 - [ ] User approval received (BLOCKING - no auto-continue)
 - [ ] 10-minute cooldown observed before next phase

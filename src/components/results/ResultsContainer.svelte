@@ -65,6 +65,7 @@
   import { addToHistory, setLastSearchedRepo } from '../../lib/search-history';
   import { SearchForm, HelpPopup, IssueCard, IssueCardSkeleton, RepoStatsPanel } from './index';
   import { infiniteScroll } from '../../lib/infinite-scroll';
+  import { ClusterView } from '../visualization';
 
   // Core state
   let repoUrl = $state('');
@@ -102,6 +103,9 @@
   // Labels expansion state
   let showAllLabels = $state(false);
   const COLLAPSED_LABEL_COUNT = 6;
+
+  // View mode state (Issue #154 - Cluster View)
+  let viewMode = $state<'list' | 'cluster'>('list');
 
   // URL state tracking (Issue #140)
   let urlStateInitialized = $state(false);
@@ -1103,6 +1107,41 @@
             {#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}
           </p>
         </div>
+        <!-- View Mode Toggle (Issue #154) -->
+        <div class="view-toggle-group">
+          <button
+            type="button"
+            class="view-toggle-btn {viewMode === 'list' ? 'active' : ''}"
+            onclick={() => (viewMode = 'list')}
+            aria-pressed={viewMode === 'list'}
+            title="List View"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="view-toggle-btn {viewMode === 'cluster' ? 'active' : ''}"
+            onclick={() => (viewMode = 'cluster')}
+            aria-pressed={viewMode === 'cluster'}
+            title="Cluster View"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
@@ -1114,13 +1153,26 @@
         {sortDirection === 'asc' ? 'ascending' : 'descending'}
       </div>
 
-      <div class="space-y-2">
-        {#each displayedIssues as issue, i (issue.number)}
-          <div in:fly={{ y: 20, delay: Math.min(i * 50, 500), duration: 300 }}>
-            <IssueCard {issue} {copiedIssueNumber} onCopy={handleCopyIssue} />
-          </div>
-        {/each}
-      </div>
+      <!-- View Mode: List or Cluster (Issue #154) -->
+      {#if viewMode === 'list'}
+        <div class="space-y-2">
+          {#each displayedIssues as issue, i (issue.number)}
+            <div in:fly={{ y: 20, delay: Math.min(i * 50, 500), duration: 300 }}>
+              <IssueCard {issue} {copiedIssueNumber} onCopy={handleCopyIssue} />
+            </div>
+          {/each}
+        </div>
+      {:else}
+        <!-- Cluster View -->
+        <div class="cluster-view-container">
+          <ClusterView
+            issues={displayedIssues}
+            width={800}
+            height={600}
+            onNodeClick={(issue) => window.open(issue.url, '_blank', 'noopener,noreferrer')}
+          />
+        </div>
+      {/if}
 
       <!-- Issue #131: Infinite scroll sentinel element -->
       {#if hasMorePages && !loadMoreError}
@@ -2099,4 +2151,56 @@
   :global(*::-webkit-scrollbar-corner) {
     background: transparent;
   }
+
+  /* ====== VIEW MODE TOGGLE STYLES (Issue #154) ====== */
+
+  .view-toggle-group {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    border-radius: 8px;
+    padding: 0.25rem;
+  }
+
+  .view-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.5rem;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    color: var(--theme-text-muted, rgb(148, 163, 184));
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .view-toggle-btn:hover {
+    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
+    color: var(--theme-text-primary, white);
+  }
+
+  .view-toggle-btn.active {
+    background: rgba(20, 184, 166, 0.3);
+    color: rgb(94, 234, 212);
+  }
+
+  .view-toggle-btn:focus-visible {
+    outline: 2px solid #14b8a6;
+    outline-offset: 2px;
+  }
+
+  /* Cluster view container */
+  .cluster-view-container {
+    display: flex;
+    justify-content: center;
+    background: var(--theme-bg-card, rgba(30, 41, 59, 0.5));
+    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  /* ====== END VIEW MODE TOGGLE STYLES ====== */
 </style>
