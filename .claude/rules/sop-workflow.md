@@ -17,33 +17,33 @@ This is the authoritative workflow for implementing GitHub issues. Every issue M
 
 ### Built-in Tools (Always Available)
 
-| Tool           | Purpose                                              | When to Use                              |
-| -------------- | ---------------------------------------------------- | ---------------------------------------- |
-| **WebSearch**  | Search the internet for documentation, best practices | Research phases, finding solutions       |
-| **WebFetch**   | Fetch and extract content from specific URLs          | Deep-diving into documentation           |
-| **Task**       | Launch specialized agents (Explore, Plan, etc.)      | Codebase exploration, architecture       |
-| **Glob/Grep**  | Find files and search code                           | Locating files and patterns              |
-| **Read/Write** | Read and write files                                 | Code implementation                      |
-| **Edit**       | Edit existing files                                  | Code modifications                       |
-| **Bash**       | Execute shell commands                               | Git, npm, build commands                 |
+| Tool           | Purpose                                               | When to Use                        |
+| -------------- | ----------------------------------------------------- | ---------------------------------- |
+| **WebSearch**  | Search the internet for documentation, best practices | Research phases, finding solutions |
+| **WebFetch**   | Fetch and extract content from specific URLs          | Deep-diving into documentation     |
+| **Task**       | Launch specialized agents (Explore, Plan, etc.)       | Codebase exploration, architecture |
+| **Glob/Grep**  | Find files and search code                            | Locating files and patterns        |
+| **Read/Write** | Read and write files                                  | Code implementation                |
+| **Edit**       | Edit existing files                                   | Code modifications                 |
+| **Bash**       | Execute shell commands                                | Git, npm, build commands           |
 
 ### MCP Tools (Context-Dependent)
 
-| Tool                    | Purpose                                    | When to Use                    |
-| ----------------------- | ------------------------------------------ | ------------------------------ |
-| **getDiagnostics**      | Check IDE for TypeScript/lint errors       | Before committing, after edits |
-| **executeCode**         | Run Python in Jupyter kernel               | Data analysis, quick tests     |
-| **ms365-outlook/gmail** | Email integration                          | Communication tasks            |
+| Tool                    | Purpose                              | When to Use                    |
+| ----------------------- | ------------------------------------ | ------------------------------ |
+| **getDiagnostics**      | Check IDE for TypeScript/lint errors | Before committing, after edits |
+| **executeCode**         | Run Python in Jupyter kernel         | Data analysis, quick tests     |
+| **ms365-outlook/gmail** | Email integration                    | Communication tasks            |
 
 ### Claude Code Skills (Available in This Project)
 
 The following skills are available and should be used when applicable:
 
-| Skill                          | Trigger            | Purpose                                           | When to Use                        |
-| ------------------------------ | ------------------ | ------------------------------------------------- | ---------------------------------- |
-| **code-review:code-review**    | `/code-review`     | Code review for pull requests                     | After creating PR, for review      |
-| **feature-dev:feature-dev**    | `/feature-dev`     | Guided feature development with architecture focus | Starting new features              |
-| **frontend-design:frontend-design** | `/frontend-design` | Create production-grade frontend interfaces  | Building UI components, pages      |
+| Skill                               | Trigger            | Purpose                                            | When to Use                   |
+| ----------------------------------- | ------------------ | -------------------------------------------------- | ----------------------------- |
+| **code-review:code-review**         | `/code-review`     | Code review for pull requests                      | After creating PR, for review |
+| **feature-dev:feature-dev**         | `/feature-dev`     | Guided feature development with architecture focus | Starting new features         |
+| **frontend-design:frontend-design** | `/frontend-design` | Create production-grade frontend interfaces        | Building UI components, pages |
 
 **How to Use Skills:**
 
@@ -52,6 +52,7 @@ The following skills are available and should be used when applicable:
 3. **Skill Tool**: Use `Skill` tool with skill name parameter
 
 **Example Usage:**
+
 ```
 # For PR code review
 /code-review
@@ -66,12 +67,14 @@ The following skills are available and should be used when applicable:
 ### Claude Code Plugins (Custom Extensions)
 
 Plugins extend Claude Code with:
+
 - **Slash Commands**: Custom commands (e.g., `/my-plugin:hello`)
 - **Agent Skills**: Auto-invoked capabilities based on task context
 - **Hooks**: Event handlers for tool calls
 - **MCP/LSP Servers**: External tool integrations
 
 **To create custom plugins:**
+
 ```bash
 claude --plugin-dir ./my-plugin
 ```
@@ -164,12 +167,14 @@ Actions:
 **Use ALL available research tools:**
 
 #### 3A. Claude Built-in Tools (MANDATORY)
+
 - **WebSearch**: Search for documentation, best practices, similar implementations
 - **WebFetch**: Fetch specific documentation pages, API references, tutorials
 - **Task (Explore agent)**: Explore codebase patterns and similar implementations
 - **getDiagnostics (IDE)**: Check for existing code issues before implementing
 
 #### 3B. Web Search Categories (5-10 searches):
+
 - Official documentation (1-2 searches)
 - Best practices guides (1-2 searches)
 - Similar implementations (1-2 searches)
@@ -178,7 +183,9 @@ Actions:
 - Edge cases/pitfalls (1 search as needed)
 
 #### 3C. WebFetch for Documentation
+
 When you find relevant URLs, use WebFetch to extract key information:
+
 ```
 Examples:
 - WebFetch official API docs for detailed method signatures
@@ -216,13 +223,13 @@ CRITICAL: This step is NON-NEGOTIABLE. Research MUST be performed before EVERY p
 
 **Research Tools to Use:**
 
-| Tool         | When to Use                                        | Example                                          |
-| ------------ | -------------------------------------------------- | ------------------------------------------------ |
-| WebSearch    | Find documentation, best practices, patterns       | "D3.js force graph Svelte 5 integration 2026"    |
-| WebFetch     | Extract detailed info from specific URLs           | Fetch d3js.org API docs for zoom behavior        |
-| Task/Explore | Find similar code patterns in current codebase     | "How are other visualizations implemented?"      |
-| getDiagnostics | Check existing TypeScript/lint issues before coding | Check IDE for pre-existing errors              |
-| Read         | Study existing code files for patterns             | Read similar components for conventions          |
+| Tool           | When to Use                                         | Example                                       |
+| -------------- | --------------------------------------------------- | --------------------------------------------- |
+| WebSearch      | Find documentation, best practices, patterns        | "D3.js force graph Svelte 5 integration 2026" |
+| WebFetch       | Extract detailed info from specific URLs            | Fetch d3js.org API docs for zoom behavior     |
+| Task/Explore   | Find similar code patterns in current codebase      | "How are other visualizations implemented?"   |
+| getDiagnostics | Check existing TypeScript/lint issues before coding | Check IDE for pre-existing errors             |
+| Read           | Study existing code files for patterns              | Read similar components for conventions       |
 
 **Search Requirements by Complexity (MINIMUM 5 PER PHASE):**
 
@@ -249,17 +256,17 @@ CRITICAL: This step is NON-NEGOTIABLE. Research MUST be performed before EVERY p
 
 **Research Categories Per Phase:**
 
-| Phase                    | Required Research Topics                         | Tools to Use               |
-| ------------------------ | ------------------------------------------------ | -------------------------- |
-| Phase 1 (Setup)          | Git branching, naming conventions                | WebSearch, Read            |
-| Phase 2 (Research)       | Existing patterns in codebase                    | Explore, Read, WebSearch   |
-| Phase 3 (Identify Files) | File structure patterns, component organization  | Explore, Glob, WebSearch   |
-| Phase 4 (Design)         | Architecture patterns, best practices            | WebSearch, WebFetch        |
-| Phase 5 (Core)           | Implementation patterns, edge cases, security    | WebSearch, WebFetch, Read  |
-| Phase 6 (Additional)     | Testing patterns, automation                     | WebSearch, getDiagnostics  |
-| Phase 7 (Docs)           | Documentation standards, examples                | WebSearch, WebFetch        |
-| Phase 8 (Commit)         | Commit message conventions                       | Read (git log), WebSearch  |
-| Phase 9 (PR)             | PR best practices, review process                | WebSearch                  |
+| Phase                    | Required Research Topics                        | Tools to Use              |
+| ------------------------ | ----------------------------------------------- | ------------------------- |
+| Phase 1 (Setup)          | Git branching, naming conventions               | WebSearch, Read           |
+| Phase 2 (Research)       | Existing patterns in codebase                   | Explore, Read, WebSearch  |
+| Phase 3 (Identify Files) | File structure patterns, component organization | Explore, Glob, WebSearch  |
+| Phase 4 (Design)         | Architecture patterns, best practices           | WebSearch, WebFetch       |
+| Phase 5 (Core)           | Implementation patterns, edge cases, security   | WebSearch, WebFetch, Read |
+| Phase 6 (Additional)     | Testing patterns, automation                    | WebSearch, getDiagnostics |
+| Phase 7 (Docs)           | Documentation standards, examples               | WebSearch, WebFetch       |
+| Phase 8 (Commit)         | Commit message conventions                      | Read (git log), WebSearch |
+| Phase 9 (PR)             | PR best practices, review process               | WebSearch                 |
 
 **Thorough Thinking Requirement:**
 
