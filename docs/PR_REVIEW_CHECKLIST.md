@@ -3,11 +3,13 @@
 This checklist helps reviewers ensure consistent and thorough PR reviews.
 
 ## Before Starting Review
+
 - [ ] Read the linked issue to understand the context
 - [ ] Check if PR description clearly explains the changes
 - [ ] Verify PR is targeting the correct branch (usually `master`)
 
 ## Code Quality Checklist
+
 ### Code Structure
 
 - [ ] Code follows project naming conventions
@@ -44,20 +46,25 @@ This checklist helps reviewers ensure consistent and thorough PR reviews.
 - [ ] All existing tests still pass
 
 ### Manual Testing
+
 - [ ] Feature works as described in the issue- [ ] No regressions in related functionality
 - [ ] Works in different browsers (if applicable)
 - [ ] Works on mobile viewport (if applicable)
 
 ## Documentation Requirements
+
 ### Code Documentation
+
 - [ ] Complex logic has explanatory comments
 - [ ] Public functions have JSDoc comments (if applicable)
 - [ ] README updated (if new feature)
 
 ### PR Documentation
+
 - [ ] PR description explains what and why
 - [ ] Breaking changes are clearly noted
 - [ ] Screenshots included for UI changes
+
 ## Performance Considerations
 
 - [ ] No unnecessary re-renders
@@ -65,7 +72,9 @@ This checklist helps reviewers ensure consistent and thorough PR reviews.
 - [ ] Images are optimized
 - [ ] No blocking operations on main thread
 - [ ] Bundle size impact considered
+
 ## Security Checklist
+
 - [ ] No sensitive data exposed (API keys, tokens)
 - [ ] User input is sanitized
 - [ ] No XSS vulnerabilities
@@ -78,22 +87,25 @@ This checklist helps reviewers ensure consistent and thorough PR reviews.
 - [ ] Focus states are visible
 
 ## Final Checklist
+
 - [ ] Build passes (`npm run build`)
 - [ ] Lint passes (`npm run lint`)
 - [ ] Format check passes (`npm run format:check`)
 - [ ] All CI checks are green
 - [ ] Commit messages follow conventions
+
 ## Review Decision
 
 After completing the checklist:
 
-| Decision | When to Use |
-|----------|-------------|
-| **Approve** | All checks pass, code is ready |
+| Decision            | When to Use                     |
+| ------------------- | ------------------------------- |
+| **Approve**         | All checks pass, code is ready  |
 | **Request Changes** | Issues found that must be fixed |
-| **Comment** | Minor suggestions, not blocking |
+| **Comment**         | Minor suggestions, not blocking |
 
 ## Common Review comments
+
 ### Good Examples
 
 ```
