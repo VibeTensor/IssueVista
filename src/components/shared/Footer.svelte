@@ -1,6 +1,6 @@
 <!--
   Footer Component - Single line layout
-  Left: Links | Center: IssueFlow v1.1.0 by VibeTensor | Right: Share icons
+  Left: Links | Center: IssueVista v1.2.0 by VibeTensor | Right: Share icons
 -->
 
 <script lang="ts">
@@ -84,7 +84,7 @@
 
     <!-- Center: Branding -->
     <div class="brand-center">
-      <span class="product">IssueFlow</span>
+      <span class="product">IssueVista</span>
       <span class="version">v{version}</span>
       <span class="by">by</span>
       <a href={COMPANY_GITHUB} target="_blank" rel="noopener noreferrer" class="company"

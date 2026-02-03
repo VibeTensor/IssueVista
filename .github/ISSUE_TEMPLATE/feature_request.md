@@ -34,4 +34,4 @@ If you have technical ideas about how this could be implemented, share them here
 
 ## Benefits
 
-How would this feature benefit IssueFlow users?
+How would this feature benefit IssueVista users?

@@ -62,11 +62,11 @@ export interface EmptyStateDetectionInput {
 // URL Constants
 // ============================================================================
 
-/** IssueFlow README URL */
-export const README_URL = 'https://github.com/VibeTensor/IssueFlow#readme';
+/** IssueVista README URL */
+export const README_URL = 'https://github.com/VibeTensor/IssueVista#readme';
 
-/** IssueFlow Issues URL for reporting bugs */
-export const ISSUES_URL = 'https://github.com/VibeTensor/IssueFlow/issues';
+/** IssueVista Issues URL for reporting bugs */
+export const ISSUES_URL = 'https://github.com/VibeTensor/IssueVista/issues';
 
 /** GitHub Rate Limit Documentation URL */
 export const RATE_LIMIT_DOCS_URL = 'https://docs.github.com/en/rest/rate-limit';

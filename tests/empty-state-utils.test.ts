@@ -26,11 +26,11 @@ import {
 describe('Empty State Constants', () => {
   describe('URL Constants', () => {
     it('should have correct README URL', () => {
-      expect(README_URL).toBe('https://github.com/VibeTensor/IssueFlow#readme');
+      expect(README_URL).toBe('https://github.com/VibeTensor/IssueVista#readme');
     });
 
     it('should have correct Issues URL', () => {
-      expect(ISSUES_URL).toBe('https://github.com/VibeTensor/IssueFlow/issues');
+      expect(ISSUES_URL).toBe('https://github.com/VibeTensor/IssueVista/issues');
     });
 
     it('should have correct Rate Limit Docs URL', () => {

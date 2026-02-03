@@ -1,6 +1,6 @@
 # Code Style Guide
 
-This guide documents the coding conventions used in IssueFlow.
+This guide documents the coding conventions used in IssueVista.
 
 ## TypeScript Conventions
 
@@ -26,7 +26,7 @@ This guide documents the coding conventions used in IssueFlow.
 
 ### Using Runes
 
-IssueFlow uses Svelte 5 runes for reactivity:
+IssueVista uses Svelte 5 runes for reactivity:
 
 ```svelte
 <script lang="ts">
@@ -105,7 +105,7 @@ Types:
 
 ### Color Scheme
 
-IssueFlow uses a dark theme with the following color palette:
+IssueVista uses a dark theme with the following color palette:
 
 | Purpose    | Color             | CSS Variable/Value     |
 | ---------- | ----------------- | ---------------------- |

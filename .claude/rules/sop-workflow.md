@@ -113,7 +113,7 @@ gh issue view <ISSUE_NUMBER> --json projectItems --jq '.projectItems'
 #### 0B. Check Sprint Alignment
 
 ```bash
-gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") | {title, due_on}'
+gh api repos/VibeTensor/IssueVista/milestones --jq '.[] | select(.state=="open") | {title, due_on}'
 ```
 
 - [ ] Issue milestone matches current sprint
@@ -138,7 +138,7 @@ gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> \
 ### Step 1: Read Issue Description
 
 ```bash
-gh issue view <ISSUE_NUMBER> --repo VibeTensor/IssueFlow
+gh issue view <ISSUE_NUMBER> --repo VibeTensor/IssueVista
 ```
 
 Actions:
@@ -151,7 +151,7 @@ Actions:
 ### Step 2: Read CodeRabbit Comments on Issue Thread
 
 ```bash
-gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
+gh api repos/VibeTensor/IssueVista/issues/<ISSUE_NUMBER>/comments \
   --jq '.[] | {user: .user.login, body: .body}'
 ```
 
@@ -654,7 +654,7 @@ EOF
 ### Step 7: Wait for CI Checks
 
 ```bash
-gh pr checks <PR_NUMBER> --repo VibeTensor/IssueFlow --watch
+gh pr checks <PR_NUMBER> --repo VibeTensor/IssueVista --watch
 ```
 
 Do NOT proceed until all checks pass.

@@ -1,6 +1,6 @@
 <!--
   Header Component - Site branding header
-  Left: IssueFlow branding with version and auth indicator | Right: GitHub link
+  Left: IssueVista branding with version and auth indicator | Right: GitHub link
   Issue #190 - Redesign header and footer branding
   Issue #187 - Add authentication state indicator
   Uses UnoCSS utility classes for styling
@@ -19,13 +19,13 @@
   onMount(() => {
     isAuthenticated = GitHubOAuth.isAuthenticated();
     window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('issueflow:auth-change', handleAuthChange);
+    window.addEventListener('issuevista:auth-change', handleAuthChange);
   });
 
   onDestroy(() => {
     if (typeof window !== 'undefined') {
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('issueflow:auth-change', handleAuthChange);
+      window.removeEventListener('issuevista:auth-change', handleAuthChange);
     }
   });
 
@@ -47,7 +47,7 @@
   <div class="flex items-center justify-between max-w-6xl mx-auto gap-2 sm:gap-4">
     <!-- Left: Branding -->
     <div class="flex items-center gap-1 sm:gap-1.5">
-      <span class="text-sm font-bold text-teal-300">IssueFlow</span>
+      <span class="text-sm font-bold text-teal-300">IssueVista</span>
       <!-- Auth state indicator - Issue #187 -->
       {#if isAuthenticated}
         <span class="group relative inline-flex items-center" role="status" aria-atomic="true">

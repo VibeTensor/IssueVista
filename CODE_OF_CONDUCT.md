@@ -78,4 +78,4 @@ For answers to common questions about this code of conduct, see the FAQ at [http
 
 ---
 
-**IssueFlow** is maintained by [VibeTensor](https://github.com/VibeTensor).
+**IssueVista** is maintained by [VibeTensor](https://github.com/VibeTensor).

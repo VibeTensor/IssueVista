@@ -33,7 +33,7 @@ test.describe('Footer Component - E2E Tests', () => {
     test('should display GitHub link', async ({ page }) => {
       const githubLink = page.locator('footer a[title="GitHub"]');
       await expect(githubLink).toBeVisible();
-      await expect(githubLink).toHaveAttribute('href', 'https://github.com/VibeTensor/IssueFlow');
+      await expect(githubLink).toHaveAttribute('href', 'https://github.com/VibeTensor/IssueVista');
     });
 
     test('should display Report Issue link', async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe('Footer Component - E2E Tests', () => {
       await expect(issueLink).toBeVisible();
       await expect(issueLink).toHaveAttribute(
         'href',
-        'https://github.com/VibeTensor/IssueFlow/issues'
+        'https://github.com/VibeTensor/IssueVista/issues'
       );
     });
 
@@ -50,7 +50,7 @@ test.describe('Footer Component - E2E Tests', () => {
       await expect(contributeLink).toBeVisible();
       await expect(contributeLink).toHaveAttribute(
         'href',
-        'https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md'
+        'https://github.com/VibeTensor/IssueVista/blob/master/CONTRIBUTING.md'
       );
     });
 

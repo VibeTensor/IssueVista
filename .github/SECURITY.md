@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-The following versions of IssueFlow are currently supported with security updates:
+The following versions of IssueVista are currently supported with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -15,7 +15,7 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 
 ### How to Report
 
-**Preferred Method:** Use GitHub's Security Advisory feature by clicking the "Report a vulnerability" button in the [Security tab](https://github.com/VibeTensor/IssueFlow/security/advisories/new).
+**Preferred Method:** Use GitHub's Security Advisory feature by clicking the "Report a vulnerability" button in the [Security tab](https://github.com/VibeTensor/IssueVista/security/advisories/new).
 
 **Alternative Method:** Email <info@vibetensor.com> with "SECURITY" in the subject line.
 
@@ -48,7 +48,7 @@ For Low severity issues, if no release is planned within 30 days, a patch releas
 
 ### In Scope
 
-- IssueFlow web application (issueflow.vibetensor.com)
+- IssueVista web application (issuevista.vibetensor.com)
 - GitHub OAuth integration and token handling
 - Issue filtering and export functionality
 - Client-side data processing
@@ -64,7 +64,7 @@ For Low severity issues, if no release is planned within 30 days, a patch releas
 
 ## Security Measures
 
-IssueFlow implements the following security practices:
+IssueVista implements the following security practices:
 
 - **Client-side only**: No server-side data collection or storage
 - **Token storage**: GitHub OAuth tokens are stored in browser localStorage for session persistence. While convenient, localStorage is accessible to JavaScript and could be vulnerable to XSS attacks. We mitigate this through Content Security Policy headers, minimal OAuth scopes, and short-lived tokens. For enhanced security, consider clearing tokens after each session.
@@ -90,8 +90,8 @@ To qualify for safe harbor protection, you must:
 
 ## Questions
 
-For general security questions, please open a [GitHub Discussion](https://github.com/VibeTensor/IssueFlow/discussions) or contact <info@vibetensor.com>.
+For general security questions, please open a [GitHub Discussion](https://github.com/VibeTensor/IssueVista/discussions) or contact <info@vibetensor.com>.
 
 ---
 
-**IssueFlow** is maintained by [VibeTensor Private Limited](https://github.com/VibeTensor).
+**IssueVista** is maintained by [VibeTensor Private Limited](https://github.com/VibeTensor).

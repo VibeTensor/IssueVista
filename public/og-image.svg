@@ -1,5 +1,5 @@
 <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <!-- IssueFlow OG Image - VibeTensor Private Limited -->
+  <!-- IssueVista OG Image - VibeTensor Private Limited -->
   <defs>
     <!-- Background gradient -->
     <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -34,7 +34,7 @@
 
   <!-- Title -->
   <text x="440" y="240" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="80" font-weight="800" fill="#ffffff">
-    IssueFlow
+    IssueVista
   </text>
 
   <!-- Tagline -->
@@ -54,6 +54,6 @@
 
   <!-- URL -->
   <text x="100" y="590" font-family="ui-monospace, 'SF Mono', monospace" font-size="20" fill="#0d9488">
-    issueflow.vibetensor.com
+    issuevista.vibetensor.com
   </text>
 </svg>

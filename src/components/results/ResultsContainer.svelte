@@ -733,7 +733,7 @@
         </div>
         <!-- Brand Text -->
         <h1 class="text-xl lg:text-2xl font-bold tracking-tight leading-none text-white">
-          IssueFlow
+          IssueVista
         </h1>
         <p class="text-[10px] lg:text-xs text-slate-500 mt-1">Find your next contribution</p>
       </div>
@@ -775,7 +775,7 @@
             </svg>
             <span class="text-[10px] text-slate-400">60/hr</span>
             <a
-              href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
+              href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
               target="_blank"
               rel="noopener noreferrer"
               class="ml-auto inline-flex items-center gap-1 px-2 py-1 bg-teal-600 hover:bg-teal-500 text-white text-[9px] font-medium rounded transition-colors"

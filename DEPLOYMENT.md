@@ -1,11 +1,11 @@
 # Deployment
 
-IssueFlow is hosted on Cloudflare Pages with automatic deployments.
+IssueVista is hosted on Cloudflare Pages with automatic deployments.
 
 ## How It Works
 
 - **Pull Requests**: Get automatic preview deployments
-- **Merge to master**: Automatically deploys to production at [issueflow.vibetensor.com](https://issueflow.vibetensor.com)
+- **Merge to master**: Automatically deploys to production at [issuevista.vibetensor.com](https://issuevista.vibetensor.com)
 
 ## Local Development
 

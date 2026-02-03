@@ -13,7 +13,7 @@ CodeRabbit provides automated analysis at TWO points. You MUST check and address
 **Command**:
 
 ```bash
-gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
+gh api repos/VibeTensor/IssueVista/issues/<ISSUE_NUMBER>/comments \
   --jq '.[] | select(.user.login | contains("coderabbit")) | .body'
 ```
 
@@ -42,11 +42,11 @@ gh api repos/VibeTensor/IssueFlow/issues/<ISSUE_NUMBER>/comments \
 
 ```bash
 # Get overall review status and summary
-gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/reviews \
+gh api repos/VibeTensor/IssueVista/pulls/<PR_NUMBER>/reviews \
   --jq '.[] | select(.user.login | contains("coderabbit")) | {state: .state, body: .body}'
 
 # Get file-level inline comments (CRITICAL - DO NOT SKIP)
-gh api repos/VibeTensor/IssueFlow/pulls/<PR_NUMBER>/comments \
+gh api repos/VibeTensor/IssueVista/pulls/<PR_NUMBER>/comments \
   --jq '.[] | select(.user.login | contains("coderabbit")) | {path: .path, line: .line, body: .body}'
 ```
 

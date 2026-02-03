@@ -319,7 +319,7 @@ describe('Copy Button Functionality', () => {
       const validUrls = [
         'https://github.com/owner/repo/issues/1',
         'https://github.com/test/project/issues/999',
-        'https://github.com/VibeTensor/IssueFlow/issues/6'
+        'https://github.com/VibeTensor/IssueVista/issues/6'
       ];
 
       validUrls.forEach((url) => {

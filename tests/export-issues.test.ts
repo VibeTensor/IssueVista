@@ -435,12 +435,12 @@ describe('File Download Functionality', () => {
 describe('Filename Generation', () => {
   it('should generate filename with repo name and date', () => {
     const owner = 'VibeTensor';
-    const repo = 'IssueFlow';
+    const repo = 'IssueVista';
     const timestamp = '2025-11-29';
 
     const filename = `${owner}-${repo}-issues-${timestamp}.csv`;
 
-    expect(filename).toBe('VibeTensor-IssueFlow-issues-2025-11-29.csv');
+    expect(filename).toBe('VibeTensor-IssueVista-issues-2025-11-29.csv');
   });
 
   it('should handle different file extensions', () => {

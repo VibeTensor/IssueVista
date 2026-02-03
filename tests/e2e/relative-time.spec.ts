@@ -21,7 +21,7 @@ test.describe('Smart Relative Time Display - E2E Tests', () => {
    */
   async function searchForIssues(page: any) {
     const searchInput = page.locator('#repoUrl');
-    await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+    await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
     const searchButton = page.locator('button:has-text("Find Issues")');
     await searchButton.click();

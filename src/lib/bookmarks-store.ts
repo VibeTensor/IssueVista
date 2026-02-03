@@ -9,13 +9,34 @@
 /**
  * localStorage key for bookmarks persistence
  */
-const STORAGE_KEY = 'issueflow_bookmarks';
+const STORAGE_KEY = 'issuevista_bookmarks';
+const LEGACY_STORAGE_KEY = 'issueflow_bookmarks';
 
 /**
  * Check if we're in a browser environment
  */
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+}
+
+/**
+ * Migrate data from legacy IssueFlow key to new IssueVista key
+ */
+function migrateFromLegacy(): void {
+  if (!isBrowser()) return;
+
+  if (!localStorage.getItem(STORAGE_KEY) && localStorage.getItem(LEGACY_STORAGE_KEY)) {
+    const legacyData = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacyData) {
+      localStorage.setItem(STORAGE_KEY, legacyData);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+    }
+  }
+}
+
+// Run migration on module load
+if (typeof localStorage !== 'undefined') {
+  migrateFromLegacy();
 }
 
 /**

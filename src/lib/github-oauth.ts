@@ -128,7 +128,7 @@ export class GitHubOAuth {
    */
   private static dispatchAuthChange(): void {
     if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('issueflow:auth-change'));
+      window.dispatchEvent(new CustomEvent('issuevista:auth-change'));
     }
   }
 

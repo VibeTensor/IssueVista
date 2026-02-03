@@ -25,27 +25,27 @@ import {
 describe('Footer Constants', () => {
   describe('Repository URLs', () => {
     it('should have correct repo URL', () => {
-      expect(REPO_URL).toBe('https://github.com/VibeTensor/IssueFlow');
+      expect(REPO_URL).toBe('https://github.com/VibeTensor/IssueVista');
     });
 
     it('should have correct issues URL', () => {
-      expect(ISSUES_URL).toBe('https://github.com/VibeTensor/IssueFlow/issues');
+      expect(ISSUES_URL).toBe('https://github.com/VibeTensor/IssueVista/issues');
     });
 
     it('should have correct contributing URL', () => {
       expect(CONTRIBUTING_URL).toBe(
-        'https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md'
+        'https://github.com/VibeTensor/IssueVista/blob/master/CONTRIBUTING.md'
       );
     });
 
     it('should have correct site URL', () => {
-      expect(SITE_URL).toBe('https://issueflow.vibetensor.com');
+      expect(SITE_URL).toBe('https://issuevista.vibetensor.com');
     });
   });
 
   describe('Share Configuration', () => {
     it('should have default share text', () => {
-      expect(DEFAULT_SHARE_TEXT).toContain('IssueFlow');
+      expect(DEFAULT_SHARE_TEXT).toContain('IssueVista');
       expect(DEFAULT_SHARE_TEXT).toContain('GitHub issues');
     });
 
@@ -74,7 +74,7 @@ describe('getTwitterShareUrl', () => {
     it('should include default text parameter', () => {
       const url = getTwitterShareUrl();
       expect(url).toContain('text=');
-      expect(url).toContain(encodeURIComponent('IssueFlow'));
+      expect(url).toContain(encodeURIComponent('IssueVista'));
     });
 
     it('should include default URL parameter', () => {
@@ -133,7 +133,7 @@ describe('getTwitterShareUrl', () => {
     });
 
     it('should handle unicode characters', () => {
-      const unicodeText = 'Check out IssueFlow! \u2764\uFE0F';
+      const unicodeText = 'Check out IssueVista! \u2764\uFE0F';
       const url = getTwitterShareUrl(unicodeText);
       expect(url).toBeTruthy();
       expect(url).toMatch(/^https:\/\/twitter\.com\/intent\/tweet\?/);
@@ -334,7 +334,7 @@ describe('createShareData', () => {
   describe('Default Values', () => {
     it('should create share data with default title', () => {
       const data = createShareData();
-      expect(data.title).toBe('IssueFlow');
+      expect(data.title).toBe('IssueVista');
     });
 
     it('should create share data with default text', () => {
@@ -435,7 +435,7 @@ describe('nativeShare', () => {
     await nativeShare();
 
     expect(mockShare).toHaveBeenCalledWith({
-      title: 'IssueFlow',
+      title: 'IssueVista',
       text: DEFAULT_SHARE_TEXT,
       url: SITE_URL
     });

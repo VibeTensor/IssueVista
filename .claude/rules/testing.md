@@ -98,7 +98,7 @@ If CI checks fail after pushing:
 1. **Read the failure logs**:
 
    ```bash
-   gh pr checks <PR_NUMBER> --repo VibeTensor/IssueFlow
+   gh pr checks <PR_NUMBER> --repo VibeTensor/IssueVista
    ```
 
 2. **Identify the failing check** (build, lint, test, etc.)

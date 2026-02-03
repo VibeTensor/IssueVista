@@ -4,7 +4,7 @@
 
 ### 1. Overview
 
-This document defines the change management process for IssueFlow, ensuring all changes are properly evaluated, approved, and tracked in accordance with ISO 21502:2020 Project Management Guidance.
+This document defines the change management process for IssueVista, ensuring all changes are properly evaluated, approved, and tracked in accordance with ISO 21502:2020 Project Management Guidance.
 
 ---
 

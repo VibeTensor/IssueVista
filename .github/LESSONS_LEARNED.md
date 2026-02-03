@@ -4,7 +4,7 @@
 
 ### Purpose
 
-This document captures lessons learned throughout the IssueFlow project lifecycle, enabling continuous improvement and knowledge transfer.
+This document captures lessons learned throughout the IssueVista project lifecycle, enabling continuous improvement and knowledge transfer.
 
 ---
 

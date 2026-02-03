@@ -1,16 +1,16 @@
-# Contributing to IssueFlow
+# Contributing to IssueVista
 
-Thank you for your interest in contributing to IssueFlow! This document provides guidelines and instructions for contributing to this project.
+Thank you for your interest in contributing to IssueVista! This document provides guidelines and instructions for contributing to this project.
 
-**Repository**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
+**Repository**: [https://github.com/VibeTensor/IssueVista](https://github.com/VibeTensor/IssueVista)
 
-**Live Demo**: [https://issueflow.vibetensor.com](https://issueflow.vibetensor.com)
+**Live Demo**: [https://issuevista.vibetensor.com](https://issuevista.vibetensor.com)
 
 ---
 
 ## Hacktoberfest Participants
 
-IssueFlow participates in Hacktoberfest! If you're contributing during Hacktoberfest, please see our [Hacktoberfest Guide](./HACKTOBERFEST.md) for specific information about:
+IssueVista participates in Hacktoberfest! If you're contributing during Hacktoberfest, please see our [Hacktoberfest Guide](./HACKTOBERFEST.md) for specific information about:
 
 - How to participate
 - Issue labels and what they mean
@@ -18,7 +18,7 @@ IssueFlow participates in Hacktoberfest! If you're contributing during Hacktober
 - What counts as spam
 - Quick start guide
 
-**Looking for Hacktoberfest issues?** Check issues labeled [`hacktoberfest`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) or [`good first issue`](https://github.com/VibeTensor/IssueFlow/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+**Looking for Hacktoberfest issues?** Check issues labeled [`hacktoberfest`](https://github.com/VibeTensor/IssueVista/issues?q=is%3Aissue+is%3Aopen+label%3Ahacktoberfest) or [`good first issue`](https://github.com/VibeTensor/IssueVista/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 ---
 
@@ -67,8 +67,8 @@ This project follows a Code of Conduct that all contributors are expected to adh
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/IssueFlow.git
-cd IssueFlow
+git clone https://github.com/YOUR_USERNAME/IssueVista.git
+cd IssueVista
 
 # Install dependencies
 npm install
@@ -82,7 +82,7 @@ The application will be available at `http://localhost:4321`
 ### Project Structure
 
 ```
-IssueFlow/
+IssueVista/
 ├── src/
 │   ├── components/     # Svelte components
 │   ├── layouts/        # Astro layouts
@@ -111,7 +111,7 @@ We welcome various types of contributions:
 
 ### Finding Work
 
-- Check the [Issues](https://github.com/VibeTensor/IssueFlow/issues) page
+- Check the [Issues](https://github.com/VibeTensor/IssueVista/issues) page
 - Look for issues labeled `good first issue` or `help wanted`
 - Comment on an issue to express interest before starting work
 - Ask questions if anything is unclear
@@ -380,11 +380,11 @@ If you have questions:
 
 ## License
 
-By contributing to IssueFlow, you agree that your contributions will be licensed under the MIT License.
+By contributing to IssueVista, you agree that your contributions will be licensed under the MIT License.
 
 ## About
 
-IssueFlow is developed and maintained by **VibeTensor Private Limited**, an Indian technology company.
+IssueVista is developed and maintained by **VibeTensor Private Limited**, an Indian technology company.
 
 - **Company**: [VibeTensor Private Limited](https://github.com/VibeTensor)
 - **Location**: India
@@ -392,7 +392,7 @@ IssueFlow is developed and maintained by **VibeTensor Private Limited**, an Indi
 
 ## Recognition
 
-Contributors will be recognized in the project. Thank you for helping make IssueFlow better!
+Contributors will be recognized in the project. Thank you for helping make IssueVista better!
 
 ---
 

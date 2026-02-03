@@ -4,7 +4,7 @@
 
 ### 1. Project Scope Statement
 
-**Project Name:** IssueFlow
+**Project Name:** IssueVista
 **Version:** v4.0 Target
 **Scope:** GitHub issue discovery platform with AI-enhanced recommendations
 
@@ -31,7 +31,7 @@
 ### 2. Work Breakdown Structure
 
 ```
-IssueFlow v4.0
+IssueVista v4.0
 │
 ├── 1.0 Core UI (Epic: Core UI)
 │   ├── 1.1 Search Interface

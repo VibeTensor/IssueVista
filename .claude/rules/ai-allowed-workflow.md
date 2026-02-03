@@ -43,7 +43,7 @@ First message in new session MUST be:
 ```
 Working on Issue #XXX - [Issue Title]
 Type: AI-ALLOWED
-Uplift Tracker URL: https://github.com/VibeTensor/IssueFlow/issues/XXX
+Uplift Tracker URL: https://github.com/VibeTensor/IssueVista/issues/XXX
 ```
 
 ### Step 3: Start Recording
@@ -58,7 +58,7 @@ Uplift Tracker URL: https://github.com/VibeTensor/IssueFlow/issues/XXX
 ### Phase 1: Issue Analysis
 
 ```bash
-gh issue view <ISSUE_NUMBER> --repo VibeTensor/IssueFlow
+gh issue view <ISSUE_NUMBER> --repo VibeTensor/IssueVista
 ```
 
 - Read acceptance criteria
@@ -192,8 +192,8 @@ UPLIFT TRACKER DATA
 ================================================================================
 
 PR/Commit Links:
-https://github.com/VibeTensor/IssueFlow/pull/XXX
-https://github.com/VibeTensor/IssueFlow/commit/XXXXXXX
+https://github.com/VibeTensor/IssueVista/pull/XXX
+https://github.com/VibeTensor/IssueVista/commit/XXXXXXX
 
 Screen Recording:
 https://www.loom.com/share/XXXXX
@@ -215,7 +215,7 @@ Perceived Effort: X/5
 Transcripts are auto-saved by Claude Code in:
 
 ```
-~/.claude/projects/D--Development-opensource-OSS-Collection-IssueFlow/
+~/.claude/projects/D--Development-opensource-OSS-Collection-IssueVista/
 ```
 
 ### Recommended Session Workflow

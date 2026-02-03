@@ -22,8 +22,10 @@ export type ResolvedTheme = 'light' | 'dark';
 /**
  * localStorage keys
  */
-const LEGACY_STORAGE_KEY = 'issueflow-theme';
-const PRESET_STORAGE_KEY = 'issueflow-theme-preset';
+const LEGACY_STORAGE_KEY = 'issuevista-theme';
+const PRESET_STORAGE_KEY = 'issuevista-theme-preset';
+const OLD_LEGACY_KEY = 'issueflow-theme';
+const OLD_PRESET_KEY = 'issueflow-theme-preset';
 
 /**
  * Theme state using Svelte 5 $state rune
@@ -185,6 +187,7 @@ export function cyclePreset(): void {
 
 /**
  * Migrate from legacy storage format if needed
+ * Handles migration from both old IssueFlow keys and legacy theme format
  */
 function migrateLegacyStorage(): ThemePreset | null {
   if (typeof localStorage === 'undefined') return null;
@@ -193,12 +196,28 @@ function migrateLegacyStorage(): ThemePreset | null {
   const preset = localStorage.getItem(PRESET_STORAGE_KEY) as ThemePreset | null;
   if (preset) return preset;
 
-  // Fall back to legacy key
+  // Check for old IssueFlow preset key and migrate
+  const oldPreset = localStorage.getItem(OLD_PRESET_KEY) as ThemePreset | null;
+  if (oldPreset) {
+    localStorage.setItem(PRESET_STORAGE_KEY, oldPreset);
+    localStorage.removeItem(OLD_PRESET_KEY);
+    localStorage.removeItem(OLD_LEGACY_KEY);
+    return oldPreset;
+  }
+
+  // Fall back to legacy key (new naming)
   const legacy = localStorage.getItem(LEGACY_STORAGE_KEY) as Theme | null;
   if (legacy && ['light', 'dark', 'system'].includes(legacy)) {
-    // Migrate to new format
     localStorage.setItem(PRESET_STORAGE_KEY, legacy);
     return legacy;
+  }
+
+  // Fall back to old IssueFlow legacy key
+  const oldLegacy = localStorage.getItem(OLD_LEGACY_KEY) as Theme | null;
+  if (oldLegacy && ['light', 'dark', 'system'].includes(oldLegacy)) {
+    localStorage.setItem(PRESET_STORAGE_KEY, oldLegacy);
+    localStorage.removeItem(OLD_LEGACY_KEY);
+    return oldLegacy;
   }
 
   return null;

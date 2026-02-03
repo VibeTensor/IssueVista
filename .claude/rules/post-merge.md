@@ -87,12 +87,12 @@ UPLIFT TRACKER SUBMISSION DATA - Issue #XX
 ----------------------------------------------------------------
 
 VIDEO TITLE (1 title per recording):
-[Your Name] | IssueFlow Issue #XX | [Issue Title] ([duration]min)
+[Your Name] | IssueVista Issue #XX | [Issue Title] ([duration]min)
 
 PR/COMMIT LINKS (one per line, no prefixes, no spaces):
-https://github.com/VibeTensor/IssueFlow/pull/YY
-https://github.com/VibeTensor/IssueFlow/commit/<sha1>
-https://github.com/VibeTensor/IssueFlow/commit/<sha2>
+https://github.com/VibeTensor/IssueVista/pull/YY
+https://github.com/VibeTensor/IssueVista/commit/<sha1>
+https://github.com/VibeTensor/IssueVista/commit/<sha2>
 
 SCREEN RECORDING LINKS (one per line, no prefixes):
 https://www.loom.com/share/xxxxx
@@ -195,13 +195,13 @@ Progress % = Earned So Far / Target x 100
 ### Format:
 
 ```text
-[Your Name] | IssueFlow Issue #XX | [Issue Title] ([total]min)
+[Your Name] | IssueVista Issue #XX | [Issue Title] ([total]min)
 ```
 
 ### Example:
 
 ```text
-Pavan Kumar | IssueFlow Issue #38 | [DOCS] Update README with November 2025 features (81min)
+Pavan Kumar | IssueVista Issue #38 | [DOCS] Update README with November 2025 features (81min)
 ```
 
 ---

@@ -1,6 +1,6 @@
-# IssueFlow Test Suite
+# IssueVista Test Suite
 
-Comprehensive test suite for the IssueFlow application, covering unit tests and end-to-end (E2E) tests.
+Comprehensive test suite for the IssueVista application, covering unit tests and end-to-end (E2E) tests.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Comprehensive test suite for the IssueFlow application, covering unit tests and 
 
 ## Overview
 
-This test suite ensures the quality and reliability of the IssueFlow application, with a focus on:
+This test suite ensures the quality and reliability of the IssueVista application, with a focus on:
 
 - **Unit Tests**: Testing individual components and functions in isolation
 - **E2E Tests**: Testing complete user workflows in real browsers
@@ -435,4 +435,4 @@ When adding new features:
 
 ## License
 
-Tests are part of the IssueFlow project and follow the same MIT license.
+Tests are part of the IssueVista project and follow the same MIT license.

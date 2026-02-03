@@ -198,7 +198,7 @@ This governance document may be amended by:
 
 ### 11. License
 
-IssueFlow is licensed under the MIT License. All contributions must be compatible with this license.
+IssueVista is licensed under the MIT License. All contributions must be compatible with this license.
 
 ---
 

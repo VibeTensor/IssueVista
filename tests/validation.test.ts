@@ -65,10 +65,10 @@ describe('validateRepoUrl', () => {
     });
 
     it('should validate URL with mixed case', () => {
-      const result = validateRepoUrl('https://github.com/VibeTensor/IssueFlow');
+      const result = validateRepoUrl('https://github.com/VibeTensor/IssueVista');
       expect(result.isValid).toBe(true);
       expect(result.owner).toBe('VibeTensor');
-      expect(result.repo).toBe('IssueFlow');
+      expect(result.repo).toBe('IssueVista');
     });
   });
 

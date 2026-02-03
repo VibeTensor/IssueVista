@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="public/favicon.svg" alt="IssueFlow Logo" width="120" height="120">
+  <img src="public/favicon.svg" alt="IssueVista Logo" width="120" height="120">
 </p>
 
-<h1 align="center">IssueFlow</h1>
+<h1 align="center">IssueVista</h1>
 
 <p align="center">
   <strong>Find unassigned GitHub issues without pull requests</strong><br>
@@ -10,23 +10,23 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/VibeTensor/IssueFlow/actions"><img src="https://github.com/VibeTensor/IssueFlow/workflows/CI/badge.svg" alt="CI"></a>
+  <a href="https://github.com/VibeTensor/IssueVista/actions"><img src="https://github.com/VibeTensor/IssueVista/workflows/CI/badge.svg" alt="CI"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
   <a href="https://hacktoberfest.com/"><img src="https://img.shields.io/badge/Hacktoberfest-Friendly-blueviolet?logo=hacktoberfest" alt="Hacktoberfest"></a>
   <img src="https://img.shields.io/badge/version-1.2.0-blue" alt="Version 1.2.0">
 </p>
 
 <p align="center">
-  <a href="https://issueflow.vibetensor.com">Live App</a> |
-  <a href="https://github.com/VibeTensor/IssueFlow/issues">Report Bug</a> |
-  <a href="https://github.com/VibeTensor/IssueFlow/issues">Request Feature</a>
+  <a href="https://issuevista.vibetensor.com">Live App</a> |
+  <a href="https://github.com/VibeTensor/IssueVista/issues">Report Bug</a> |
+  <a href="https://github.com/VibeTensor/IssueVista/issues">Request Feature</a>
 </p>
 
 ---
 
-## What is IssueFlow?
+## What is IssueVista?
 
-IssueFlow helps developers discover contribution-ready GitHub issues by filtering for:
+IssueVista helps developers discover contribution-ready GitHub issues by filtering for:
 
 - Open issues with no assignee
 - Issues without linked pull requests (with token)
@@ -35,8 +35,8 @@ IssueFlow helps developers discover contribution-ready GitHub issues by filterin
 ## Quick Start
 
 ```bash
-git clone https://github.com/VibeTensor/IssueFlow.git
-cd IssueFlow
+git clone https://github.com/VibeTensor/IssueVista.git
+cd IssueVista
 npm install
 npm run dev
 ```
@@ -55,7 +55,7 @@ Open http://localhost:4321
 
 ### With GitHub Token (Recommended)
 
-1. [Generate a token](https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo) with `public_repo` scope
+1. [Generate a token](https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo) with `public_repo` scope
 2. Paste token in the app
 3. Get full PR filtering + 5000 requests/hour
 
@@ -120,7 +120,7 @@ Open http://localhost:4321
 ## Project Structure
 
 ```text
-IssueFlow/
+IssueVista/
 ├── public/                 # Static assets (favicon, images)
 ├── src/
 │   ├── components/
@@ -153,9 +153,9 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ### Good First Issues
 
-- [`good first issue`](https://github.com/VibeTensor/IssueFlow/labels/good%20first%20issue)
-- [`hacktoberfest`](https://github.com/VibeTensor/IssueFlow/labels/hacktoberfest)
-- [`help wanted`](https://github.com/VibeTensor/IssueFlow/labels/help%20wanted)
+- [`good first issue`](https://github.com/VibeTensor/IssueVista/labels/good%20first%20issue)
+- [`hacktoberfest`](https://github.com/VibeTensor/IssueVista/labels/hacktoberfest)
+- [`help wanted`](https://github.com/VibeTensor/IssueVista/labels/help%20wanted)
 
 ## Privacy
 
@@ -170,7 +170,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ## About
 
-**IssueFlow** is an open source project by [VibeTensor Private Limited](https://github.com/VibeTensor).
+**IssueVista** is an open source project by [VibeTensor Private Limited](https://github.com/VibeTensor).
 
 ---
 

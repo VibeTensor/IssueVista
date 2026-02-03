@@ -1,8 +1,8 @@
-# IssueFlow Product Audit & Competitive Analysis
+# IssueVista Product Audit & Competitive Analysis
 
 ## Executive Summary
 
-IssueFlow differentiates from competitors through **AI-powered difficulty estimation** - a feature no competitor currently offers. Combined with multi-agent analysis and semantic search, IssueFlow aims to create a monopoly position in intelligent issue discovery.
+IssueVista differentiates from competitors through **AI-powered difficulty estimation** - a feature no competitor currently offers. Combined with multi-agent analysis and semantic search, IssueVista aims to create a monopoly position in intelligent issue discovery.
 
 ---
 
@@ -17,7 +17,7 @@ IssueFlow differentiates from competitors through **AI-powered difficulty estima
 | [EddieHub Finder](https://finder.eddiehub.org/)                      | Yes             | No         | No          | Yes        | No      | No        |
 | [GoodFirstIssue.org](https://www.goodfirstissue.org/)                | Yes             | No         | No          | No         | No      | No        |
 | [good-first-issue CLI](https://github.com/cutenode/good-first-issue) | No              | No         | No          | Yes        | Yes     | No        |
-| **IssueFlow (Planned)**                                              | Yes             | Yes        | Yes         | Yes        | Yes     | Planned   |
+| **IssueVista (Planned)**                                              | Yes             | Yes        | Yes         | Yes        | Yes     | Planned   |
 
 ### Adjacent Competitors (AI Code Review)
 
@@ -87,7 +87,7 @@ Based on research from [OpenAI Issue Labeler](https://github.com/austenstone/ope
 
 ### Features We MUST Match (Table Stakes)
 
-| Feature             | GoodFirstIssue.dev | EddieHub | IssueFlow Status |
+| Feature             | GoodFirstIssue.dev | EddieHub | IssueVista Status |
 | ------------------- | ------------------ | -------- | ---------------- |
 | Language filtering  | Yes                | Yes      | Planned (#61)    |
 | Stars/Forks sorting | Yes                | No       | Planned          |
@@ -96,7 +96,7 @@ Based on research from [OpenAI Issue Labeler](https://github.com/austenstone/ope
 
 ### Features Where We LEAD
 
-| Feature              | Competitors | IssueFlow         |
+| Feature              | Competitors | IssueVista         |
 | -------------------- | ----------- | ----------------- |
 | AI difficulty rating | None        | Planned (#80-87)  |
 | Search history       | None        | Done (#62)        |

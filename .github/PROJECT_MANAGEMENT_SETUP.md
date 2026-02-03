@@ -1,8 +1,8 @@
-# IssueFlow Project Management Configuration Guide
+# IssueVista Project Management Configuration Guide
 
 ## Overview
 
-This guide documents the complete project management setup for IssueFlow, aligned with:
+This guide documents the complete project management setup for IssueVista, aligned with:
 
 - **ISO 21502:2020** - Project Management Guidance
 - **PMI PMBOK 7th Edition** - Agile Practices

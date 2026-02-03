@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to IssueFlow will be documented in this file.
+All notable changes to IssueVista will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -54,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Accessible with role="status" and sr-only text (WCAG 2.1 compliant)
   - prefers-reduced-motion support (disables pulse animation)
 
-- **Header Branding** (#190): Site header with IssueFlow branding
+- **Header Branding** (#190): Site header with IssueVista branding
   - Sticky header with product name, version badge, and tagline
   - GitHub repository and star links in navigation
   - Matches Footer component styling (dark/light mode support)
@@ -323,7 +323,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Brand Redesign**: New IssueFlow identity
+- **Brand Redesign**: New IssueVista identity
   - New logo: Issues flowing through pipeline (S-curve with three nodes)
   - Monochromatic teal color palette (#0d9488, #14b8a6)
   - Updated favicon and Open Graph image
@@ -347,7 +347,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial release of IssueFlow
+- Initial release of IssueVista
 - GitHub issue finder with smart filtering (open, unassigned, no PRs)
 - Multiple authentication options (GitHub OAuth, Personal Access Token, No Auth)
 - GraphQL API support for authenticated users (5000 req/hr)
@@ -395,7 +395,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Version 1.0.0
 
-This is the initial public release of IssueFlow, a tool designed to help developers find unassigned GitHub issues ready for contribution.
+This is the initial public release of IssueVista, a tool designed to help developers find unassigned GitHub issues ready for contribution.
 
 **Key Highlights:**
 
@@ -406,9 +406,9 @@ This is the initial public release of IssueFlow, a tool designed to help develop
 - Privacy-focused (no server-side data storage)
 - Open source under MIT License
 
-**Live Demo:** [https://issueflow.vibetensor.com](https://issueflow.vibetensor.com)
+**Live Demo:** [https://issuevista.vibetensor.com](https://issuevista.vibetensor.com)
 
-**Repository:** [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
+**Repository:** [https://github.com/VibeTensor/IssueVista](https://github.com/VibeTensor/IssueVista)
 
 ---
 
@@ -430,8 +430,8 @@ Planned features for future releases:
 
 ---
 
-For detailed information about changes in each version, see the [Git commit history](https://github.com/VibeTensor/IssueFlow/commits/master).
+For detailed information about changes in each version, see the [Git commit history](https://github.com/VibeTensor/IssueVista/commits/master).
 
-[1.2.0]: https://github.com/VibeTensor/IssueFlow/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/VibeTensor/IssueFlow/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/VibeTensor/IssueFlow/releases/tag/v1.0.0
+[1.2.0]: https://github.com/VibeTensor/IssueVista/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/VibeTensor/IssueVista/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/VibeTensor/IssueVista/releases/tag/v1.0.0

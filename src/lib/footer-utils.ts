@@ -6,10 +6,10 @@
  */
 
 // Configuration constants
-export const REPO_URL = 'https://github.com/VibeTensor/IssueFlow';
+export const REPO_URL = 'https://github.com/VibeTensor/IssueVista';
 export const ISSUES_URL = `${REPO_URL}/issues`;
 export const CONTRIBUTING_URL = `${REPO_URL}/blob/master/CONTRIBUTING.md`;
-export const SITE_URL = 'https://issueflow.vibetensor.com';
+export const SITE_URL = 'https://issuevista.vibetensor.com';
 
 // Company Information - VibeTensor Private Limited (India)
 export const COMPANY_NAME = 'VibeTensor Private Limited';
@@ -23,7 +23,7 @@ export const COMPANY_COUNTRY = 'India';
 
 // Default sharing configuration
 export const DEFAULT_SHARE_TEXT =
-  'Check out IssueFlow - Find unassigned GitHub issues for open-source contributions!';
+  'Check out IssueVista - Find unassigned GitHub issues for open-source contributions!';
 export const DEFAULT_HASHTAGS = 'opensource,github,hacktoberfest';
 
 /**
@@ -79,7 +79,7 @@ export function isWebShareSupported(): boolean {
  * @returns Promise that resolves when share completes or rejects on error/cancel
  */
 export async function nativeShare(
-  title: string = 'IssueFlow',
+  title: string = 'IssueVista',
   text: string = DEFAULT_SHARE_TEXT,
   url: string = SITE_URL
 ): Promise<void> {
@@ -114,7 +114,7 @@ export function isValidUrl(url: string): boolean {
  * @returns ShareData object
  */
 export function createShareData(
-  title: string = 'IssueFlow',
+  title: string = 'IssueVista',
   text: string = DEFAULT_SHARE_TEXT,
   url: string = SITE_URL
 ): ShareData {

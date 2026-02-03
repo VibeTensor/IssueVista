@@ -1,10 +1,10 @@
 # Keyboard Shortcuts Reference
 
-This guide documents all keyboard shortcuts available in IssueFlow for efficient navigation and interaction.
+This guide documents all keyboard shortcuts available in IssueVista for efficient navigation and interaction.
 
 ## Overview
 
-IssueFlow is designed with keyboard accessibility in mind. All interactive elements can be accessed and controlled using keyboard shortcuts, making the application fully usable without a mouse.
+IssueVista is designed with keyboard accessibility in mind. All interactive elements can be accessed and controlled using keyboard shortcuts, making the application fully usable without a mouse.
 
 ## Global Shortcuts
 
@@ -73,7 +73,7 @@ The export menu allows you to download your search results in different formats.
 
 ## Theme Selector Shortcuts
 
-The theme selector allows you to customize the appearance of IssueFlow.
+The theme selector allows you to customize the appearance of IssueVista.
 
 | Shortcut      | Action         | Description                                                      |
 | ------------- | -------------- | ---------------------------------------------------------------- |
@@ -87,7 +87,7 @@ The theme selector allows you to customize the appearance of IssueFlow.
 
 ### Available Themes
 
-IssueFlow offers multiple color themes to suit your preferences and reduce eye strain. Use the arrow keys to browse through available options and press Enter to apply your selection.
+IssueVista offers multiple color themes to suit your preferences and reduce eye strain. Use the arrow keys to browse through available options and press Enter to apply your selection.
 
 ## Filter Builder Shortcuts
 
@@ -175,7 +175,7 @@ All interactive elements display visible focus indicators when navigated to via 
 
 ### Screen Reader Support
 
-IssueFlow includes ARIA labels and roles to support screen reader users:
+IssueVista includes ARIA labels and roles to support screen reader users:
 
 - All buttons have descriptive aria-labels
 - Modal dialogs have proper aria-modal and aria-labelledby attributes
@@ -192,7 +192,7 @@ Users who prefer reduced motion will experience:
 
 ## Browser Shortcuts
 
-Standard browser shortcuts also work within IssueFlow:
+Standard browser shortcuts also work within IssueVista:
 
 | Shortcut            | Action       | Description                                          |
 | ------------------- | ------------ | ---------------------------------------------------- |
@@ -263,11 +263,11 @@ If you experience screen reader problems:
 
 1. Ensure your screen reader is up to date
 2. Try a different screen reader or browser combination
-3. Report issues on the IssueFlow GitHub repository
+3. Report issues on the IssueVista GitHub repository
 
 ## Summary
 
-IssueFlow provides comprehensive keyboard support to ensure all users can efficiently navigate and use the application. Key points to remember:
+IssueVista provides comprehensive keyboard support to ensure all users can efficiently navigate and use the application. Key points to remember:
 
 - `Tab` and `Shift+Tab` for navigation
 - `Enter` and `Space` for activation

@@ -104,7 +104,7 @@ done
 ### Recommended: Use Separate Project Folders
 
 ```text
-D:\Development\opensource\IssueFlow\     → Open-source dev ONLY
+D:\Development\opensource\IssueVista\     → Open-source dev ONLY
 E:\Personal\                             → Business, finance, personal
 D:\Work\ClientName\                      → Client work (NDA)
 ```
@@ -113,7 +113,7 @@ D:\Work\ClientName\                      → Client work (NDA)
 
 ```text
 ~/.claude/projects/
-├── D--Development-opensource-IssueFlow/    → IssueFlow chats
+├── D--Development-opensource-IssueVista/    → IssueVista chats
 ├── E--Personal/                            → Personal chats
 └── D--Work-ClientName/                     → Client chats
 ```
@@ -124,7 +124,7 @@ D:\Work\ClientName\                      → Client work (NDA)
 
 | Chat Type                 | Folder to Use                         | Can Share? |
 | ------------------------- | ------------------------------------- | ---------- |
-| IssueFlow development     | `D:\Development\opensource\IssueFlow` | YES        |
+| IssueVista development     | `D:\Development\opensource\IssueVista` | YES        |
 | Payment/salary discussion | `E:\Personal`                         | NO         |
 | Partnership outreach      | `E:\Personal`                         | NO         |
 | Client work               | `D:\Work\ClientName`                  | NO         |
@@ -137,8 +137,8 @@ D:\Work\ClientName\                      → Client work (NDA)
 ### Step 1: Identify Project Folder
 
 ```bash
-# Only share IssueFlow transcripts
-cd ~/.claude/projects/D--Development-opensource-OSS-Collection-IssueFlow
+# Only share IssueVista transcripts
+cd ~/.claude/projects/D--Development-opensource-OSS-Collection-IssueVista
 ```
 
 ### Step 2: Filter by Date (Last 30 Days)
@@ -193,7 +193,7 @@ zip -r metr-transcripts-wsl.zip metr-transcripts/
 
 ## What NOT to Discuss in Development Chats
 
-### Never Ask in IssueFlow Chat:
+### Never Ask in IssueVista Chat:
 
 - "Calculate my earnings for this month"
 - "Draft a cold email to this company"
@@ -203,7 +203,7 @@ zip -r metr-transcripts-wsl.zip metr-transcripts/
 - "Check my invoice details"
 - "Help with salary negotiation"
 
-### Safe to Ask in IssueFlow Chat:
+### Safe to Ask in IssueVista Chat:
 
 - "Fix this TypeScript error"
 - "How do I implement this feature?"
@@ -236,7 +236,7 @@ find ~/.claude/projects/*/ -name "*.jsonl" -mtime +90 -exec mv {} ~/.claude/arch
 
 Before sending transcripts to METR:
 
-- [ ] Only IssueFlow project folder (open source)
+- [ ] Only IssueVista project folder (open source)
 - [ ] Last 30 days only
 - [ ] No bank names (Axis, SBI, ICICI, Kotak, HDFC)
 - [ ] No passwords/credentials/API keys
@@ -258,18 +258,18 @@ Before sending transcripts to METR:
 **CRITICAL**: Only share data that is:
 
 1. **Adequate** - Sufficient for the stated purpose
-2. **Relevant** - Directly related to IssueFlow development
+2. **Relevant** - Directly related to IssueVista development
 3. **Limited** - Only from tools actually used for the project
 
 ### Tool-by-Tool Security Assessment
 
-| Tool                | Location                                | Used for IssueFlow? | Decision           | Reason                                                     |
+| Tool                | Location                                | Used for IssueVista? | Decision           | Reason                                                     |
 | ------------------- | --------------------------------------- | ------------------- | ------------------ | ---------------------------------------------------------- |
-| **Claude Code**     | `~/.claude/projects/`                   | YES                 | INCLUDE (filtered) | Only tool used for IssueFlow, sensitive content removed    |
-| **Gemini CLI**      | `~/.gemini/`                            | NO                  | EXCLUDE            | Not used for IssueFlow + no transcripts (OAuth creds only) |
+| **Claude Code**     | `~/.claude/projects/`                   | YES                 | INCLUDE (filtered) | Only tool used for IssueVista, sensitive content removed    |
+| **Gemini CLI**      | `~/.gemini/`                            | NO                  | EXCLUDE            | Not used for IssueVista + no transcripts (OAuth creds only) |
 | **Codex CLI**       | `~/.codex/`                             | NO                  | EXCLUDE            | Not installed                                              |
-| **Cursor**          | `%APPDATA%\Cursor\User\`                | NO                  | EXCLUDE            | Not used for IssueFlow (data minimization)                 |
-| **VS Code Copilot** | `%APPDATA%\Code\User\workspaceStorage\` | NO                  | EXCLUDE            | Not used for IssueFlow (data minimization)                 |
+| **Cursor**          | `%APPDATA%\Cursor\User\`                | NO                  | EXCLUDE            | Not used for IssueVista (data minimization)                 |
+| **VS Code Copilot** | `%APPDATA%\Code\User\workspaceStorage\` | NO                  | EXCLUDE            | Not used for IssueVista (data minimization)                 |
 
 ### Audit Results Summary (2026-01-13) - FINAL
 
@@ -294,7 +294,7 @@ Before sending transcripts to METR:
 **All Other Tools:**
 
 - Status: EXCLUDED per Data Minimization Principle
-- Reason: Not used for IssueFlow project development
+- Reason: Not used for IssueVista project development
 
 ---
 
@@ -339,7 +339,7 @@ done
 
 | Item               | Path                                                                     |
 | ------------------ | ------------------------------------------------------------------------ |
-| Claude transcripts | `~/.claude/projects/D--Development-opensource-OSS-Collection-IssueFlow/` |
+| Claude transcripts | `~/.claude/projects/D--Development-opensource-OSS-Collection-IssueVista/` |
 | Clean transcripts  | `~/metr-transcripts/claude-code/`                                        |
 | Final submission   | `C:\Users\pavan\metr-transcripts-final.zip`                              |
 

@@ -2,7 +2,7 @@
   HelpPopup Component
   Issue #35 - Extracted from ResultsList.svelte
 
-  Modal overlay displaying how-to guide for using IssueFlow.
+  Modal overlay displaying how-to guide for using IssueVista.
   Includes step-by-step instructions for GitHub token creation.
 -->
 
@@ -164,7 +164,7 @@
                   <ol class="mt-1.5 space-y-1 text-[11px] text-slate-300 list-decimal list-inside">
                     <li>
                       Click <a
-                        href="https://github.com/settings/tokens/new?description=IssueFlow&scopes=public_repo"
+                        href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="text-teal-400 hover:text-teal-300 underline">this link</a

@@ -1,6 +1,6 @@
 # Git Workflow Guide
 
-This guide documents the Git workflow and branching strategy used in IssueFlow.
+This guide documents the Git workflow and branching strategy used in IssueVista.
 
 ## Branch Naming Convention
 

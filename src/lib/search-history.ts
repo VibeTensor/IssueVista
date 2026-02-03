@@ -9,9 +9,42 @@
 
 import type { SearchHistoryItem } from './types/results';
 
-const STORAGE_KEY = 'issueflow_search_history';
-const LAST_REPO_KEY = 'issueflow_last_searched_repo';
+const STORAGE_KEY = 'issuevista_search_history';
+const LAST_REPO_KEY = 'issuevista_last_searched_repo';
+const LEGACY_STORAGE_KEY = 'issueflow_search_history';
+const LEGACY_LAST_REPO_KEY = 'issueflow_last_searched_repo';
 const MAX_HISTORY_ITEMS = 20;
+
+/**
+ * Migrate data from legacy IssueFlow keys to new IssueVista keys
+ * This preserves user data after the rebrand
+ */
+function migrateFromLegacy(): void {
+  if (typeof localStorage === 'undefined') return;
+
+  // Migrate search history
+  if (!localStorage.getItem(STORAGE_KEY) && localStorage.getItem(LEGACY_STORAGE_KEY)) {
+    const legacyData = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacyData) {
+      localStorage.setItem(STORAGE_KEY, legacyData);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+    }
+  }
+
+  // Migrate last searched repo
+  if (!localStorage.getItem(LAST_REPO_KEY) && localStorage.getItem(LEGACY_LAST_REPO_KEY)) {
+    const legacyData = localStorage.getItem(LEGACY_LAST_REPO_KEY);
+    if (legacyData) {
+      localStorage.setItem(LAST_REPO_KEY, legacyData);
+      localStorage.removeItem(LEGACY_LAST_REPO_KEY);
+    }
+  }
+}
+
+// Run migration on module load
+if (typeof localStorage !== 'undefined') {
+  migrateFromLegacy();
+}
 
 /**
  * Check if we're in a browser environment
@@ -306,7 +339,7 @@ export function downloadExport(format: ExportFormat): void {
     extension = 'csv';
   }
 
-  const filename = `issueflow-search-history-${getDateString()}.${extension}`;
+  const filename = `issuevista-search-history-${getDateString()}.${extension}`;
 
   try {
     // Create Blob and download

@@ -84,8 +84,8 @@ const MAX_INPUT_ISSUES = 500;
 
 // Allowed origins for CORS (restrict to prevent abuse)
 const ALLOWED_ORIGINS = [
-  'https://issueflow.vibetensor.com',
-  'https://issueflow.pages.dev',
+  'https://issuevista.vibetensor.com',
+  'https://issuevista.pages.dev',
   'http://localhost:4321',
   'http://localhost:3000'
 ];

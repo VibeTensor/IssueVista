@@ -15,7 +15,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
     test('should display copy button on each issue card', async ({ page }) => {
       // Search for a repository with issues
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
 
       // Wait for results to load
@@ -34,7 +34,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
     test('should have copy button with proper ARIA label', async ({ page }) => {
       // Search for issues
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -49,7 +49,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should display copy icon on button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -67,7 +67,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should have "Copy" text visible on button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -85,7 +85,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should display copy button in top-right on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -105,7 +105,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should display icon and text horizontally on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -120,7 +120,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should be easily tappable on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -142,7 +142,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should display copy button on right side on desktop', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -162,7 +162,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should have consistent button width with issue badge', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -189,7 +189,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -214,7 +214,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -239,7 +239,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -263,7 +263,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -282,7 +282,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -309,7 +309,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -339,7 +339,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
   test.describe('Accessibility', () => {
     test('should have proper title attribute', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -355,7 +355,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -372,7 +372,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should be keyboard accessible', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -399,7 +399,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should have sufficient color contrast', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -424,7 +424,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
   test.describe('Button Styling', () => {
     test('should have gradient background', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -438,7 +438,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should have rounded corners', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -452,7 +452,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should have shadow effect', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -468,7 +468,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
   test.describe('Integration with Issue Cards', () => {
     test('should not interfere with View button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -491,7 +491,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
 
     test('should not interfere with issue card click areas', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 
@@ -525,7 +525,7 @@ test.describe('Copy Button Feature - E2E Tests', () => {
     test('should handle clipboard permission denial gracefully', async ({ page }) => {
       // Don't grant clipboard permissions to simulate denial
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('VibeTensor/IssueFlow');
+      await searchInput.fill('VibeTensor/IssueVista');
       await searchInput.press('Enter');
       await page.waitForTimeout(2000);
 

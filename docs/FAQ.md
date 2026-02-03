@@ -1,33 +1,33 @@
 # Frequently Asked Questions
 
-This document answers common questions about IssueFlow, from getting started to advanced usage and contributing.
+This document answers common questions about IssueVista, from getting started to advanced usage and contributing.
 
 ## Getting Started
 
-### What is IssueFlow?
+### What is IssueVista?
 
-IssueFlow is a GitHub issue discovery tool designed to help developers find beginner-friendly issues across open source projects. It provides a streamlined interface for searching, filtering, and exploring GitHub issues, making it easier for newcomers to find their first contribution opportunities.
+IssueVista is a GitHub issue discovery tool designed to help developers find beginner-friendly issues across open source projects. It provides a streamlined interface for searching, filtering, and exploring GitHub issues, making it easier for newcomers to find their first contribution opportunities.
 
-### How do I install IssueFlow locally?
+### How do I install IssueVista locally?
 
-To run IssueFlow locally, follow these steps:
+To run IssueVista locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/VibeTensor/IssueFlow.git`
-2. Navigate to the project directory: `cd IssueFlow`
+1. Clone the repository: `git clone https://github.com/VibeTensor/IssueVista.git`
+2. Navigate to the project directory: `cd IssueVista`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm run dev`
 5. Open your browser to `http://localhost:4321`
 
 ### What are the system requirements?
 
-IssueFlow requires the following:
+IssueVista requires the following:
 
 - Node.js version 18 or higher
 - npm version 9 or higher
 - A modern web browser (Chrome, Firefox, Safari, or Edge)
 - Git for version control
 
-### Do I need a GitHub account to use IssueFlow?
+### Do I need a GitHub account to use IssueVista?
 
 No, you do not need a GitHub account for basic searches. However, providing a GitHub Personal Access Token increases your API rate limit from 60 to 5,000 requests per hour, which is recommended for extensive searching.
 
@@ -39,10 +39,10 @@ To create a Personal Access Token:
 2. Click on Developer Settings
 3. Select Personal access tokens, then Tokens (classic)
 4. Click Generate new token
-5. Give it a descriptive name like "IssueFlow"
+5. Give it a descriptive name like "IssueVista"
 6. Select the `public_repo` scope (minimum required)
 7. Click Generate token
-8. Copy the token and paste it into IssueFlow's token field
+8. Copy the token and paste it into IssueVista's token field
 
 Note: Keep your token secure and never share it publicly.
 
@@ -50,7 +50,7 @@ Note: Keep your token secure and never share it publicly.
 
 ### What filters are available for searching issues?
 
-IssueFlow provides several filtering options:
+IssueVista provides several filtering options:
 
 - **Label**: Filter by issue labels such as bug, enhancement, documentation, good first issue, and help wanted
 - **Language**: Filter by programming language used in the repository
@@ -59,7 +59,7 @@ IssueFlow provides several filtering options:
 
 ### How does the search history feature work?
 
-IssueFlow automatically saves your recent searches to browser local storage. Up to 10 recent searches are stored. You can access your search history by clicking on the search input field or pressing the down arrow key when the input is focused. Select any previous search to quickly repeat it.
+IssueVista automatically saves your recent searches to browser local storage. Up to 10 recent searches are stored. You can access your search history by clicking on the search input field or pressing the down arrow key when the input is focused. Select any previous search to quickly repeat it.
 
 ### What export formats are supported?
 
@@ -85,9 +85,9 @@ The Topic Cluster Visualization groups issues by their primary label in an inter
 
 ## Technical Questions
 
-### What technology stack does IssueFlow use?
+### What technology stack does IssueVista use?
 
-IssueFlow is built with modern web technologies:
+IssueVista is built with modern web technologies:
 
 - **Astro 5**: Static site generator with island architecture
 - **Svelte 5**: Reactive UI framework using runes ($state, $derived, $effect)
@@ -96,21 +96,21 @@ IssueFlow is built with modern web technologies:
 - **Vitest**: Unit testing framework
 - **Playwright**: End-to-end testing framework
 
-### How does IssueFlow interact with the GitHub API?
+### How does IssueVista interact with the GitHub API?
 
-IssueFlow uses the GitHub GraphQL API (v4) for efficient data fetching. GraphQL allows requesting exactly the data needed in a single query, reducing bandwidth and improving performance compared to the REST API.
+IssueVista uses the GitHub GraphQL API (v4) for efficient data fetching. GraphQL allows requesting exactly the data needed in a single query, reducing bandwidth and improving performance compared to the REST API.
 
 ### What is the rate limit for GitHub API requests?
 
-Without authentication, you are limited to 60 requests per hour. With a Personal Access Token, the limit increases to 5,000 requests per hour. IssueFlow displays your remaining rate limit in the interface.
+Without authentication, you are limited to 60 requests per hour. With a Personal Access Token, the limit increases to 5,000 requests per hour. IssueVista displays your remaining rate limit in the interface.
 
-### Does IssueFlow store any data on external servers?
+### Does IssueVista store any data on external servers?
 
-No, IssueFlow is a client-side application. All data processing happens in your browser. Search history and preferences are stored in your browser's local storage. No data is sent to external servers other than GitHub's API.
+No, IssueVista is a client-side application. All data processing happens in your browser. Search history and preferences are stored in your browser's local storage. No data is sent to external servers other than GitHub's API.
 
 ### How do I run the tests?
 
-IssueFlow includes both unit and end-to-end tests:
+IssueVista includes both unit and end-to-end tests:
 
 - Run all tests: `npm test`
 - Run unit tests only: `npm run test:unit`
@@ -127,7 +127,7 @@ To create a production build:
 
 ## Contribution Questions
 
-### How can I contribute to IssueFlow?
+### How can I contribute to IssueVista?
 
 We welcome contributions of all kinds:
 
@@ -140,7 +140,7 @@ We welcome contributions of all kinds:
 
 ### What are the coding standards?
 
-IssueFlow follows these coding standards:
+IssueVista follows these coding standards:
 
 - Use TypeScript with strict mode
 - Follow ESLint rules (run `npm run lint`)
@@ -222,7 +222,7 @@ Search history is stored in browser local storage. To clear it:
 - Open browser developer tools (F12)
 - Go to the Application tab
 - Find Local Storage in the sidebar
-- Delete the IssueFlow entries
+- Delete the IssueVista entries
 
 Alternatively, clearing your browser's site data will remove all stored preferences.
 
@@ -253,6 +253,6 @@ You can reach the maintainers through:
 - GitHub Discussions: For questions and community conversations
 - Pull Request comments: For code-related discussions
 
-### Is IssueFlow open source?
+### Is IssueVista open source?
 
-Yes, IssueFlow is fully open source under the MIT License. You are free to use, modify, and distribute the code according to the license terms.
+Yes, IssueVista is fully open source under the MIT License. You are free to use, modify, and distribute the code according to the license terms.

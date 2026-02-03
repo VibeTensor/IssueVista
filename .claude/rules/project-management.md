@@ -47,7 +47,7 @@ gh project item-edit --project-id <PROJECT_ID> --id <ITEM_ID> --field-id <FIELD_
 
 ```bash
 # View current sprint milestone
-gh api repos/VibeTensor/IssueFlow/milestones --jq '.[] | select(.state=="open") | {title, due_on, open_issues}'
+gh api repos/VibeTensor/IssueVista/milestones --jq '.[] | select(.state=="open") | {title, due_on, open_issues}'
 ```
 
 **Verify:**
@@ -228,10 +228,10 @@ gh project item-edit --project-id PVT_kwDON8nFv84A6eQg --id <ITEM_ID> --field-id
 
 ```bash
 # List milestones
-gh api repos/VibeTensor/IssueFlow/milestones
+gh api repos/VibeTensor/IssueVista/milestones
 
 # View specific milestone
-gh api repos/VibeTensor/IssueFlow/milestones/<NUMBER>
+gh api repos/VibeTensor/IssueVista/milestones/<NUMBER>
 ```
 
 ---

@@ -1,4 +1,4 @@
-# CodeRabbit AI Configuration for IssueFlow
+# CodeRabbit AI Configuration for IssueVista
 # https://docs.coderabbit.ai/guides/configure-coderabbit
 
 language: en-US
@@ -31,7 +31,7 @@ reviews:
     - path: '**/*'
       instructions: |
         ## Project Context
-        IssueFlow is a web application built with Astro 5.x, Svelte 5, and UnoCSS that helps developers find unassigned GitHub issues without pull requests.
+        IssueVista is a web application built with Astro 5.x, Svelte 5, and UnoCSS that helps developers find unassigned GitHub issues without pull requests.
 
         ## Review Focus
         - TypeScript type safety

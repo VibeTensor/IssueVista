@@ -14,7 +14,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
   test.describe('Loading Progress Display', () => {
     test('should display loading progress when search starts', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -34,7 +34,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should display progress bar with percentage', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -58,7 +58,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should display status message during loading', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -80,7 +80,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should have ARIA live region for accessibility', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -101,7 +101,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
   test.describe('Cancel Button', () => {
     test('should display cancel button during loading', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -121,7 +121,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should have accessible aria-label on cancel button', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -138,7 +138,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('clicking cancel should show confirmation modal', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -162,7 +162,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
   test.describe('Cancel Confirmation Modal', () => {
     test('should display modal with proper structure', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -195,7 +195,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should display issues loaded count', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -223,7 +223,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should have Continue and Cancel buttons', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -255,7 +255,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('clicking Continue should close modal and resume loading', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -284,7 +284,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('clicking outside modal should close it (Continue behavior)', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -314,7 +314,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('pressing Escape should close modal (Continue behavior)', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -342,7 +342,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('confirming cancel should stop search and show results', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -377,7 +377,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
   test.describe('Modal Accessibility', () => {
     test('should auto-focus Continue button when modal opens', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -406,7 +406,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should trap focus within modal', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -481,7 +481,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should display loading progress on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -502,7 +502,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('modal should be responsive on mobile', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -534,7 +534,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('should center loading progress on desktop', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -557,7 +557,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
 
     test('modal buttons should be side by side on desktop', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -593,7 +593,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
   test.describe('Search Completion', () => {
     test('should hide loading progress when search completes', async ({ page }) => {
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();
@@ -626,7 +626,7 @@ test.describe('Loading Progress Feature - E2E Tests', () => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
 
       const searchInput = page.locator('#repoUrl');
-      await searchInput.fill('https://github.com/VibeTensor/IssueFlow');
+      await searchInput.fill('https://github.com/VibeTensor/IssueVista');
 
       const searchButton = page.locator('button:has-text("Find Issues")');
       await searchButton.click();

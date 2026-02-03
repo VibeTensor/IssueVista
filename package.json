@@ -1,17 +1,17 @@
 {
-  "name": "issueflow",
+  "name": "issuevista",
   "version": "1.2.0",
   "description": "Find unassigned open GitHub issues without pull requests - your gateway to open-source contribution",
   "type": "module",
   "author": "ascender1729 <https://github.com/ascender1729>",
   "license": "MIT",
-  "homepage": "https://issueflow.vibetensor.com",
+  "homepage": "https://issuevista.vibetensor.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VibeTensor/IssueFlow.git"
+    "url": "https://github.com/VibeTensor/IssueVista.git"
   },
   "bugs": {
-    "url": "https://github.com/VibeTensor/IssueFlow/issues"
+    "url": "https://github.com/VibeTensor/IssueVista/issues"
   },
   "keywords": [
     "github",

@@ -1,17 +1,17 @@
 blank_issues_enabled: false
 contact_links:
   - name: GitHub Discussions
-    url: https://github.com/VibeTensor/IssueFlow/discussions
-    about: Ask questions and discuss IssueFlow with the community
+    url: https://github.com/VibeTensor/IssueVista/discussions
+    about: Ask questions and discuss IssueVista with the community
   - name: Security Vulnerabilities
-    url: https://github.com/VibeTensor/IssueFlow/security/advisories/new
+    url: https://github.com/VibeTensor/IssueVista/security/advisories/new
     about: Report security vulnerabilities privately
   - name: Documentation
-    url: https://github.com/VibeTensor/IssueFlow#readme
+    url: https://github.com/VibeTensor/IssueVista#readme
     about: Read the project documentation
   - name: Project Board
     url: https://github.com/orgs/VibeTensor/projects/2
     about: View project roadmap and sprint progress
   - name: Contributing Guide
-    url: https://github.com/VibeTensor/IssueFlow/blob/master/CONTRIBUTING.md
-    about: Learn how to contribute to IssueFlow
+    url: https://github.com/VibeTensor/IssueVista/blob/master/CONTRIBUTING.md
+    about: Learn how to contribute to IssueVista

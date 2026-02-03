@@ -7,7 +7,7 @@ If CI checks fail:
 ### Step 1: Read the failure logs
 
 ```bash
-gh pr checks <PR_NUMBER> --repo VibeTensor/IssueFlow
+gh pr checks <PR_NUMBER> --repo VibeTensor/IssueVista
 ```
 
 ### Step 2: Identify the failing check

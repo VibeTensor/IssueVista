@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-This guide helps you diagnose and resolve common issues when using IssueFlow. Each section covers specific problems with step-by-step solutions.
+This guide helps you diagnose and resolve common issues when using IssueVista. Each section covers specific problems with step-by-step solutions.
 
 ## Installation issues
 
@@ -27,7 +27,7 @@ npm install
 
 ### Node.js version mismatch
 
-IssueFlow requires Node.js 18 or higher. Check your version:
+IssueVista requires Node.js 18 or higher. Check your version:
 
 ```bash
 node --version
@@ -141,7 +141,7 @@ The GitHub API limits unauthenticated requests to 60 per hour.
 1. Go to GitHub Settings then Developer Settings
 2. Click Personal access tokens then Tokens classic
 3. Generate a new token with public_repo scope
-4. Paste the token in IssueFlow's token field
+4. Paste the token in IssueVista's token field
 
 **Check your current rate limit:**
 
@@ -222,7 +222,7 @@ If your previous searches are not appearing:
 1. Open browser developer tools with F12
 2. Go to Application tab
 3. Expand Local Storage in the sidebar
-4. Look for IssueFlow entries
+4. Look for IssueVista entries
 
 ### Language filter shows wrong languages
 
@@ -430,7 +430,7 @@ To inspect stored data:
 1. Open developer tools with F12
 2. Go to Application tab
 3. Expand Local Storage
-4. Find the IssueFlow domain
+4. Find the IssueVista domain
 5. Review stored key-value pairs
 
 ## Getting help
@@ -508,10 +508,10 @@ npm test             # Run all tests
 
 ### Clearing site data
 
-To completely reset IssueFlow:
+To completely reset IssueVista:
 
 1. Open browser settings
 2. Find privacy or site settings
-3. Search for the IssueFlow domain
+3. Search for the IssueVista domain
 4. Click clear data or forget site
 5. Refresh the page

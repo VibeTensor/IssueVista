@@ -1,4 +1,4 @@
-# IssueFlow Development Roadmap
+# IssueVista Development Roadmap
 
 ## Project Status - Updated After Issue Swap
 
@@ -215,10 +215,10 @@ Issues: All 70 documentation issues
 
 ## Quick Links
 
-- [All Open Issues](https://github.com/VibeTensor/IssueFlow/issues)
-- [AI-Allowed Technical](https://github.com/VibeTensor/IssueFlow/labels/enhancement)
-- [Documentation](https://github.com/VibeTensor/IssueFlow/labels/documentation)
-- [Testing](https://github.com/VibeTensor/IssueFlow/labels/testing)
+- [All Open Issues](https://github.com/VibeTensor/IssueVista/issues)
+- [AI-Allowed Technical](https://github.com/VibeTensor/IssueVista/labels/enhancement)
+- [Documentation](https://github.com/VibeTensor/IssueVista/labels/documentation)
+- [Testing](https://github.com/VibeTensor/IssueVista/labels/testing)
 
 ---
 

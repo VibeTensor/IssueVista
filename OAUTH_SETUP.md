@@ -24,7 +24,7 @@ This app now supports GitHub OAuth authentication using the **Device Flow**, whi
 1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
 2. Click **"New OAuth App"**
 3. Fill in the details:
-   - **Application name**: `IssueFlow`
+   - **Application name**: `IssueVista`
    - **Homepage URL**: `http://localhost:4321` (for development) or your production URL
    - **Application description**: `Find unassigned GitHub issues without PRs`
    - **Authorization callback URL**: Leave empty (not needed for device flow)

@@ -1,11 +1,11 @@
-# IssueFlow Project Memory
+# IssueVista Project Memory
 
 ## Project Overview
 
-IssueFlow is a GitHub issue discovery tool that helps developers find beginner-friendly issues.
+IssueVista is a GitHub issue discovery tool that helps developers find beginner-friendly issues.
 
-- **Repository**: VibeTensor/IssueFlow
-- **URL**: [https://github.com/VibeTensor/IssueFlow](https://github.com/VibeTensor/IssueFlow)
+- **Repository**: VibeTensor/IssueVista
+- **URL**: [https://github.com/VibeTensor/IssueVista](https://github.com/VibeTensor/IssueVista)
 - **Stack**: Astro 5, Svelte 5, TypeScript, UnoCSS
 
 ## Tech Stack
