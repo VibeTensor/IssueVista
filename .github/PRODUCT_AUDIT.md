@@ -17,7 +17,7 @@ IssueVista differentiates from competitors through **AI-powered difficulty estim
 | [EddieHub Finder](https://finder.eddiehub.org/)                      | Yes             | No         | No          | Yes        | No      | No        |
 | [GoodFirstIssue.org](https://www.goodfirstissue.org/)                | Yes             | No         | No          | No         | No      | No        |
 | [good-first-issue CLI](https://github.com/cutenode/good-first-issue) | No              | No         | No          | Yes        | Yes     | No        |
-| **IssueVista (Planned)**                                              | Yes             | Yes        | Yes         | Yes        | Yes     | Planned   |
+| **IssueVista (Planned)**                                             | Yes             | Yes        | Yes         | Yes        | Yes     | Planned   |
 
 ### Adjacent Competitors (AI Code Review)
 
@@ -88,15 +88,15 @@ Based on research from [OpenAI Issue Labeler](https://github.com/austenstone/ope
 ### Features We MUST Match (Table Stakes)
 
 | Feature             | GoodFirstIssue.dev | EddieHub | IssueVista Status |
-| ------------------- | ------------------ | -------- | ---------------- |
-| Language filtering  | Yes                | Yes      | Planned (#61)    |
-| Stars/Forks sorting | Yes                | No       | Planned          |
-| Label-based search  | Yes                | Yes      | Done             |
-| Project curation    | Yes                | Yes      | N/A (any repo)   |
+| ------------------- | ------------------ | -------- | ----------------- |
+| Language filtering  | Yes                | Yes      | Planned (#61)     |
+| Stars/Forks sorting | Yes                | No       | Planned           |
+| Label-based search  | Yes                | Yes      | Done              |
+| Project curation    | Yes                | Yes      | N/A (any repo)    |
 
 ### Features Where We LEAD
 
-| Feature              | Competitors | IssueVista         |
+| Feature              | Competitors | IssueVista        |
 | -------------------- | ----------- | ----------------- |
 | AI difficulty rating | None        | Planned (#80-87)  |
 | Search history       | None        | Done (#62)        |

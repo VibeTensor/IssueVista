@@ -80,7 +80,7 @@
 
 | Attribute            | Details                             |
 | -------------------- | ----------------------------------- |
-| **Definition**       | Developers using IssueVista          |
+| **Definition**       | Developers using IssueVista         |
 | **Expectations**     | Working product, good documentation |
 | **Concerns**         | Bugs, missing features, UX          |
 | **Communication**    | README, Releases, Changelog         |

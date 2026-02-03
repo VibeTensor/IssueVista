@@ -122,13 +122,13 @@ D:\Work\ClientName\                      → Client work (NDA)
 
 ### Best Practice Going Forward
 
-| Chat Type                 | Folder to Use                         | Can Share? |
-| ------------------------- | ------------------------------------- | ---------- |
-| IssueVista development     | `D:\Development\opensource\IssueVista` | YES        |
-| Payment/salary discussion | `E:\Personal`                         | NO         |
-| Partnership outreach      | `E:\Personal`                         | NO         |
-| Client work               | `D:\Work\ClientName`                  | NO         |
-| Personal queries          | `E:\Personal`                         | NO         |
+| Chat Type                 | Folder to Use                          | Can Share? |
+| ------------------------- | -------------------------------------- | ---------- |
+| IssueVista development    | `D:\Development\opensource\IssueVista` | YES        |
+| Payment/salary discussion | `E:\Personal`                          | NO         |
+| Partnership outreach      | `E:\Personal`                          | NO         |
+| Client work               | `D:\Work\ClientName`                   | NO         |
+| Personal queries          | `E:\Personal`                          | NO         |
 
 ---
 
@@ -263,13 +263,13 @@ Before sending transcripts to METR:
 
 ### Tool-by-Tool Security Assessment
 
-| Tool                | Location                                | Used for IssueVista? | Decision           | Reason                                                     |
-| ------------------- | --------------------------------------- | ------------------- | ------------------ | ---------------------------------------------------------- |
-| **Claude Code**     | `~/.claude/projects/`                   | YES                 | INCLUDE (filtered) | Only tool used for IssueVista, sensitive content removed    |
-| **Gemini CLI**      | `~/.gemini/`                            | NO                  | EXCLUDE            | Not used for IssueVista + no transcripts (OAuth creds only) |
-| **Codex CLI**       | `~/.codex/`                             | NO                  | EXCLUDE            | Not installed                                              |
-| **Cursor**          | `%APPDATA%\Cursor\User\`                | NO                  | EXCLUDE            | Not used for IssueVista (data minimization)                 |
-| **VS Code Copilot** | `%APPDATA%\Code\User\workspaceStorage\` | NO                  | EXCLUDE            | Not used for IssueVista (data minimization)                 |
+| Tool                | Location                                | Used for IssueVista? | Decision           | Reason                                                      |
+| ------------------- | --------------------------------------- | -------------------- | ------------------ | ----------------------------------------------------------- |
+| **Claude Code**     | `~/.claude/projects/`                   | YES                  | INCLUDE (filtered) | Only tool used for IssueVista, sensitive content removed    |
+| **Gemini CLI**      | `~/.gemini/`                            | NO                   | EXCLUDE            | Not used for IssueVista + no transcripts (OAuth creds only) |
+| **Codex CLI**       | `~/.codex/`                             | NO                   | EXCLUDE            | Not installed                                               |
+| **Cursor**          | `%APPDATA%\Cursor\User\`                | NO                   | EXCLUDE            | Not used for IssueVista (data minimization)                 |
+| **VS Code Copilot** | `%APPDATA%\Code\User\workspaceStorage\` | NO                   | EXCLUDE            | Not used for IssueVista (data minimization)                 |
 
 ### Audit Results Summary (2026-01-13) - FINAL
 
@@ -337,11 +337,11 @@ done
 
 ### File Locations
 
-| Item               | Path                                                                     |
-| ------------------ | ------------------------------------------------------------------------ |
+| Item               | Path                                                                      |
+| ------------------ | ------------------------------------------------------------------------- |
 | Claude transcripts | `~/.claude/projects/D--Development-opensource-OSS-Collection-IssueVista/` |
-| Clean transcripts  | `~/metr-transcripts/claude-code/`                                        |
-| Final submission   | `C:\Users\pavan\metr-transcripts-final.zip`                              |
+| Clean transcripts  | `~/metr-transcripts/claude-code/`                                         |
+| Final submission   | `C:\Users\pavan\metr-transcripts-final.zip`                               |
 
 ### Emergency: Accidentally Shared Sensitive Info
 

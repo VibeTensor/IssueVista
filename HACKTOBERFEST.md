@@ -76,8 +76,8 @@ We have **33 issues** labeled for Hacktoberfest participation! Browse them all:
 
 These issues are perfect for newcomers:
 
-| Issue                                                    | Title                                                 | Labels                              |
-| -------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------- |
+| Issue                                                     | Title                                                 | Labels                              |
+| --------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------- |
 | [#5](https://github.com/VibeTensor/IssueVista/issues/5)   | Add copy button for repository URL input              | `good first issue`, `enhancement`   |
 | [#7](https://github.com/VibeTensor/IssueVista/issues/7)   | Add ESC key to close help popup                       | `good first issue`, `enhancement`   |
 | [#8](https://github.com/VibeTensor/IssueVista/issues/8)   | Add loading skeleton cards placeholder                | `good first issue`, `enhancement`   |
@@ -103,8 +103,8 @@ These issues are perfect for newcomers:
 
 These require more experience:
 
-| Issue                                                    | Title                                         | Labels                       |
-| -------------------------------------------------------- | --------------------------------------------- | ---------------------------- |
+| Issue                                                     | Title                                         | Labels                       |
+| --------------------------------------------------------- | --------------------------------------------- | ---------------------------- |
 | [#11](https://github.com/VibeTensor/IssueVista/issues/11) | Add light/dark theme toggle button            | `enhancement`                |
 | [#12](https://github.com/VibeTensor/IssueVista/issues/12) | Show colored badge for good-first-issue label | `enhancement`                |
 | [#36](https://github.com/VibeTensor/IssueVista/issues/36) | Redesign header and add footer with branding  | `enhancement`, `ui/ux`       |
