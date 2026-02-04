@@ -297,9 +297,9 @@ describe('calculateProgress', () => {
         phase: 'fetching',
         cancelled: false
       };
-      // Division by zero results in NaN (0/0)
+      // Guard clause returns 15 for invalid maxPages
       const progress = calculateProgress(state);
-      expect(Number.isNaN(progress)).toBe(true);
+      expect(progress).toBe(15);
     });
   });
 });
@@ -1125,7 +1125,8 @@ describe('Loading Progress Integration', () => {
 
       const error = toErrorState(fetch);
       expect(error.phase).toBe('error');
-      expect(calculateProgress(error)).toBe(0);
+      // Error state preserves lastProgress from fetching phase (page 1 of 3 = 40%)
+      expect(calculateProgress(error)).toBe(40);
       expect(isLoading(error)).toBe(false);
       expect(canCancel(error)).toBe(false);
     });
