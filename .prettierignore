@@ -3,3 +3,4 @@ dist/
 coverage/
 package-lock.json
 pnpm-lock.yaml
+magicuidesign-devtool-template/
