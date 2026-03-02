@@ -375,9 +375,9 @@
   .export-btn {
     font-size: 0.5625rem;
     font-weight: 500;
-    color: #14b8a6;
+    color: var(--theme-accent, oklch(0.78 0.13 291));
     background: transparent;
-    border: 1px solid rgba(20, 184, 166, 0.3);
+    border: 1px solid oklch(0.78 0.13 291 / 0.3);
     cursor: pointer;
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
@@ -385,9 +385,9 @@
   }
 
   .export-btn:hover {
-    color: #2dd4bf;
-    background: rgba(20, 184, 166, 0.1);
-    border-color: rgba(20, 184, 166, 0.5);
+    color: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    background: oklch(0.78 0.13 291 / 0.1);
+    border-color: oklch(0.78 0.13 291 / 0.5);
   }
 
   .clear-all-btn {
@@ -484,7 +484,7 @@
   }
 
   .issue-count {
-    color: #14b8a6;
+    color: var(--theme-accent, oklch(0.78 0.13 291));
   }
 
   .search-count {
@@ -591,10 +591,10 @@
 
   /* Autocomplete highlight styling (Issue #129) */
   :global(.autocomplete-highlight) {
-    background-color: rgba(20, 184, 166, 0.3);
+    background-color: oklch(0.78 0.13 291 / 0.3);
     border-radius: 2px;
     padding: 0 1px;
-    color: #2dd4bf;
+    color: var(--theme-accent-hover, oklch(0.83 0.13 291));
   }
 
   /* No matches empty state (Issue #129) */

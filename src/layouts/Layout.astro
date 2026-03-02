@@ -40,6 +40,17 @@ const ogImage = `${siteUrl}/og-image.png`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
 
+    <!-- Geist Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.min.css"
+    />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
@@ -65,9 +76,9 @@ const ogImage = `${siteUrl}/og-image.png`;
     <!-- Author -->
     <meta name="author" content="VibeTensor Private Limited" />
 
-    <!-- Theme Color - Brand Teal -->
-    <meta name="theme-color" content="#0d9488" />
-    <meta name="msapplication-TileColor" content="#0d9488" />
+    <!-- Theme Color - Brand Purple -->
+    <meta name="theme-color" content="#b07de8" />
+    <meta name="msapplication-TileColor" content="#b07de8" />
 
     <!-- Issue #180, #142 - Theme Detection Script (blocking to prevent FOUC) -->
     <script is:inline>
@@ -175,111 +186,115 @@ const ogImage = `${siteUrl}/og-image.png`;
          ======================================== */
 
       :root {
-        /* Dark mode colors (default) */
-        --theme-bg-primary: #0f172a;
-        --theme-bg-secondary: #1e293b;
-        --theme-bg-tertiary: #334155;
-        --theme-bg-card: rgba(30, 41, 59, 0.7);
-        --theme-bg-input: rgba(30, 41, 59, 0.8);
-        --theme-text-primary: #ffffff;
-        --theme-text-secondary: #e2e8f0;
-        --theme-text-muted: #94a3b8;
-        --theme-border: rgba(148, 163, 184, 0.25);
-        --theme-shadow: rgba(0, 0, 0, 0.4);
-        --theme-accent: #14b8a6;
-        --theme-accent-hover: #2dd4bf;
+        /* Font system */
+        --font-sans: 'Geist Sans', 'Geist', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+
+        /* Dark mode colors (default) - OKLCH aligned with landing page */
+        --theme-bg-primary: oklch(0.1648 0.0075 270.93);
+        --theme-bg-secondary: oklch(0.22 0.01 270);
+        --theme-bg-tertiary: oklch(0.28 0.012 270);
+        --theme-bg-card: oklch(0.22 0.01 270 / 0.7);
+        --theme-bg-input: oklch(0.22 0.01 270 / 0.8);
+        --theme-text-primary: oklch(0.98 0.004 264);
+        --theme-text-secondary: oklch(0.9 0.008 264);
+        --theme-text-muted: oklch(0.65 0.01 264);
+        --theme-border: oklch(0.4 0.01 264 / 0.3);
+        --theme-shadow: oklch(0 0 0 / 0.4);
+        --theme-accent: oklch(0.78 0.13 291);
+        --theme-accent-hover: oklch(0.83 0.13 291);
       }
 
       html:not(.dark) {
-        /* Light mode colors */
-        --theme-bg-primary: #f8fafc;
-        --theme-bg-secondary: #ffffff;
-        --theme-bg-tertiary: #f1f5f9;
-        --theme-bg-card: #ffffff;
-        --theme-bg-input: #ffffff;
-        --theme-text-primary: #1e293b;
-        --theme-text-secondary: #334155;
-        --theme-text-muted: #64748b;
-        --theme-border: rgba(203, 213, 225, 0.5);
-        --theme-shadow: rgba(0, 0, 0, 0.08);
-        --theme-accent: #0d9488;
-        --theme-accent-hover: #0f766e;
+        /* Light mode colors - OKLCH aligned with landing page */
+        --theme-bg-primary: oklch(0.98 0.004 264);
+        --theme-bg-secondary: oklch(1 0 0);
+        --theme-bg-tertiary: oklch(0.96 0.004 264);
+        --theme-bg-card: oklch(1 0 0);
+        --theme-bg-input: oklch(1 0 0);
+        --theme-text-primary: oklch(0.15 0.02 264);
+        --theme-text-secondary: oklch(0.25 0.02 264);
+        --theme-text-muted: oklch(0.52 0.01 264);
+        --theme-border: oklch(0.82 0.008 264 / 0.5);
+        --theme-shadow: oklch(0 0 0 / 0.08);
+        --theme-accent: oklch(0.78 0.13 291);
+        --theme-accent-hover: oklch(0.68 0.13 291);
       }
 
       /* ========================================
          THEME PRESET: MIDNIGHT (Issue #142)
-         Deep indigo/purple dark theme
+         Deep indigo/purple dark theme - OKLCH
          ======================================== */
       html.theme-midnight {
-        --theme-bg-primary: #0a0a1a;
-        --theme-bg-secondary: #12122a;
-        --theme-bg-tertiary: #1a1a3a;
-        --theme-bg-card: rgba(18, 18, 42, 0.8);
-        --theme-bg-input: rgba(18, 18, 42, 0.9);
-        --theme-text-primary: #e8e8f0;
-        --theme-text-secondary: #c8c8d8;
-        --theme-text-muted: #8888aa;
-        --theme-border: rgba(136, 136, 170, 0.25);
-        --theme-shadow: rgba(0, 0, 0, 0.5);
-        --theme-accent: #6366f1;
-        --theme-accent-hover: #818cf8;
+        --theme-bg-primary: oklch(0.13 0.03 280);
+        --theme-bg-secondary: oklch(0.17 0.035 280);
+        --theme-bg-tertiary: oklch(0.22 0.04 280);
+        --theme-bg-card: oklch(0.17 0.035 280 / 0.8);
+        --theme-bg-input: oklch(0.17 0.035 280 / 0.9);
+        --theme-text-primary: oklch(0.93 0.01 280);
+        --theme-text-secondary: oklch(0.82 0.015 280);
+        --theme-text-muted: oklch(0.6 0.03 280);
+        --theme-border: oklch(0.6 0.03 280 / 0.25);
+        --theme-shadow: oklch(0 0 0 / 0.5);
+        --theme-accent: oklch(0.55 0.24 285);
+        --theme-accent-hover: oklch(0.65 0.22 285);
       }
 
       /* ========================================
          THEME PRESET: OCEAN (Issue #142)
-         Deep blue oceanic theme
+         Deep blue oceanic theme - OKLCH
          ======================================== */
       html.theme-ocean {
-        --theme-bg-primary: #0a1628;
-        --theme-bg-secondary: #0f2744;
-        --theme-bg-tertiary: #163860;
-        --theme-bg-card: rgba(15, 39, 68, 0.8);
-        --theme-bg-input: rgba(15, 39, 68, 0.9);
-        --theme-text-primary: #e0f2fe;
-        --theme-text-secondary: #bae6fd;
-        --theme-text-muted: #7dd3fc;
-        --theme-border: rgba(125, 211, 252, 0.25);
-        --theme-shadow: rgba(0, 0, 0, 0.5);
-        --theme-accent: #0ea5e9;
-        --theme-accent-hover: #38bdf8;
+        --theme-bg-primary: oklch(0.16 0.03 250);
+        --theme-bg-secondary: oklch(0.22 0.04 250);
+        --theme-bg-tertiary: oklch(0.28 0.05 250);
+        --theme-bg-card: oklch(0.22 0.04 250 / 0.8);
+        --theme-bg-input: oklch(0.22 0.04 250 / 0.9);
+        --theme-text-primary: oklch(0.95 0.01 230);
+        --theme-text-secondary: oklch(0.85 0.03 230);
+        --theme-text-muted: oklch(0.72 0.08 230);
+        --theme-border: oklch(0.72 0.08 230 / 0.25);
+        --theme-shadow: oklch(0 0 0 / 0.5);
+        --theme-accent: oklch(0.65 0.17 230);
+        --theme-accent-hover: oklch(0.72 0.14 230);
       }
 
       /* ========================================
          THEME PRESET: FOREST (Issue #142)
-         Deep green nature theme
+         Deep green nature theme - OKLCH
          ======================================== */
       html.theme-forest {
-        --theme-bg-primary: #0a1a0f;
-        --theme-bg-secondary: #0f2a16;
-        --theme-bg-tertiary: #163a20;
-        --theme-bg-card: rgba(15, 42, 22, 0.8);
-        --theme-bg-input: rgba(15, 42, 22, 0.9);
-        --theme-text-primary: #dcfce7;
-        --theme-text-secondary: #bbf7d0;
-        --theme-text-muted: #86efac;
-        --theme-border: rgba(134, 239, 172, 0.25);
-        --theme-shadow: rgba(0, 0, 0, 0.5);
-        --theme-accent: #22c55e;
-        --theme-accent-hover: #4ade80;
+        --theme-bg-primary: oklch(0.15 0.03 145);
+        --theme-bg-secondary: oklch(0.2 0.04 145);
+        --theme-bg-tertiary: oklch(0.26 0.05 145);
+        --theme-bg-card: oklch(0.2 0.04 145 / 0.8);
+        --theme-bg-input: oklch(0.2 0.04 145 / 0.9);
+        --theme-text-primary: oklch(0.95 0.02 145);
+        --theme-text-secondary: oklch(0.85 0.05 145);
+        --theme-text-muted: oklch(0.72 0.1 145);
+        --theme-border: oklch(0.72 0.1 145 / 0.25);
+        --theme-shadow: oklch(0 0 0 / 0.5);
+        --theme-accent: oklch(0.65 0.19 150);
+        --theme-accent-hover: oklch(0.72 0.17 150);
       }
 
       /* ========================================
          THEME PRESET: SUNSET (Issue #142)
-         Warm orange/red dark theme
+         Warm orange/red dark theme - OKLCH
          ======================================== */
       html.theme-sunset {
-        --theme-bg-primary: #1a0a0a;
-        --theme-bg-secondary: #2a1010;
-        --theme-bg-tertiary: #3a1818;
-        --theme-bg-card: rgba(42, 16, 16, 0.8);
-        --theme-bg-input: rgba(42, 16, 16, 0.9);
-        --theme-text-primary: #fef2f2;
-        --theme-text-secondary: #fecaca;
-        --theme-text-muted: #fca5a5;
-        --theme-border: rgba(252, 165, 165, 0.25);
-        --theme-shadow: rgba(0, 0, 0, 0.5);
-        --theme-accent: #f97316;
-        --theme-accent-hover: #fb923c;
+        --theme-bg-primary: oklch(0.15 0.03 25);
+        --theme-bg-secondary: oklch(0.2 0.035 25);
+        --theme-bg-tertiary: oklch(0.26 0.04 25);
+        --theme-bg-card: oklch(0.2 0.035 25 / 0.8);
+        --theme-bg-input: oklch(0.2 0.035 25 / 0.9);
+        --theme-text-primary: oklch(0.97 0.005 25);
+        --theme-text-secondary: oklch(0.87 0.03 25);
+        --theme-text-muted: oklch(0.75 0.06 25);
+        --theme-border: oklch(0.75 0.06 25 / 0.25);
+        --theme-shadow: oklch(0 0 0 / 0.5);
+        --theme-accent: oklch(0.72 0.17 55);
+        --theme-accent-hover: oklch(0.78 0.14 55);
       }
 
       /* ========================================
@@ -339,6 +354,215 @@ const ogImage = `${siteUrl}/og-image.png`;
       body {
         background-color: var(--theme-bg-primary) !important;
         color: var(--theme-text-primary);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      code, pre, .font-mono {
+        font-family: var(--font-mono);
+      }
+
+      /* ========================================
+         DARK MODE: GLASS-MORPHISM BASE STYLES
+         ======================================== */
+
+      html.dark .sketch-card,
+      html.dark [class*='sketch-card'],
+      html.dark .card-front,
+      html.dark .card-back {
+        background: var(--theme-bg-card) !important;
+        backdrop-filter: blur(12px) saturate(150%);
+        border: 1px solid var(--theme-border) !important;
+        box-shadow: 0 4px 24px var(--theme-shadow) !important;
+      }
+
+      html.dark .sketch-card:hover,
+      html.dark [class*='sketch-card']:hover {
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+        box-shadow: 0 0 20px oklch(from var(--theme-accent) l c h / 0.08) !important;
+      }
+
+      html.dark .sketch-input,
+      html.dark input:not([type='checkbox']):not([type='radio']),
+      html.dark textarea,
+      html.dark select {
+        background: var(--theme-bg-input) !important;
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text-primary) !important;
+      }
+
+      html.dark .sketch-input:focus,
+      html.dark input:focus,
+      html.dark textarea:focus {
+        border-color: var(--theme-accent) !important;
+        box-shadow: 0 0 0 2px oklch(from var(--theme-accent) l c h / 0.15) !important;
+      }
+
+      html.dark .sketch-input::placeholder,
+      html.dark input::placeholder {
+        color: var(--theme-text-muted) !important;
+      }
+
+      html.dark .filter-card {
+        background: var(--theme-bg-card) !important;
+        backdrop-filter: blur(12px) saturate(150%);
+        border-color: var(--theme-border) !important;
+      }
+
+      html.dark .sidebar-panel,
+      html.dark aside {
+        background: var(--theme-bg-secondary) !important;
+        border-color: var(--theme-border) !important;
+      }
+
+      html.dark .dropdown-menu,
+      html.dark [role='menu']:not(.context-menu),
+      html.dark [role='listbox'] {
+        background: var(--theme-bg-secondary) !important;
+        backdrop-filter: blur(16px) saturate(150%);
+        border: 1px solid var(--theme-border) !important;
+        box-shadow: 0 8px 32px var(--theme-shadow) !important;
+      }
+
+      html.dark .dropdown-option:hover {
+        background: var(--theme-bg-tertiary) !important;
+      }
+
+      html.dark .dropdown-option.selected {
+        background: oklch(from var(--theme-accent) l c h / 0.15) !important;
+        color: var(--theme-accent) !important;
+      }
+
+      /* Primary button - accent colored */
+      html.dark button[type='submit'],
+      html.dark .find-issues-btn {
+        background: var(--theme-accent) !important;
+        color: oklch(0.15 0.01 264) !important;
+        border: none !important;
+        font-weight: 600;
+      }
+
+      html.dark button[type='submit']:hover,
+      html.dark .find-issues-btn:hover {
+        background: var(--theme-accent-hover) !important;
+        box-shadow: 0 0 20px oklch(from var(--theme-accent) l c h / 0.25) !important;
+      }
+
+      /* Ghost/secondary buttons */
+      html.dark .icon-btn,
+      html.dark .export-btn,
+      html.dark .filter-toggle {
+        background: var(--theme-bg-tertiary) !important;
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text-secondary) !important;
+      }
+
+      html.dark .icon-btn:hover,
+      html.dark .export-btn:hover,
+      html.dark .filter-toggle:hover {
+        background: oklch(0.3 0.012 264 / 0.8) !important;
+        color: var(--theme-text-primary) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+      }
+
+      html.dark .filter-toggle.active {
+        background: oklch(from var(--theme-accent) l c h / 0.15) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.4) !important;
+        color: var(--theme-accent) !important;
+      }
+
+      /* Quick pick chips */
+      html.dark .quick-pick-chip {
+        background: var(--theme-bg-tertiary) !important;
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text-secondary) !important;
+      }
+
+      html.dark .quick-pick-chip:hover:not(:disabled) {
+        background: oklch(0.3 0.012 264 / 0.8) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+        color: var(--theme-text-primary) !important;
+      }
+
+      /* Help popup glass */
+      html.dark .help-popup-wrapper {
+        background: var(--theme-bg-secondary) !important;
+        backdrop-filter: blur(16px) saturate(150%);
+        border: 1px solid var(--theme-border) !important;
+      }
+
+      /* Loading progress glass */
+      html.dark .loading-progress-container {
+        background: oklch(0.18 0.008 264 / 0.9) !important;
+        backdrop-filter: blur(16px) saturate(150%);
+        border: 1px solid var(--theme-border) !important;
+      }
+
+      /* Toast glass */
+      html.dark .toast,
+      html.dark [class*='toast'] {
+        background: var(--theme-bg-secondary) !important;
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text-primary) !important;
+      }
+
+      /* Empty state glass */
+      html.dark .empty-state-container {
+        background: var(--theme-bg-card) !important;
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--theme-border) !important;
+      }
+
+      /* Help & theme FABs */
+      html.dark .help-button {
+        background: var(--theme-accent) !important;
+        color: oklch(0.15 0.01 264) !important;
+        box-shadow: 0 4px 16px oklch(from var(--theme-accent) l c h / 0.3) !important;
+      }
+
+      html.dark .help-button:hover {
+        background: var(--theme-accent-hover) !important;
+        box-shadow: 0 6px 24px oklch(from var(--theme-accent) l c h / 0.4) !important;
+      }
+
+      /* Share button */
+      html.dark .share-btn {
+        background: var(--theme-bg-tertiary) !important;
+        border: 1px solid var(--theme-border) !important;
+        color: var(--theme-text-muted) !important;
+      }
+
+      html.dark .share-btn:hover {
+        background: oklch(from var(--theme-accent) l c h / 0.1) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+        color: var(--theme-accent) !important;
+      }
+
+      /* Scrollbar dark mode */
+      html.dark ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      html.dark ::-webkit-scrollbar-track {
+        background: var(--theme-bg-primary);
+      }
+
+      html.dark ::-webkit-scrollbar-thumb {
+        background: oklch(0.35 0.01 264 / 0.5);
+        border-radius: 4px;
+      }
+
+      html.dark ::-webkit-scrollbar-thumb:hover {
+        background: oklch(0.45 0.01 264 / 0.6);
+      }
+
+      html.dark * {
+        scrollbar-color: oklch(0.35 0.01 264 / 0.5) var(--theme-bg-primary);
+        scrollbar-width: thin;
       }
 
       /* ========================================
@@ -542,7 +766,7 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) textarea:focus,
       html:not(.dark) .sketch-input:focus {
         border-color: #94a3b8 !important;
-        outline-color: #0d9488 !important;
+        outline-color: var(--theme-accent) !important;
       }
 
       /* ========================================
@@ -562,10 +786,10 @@ const ogImage = `${siteUrl}/og-image.png`;
         background-color: #cbd5e1 !important;
       }
 
-      /* Keep teal/primary buttons as-is */
-      html:not(.dark) button[class*='bg-teal'],
+      /* Keep accent/primary buttons as-is */
+      html:not(.dark) button[class*='bg-violet'],
       html:not(.dark) button[class*='bg-green'],
-      html:not(.dark) a[class*='bg-teal'],
+      html:not(.dark) a[class*='bg-violet'],
       html:not(.dark) a[class*='bg-green'] {
         color: #ffffff !important;
       }
@@ -613,14 +837,14 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       html:not(.dark) .nav-link,
       html:not(.dark) .company,
-      html:not(.dark) footer a:not([class*='text-teal']) {
+      html:not(.dark) footer a:not([class*='text-violet']) {
         color: #475569 !important;
       }
 
       html:not(.dark) .nav-link:hover,
       html:not(.dark) .company:hover,
       html:not(.dark) footer a:hover {
-        color: #0d9488 !important;
+        color: var(--theme-accent-hover) !important;
       }
 
       html:not(.dark) .share-btn,
@@ -629,11 +853,11 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .share-btn:hover {
-        color: #0d9488 !important;
+        color: var(--theme-accent-hover) !important;
       }
 
       html:not(.dark) .product {
-        color: #0d9488 !important;
+        color: var(--theme-accent) !important;
       }
 
       html:not(.dark) .by {
@@ -641,8 +865,8 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .version {
-        color: #0d9488 !important;
-        background: rgba(13, 148, 136, 0.15) !important;
+        color: var(--theme-accent) !important;
+        background: oklch(from var(--theme-accent) l c h / 0.15) !important;
       }
 
       /* ========================================
@@ -913,9 +1137,9 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .share-btn:hover {
-        background: rgba(13, 148, 136, 0.1) !important;
-        border-color: rgba(13, 148, 136, 0.3) !important;
-        color: #0d9488 !important;
+        background: oklch(from var(--theme-accent) l c h / 0.1) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+        color: var(--theme-accent) !important;
       }
 
       /* ========================================
@@ -971,7 +1195,7 @@ const ogImage = `${siteUrl}/og-image.png`;
         background: linear-gradient(
           to right,
           rgba(251, 191, 36, 0.1),
-          rgba(20, 184, 166, 0.1)
+          oklch(0.78 0.13 291 / 0.1)
         ) !important;
         border-color: rgba(251, 191, 36, 0.3) !important;
       }
@@ -1151,21 +1375,21 @@ const ogImage = `${siteUrl}/og-image.png`;
         background: linear-gradient(
           to right,
           rgba(251, 191, 36, 0.12),
-          rgba(13, 148, 136, 0.08)
+          oklch(0.78 0.13 291 / 0.08)
         ) !important;
         border-color: rgba(251, 191, 36, 0.35) !important;
       }
 
-      /* "Get 5000/hr" button - ensure white text on teal */
-      html:not(.dark) a[class*='bg-teal-6'],
-      html:not(.dark) a.bg-teal-600 {
-        background: #0d9488 !important;
+      /* "Get 5000/hr" button - accent colored */
+      html:not(.dark) a[class*='bg-violet-6'],
+      html:not(.dark) a.bg-violet-600 {
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
       }
 
-      html:not(.dark) a[class*='bg-teal-6']:hover,
-      html:not(.dark) a.bg-teal-600:hover {
-        background: #14b8a6 !important;
+      html:not(.dark) a[class*='bg-violet-6']:hover,
+      html:not(.dark) a.bg-violet-600:hover {
+        background: var(--theme-accent-hover) !important;
         color: #ffffff !important;
       }
 
@@ -1263,27 +1487,27 @@ const ogImage = `${siteUrl}/og-image.png`;
         color: #ffffff !important;
       }
 
-      /* All teal/green gradient buttons should have white text */
+      /* All violet/green gradient buttons should have white text */
       html:not(.dark) button[class*='bg-gradient'],
-      html:not(.dark) button[class*='from-teal'],
-      html:not(.dark) button[class*='bg-teal'],
+      html:not(.dark) button[class*='from-violet'],
+      html:not(.dark) button[class*='bg-violet'],
       html:not(.dark) button[class*='bg-green'] {
         color: #ffffff !important;
       }
 
       html:not(.dark) button[class*='bg-gradient']:hover,
-      html:not(.dark) button[class*='from-teal']:hover,
-      html:not(.dark) button[class*='bg-teal']:hover,
+      html:not(.dark) button[class*='from-violet']:hover,
+      html:not(.dark) button[class*='bg-violet']:hover,
       html:not(.dark) button[class*='bg-green']:hover {
         color: #ffffff !important;
       }
 
       html:not(.dark) .secondary-action {
-        color: #0d9488 !important;
+        color: var(--theme-accent) !important;
       }
 
       html:not(.dark) .secondary-action:hover {
-        color: #0f766e !important;
+        color: var(--theme-accent-hover) !important;
       }
 
       /* ========================================
@@ -1367,14 +1591,14 @@ const ogImage = `${siteUrl}/og-image.png`;
          ======================================== */
 
       html:not(.dark)
-        a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not(
+        a:not([class*='text-violet']):not([class*='text-green']):not([class*='text-amber']):not(
           [class*='bg-']
         ) {
         color: #2563eb;
       }
 
       html:not(.dark)
-        a:not([class*='text-teal']):not([class*='text-green']):not([class*='text-amber']):not(
+        a:not([class*='text-violet']):not([class*='text-green']):not([class*='text-amber']):not(
           [class*='bg-']
         ):hover {
         color: #1d4ed8;
@@ -1487,7 +1711,7 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .flip-button[aria-pressed='true'] {
-        background: #0d9488 !important;
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
       }
 
@@ -1520,7 +1744,7 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html.dark .flip-button[aria-pressed='true'] {
-        background: #14b8a6 !important;
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
       }
 
@@ -1535,28 +1759,28 @@ const ogImage = `${siteUrl}/og-image.png`;
          Theme Toggle, Help FAB, Find Issues Button
          ======================================== */
 
-      /* Help FAB button - keep teal but adjust shadow */
+      /* Help FAB button - accent colored */
       html:not(.dark) .help-button {
-        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25) !important;
+        box-shadow: 0 4px 16px oklch(from var(--theme-accent) l c h / 0.3) !important;
       }
 
       html:not(.dark) .help-button:hover {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
-        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+        background: var(--theme-accent-hover) !important;
+        box-shadow: 0 6px 20px oklch(from var(--theme-accent) l c h / 0.4) !important;
       }
 
-      /* Theme toggle button - adjust for light mode visibility */
+      /* Theme toggle button - accent colored for visibility */
       html:not(.dark) .theme-toggle-btn,
       html:not(.dark) .theme-toggle,
       html:not(.dark) [class*='theme-toggle'],
       html:not(.dark) button[aria-label*='Switch to dark'],
       html:not(.dark) button[aria-label*='Switch to light'],
       html:not(.dark) button[title*='Switch to'] {
-        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.25) !important;
+        box-shadow: 0 4px 16px oklch(from var(--theme-accent) l c h / 0.3) !important;
         border: none !important;
       }
 
@@ -1566,36 +1790,36 @@ const ogImage = `${siteUrl}/og-image.png`;
       html:not(.dark) button[aria-label*='Switch to dark']:hover,
       html:not(.dark) button[aria-label*='Switch to light']:hover,
       html:not(.dark) button[title*='Switch to']:hover {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
-        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35) !important;
+        background: var(--theme-accent-hover) !important;
+        box-shadow: 0 6px 20px oklch(from var(--theme-accent) l c h / 0.4) !important;
       }
 
       /* Find Issues button - primary action */
-      html:not(.dark) button[type='submit'][class*='bg-teal'],
-      html:not(.dark) button[type='submit'][class*='from-teal'],
+      html:not(.dark) button[type='submit'][class*='bg-violet'],
+      html:not(.dark) button[type='submit'][class*='from-violet'],
       html:not(.dark) .find-issues-btn,
-      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-teal'] {
-        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-violet'] {
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3) !important;
+        box-shadow: 0 4px 16px oklch(from var(--theme-accent) l c h / 0.35) !important;
       }
 
-      html:not(.dark) button[type='submit'][class*='bg-teal']:hover,
-      html:not(.dark) button[type='submit'][class*='from-teal']:hover,
+      html:not(.dark) button[type='submit'][class*='bg-violet']:hover,
+      html:not(.dark) button[type='submit'][class*='from-violet']:hover,
       html:not(.dark) .find-issues-btn:hover,
-      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-teal']:hover {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
-        box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4) !important;
+      html:not(.dark) button[class*='bg-gradient-to-r'][class*='from-violet']:hover {
+        background: var(--theme-accent-hover) !important;
+        box-shadow: 0 6px 20px oklch(from var(--theme-accent) l c h / 0.45) !important;
       }
 
       /* Get 5000/hr link button */
-      html:not(.dark) a[class*='bg-teal'] {
-        background: #0d9488 !important;
+      html:not(.dark) a[class*='bg-violet'] {
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
       }
 
-      html:not(.dark) a[class*='bg-teal']:hover {
-        background: #0f766e !important;
+      html:not(.dark) a[class*='bg-violet']:hover {
+        background: var(--theme-accent-hover) !important;
       }
 
       /* ========================================
@@ -1661,11 +1885,11 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       /* Filter action buttons (Clear, Show more) */
       html:not(.dark) .filter-action-btn {
-        color: #0d9488 !important;
+        color: var(--theme-accent) !important;
       }
 
       html:not(.dark) .filter-action-btn:hover {
-        color: #0f766e !important;
+        color: var(--theme-accent-hover) !important;
       }
 
       html:not(.dark) .filter-action-btn.text-amber-400 {
@@ -1727,8 +1951,8 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .dropdown-option.selected {
-        background: rgba(13, 148, 136, 0.15) !important;
-        color: #0d9488 !important;
+        background: oklch(from var(--theme-accent) l c h / 0.15) !important;
+        color: var(--theme-accent) !important;
       }
 
       /* Icon button (sort direction) */
@@ -1768,9 +1992,9 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .share-btn:hover {
-        background: rgba(13, 148, 136, 0.1) !important;
-        border-color: rgba(13, 148, 136, 0.3) !important;
-        color: #0d9488 !important;
+        background: oklch(from var(--theme-accent) l c h / 0.1) !important;
+        border-color: oklch(from var(--theme-accent) l c h / 0.3) !important;
+        color: var(--theme-accent) !important;
       }
 
       /* Reset button */
@@ -1787,7 +2011,7 @@ const ogImage = `${siteUrl}/og-image.png`;
          ======================================== */
 
       html:not(.dark) body {
-        background: #f1f5f9 !important;
+        background: var(--theme-bg-primary) !important;
         background-image: none !important;
       }
 
@@ -1819,7 +2043,7 @@ const ogImage = `${siteUrl}/og-image.png`;
         background: linear-gradient(
           to right,
           rgba(251, 191, 36, 0.08),
-          rgba(13, 148, 136, 0.08)
+          oklch(0.78 0.13 291 / 0.08)
         ) !important;
         border-color: rgba(251, 191, 36, 0.25) !important;
       }
@@ -1918,7 +2142,7 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       html:not(.dark) .cancel-modal .issues-info .info-icon,
       html:not(.dark) .cancel-modal .issues-info svg.info-icon {
-        color: #14b8a6 !important;
+        color: var(--theme-accent) !important;
         background: transparent !important;
         background-color: transparent !important;
       }
@@ -1952,20 +2176,20 @@ const ogImage = `${siteUrl}/og-image.png`;
         box-shadow: none !important;
       }
 
-      /* Continue Loading button - SOLID teal gradient */
+      /* Continue Loading button - accent colored */
       html:not(.dark) .cancel-modal .btn-continue,
       html:not(.dark) .cancel-modal button.btn-continue {
-        background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+        background: var(--theme-accent) !important;
         color: #ffffff !important;
         border: none !important;
-        box-shadow: 0 2px 8px rgba(20, 184, 166, 0.35) !important;
+        box-shadow: 0 2px 8px oklch(from var(--theme-accent) l c h / 0.35) !important;
       }
 
       html:not(.dark) .cancel-modal .btn-continue:hover,
       html:not(.dark) .cancel-modal button.btn-continue:hover {
-        background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+        background: var(--theme-accent-hover) !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 12px rgba(20, 184, 166, 0.45) !important;
+        box-shadow: 0 4px 12px oklch(from var(--theme-accent) l c h / 0.45) !important;
       }
 
       /* Yes, Show Results button - SOLID amber/yellow */
@@ -2099,7 +2323,7 @@ const ogImage = `${siteUrl}/og-image.png`;
       /* Operator code blocks */
       html:not(.dark) .help-modal .operators code {
         background: rgba(226, 232, 240, 0.8) !important;
-        color: #0d9488 !important;
+        color: var(--theme-accent) !important;
       }
 
       html:not(.dark) .help-modal .operators span {
@@ -2128,11 +2352,11 @@ const ogImage = `${siteUrl}/og-image.png`;
       }
 
       html:not(.dark) .help-modal .footer a {
-        color: #0d9488 !important;
+        color: var(--theme-accent) !important;
       }
 
       html:not(.dark) .help-modal .footer a:hover {
-        color: #0f766e !important;
+        color: var(--theme-accent-hover) !important;
       }
 
       /* Keyboard hint */
@@ -2267,5 +2491,6 @@ const ogImage = `${siteUrl}/og-image.png`;
     <ScrollToTop client:idle />
     <ThemeSelector client:idle />
     <Footer client:visible />
+    <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ISSUEVISTA_CF_ANALYTICS_TOKEN"}'></script>
   </body>
 </html>

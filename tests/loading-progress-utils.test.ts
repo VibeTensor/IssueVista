@@ -967,24 +967,24 @@ describe('Utility Functions', () => {
       expect(getProgressColor('error')).toBe('bg-red-500');
     });
 
-    it('should return teal for initializing phase', () => {
-      expect(getProgressColor('initializing')).toBe('bg-teal-500');
+    it('should return violet for initializing phase', () => {
+      expect(getProgressColor('initializing')).toBe('bg-violet-500');
     });
 
-    it('should return teal for authenticating phase', () => {
-      expect(getProgressColor('authenticating')).toBe('bg-teal-500');
+    it('should return violet for authenticating phase', () => {
+      expect(getProgressColor('authenticating')).toBe('bg-violet-500');
     });
 
-    it('should return teal for fetching phase', () => {
-      expect(getProgressColor('fetching')).toBe('bg-teal-500');
+    it('should return violet for fetching phase', () => {
+      expect(getProgressColor('fetching')).toBe('bg-violet-500');
     });
 
-    it('should return teal for processing phase', () => {
-      expect(getProgressColor('processing')).toBe('bg-teal-500');
+    it('should return violet for processing phase', () => {
+      expect(getProgressColor('processing')).toBe('bg-violet-500');
     });
 
-    it('should return teal for unknown phase', () => {
-      expect(getProgressColor('unknown' as LoadingPhase)).toBe('bg-teal-500');
+    it('should return violet for unknown phase', () => {
+      expect(getProgressColor('unknown' as LoadingPhase)).toBe('bg-violet-500');
     });
   });
 

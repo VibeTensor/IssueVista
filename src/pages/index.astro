@@ -1,8 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { ResultsContainer } from '../components/results';
+import LandingLayout from '../layouts/LandingLayout.astro';
+import { Header } from '../components/landing/Header';
+import { Hero } from '../components/landing/Hero';
+import { Features } from '../components/landing/Features';
+import { UseCases } from '../components/landing/UseCases';
+import { Statistics } from '../components/landing/Statistics';
+import { Community } from '../components/landing/Community';
+import { CTA } from '../components/landing/CTA';
+import { Footer } from '../components/landing/Footer';
 ---
 
-<Layout title="IssueVista - Find Unassigned GitHub Issues">
-  <ResultsContainer client:load />
-</Layout>
+<LandingLayout title="IssueVista - Find Beginner-Friendly GitHub Issues">
+  <Header client:load />
+  <main>
+    <Hero client:load />
+    <Features client:visible />
+    <UseCases client:visible />
+    <Statistics client:visible />
+    <Community client:visible />
+    <CTA client:visible />
+  </main>
+  <Footer client:visible />
+</LandingLayout>

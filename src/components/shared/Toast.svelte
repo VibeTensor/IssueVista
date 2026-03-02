@@ -144,7 +144,7 @@
   }
 
   .toast-success {
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    background: var(--theme-accent, oklch(0.78 0.13 291));
   }
 
   .toast-error {

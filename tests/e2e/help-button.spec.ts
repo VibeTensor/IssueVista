@@ -51,10 +51,10 @@ test.describe('Help Button - Brand Styled FAB', () => {
     await expect(helpButton).toHaveAttribute('aria-expanded', 'true');
   });
 
-  test('should have teal gradient styling', async ({ page }) => {
+  test('should have accent gradient styling', async ({ page }) => {
     const helpButton = page.locator('.help-button');
 
-    // Check background includes gradient (teal colors)
+    // Check background includes gradient (accent colors)
     const bgStyle = await helpButton.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bgStyle).toContain('gradient');
   });
@@ -91,8 +91,8 @@ test.describe('Help Popup - Modal Dialog', () => {
     await expect(title).toHaveText(/how it works/i);
   });
 
-  test('should have 4 numbered steps with teal styling', async ({ page }) => {
-    // Check for step badges with teal gradient
+  test('should have 4 numbered steps with accent styling', async ({ page }) => {
+    // Check for step badges with accent gradient
     const stepBadges = page.locator('.sketch-card .bg-gradient-to-br');
     const count = await stepBadges.count();
     expect(count).toBe(4); // Steps 1-4
@@ -113,17 +113,17 @@ test.describe('Help Popup - Modal Dialog', () => {
     expect(count).toBe(4); // 4 condensed steps
   });
 
-  test('should have teal CTA button', async ({ page }) => {
+  test('should have accent CTA button', async ({ page }) => {
     // Find the CTA button (compact design uses just "Got it!")
     const ctaButton = page.getByRole('button', { name: /got it/i });
     await expect(ctaButton).toBeVisible();
 
-    // Check for teal gradient background
+    // Check for accent gradient background
     const bgStyle = await ctaButton.evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(bgStyle).toContain('gradient');
   });
 
-  test('should have teal-colored link for token creation', async ({ page }) => {
+  test('should have violet-colored link for token creation', async ({ page }) => {
     // Expand the details first
     const details = page.locator('details');
     await details.locator('summary').click();
@@ -131,8 +131,8 @@ test.describe('Help Popup - Modal Dialog', () => {
     const tokenLink = page.locator('a[href*="github.com/settings/tokens"]');
     await expect(tokenLink).toBeVisible();
 
-    // Check for teal color class
-    const hasClass = await tokenLink.evaluate((el) => el.classList.contains('text-teal-400'));
+    // Check for violet color class
+    const hasClass = await tokenLink.evaluate((el) => el.classList.contains('text-violet-400'));
     expect(hasClass).toBe(true);
   });
 

@@ -332,11 +332,7 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    background: linear-gradient(
-      135deg,
-      var(--theme-accent, #0d9488) 0%,
-      var(--theme-accent-hover, #0f766e) 100%
-    );
+    background: var(--theme-accent, oklch(0.78 0.13 291));
     color: white;
     border: none;
     border-radius: 9999px;

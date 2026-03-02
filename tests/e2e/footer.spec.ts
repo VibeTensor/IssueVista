@@ -268,7 +268,7 @@ test.describe('Footer Component - E2E Tests', () => {
         return window.getComputedStyle(el).color;
       });
 
-      // Color should change on hover (from gray to teal)
+      // Color should change on hover (from gray to accent)
       expect(hoverColor).not.toBe(initialColor);
     });
   });

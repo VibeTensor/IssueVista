@@ -58,7 +58,7 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    background: var(--theme-accent, oklch(0.78 0.13 291));
     color: white;
     border: none;
     border-radius: 9999px;
@@ -90,7 +90,7 @@
   }
 
   .scroll-to-top-btn.visible:hover {
-    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
     transform: translateY(-0.125rem);
     box-shadow:
       0 10px 15px -3px rgba(0, 0, 0, 0.1),

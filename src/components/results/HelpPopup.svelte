@@ -96,7 +96,7 @@
         >
           <div class="flex items-center gap-2 min-w-0">
             <div
-              class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-teal-500 to-teal-600 shadow-sm shadow-teal-500/20"
+              class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-violet-500 to-violet-600 shadow-sm shadow-violet-500/20"
             >
               <svg
                 class="w-3.5 h-3.5 text-white"
@@ -146,7 +146,7 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
               >
                 1
               </div>
@@ -158,7 +158,7 @@
 
                 <!-- Token Generation - Collapsed -->
                 <details class="bg-slate-800/40 rounded p-2">
-                  <summary class="text-[11px] text-teal-400 cursor-pointer hover:text-teal-300"
+                  <summary class="text-[11px] text-violet-400 cursor-pointer hover:text-violet-300"
                     >How to create a token →</summary
                   >
                   <ol class="mt-1.5 space-y-1 text-[11px] text-slate-300 list-decimal list-inside">
@@ -167,7 +167,7 @@
                         href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="text-teal-400 hover:text-teal-300 underline">this link</a
+                        class="text-violet-400 hover:text-violet-300 underline">this link</a
                       >
                     </li>
                     <li>Check <span class="text-white">"public_repo"</span> scope</li>
@@ -183,7 +183,7 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
               >
                 2
               </div>
@@ -198,7 +198,7 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
               >
                 3
               </div>
@@ -213,7 +213,7 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-teal-500 to-teal-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-teal-500/20"
+                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
               >
                 4
               </div>
@@ -232,7 +232,7 @@
           <button
             bind:this={ctaButtonRef}
             onclick={onClose}
-            class="w-full bg-gradient-to-r from-teal-500 to-teal-600 text-white py-2 px-4 rounded font-semibold text-xs hover:from-teal-400 hover:to-teal-500 shadow-sm shadow-teal-500/25 transition-all duration-200"
+            class="w-full bg-gradient-to-r from-violet-500 to-violet-600 text-white py-2 px-4 rounded font-semibold text-xs hover:from-violet-400 hover:to-violet-500 shadow-sm shadow-violet-500/25 transition-all duration-200"
           >
             Got it!
           </button>

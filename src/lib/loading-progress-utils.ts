@@ -303,7 +303,7 @@ export function getProgressColor(phase: LoadingPhase): string {
     case 'error':
       return 'bg-red-500';
     default:
-      return 'bg-teal-500';
+      return 'bg-violet-500';
   }
 }
 

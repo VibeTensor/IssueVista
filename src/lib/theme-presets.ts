@@ -61,8 +61,8 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
       textMuted: '#64748b',
       border: 'rgba(203, 213, 225, 0.5)',
       shadow: 'rgba(0, 0, 0, 0.08)',
-      accent: '#0d9488',
-      accentHover: '#0f766e'
+      accent: 'oklch(0.78 0.13 291)',
+      accentHover: 'oklch(0.68 0.13 291)'
     }
   },
   dark: {
@@ -71,18 +71,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'moon',
     isDark: true,
     colors: {
-      bgPrimary: '#0f172a',
-      bgSecondary: '#1e293b',
-      bgTertiary: '#334155',
-      bgCard: 'rgba(30, 41, 59, 0.7)',
-      bgInput: 'rgba(30, 41, 59, 0.8)',
-      textPrimary: '#ffffff',
-      textSecondary: '#e2e8f0',
-      textMuted: '#94a3b8',
-      border: 'rgba(148, 163, 184, 0.25)',
-      shadow: 'rgba(0, 0, 0, 0.4)',
-      accent: '#14b8a6',
-      accentHover: '#2dd4bf'
+      bgPrimary: 'oklch(0.1648 0.0075 270.93)',
+      bgSecondary: 'oklch(0.22 0.01 270)',
+      bgTertiary: 'oklch(0.28 0.012 270)',
+      bgCard: 'oklch(0.22 0.01 270 / 0.7)',
+      bgInput: 'oklch(0.22 0.01 270 / 0.8)',
+      textPrimary: 'oklch(0.98 0.004 264)',
+      textSecondary: 'oklch(0.9 0.008 264)',
+      textMuted: 'oklch(0.65 0.01 264)',
+      border: 'oklch(0.4 0.01 264 / 0.3)',
+      shadow: 'oklch(0 0 0 / 0.4)',
+      accent: 'oklch(0.78 0.13 291)',
+      accentHover: 'oklch(0.83 0.13 291)'
     }
   },
   midnight: {
@@ -91,18 +91,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'star',
     isDark: true,
     colors: {
-      bgPrimary: '#0a0a1a',
-      bgSecondary: '#12122a',
-      bgTertiary: '#1a1a3a',
-      bgCard: 'rgba(18, 18, 42, 0.8)',
-      bgInput: 'rgba(18, 18, 42, 0.9)',
-      textPrimary: '#e8e8f0',
-      textSecondary: '#c8c8d8',
-      textMuted: '#8888aa',
-      border: 'rgba(136, 136, 170, 0.25)',
-      shadow: 'rgba(0, 0, 0, 0.5)',
-      accent: '#6366f1',
-      accentHover: '#818cf8'
+      bgPrimary: 'oklch(0.13 0.03 280)',
+      bgSecondary: 'oklch(0.17 0.035 280)',
+      bgTertiary: 'oklch(0.22 0.04 280)',
+      bgCard: 'oklch(0.17 0.035 280 / 0.8)',
+      bgInput: 'oklch(0.17 0.035 280 / 0.9)',
+      textPrimary: 'oklch(0.93 0.01 280)',
+      textSecondary: 'oklch(0.82 0.015 280)',
+      textMuted: 'oklch(0.6 0.03 280)',
+      border: 'oklch(0.6 0.03 280 / 0.25)',
+      shadow: 'oklch(0 0 0 / 0.5)',
+      accent: 'oklch(0.55 0.24 285)',
+      accentHover: 'oklch(0.65 0.22 285)'
     }
   },
   ocean: {
@@ -111,18 +111,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'wave',
     isDark: true,
     colors: {
-      bgPrimary: '#0a1628',
-      bgSecondary: '#0f2744',
-      bgTertiary: '#163860',
-      bgCard: 'rgba(15, 39, 68, 0.8)',
-      bgInput: 'rgba(15, 39, 68, 0.9)',
-      textPrimary: '#e0f2fe',
-      textSecondary: '#bae6fd',
-      textMuted: '#7dd3fc',
-      border: 'rgba(125, 211, 252, 0.25)',
-      shadow: 'rgba(0, 0, 0, 0.5)',
-      accent: '#0ea5e9',
-      accentHover: '#38bdf8'
+      bgPrimary: 'oklch(0.16 0.03 250)',
+      bgSecondary: 'oklch(0.22 0.04 250)',
+      bgTertiary: 'oklch(0.28 0.05 250)',
+      bgCard: 'oklch(0.22 0.04 250 / 0.8)',
+      bgInput: 'oklch(0.22 0.04 250 / 0.9)',
+      textPrimary: 'oklch(0.95 0.01 230)',
+      textSecondary: 'oklch(0.85 0.03 230)',
+      textMuted: 'oklch(0.72 0.08 230)',
+      border: 'oklch(0.72 0.08 230 / 0.25)',
+      shadow: 'oklch(0 0 0 / 0.5)',
+      accent: 'oklch(0.65 0.17 230)',
+      accentHover: 'oklch(0.72 0.14 230)'
     }
   },
   forest: {
@@ -131,18 +131,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'tree',
     isDark: true,
     colors: {
-      bgPrimary: '#0a1a0f',
-      bgSecondary: '#0f2a16',
-      bgTertiary: '#163a20',
-      bgCard: 'rgba(15, 42, 22, 0.8)',
-      bgInput: 'rgba(15, 42, 22, 0.9)',
-      textPrimary: '#dcfce7',
-      textSecondary: '#bbf7d0',
-      textMuted: '#86efac',
-      border: 'rgba(134, 239, 172, 0.25)',
-      shadow: 'rgba(0, 0, 0, 0.5)',
-      accent: '#22c55e',
-      accentHover: '#4ade80'
+      bgPrimary: 'oklch(0.15 0.03 145)',
+      bgSecondary: 'oklch(0.2 0.04 145)',
+      bgTertiary: 'oklch(0.26 0.05 145)',
+      bgCard: 'oklch(0.2 0.04 145 / 0.8)',
+      bgInput: 'oklch(0.2 0.04 145 / 0.9)',
+      textPrimary: 'oklch(0.95 0.02 145)',
+      textSecondary: 'oklch(0.85 0.05 145)',
+      textMuted: 'oklch(0.72 0.1 145)',
+      border: 'oklch(0.72 0.1 145 / 0.25)',
+      shadow: 'oklch(0 0 0 / 0.5)',
+      accent: 'oklch(0.65 0.19 150)',
+      accentHover: 'oklch(0.72 0.17 150)'
     }
   },
   sunset: {
@@ -151,18 +151,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'sunset',
     isDark: true,
     colors: {
-      bgPrimary: '#1a0a0a',
-      bgSecondary: '#2a1010',
-      bgTertiary: '#3a1818',
-      bgCard: 'rgba(42, 16, 16, 0.8)',
-      bgInput: 'rgba(42, 16, 16, 0.9)',
-      textPrimary: '#fef2f2',
-      textSecondary: '#fecaca',
-      textMuted: '#fca5a5',
-      border: 'rgba(252, 165, 165, 0.25)',
-      shadow: 'rgba(0, 0, 0, 0.5)',
-      accent: '#f97316',
-      accentHover: '#fb923c'
+      bgPrimary: 'oklch(0.15 0.03 25)',
+      bgSecondary: 'oklch(0.2 0.035 25)',
+      bgTertiary: 'oklch(0.26 0.04 25)',
+      bgCard: 'oklch(0.2 0.035 25 / 0.8)',
+      bgInput: 'oklch(0.2 0.035 25 / 0.9)',
+      textPrimary: 'oklch(0.97 0.005 25)',
+      textSecondary: 'oklch(0.87 0.03 25)',
+      textMuted: 'oklch(0.75 0.06 25)',
+      border: 'oklch(0.75 0.06 25 / 0.25)',
+      shadow: 'oklch(0 0 0 / 0.5)',
+      accent: 'oklch(0.72 0.17 55)',
+      accentHover: 'oklch(0.78 0.14 55)'
     }
   }
 };

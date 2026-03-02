@@ -88,7 +88,7 @@
   type="button"
   class="help-trigger flex items-center justify-center w-6 h-6 rounded-full
          text-slate-400 hover:text-slate-300 hover:bg-slate-700/50
-         focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-1 focus:ring-offset-slate-900
+         focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-1 focus:ring-offset-slate-900
          transition-colors"
   onclick={toggleTooltip}
   aria-controls={tooltipId}
@@ -136,7 +136,7 @@
           <button
             type="button"
             class="close-btn p-1 rounded hover:bg-slate-700
-                     focus:outline-none focus:ring-1 focus:ring-teal-500
+                     focus:outline-none focus:ring-1 focus:ring-violet-500
                      text-slate-400 hover:text-slate-300 transition-colors"
             onclick={closeTooltip}
             aria-label="Close help"
@@ -162,19 +162,19 @@
           <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">Operators</h4>
           <div class="space-y-1.5">
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-teal-400 text-xs font-mono"
+              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
                 >AND</code
               >
               <span class="text-slate-400">Space between filters</span>
             </div>
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-teal-400 text-xs font-mono"
+              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
                 >OR</code
               >
               <span class="text-slate-400">Comma between filters</span>
             </div>
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-teal-400 text-xs font-mono"
+              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
                 >NOT</code
               >
               <span class="text-slate-400">Dash prefix (-)</span>
@@ -233,7 +233,7 @@
             href="https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-xs text-teal-400 hover:text-teal-300 transition-colors"
+            class="inline-flex items-center gap-1 text-xs text-violet-400 hover:text-violet-300 transition-colors"
           >
             <span>GitHub Search Docs</span>
             <svg

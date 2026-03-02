@@ -65,8 +65,6 @@
   import { addToHistory, setLastSearchedRepo } from '../../lib/search-history';
   import { SearchForm, HelpPopup, IssueCard, IssueCardSkeleton, RepoStatsPanel } from './index';
   import { infiniteScroll } from '../../lib/infinite-scroll';
-  import { ClusterView } from '../visualization';
-
   // Core state
   let repoUrl = $state('');
   let githubToken = $state('');
@@ -105,7 +103,6 @@
   const COLLAPSED_LABEL_COUNT = 6;
 
   // View mode state (Issue #154 - Cluster View)
-  let viewMode = $state<'list' | 'cluster'>('list');
 
   // URL state tracking (Issue #140)
   let urlStateInitialized = $state(false);
@@ -691,7 +688,7 @@
             xmlns="http://www.w3.org/2000/svg"
           >
             <!-- Background circle -->
-            <circle cx="64" cy="64" r="56" fill="#0d9488" />
+            <circle cx="64" cy="64" r="56" fill="oklch(0.78 0.13 291)" />
             <!-- Flowing S-curve path -->
             <path
               d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
@@ -707,7 +704,7 @@
             <!-- Checkmarks inside -->
             <path
               d="M 27 50 L 30 53 L 37 46"
-              stroke="#0d9488"
+              stroke="oklch(0.78 0.13 291)"
               stroke-width="3"
               fill="none"
               stroke-linecap="round"
@@ -715,7 +712,7 @@
             />
             <path
               d="M 58 64 L 62 68 L 70 58"
-              stroke="#0d9488"
+              stroke="oklch(0.78 0.13 291)"
               stroke-width="3"
               fill="none"
               stroke-linecap="round"
@@ -723,7 +720,7 @@
             />
             <path
               d="M 91 78 L 94 81 L 101 74"
-              stroke="#0d9488"
+              stroke="oklch(0.78 0.13 291)"
               stroke-width="3"
               fill="none"
               stroke-linecap="round"
@@ -757,7 +754,7 @@
         <GitHubAuth onAuthChange={handleAuthChange} />
       {:else if !isAuthenticated}
         <div
-          class="auth-prompt p-2 bg-gradient-to-r from-amber-500/10 to-teal-500/10 border border-amber-500/30 rounded-md"
+          class="auth-prompt p-2 bg-gradient-to-r from-amber-500/10 to-violet-500/10 border border-amber-500/30 rounded-md"
         >
           <div class="flex items-center gap-2">
             <svg
@@ -778,7 +775,7 @@
               href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
               target="_blank"
               rel="noopener noreferrer"
-              class="ml-auto inline-flex items-center gap-1 px-2 py-1 bg-teal-600 hover:bg-teal-500 text-white text-[9px] font-medium rounded transition-colors"
+              class="ml-auto inline-flex items-center gap-1 px-2 py-1 bg-violet-600 hover:bg-violet-500 text-white text-[9px] font-medium rounded transition-colors"
             >
               <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -843,7 +840,7 @@
                     <button
                       type="button"
                       onclick={() => (showAllLabels = !showAllLabels)}
-                      class="filter-action-btn text-teal-400 hover:text-teal-300"
+                      class="filter-action-btn text-violet-400 hover:text-violet-300"
                     >
                       {showAllLabels
                         ? 'Show less'
@@ -1062,7 +1059,7 @@
           <div class="relative w-12 h-12 mb-4">
             <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
             <div
-              class="animate-spin rounded-full h-12 w-12 border-2 border-teal-500 border-t-transparent absolute top-0 left-0"
+              class="animate-spin rounded-full h-12 w-12 border-2 border-violet-500 border-t-transparent absolute top-0 left-0"
             ></div>
           </div>
           <p class="text-slate-300 text-sm font-medium">Initializing...</p>
@@ -1107,41 +1104,6 @@
             {#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}
           </p>
         </div>
-        <!-- View Mode Toggle (Issue #154) -->
-        <div class="view-toggle-group">
-          <button
-            type="button"
-            class="view-toggle-btn {viewMode === 'list' ? 'active' : ''}"
-            onclick={() => (viewMode = 'list')}
-            aria-pressed={viewMode === 'list'}
-            title="List View"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 10h16M4 14h16M4 18h16"
-              />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="view-toggle-btn {viewMode === 'cluster' ? 'active' : ''}"
-            onclick={() => (viewMode = 'cluster')}
-            aria-pressed={viewMode === 'cluster'}
-            title="Cluster View"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
-        </div>
       </div>
 
       <div aria-live="polite" aria-atomic="true" class="sr-only" role="status">
@@ -1153,26 +1115,13 @@
         {sortDirection === 'asc' ? 'ascending' : 'descending'}
       </div>
 
-      <!-- View Mode: List or Cluster (Issue #154) -->
-      {#if viewMode === 'list'}
-        <div class="space-y-2">
-          {#each displayedIssues as issue, i (issue.number)}
-            <div in:fly={{ y: 20, delay: Math.min(i * 50, 500), duration: 300 }}>
-              <IssueCard {issue} {copiedIssueNumber} onCopy={handleCopyIssue} />
-            </div>
-          {/each}
-        </div>
-      {:else}
-        <!-- Cluster View -->
-        <div class="cluster-view-container">
-          <ClusterView
-            issues={displayedIssues}
-            width={800}
-            height={600}
-            onNodeClick={(issue) => window.open(issue.url, '_blank', 'noopener,noreferrer')}
-          />
-        </div>
-      {/if}
+      <div class="space-y-2">
+        {#each displayedIssues as issue, i (issue.number)}
+          <div in:fly={{ y: 20, delay: Math.min(i * 50, 500), duration: 300 }}>
+            <IssueCard {issue} {copiedIssueNumber} onCopy={handleCopyIssue} />
+          </div>
+        {/each}
+      </div>
 
       <!-- Issue #131: Infinite scroll sentinel element -->
       {#if hasMorePages && !loadMoreError}
@@ -1422,8 +1371,8 @@
     transform: translateY(-2px) scale(1.02);
     box-shadow:
       0 12px 40px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(20, 184, 166, 0.15);
-    border-color: rgba(20, 184, 166, 0.3);
+      0 0 20px oklch(0.78 0.13 291 / 0.15);
+    border-color: oklch(0.78 0.13 291 / 0.3);
   }
 
   /* Card flip animation - Issue #125 */
@@ -1508,7 +1457,7 @@
   }
 
   :global(.flip-button):focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 
@@ -1630,7 +1579,7 @@
   }
 
   .logo-mark svg {
-    filter: drop-shadow(0 4px 12px rgba(13, 148, 136, 0.4));
+    filter: drop-shadow(0 4px 12px oklch(0.78 0.13 291 / 0.4));
   }
 
   /* ====== FILTER CARD COMPONENT STYLES ====== */
@@ -1814,7 +1763,7 @@
   }
 
   .dropdown-option.selected {
-    background: rgba(20, 184, 166, 0.3);
+    background: oklch(0.78 0.13 291 / 0.3);
     color: rgb(94, 234, 212);
   }
 
@@ -1887,8 +1836,8 @@
   }
 
   .share-btn:hover {
-    background: rgba(20, 184, 166, 0.2);
-    border-color: rgba(20, 184, 166, 0.4);
+    background: oklch(0.78 0.13 291 / 0.2);
+    border-color: oklch(0.78 0.13 291 / 0.4);
     color: rgb(94, 234, 212);
   }
 
@@ -1897,7 +1846,7 @@
   }
 
   .share-btn:focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 
@@ -1969,12 +1918,12 @@
     border-radius: 50%;
     cursor: pointer;
 
-    /* Brand teal gradient */
-    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    /* Brand accent */
+    background: var(--theme-accent, oklch(0.78 0.13 291));
     color: white;
 
-    /* Shadow glow - subtle */
-    box-shadow: 0 3px 12px rgba(20, 184, 166, 0.35);
+    /* Shadow glow */
+    box-shadow: 0 3px 12px oklch(0.78 0.13 291 / 0.35);
 
     /* Transitions */
     transition: all 0.2s ease;
@@ -1984,19 +1933,19 @@
   }
 
   .help-button:hover {
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-    box-shadow: 0 4px 16px rgba(20, 184, 166, 0.45);
+    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    box-shadow: 0 4px 16px oklch(0.78 0.13 291 / 0.45);
     transform: translateY(-1px);
   }
 
   .help-button:active {
-    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
-    box-shadow: 0 2px 10px rgba(20, 184, 166, 0.3);
+    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    box-shadow: 0 2px 10px oklch(0.78 0.13 291 / 0.3);
     transform: translateY(0) scale(0.98);
   }
 
   .help-button:focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 
@@ -2006,14 +1955,14 @@
     height: 18px;
   }
 
-  /* Pulse glow animation - subtle */
+  /* Pulse glow animation */
   @keyframes help-glow {
     0%,
     100% {
-      box-shadow: 0 3px 12px rgba(20, 184, 166, 0.35);
+      box-shadow: 0 3px 12px oklch(0.78 0.13 291 / 0.35);
     }
     50% {
-      box-shadow: 0 3px 16px rgba(20, 184, 166, 0.5);
+      box-shadow: 0 3px 16px oklch(0.78 0.13 291 / 0.5);
     }
   }
 
@@ -2101,13 +2050,13 @@
   :global(.sketch-button):focus-visible,
   :global(.sketch-input):focus-visible,
   :global(a):focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 
   /* Ensure focus is visible on dark backgrounds */
   :global(:focus-visible) {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 
@@ -2151,56 +2100,4 @@
   :global(*::-webkit-scrollbar-corner) {
     background: transparent;
   }
-
-  /* ====== VIEW MODE TOGGLE STYLES (Issue #154) ====== */
-
-  .view-toggle-group {
-    display: flex;
-    gap: 0.25rem;
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
-    border-radius: 8px;
-    padding: 0.25rem;
-  }
-
-  .view-toggle-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.375rem 0.5rem;
-    border-radius: 6px;
-    background: transparent;
-    border: none;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .view-toggle-btn:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
-    color: var(--theme-text-primary, white);
-  }
-
-  .view-toggle-btn.active {
-    background: rgba(20, 184, 166, 0.3);
-    color: rgb(94, 234, 212);
-  }
-
-  .view-toggle-btn:focus-visible {
-    outline: 2px solid #14b8a6;
-    outline-offset: 2px;
-  }
-
-  /* Cluster view container */
-  .cluster-view-container {
-    display: flex;
-    justify-content: center;
-    background: var(--theme-bg-card, rgba(30, 41, 59, 0.5));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
-    border-radius: 12px;
-    padding: 1rem;
-    margin: 1rem 0;
-  }
-
-  /* ====== END VIEW MODE TOGGLE STYLES ====== */
 </style>

@@ -214,7 +214,7 @@
                 href={issue.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-1.5 bg-teal-600 hover:bg-teal-500 text-white rounded transition-colors"
+                class="p-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded transition-colors"
                 aria-label="View on GitHub"
               >
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,7 +399,7 @@
               href={issue.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 px-2 py-1.5 bg-teal-600 hover:bg-teal-500 text-white rounded text-xs font-medium transition-colors"
+              class="inline-flex items-center gap-1 px-2 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-medium transition-colors"
             >
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -462,7 +462,7 @@
             href={issue.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 px-2 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded text-xs font-medium transition-colors"
+            class="inline-flex items-center gap-1 px-2 py-1 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-medium transition-colors"
           >
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path

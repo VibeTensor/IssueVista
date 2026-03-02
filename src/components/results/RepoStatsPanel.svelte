@@ -229,7 +229,7 @@
   }
 
   .stats-header:focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: -2px;
   }
 
@@ -242,7 +242,7 @@
   .header-icon {
     width: 1rem;
     height: 1rem;
-    color: var(--theme-accent, #14b8a6);
+    color: var(--theme-accent, var(--theme-accent, oklch(0.78 0.13 291)));
   }
 
   .header-title {
@@ -358,7 +358,7 @@
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: var(--theme-accent, #14b8a6);
+    background: var(--theme-accent, var(--theme-accent, oklch(0.78 0.13 291)));
   }
 
   /* Loading skeleton */

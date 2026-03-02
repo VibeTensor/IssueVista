@@ -213,8 +213,8 @@
   }
 
   /* Progress Fill Colors (from getProgressColor) */
-  .progress-fill.bg-teal-500 {
-    background: linear-gradient(90deg, #14b8a6 0%, #0d9488 100%);
+  .progress-fill.bg-violet-500 {
+    background: var(--theme-accent, oklch(0.78 0.13 291));
   }
 
   .progress-fill.bg-emerald-500 {

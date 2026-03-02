@@ -1,0 +1,218 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Find unassigned open GitHub issues without pull requests. Discover open-source contribution opportunities with smart filtering for issues ready for your contribution.'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = 'https://issuevista.vibetensor.com';
+const ogImage = `${siteUrl}/og-image.png`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="IssueVista" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <meta
+      name="keywords"
+      content="github, issues, open source, contribution, pull requests, hacktoberfest, github api, graphql, unassigned issues, beginner friendly"
+    />
+    <meta name="author" content="VibeTensor Private Limited" />
+    <meta name="theme-color" content="#b07de8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="application-name" content="IssueVista" />
+
+    <!-- Geist Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.min.css"
+    />
+
+    <!-- Theme Detection (blocking to prevent FOUC) -->
+    <script is:inline>
+      (function () {
+        if (
+          localStorage.getItem('issuevista-theme-preset') === 'dark' ||
+          localStorage.getItem('issuevista-theme') === 'dark' ||
+          (!localStorage.getItem('issuevista-theme-preset') &&
+            !localStorage.getItem('issuevista-theme') &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+          document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = 'dark';
+        }
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "IssueVista",
+        "description": "Find unassigned open GitHub issues without pull requests",
+        "url": "https://issuevista.vibetensor.com",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "VibeTensor Private Limited",
+          "url": "https://github.com/VibeTensor"
+        }
+      }
+    </script>
+
+    <style is:global>
+      :root {
+        --font-sans: 'Geist Sans', 'Geist', system-ui, -apple-system, sans-serif;
+        --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: oklch(0.98 0.004 264);
+        color: oklch(0.15 0.02 264);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .dark body {
+        background-color: oklch(0.1648 0.0075 270.93);
+        color: oklch(0.95 0.004 264);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+
+      /* Animation keyframes */
+      @keyframes aurora {
+        0% {
+          background-position: 0% 50%;
+          transform: rotate(-5deg) scale(0.9);
+        }
+        25% {
+          background-position: 50% 100%;
+          transform: rotate(5deg) scale(1.1);
+        }
+        50% {
+          background-position: 100% 50%;
+          transform: rotate(-3deg) scale(0.95);
+        }
+        75% {
+          background-position: 50% 0%;
+          transform: rotate(3deg) scale(1.05);
+        }
+        100% {
+          background-position: 0% 50%;
+          transform: rotate(-5deg) scale(0.9);
+        }
+      }
+
+      @keyframes ripple {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(0.9);
+        }
+      }
+
+      @keyframes orbit {
+        0% {
+          transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
+        }
+      }
+
+      /* Scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: oklch(0.52 0.01 264 / 0.3);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: oklch(0.52 0.01 264 / 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "ISSUEVISTA_CF_ANALYTICS_TOKEN"}'></script>
+  </body>
+</html>

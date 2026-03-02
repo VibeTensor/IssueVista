@@ -285,7 +285,7 @@
   .info-icon {
     width: 1.125rem;
     height: 1.125rem;
-    color: #14b8a6;
+    color: var(--theme-accent, oklch(0.78 0.13 291));
     flex-shrink: 0;
   }
 
@@ -329,18 +329,18 @@
   /* Continue Button (primary, safer default) */
   .btn-continue {
     color: white;
-    background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    background: var(--theme-accent, oklch(0.78 0.13 291));
     border: none;
   }
 
   .btn-continue:hover {
-    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+    box-shadow: 0 4px 12px oklch(0.78 0.13 291 / 0.3);
   }
 
   .btn-continue:focus-visible {
-    outline: 2px solid #14b8a6;
+    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
     outline-offset: 2px;
   }
 

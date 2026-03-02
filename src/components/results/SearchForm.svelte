@@ -577,7 +577,7 @@
       onclick={onSearch}
       disabled={!canSubmit}
       class="w-full py-1.5 px-3 rounded-md font-medium text-xs transition-all {canSubmit
-        ? 'bg-teal-600 hover:bg-teal-500 text-white shadow-md shadow-teal-500/20'
+        ? 'bg-violet-600 hover:bg-violet-500 text-white shadow-md shadow-violet-500/20'
         : 'bg-slate-800 text-slate-600 cursor-not-allowed'}"
     >
       <span class="flex items-center justify-center gap-1.5">

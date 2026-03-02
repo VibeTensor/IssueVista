@@ -177,7 +177,7 @@
         <button
           type="button"
           class="chip-remove ml-1 p-0.5 rounded hover:bg-slate-500/50
-                 focus:outline-none focus:ring-1 focus:ring-teal-500
+                 focus:outline-none focus:ring-1 focus:ring-violet-500
                  opacity-60 group-hover:opacity-100 transition-opacity"
           onclick={() => removeChip(chip.id)}
           aria-label="Remove filter: {chip.displayLabel}"
@@ -209,7 +209,7 @@
       class="add-filter-btn flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px]
              bg-slate-800/50 border border-slate-600/50 border-dashed
              text-slate-400 hover:text-slate-300 hover:border-slate-500
-             focus:outline-none focus:ring-1 focus:ring-teal-500
+             focus:outline-none focus:ring-1 focus:ring-violet-500
              transition-colors"
       onclick={(e) => {
         e.stopPropagation();
@@ -260,7 +260,7 @@
              {isNegated
             ? 'bg-red-900/50 text-red-300 border border-red-700'
             : 'bg-slate-700 text-slate-400 border border-slate-600'}
-             hover:bg-slate-600 focus:outline-none focus:ring-1 focus:ring-teal-500
+             hover:bg-slate-600 focus:outline-none focus:ring-1 focus:ring-violet-500
              transition-colors"
           onclick={() => (isNegated = !isNegated)}
           aria-pressed={isNegated}
@@ -278,7 +278,7 @@
                 class="type-btn px-2 py-1 rounded text-xs
                    bg-slate-700 text-slate-300 border border-slate-600
                    hover:bg-slate-600 hover:text-white
-                   focus:outline-none focus:ring-1 focus:ring-teal-500
+                   focus:outline-none focus:ring-1 focus:ring-violet-500
                    transition-colors"
                 onclick={() => selectFilterType(type)}
               >
@@ -290,7 +290,7 @@
           <!-- Selected type and value input -->
           <span
             class="selected-type px-2 py-1 rounded text-xs font-medium flex-shrink-0
-               bg-teal-900/50 text-teal-300 border border-teal-700"
+               bg-violet-900/50 text-violet-300 border border-violet-700"
           >
             {FILTER_TYPE_LABELS[selectedFilterType]}:
           </span>
@@ -301,7 +301,7 @@
             type="text"
             class="value-input px-2 py-1 rounded text-sm w-28 sm:w-32 min-w-0
                bg-slate-900 text-white border border-slate-600
-               focus:outline-none focus:ring-1 focus:ring-teal-500
+               focus:outline-none focus:ring-1 focus:ring-violet-500
                placeholder:text-slate-500"
             placeholder={selectedFilterType === 'state'
               ? 'open or closed'
@@ -319,8 +319,8 @@
           <button
             type="button"
             class="confirm-btn px-2 py-1 rounded text-xs flex-shrink-0
-               bg-teal-600 text-white
-               hover:bg-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-400
+               bg-violet-600 text-white
+               hover:bg-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-400
                transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onclick={addChip}
             disabled={!filterValueInput.trim()}
@@ -334,7 +334,7 @@
           type="button"
           class="cancel-btn p-1 rounded text-slate-400 flex-shrink-0
              hover:text-slate-300 hover:bg-slate-700
-             focus:outline-none focus:ring-1 focus:ring-teal-500
+             focus:outline-none focus:ring-1 focus:ring-violet-500
              transition-colors"
           onclick={resetAddForm}
           aria-label="Cancel"

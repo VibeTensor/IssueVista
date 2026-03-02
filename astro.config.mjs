@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import svelte from '@astrojs/svelte';
+import react from '@astrojs/react';
 import UnoCSS from '@unocss/astro';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -10,7 +11,7 @@ const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
 
 export default defineConfig({
   site: 'https://issuevista.vibetensor.com',
-  integrations: [UnoCSS({ injectReset: true }), svelte()],
+  integrations: [UnoCSS({ injectReset: true }), svelte(), react()],
   output: 'static',
   build: {
     inlineStylesheets: 'auto'
