@@ -21,7 +21,7 @@ export default defineConfig({
     ['animate-aurora', { animation: 'aurora 8s ease-in-out infinite' }],
     ['animate-ripple', { animation: 'ripple 2s ease infinite' }],
     ['animate-orbit', { animation: 'orbit 20s linear infinite' }],
-    ['animate-fade-in-up', { animation: 'fade-in-up 0.6s ease-out' }],
+    ['animate-fade-in-up', { animation: 'fade-in-up 0.6s ease-out' }]
   ],
   preflights: [
     {
