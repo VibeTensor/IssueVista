@@ -63,79 +63,91 @@ Open http://localhost:4321
 
 ## Features
 
-| Feature           | Without Token | With Token |
-| ----------------- | ------------- | ---------- |
-| Open issues       | Yes           | Yes        |
-| Unassigned filter | Yes           | Yes        |
-| PR detection      | No            | Yes        |
-| Rate limit        | 60/hr         | 5000/hr    |
-| API               | REST          | GraphQL    |
+| Feature | Without Token | With Token |
+|---------|:---:|:---:|
+| Open issues | Yes | Yes |
+| Unassigned filter | Yes | Yes |
+| PR detection | No | Yes |
+| Rate limit | 60/hr | 5000/hr |
+| API | REST | GraphQL |
 
-### November 2025 Features
+### Search and Filtering
 
-#### Zero-Comment Issue Highlighting
+- Advanced filter syntax with autocomplete
+- Language-based filtering with tag chips
+- Difficulty scoring and complexity meter for each issue
+- Sort by comments, date, or relevance
+- Search history with quick access to previous queries
 
-- Visual indicators for issues with no comments
-- Easy identification of untouched issues ideal for new contributors
-- Filter to show only zero-comment issues
+### Issue Display
 
-#### Smart Relative Time Display
+- Zero-comment highlighting for untouched issues
+- Relative time display with freshness indicators ("Today", "3 days ago")
+- Difficulty badges (beginner, intermediate, advanced)
+- Repo stats panel with repository metadata
+- Context menu with quick actions
 
-- Human-readable timestamps ("Today", "Yesterday", "3 days ago")
-- Freshness indicators (fresh, moderate, stale)
-- Hover tooltips showing exact date and time
+### Export and Sharing
 
-#### Auto-Focus and URL Validation
+- Export to Markdown, CSV, or plain text
+- One-click copy of issue URLs
+- Bookmarks for saving interesting issues
 
-- Input field auto-focuses on page load
-- Real-time GitHub URL validation
-- Clear error messages for invalid URLs
+### UI and Theming
 
-#### Export Issues
-
-- Export to Markdown format
-- Export to CSV for spreadsheet analysis
-- Export to plain text
-
-#### Copy Issue Link
-
-- One-click copy of issue URL to clipboard
-- Visual feedback on successful copy
-
-### Core Features
-
-- Real-time rate limit display
+- Multiple theme presets with live preview
+- Light and dark mode support
+- Animated landing page with interactive elements
 - Mobile-responsive design
-- Sort by comment count
+- Scroll to top, loading progress indicators
 
 ## Tech Stack
 
 - **Framework**: [Astro](https://astro.build) 5.x
-- **UI Components**: [Svelte](https://svelte.dev) 5
+- **UI Components**: [Svelte](https://svelte.dev) 5 (app) + [React](https://react.dev) 19 (landing page)
 - **Styling**: [UnoCSS](https://unocss.dev)
+- **Animations**: [Framer Motion](https://motion.dev)
 - **API**: GitHub GraphQL + REST fallback
-- **Language**: TypeScript
+- **Language**: TypeScript (strict mode)
+- **Testing**: Vitest + Playwright
 - **Hosting**: Cloudflare Pages
 
 ## Project Structure
 
 ```text
 IssueVista/
-├── public/                 # Static assets (favicon, images)
+├── public/                    # Static assets (favicon, images)
 ├── src/
 │   ├── components/
-│   │   ├── results/        # Issue display components
-│   │   └── shared/         # Reusable UI components
-│   ├── lib/                # Utility functions
-│   │   ├── github-graphql.ts
-│   │   ├── issue-utils.ts
-│   │   └── time-utils.ts
-│   └── pages/              # Astro pages
-├── tests/                  # Test files
-├── astro.config.mjs
-├── package.json
+│   │   ├── landing/           # Landing page (React): Hero, Features, CTA, etc.
+│   │   │   └── ui/            # Animated UI primitives (aurora, orbiting circles)
+│   │   ├── results/           # Issue display (Svelte): ResultsContainer, IssueCard, etc.
+│   │   └── shared/            # Reusable components (Svelte): Header, Footer, ThemeSelector
+│   ├── layouts/
+│   │   ├── Layout.astro       # Main application layout
+│   │   └── LandingLayout.astro # Landing page layout
+│   ├── lib/                   # Utilities: GitHub API, filters, themes, search history
+│   │   └── types/             # TypeScript type definitions
+│   └── pages/
+│       ├── index.astro        # Landing page
+│       └── app.astro          # Application page
+├── tests/                     # Unit tests (Vitest)
+│   └── e2e/                   # E2E tests (Playwright)
+├── eslint.config.js           # ESLint flat config
+├── uno.config.ts              # UnoCSS configuration
 └── tsconfig.json
 ```
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run lint` | Run ESLint |
+| `npm run format:check` | Check Prettier formatting |
+| `npm run test` | Run unit tests |
+| `npm run test:e2e` | Run E2E tests |
 
 ## Contributing
 
