@@ -2,11 +2,12 @@ import React from 'react';
 
 interface IconProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function LogoIcon({ className }: IconProps) {
+export function LogoIcon({ className, style }: IconProps) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className={className} style={style} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
       <path
         d="M8 12L11 15L16 9"
@@ -19,10 +20,11 @@ export function LogoIcon({ className }: IconProps) {
   );
 }
 
-export function GitHubIcon({ className }: IconProps) {
+export function GitHubIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
@@ -32,10 +34,11 @@ export function GitHubIcon({ className }: IconProps) {
   );
 }
 
-export function TwitterIcon({ className }: IconProps) {
+export function TwitterIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
@@ -45,10 +48,11 @@ export function TwitterIcon({ className }: IconProps) {
   );
 }
 
-export function GraphQLIcon({ className }: IconProps) {
+export function GraphQLIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -72,10 +76,11 @@ export function GraphQLIcon({ className }: IconProps) {
   );
 }
 
-export function FilterIcon({ className }: IconProps) {
+export function FilterIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -88,10 +93,11 @@ export function FilterIcon({ className }: IconProps) {
   );
 }
 
-export function BadgeIcon({ className }: IconProps) {
+export function BadgeIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -104,10 +110,11 @@ export function BadgeIcon({ className }: IconProps) {
   );
 }
 
-export function PaletteIcon({ className }: IconProps) {
+export function PaletteIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -124,10 +131,11 @@ export function PaletteIcon({ className }: IconProps) {
   );
 }
 
-export function ExportIcon({ className }: IconProps) {
+export function ExportIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -142,10 +150,11 @@ export function ExportIcon({ className }: IconProps) {
   );
 }
 
-export function HistoryIcon({ className }: IconProps) {
+export function HistoryIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -160,10 +169,11 @@ export function HistoryIcon({ className }: IconProps) {
   );
 }
 
-export function SearchIcon({ className }: IconProps) {
+export function SearchIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -177,10 +187,11 @@ export function SearchIcon({ className }: IconProps) {
   );
 }
 
-export function ChartIcon({ className }: IconProps) {
+export function ChartIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -198,10 +209,11 @@ export function ChartIcon({ className }: IconProps) {
   );
 }
 
-export function MenuIcon({ className }: IconProps) {
+export function MenuIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -216,10 +228,11 @@ export function MenuIcon({ className }: IconProps) {
   );
 }
 
-export function CloseIcon({ className }: IconProps) {
+export function CloseIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -233,10 +246,11 @@ export function CloseIcon({ className }: IconProps) {
   );
 }
 
-export function ArrowRightIcon({ className }: IconProps) {
+export function ArrowRightIcon({ className, style }: IconProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
