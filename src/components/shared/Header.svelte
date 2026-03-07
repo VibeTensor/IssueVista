@@ -53,16 +53,43 @@
       <a href="/" class="brand-link">
         <svg
           class="logo-icon"
-          viewBox="0 0 24 24"
+          viewBox="0 0 128 128"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <circle cx="64" cy="64" r="56" fill="oklch(0.78 0.13 291)" />
           <path
-            d="M8 12L11 15L16 9"
-            stroke="currentColor"
-            stroke-width="2"
+            d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
+            stroke="white"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <circle cx="32" cy="50" r="10" fill="white" />
+          <circle cx="64" cy="64" r="12" fill="white" />
+          <circle cx="96" cy="78" r="10" fill="white" />
+          <path
+            d="M 27 50 L 30 53 L 37 46"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M 58 64 L 62 68 L 70 58"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M 91 78 L 94 81 L 101 74"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
@@ -132,15 +159,10 @@
   }
 
   .header.scrolled {
-    background: var(--theme-bg-primary, oklch(0.1648 0.0075 270.93));
+    background: var(--theme-bg-primary);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-bottom-color: var(--theme-border, oklch(0.3 0.01 264 / 0.5));
-  }
-
-  :global(html:not(.dark)) .header.scrolled {
-    background: oklch(0.98 0.004 264 / 0.85);
-    border-bottom-color: oklch(0.91 0.008 264 / 0.5);
+    border-bottom-color: var(--theme-border);
   }
 
   .header-inner {
@@ -170,21 +192,21 @@
   .logo-icon {
     width: 1.25rem;
     height: 1.25rem;
-    color: oklch(0.78 0.13 291);
+    color: var(--theme-accent);
   }
 
   .brand-name {
     font-size: 0.9375rem;
     font-weight: 700;
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   .version-badge {
     font-family: var(--font-mono, monospace);
     font-size: 0.5625rem;
     font-weight: 600;
-    color: oklch(0.78 0.13 291);
-    background: oklch(0.78 0.13 291 / 0.15);
+    color: var(--theme-accent);
+    background: oklch(from var(--theme-accent) l c h / 0.15);
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
   }
@@ -228,7 +250,7 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.375rem 0.625rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
     text-decoration: none;
     font-size: 0.75rem;
     font-weight: 500;
@@ -237,7 +259,7 @@
   }
 
   .nav-link:hover {
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   .nav-icon {
@@ -251,18 +273,18 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.375rem 0.75rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
     text-decoration: none;
     font-size: 0.75rem;
     font-weight: 500;
     border-radius: 0.375rem;
-    border: 1px solid var(--theme-border, oklch(0.3 0.01 264 / 0.5));
+    border: 1px solid var(--theme-border);
     transition: all 0.15s ease;
   }
 
   .star-btn:hover {
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
-    border-color: oklch(0.78 0.13 291 / 0.5);
+    color: var(--theme-text-primary);
+    border-color: var(--theme-accent);
   }
 
   .link-text {

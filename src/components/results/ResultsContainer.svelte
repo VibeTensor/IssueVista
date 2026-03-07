@@ -677,62 +677,9 @@
     class="sidebar-panel lg:w-[300px] xl:w-[320px] lg:flex-shrink-0 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto"
   >
     <div class="p-3 lg:p-4 space-y-3">
-      <!-- Brand Header - Using favicon design -->
-      <div class="brand-header text-center py-3">
-        <!-- Logo - Issues flowing through pipeline (matches favicon.svg) -->
-        <div class="logo-mark inline-flex items-center justify-center mb-2">
-          <svg
-            class="w-14 h-14 lg:w-16 lg:h-16"
-            viewBox="0 0 128 128"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Background circle -->
-            <circle cx="64" cy="64" r="56" fill="oklch(0.78 0.13 291)" />
-            <!-- Flowing S-curve path -->
-            <path
-              d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
-              stroke="#ffffff"
-              stroke-width="6"
-              fill="none"
-              stroke-linecap="round"
-            />
-            <!-- Three issue nodes -->
-            <circle cx="32" cy="50" r="10" fill="#ffffff" />
-            <circle cx="64" cy="64" r="12" fill="#ffffff" />
-            <circle cx="96" cy="78" r="10" fill="#ffffff" />
-            <!-- Checkmarks inside -->
-            <path
-              d="M 27 50 L 30 53 L 37 46"
-              stroke="oklch(0.78 0.13 291)"
-              stroke-width="3"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M 58 64 L 62 68 L 70 58"
-              stroke="oklch(0.78 0.13 291)"
-              stroke-width="3"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M 91 78 L 94 81 L 101 74"
-              stroke="oklch(0.78 0.13 291)"
-              stroke-width="3"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <!-- Brand Text -->
-        <h1 class="text-xl lg:text-2xl font-bold tracking-tight leading-none text-white">
-          IssueVista
-        </h1>
-        <p class="text-[10px] lg:text-xs text-slate-500 mt-1">Find your next contribution</p>
+      <!-- Sidebar Title -->
+      <div class="sidebar-title">
+        <span class="sidebar-title-text">Search Issues</span>
       </div>
 
       <!-- Search Form -->
@@ -770,12 +717,13 @@
                 d="M13 10V3L4 14h7v7l9-11h-7z"
               />
             </svg>
-            <span class="text-[10px] text-slate-400">60/hr</span>
+            <span class="text-[10px]" style="color: var(--theme-text-muted);">60/hr</span>
             <a
               href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
               target="_blank"
               rel="noopener noreferrer"
-              class="ml-auto inline-flex items-center gap-1 px-2 py-1 bg-violet-600 hover:bg-violet-500 text-white text-[9px] font-medium rounded transition-colors"
+              class="ml-auto inline-flex items-center gap-1 px-2 py-1 text-[9px] font-medium rounded transition-colors auth-cta-btn"
+              style="color: white;"
             >
               <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24">
                 <path
@@ -840,7 +788,8 @@
                     <button
                       type="button"
                       onclick={() => (showAllLabels = !showAllLabels)}
-                      class="filter-action-btn text-violet-400 hover:text-violet-300"
+                      class="filter-action-btn"
+                      style="color: var(--theme-accent);"
                     >
                       {showAllLabels
                         ? 'Show less'
@@ -904,7 +853,7 @@
                   >
                     <span>{SORT_OPTION_LABELS[sortBy]}</span>
                     <svg
-                      class="w-3 h-3 text-slate-400 transition-transform {sortDropdownOpen
+                      class="w-3 h-3 text-theme-muted transition-transform {sortDropdownOpen
                         ? 'rotate-180'
                         : ''}"
                       fill="none"
@@ -1057,12 +1006,18 @@
       <div class="loading-container" aria-busy="true" aria-label="Initializing search">
         <div class="flex flex-col items-center justify-center mb-4">
           <div class="relative w-12 h-12 mb-4">
-            <div class="animate-spin rounded-full h-12 w-12 border-2 border-slate-700"></div>
             <div
-              class="animate-spin rounded-full h-12 w-12 border-2 border-violet-500 border-t-transparent absolute top-0 left-0"
+              class="animate-spin rounded-full h-12 w-12 border-2"
+              style="border-color: var(--theme-border);"
+            ></div>
+            <div
+              class="animate-spin rounded-full h-12 w-12 border-2 border-t-transparent absolute top-0 left-0"
+              style="border-color: var(--theme-accent); border-top-color: transparent;"
             ></div>
           </div>
-          <p class="text-slate-300 text-sm font-medium">Initializing...</p>
+          <p class="text-sm font-medium" style="color: var(--theme-text-secondary);">
+            Initializing...
+          </p>
         </div>
         <!-- Skeleton cards for visual content preview (Issue #172) -->
         <div class="grid grid-cols-1 gap-2">
@@ -1091,16 +1046,16 @@
 
       <div class="flex items-center justify-between mb-3">
         <div>
-          <h2 class="text-base lg:text-lg font-bold text-white">
+          <h2 class="text-base lg:text-lg font-bold" style="color: var(--theme-text-primary);">
             Found {displayedIssues.length} available
             {displayedIssues.length === 1 ? 'issue' : 'issues'}
             {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
-              <span class="text-xs text-slate-500 font-normal">of {issues.length}</span>
+              <span class="text-xs text-theme-muted font-normal">of {issues.length}</span>
             {:else if totalIssueCount > issues.length && totalCountAccurate}
-              <span class="text-xs text-slate-500 font-normal">of {totalIssueCount}</span>
+              <span class="text-xs text-theme-muted font-normal">of {totalIssueCount}</span>
             {/if}
           </h2>
-          <p class="text-[10px] text-slate-500">
+          <p class="text-[10px] text-theme-muted">
             {#if isAuthenticated}Open, unassigned, no PRs{:else}Open & unassigned{/if}
           </p>
         </div>
@@ -1139,7 +1094,7 @@
           <IssueCardSkeleton count={3} />
         </div>
         <div class="flex justify-center py-2">
-          <span class="text-xs text-slate-500">Loading more issues...</span>
+          <span class="text-xs text-theme-muted">Loading more issues...</span>
         </div>
       {/if}
 
@@ -1150,7 +1105,8 @@
           <button
             type="button"
             onclick={retryLoadMore}
-            class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors"
+            class="px-4 py-2 text-sm rounded-lg transition-colors load-more-btn"
+            style="color: white;"
           >
             Retry
           </button>
@@ -1159,7 +1115,7 @@
 
       <div class="mt-6 text-center py-3">
         {#if hasMorePages && !loadMoreError}
-          <p class="text-[10px] text-slate-500">
+          <p class="text-[10px] text-theme-muted">
             {#if totalCountAccurate}
               Showing {issues.length} of {totalIssueCount} issues - scroll for more
             {:else}
@@ -1167,11 +1123,11 @@
             {/if}
           </p>
         {:else if loadMoreError}
-          <p class="text-[10px] text-slate-500">
+          <p class="text-[10px] text-theme-muted">
             Showing {issues.length} issues - click retry to load more
           </p>
         {:else}
-          <p class="text-[10px] text-slate-500">Pick an issue and start contributing!</p>
+          <p class="text-[10px] text-theme-muted">Pick an issue and start contributing!</p>
         {/if}
       </div>
     {/if}
@@ -1211,35 +1167,29 @@
 <style>
   /* Global body styles - uses CSS variables for theme support */
   :global(body) {
-    font-family:
-      -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-      sans-serif;
-    background: var(
-      --theme-body-gradient,
-      linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)
-    );
-    background-attachment: fixed;
+    font-family: var(--font-sans, 'Geist Sans', system-ui, -apple-system, sans-serif);
+    background: var(--theme-bg-primary);
     min-height: 100vh;
   }
 
-  /* Sidebar panel - uses CSS variables for theme support */
+  /* Sidebar panel */
   .sidebar-panel {
-    background: var(--theme-bg-primary, #0f172a);
+    background: var(--theme-bg-primary);
   }
 
   @media (min-width: 1024px) {
     .sidebar-panel {
-      border-right: 1px solid var(--theme-border, rgba(71, 85, 105, 0.3));
+      border-right: 1px solid var(--theme-border);
     }
   }
 
   /* Sketch card - hand-drawn borders with theme support */
   :global(.sketch-card) {
-    background: var(--theme-bg-card, rgba(30, 41, 59, 0.7));
+    background: var(--theme-bg-card);
     backdrop-filter: blur(16px);
     border-radius: 12px;
     position: relative;
-    box-shadow: var(--theme-card-shadow, 0 8px 30px rgba(0, 0, 0, 0.4));
+    box-shadow: 0 8px 30px var(--theme-shadow);
   }
 
   :global(.sketch-card)::before {
@@ -1247,7 +1197,7 @@
     position: absolute;
     inset: -2px;
     background: transparent;
-    border: 2px solid var(--theme-border, rgba(148, 163, 184, 0.25));
+    border: 2px solid var(--theme-border);
     border-radius: inherit;
     filter: url(#sketch);
     pointer-events: none;
@@ -1371,8 +1321,8 @@
     transform: translateY(-2px) scale(1.02);
     box-shadow:
       0 12px 40px rgba(0, 0, 0, 0.6),
-      0 0 20px oklch(0.78 0.13 291 / 0.15);
-    border-color: oklch(0.78 0.13 291 / 0.3);
+      0 0 20px oklch(from var(--theme-accent) l c h / 0.15);
+    border-color: oklch(from var(--theme-accent) l c h / 0.3);
   }
 
   /* Card flip animation - Issue #125 */
@@ -1457,7 +1407,7 @@
   }
 
   :global(.flip-button):focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 
@@ -1567,31 +1517,58 @@
     pointer-events: none;
   }
 
-  /* Brand header styling */
-  .brand-header {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+  /* Sidebar title */
+  .sidebar-title {
+    padding: 0.25rem 0 0.5rem;
+    border-bottom: 1px solid var(--theme-border);
     margin-bottom: 0.5rem;
   }
 
-  .logo-mark {
-    position: relative;
+  .sidebar-title-text {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--theme-text-muted);
   }
 
-  .logo-mark svg {
-    filter: drop-shadow(0 4px 12px oklch(0.78 0.13 291 / 0.4));
+  /* Theme-aware text utility classes */
+  :global(.text-theme-muted) {
+    color: var(--theme-text-muted) !important;
+  }
+
+  :global(.text-theme-secondary) {
+    color: var(--theme-text-secondary) !important;
+  }
+
+  /* Auth CTA button */
+  .auth-cta-btn {
+    background-color: var(--theme-accent);
+  }
+
+  .auth-cta-btn:hover {
+    background-color: var(--theme-accent-hover);
+  }
+
+  /* Load more button */
+  .load-more-btn {
+    background-color: var(--theme-accent);
+  }
+
+  .load-more-btn:hover {
+    background-color: var(--theme-accent-hover);
   }
 
   /* ====== FILTER CARD COMPONENT STYLES ====== */
 
-  /* Main filter card container - uses CSS variables for theme support */
+  /* Main filter card container */
   .filter-card {
-    background: var(--theme-bg-card, rgba(30, 41, 59, 0.6));
+    background: var(--theme-bg-card);
     backdrop-filter: blur(12px);
     border-radius: 12px;
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    border: 1px solid var(--theme-border);
     padding: 0.75rem;
-    box-shadow: var(--theme-card-shadow, 0 4px 20px rgba(0, 0, 0, 0.3));
+    box-shadow: 0 4px 20px var(--theme-shadow);
   }
 
   /* Easy to Start toggle button */
@@ -1602,16 +1579,16 @@
     width: 100%;
     padding: 0.625rem 0.75rem;
     border-radius: 8px;
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
-    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.3));
-    color: var(--theme-text-secondary, rgb(203, 213, 225));
+    border: 1px solid var(--theme-border);
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-secondary);
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .filter-toggle:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.5));
-    border-color: var(--theme-border-hover, rgba(71, 85, 105, 0.6));
+    border-color: var(--theme-accent, oklch(0.72 0.16 291));
+    opacity: 0.9;
   }
 
   .filter-toggle.active {
@@ -1625,8 +1602,8 @@
     width: 1rem;
     height: 1rem;
     border-radius: 4px;
-    border: 2px solid var(--theme-border, rgba(100, 116, 139, 0.5));
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.5));
+    border: 2px solid var(--theme-border);
+    background: var(--theme-bg-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1645,8 +1622,8 @@
     font-weight: 700;
     padding: 0.25rem 0.5rem;
     border-radius: 9999px;
-    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.6));
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-muted);
   }
 
   .toggle-count.active {
@@ -1657,7 +1634,7 @@
   /* Divider between sections */
   .filter-divider {
     height: 1px;
-    background: var(--theme-border, rgba(71, 85, 105, 0.3));
+    background: var(--theme-border);
     margin: 0.625rem 0;
   }
 
@@ -1678,7 +1655,7 @@
   .filter-label {
     font-size: 0.625rem;
     font-weight: 600;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -1708,7 +1685,7 @@
     gap: 0.375rem;
   }
 
-  /* Dropdown trigger button - uses CSS variables for theme support */
+  /* Dropdown trigger button */
   .dropdown-trigger {
     width: 100%;
     display: flex;
@@ -1717,29 +1694,29 @@
     padding: 0.375rem 0.5rem;
     font-size: 0.625rem;
     font-weight: 500;
-    color: var(--theme-text-primary, rgb(226, 232, 240));
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.8));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.5));
+    color: var(--theme-text-primary);
+    background: var(--theme-bg-secondary);
+    border: 1px solid var(--theme-border);
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .dropdown-trigger:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
-    border-color: var(--theme-border-hover, rgba(100, 116, 139, 0.5));
+    background: var(--theme-bg-tertiary);
+    border-color: var(--theme-accent);
   }
 
-  /* Dropdown menu - uses CSS variables for theme support */
+  /* Dropdown menu */
   .dropdown-menu {
     position: absolute;
     z-index: 50;
     margin-top: 0.25rem;
     width: 100%;
-    background: var(--theme-dropdown-bg, rgb(30, 41, 59));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.6));
+    background: var(--theme-bg-secondary);
+    border: 1px solid var(--theme-border);
     border-radius: 8px;
-    box-shadow: var(--theme-dropdown-shadow, 0 8px 24px rgba(0, 0, 0, 0.4));
+    box-shadow: 0 8px 24px var(--theme-shadow);
     overflow: hidden;
   }
 
@@ -1750,7 +1727,7 @@
     font-size: 0.625rem;
     font-weight: 500;
     text-align: left;
-    color: var(--theme-text-secondary, rgb(203, 213, 225));
+    color: var(--theme-text-secondary);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -1758,42 +1735,42 @@
   }
 
   .dropdown-option:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.8));
-    color: var(--theme-text-primary, white);
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-primary);
   }
 
   .dropdown-option.selected {
-    background: oklch(0.78 0.13 291 / 0.3);
-    color: rgb(94, 234, 212);
+    background: oklch(from var(--theme-accent) l c h / 0.25);
+    color: var(--theme-accent);
   }
 
-  /* Icon button (sort direction) - uses CSS variables */
+  /* Icon button (sort direction) */
   .icon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.375rem;
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.8));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.5));
+    background: var(--theme-bg-secondary);
+    border: 1px solid var(--theme-border);
     border-radius: 6px;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .icon-btn:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
-    color: var(--theme-text-primary, white);
-    border-color: var(--theme-border-hover, rgba(100, 116, 139, 0.5));
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-primary);
+    border-color: var(--theme-accent);
   }
 
-  /* Export buttons container - uses CSS variables */
+  /* Export buttons container */
   .export-buttons {
     flex: 1;
     display: flex;
     gap: 0.25rem;
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    background: var(--theme-bg-secondary);
+    border: 1px solid var(--theme-border);
     border-radius: 6px;
     padding: 0.125rem;
   }
@@ -1804,7 +1781,7 @@
     padding: 0.25rem 0.375rem;
     font-size: 0.5625rem;
     font-weight: 600;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     background: transparent;
     border: none;
     border-radius: 4px;
@@ -1813,11 +1790,11 @@
   }
 
   .export-btn:hover {
-    background: var(--theme-bg-tertiary-hover, rgba(51, 65, 85, 0.6));
-    color: var(--theme-text-primary, white);
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-primary);
   }
 
-  /* Share button (Issue #140) - uses CSS variables */
+  /* Share button (Issue #140) */
   .share-btn {
     flex: 1;
     display: flex;
@@ -1827,18 +1804,18 @@
     padding: 0.375rem 0.75rem;
     font-size: 0.625rem;
     font-weight: 600;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.6));
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    color: var(--theme-text-muted);
+    background: var(--theme-bg-secondary);
+    border: 1px solid var(--theme-border);
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .share-btn:hover {
-    background: oklch(0.78 0.13 291 / 0.2);
-    border-color: oklch(0.78 0.13 291 / 0.4);
-    color: rgb(94, 234, 212);
+    background: oklch(from var(--theme-accent) l c h / 0.15);
+    border-color: var(--theme-accent);
+    color: var(--theme-accent);
   }
 
   .share-btn:active {
@@ -1846,7 +1823,7 @@
   }
 
   .share-btn:focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 
@@ -1873,32 +1850,6 @@
 
   /* ====== END FILTER CARD STYLES ====== */
 
-  @media (prefers-reduced-motion: no-preference) {
-    .logo-mark svg circle:nth-child(3),
-    .logo-mark svg circle:nth-child(4),
-    .logo-mark svg circle:nth-child(5) {
-      animation: logo-pulse 3s ease-in-out infinite;
-    }
-
-    .logo-mark svg circle:nth-child(4) {
-      animation-delay: 0.3s;
-    }
-
-    .logo-mark svg circle:nth-child(5) {
-      animation-delay: 0.6s;
-    }
-
-    @keyframes logo-pulse {
-      0%,
-      100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.7;
-      }
-    }
-  }
-
   /* Help button - Brand styled circular FAB (compact) */
   /* Positioned above footer (footer ~70px height) */
   .help-button {
@@ -1919,11 +1870,11 @@
     cursor: pointer;
 
     /* Brand accent */
-    background: var(--theme-accent, oklch(0.78 0.13 291));
+    background: var(--theme-accent);
     color: white;
 
     /* Shadow glow */
-    box-shadow: 0 3px 12px oklch(0.78 0.13 291 / 0.35);
+    box-shadow: 0 3px 12px oklch(from var(--theme-accent) l c h / 0.35);
 
     /* Transitions */
     transition: all 0.2s ease;
@@ -1933,19 +1884,19 @@
   }
 
   .help-button:hover {
-    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
-    box-shadow: 0 4px 16px oklch(0.78 0.13 291 / 0.45);
+    background: var(--theme-accent-hover);
+    box-shadow: 0 4px 16px oklch(from var(--theme-accent) l c h / 0.45);
     transform: translateY(-1px);
   }
 
   .help-button:active {
-    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
-    box-shadow: 0 2px 10px oklch(0.78 0.13 291 / 0.3);
+    background: var(--theme-accent-hover);
+    box-shadow: 0 2px 10px oklch(from var(--theme-accent) l c h / 0.3);
     transform: translateY(0) scale(0.98);
   }
 
   .help-button:focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 
@@ -1959,10 +1910,10 @@
   @keyframes help-glow {
     0%,
     100% {
-      box-shadow: 0 3px 12px oklch(0.78 0.13 291 / 0.35);
+      box-shadow: 0 3px 12px oklch(from var(--theme-accent) l c h / 0.35);
     }
     50% {
-      box-shadow: 0 3px 16px oklch(0.78 0.13 291 / 0.5);
+      box-shadow: 0 3px 16px oklch(from var(--theme-accent) l c h / 0.5);
     }
   }
 
@@ -2018,7 +1969,6 @@
       animation-delay: 0.01ms !important;
     }
 
-    .logo-mark svg circle,
     :global(.easy-start-badge),
     :global(.zero-comment-highlight),
     :global(.animate-pulse) {
@@ -2050,13 +2000,13 @@
   :global(.sketch-button):focus-visible,
   :global(.sketch-input):focus-visible,
   :global(a):focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 
   /* Ensure focus is visible on dark backgrounds */
   :global(:focus-visible) {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 

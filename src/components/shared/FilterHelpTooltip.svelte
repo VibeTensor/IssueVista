@@ -87,9 +87,9 @@
   bind:this={triggerRef}
   type="button"
   class="help-trigger flex items-center justify-center w-6 h-6 rounded-full
-         text-slate-400 hover:text-slate-300 hover:bg-slate-700/50
-         focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-1 focus:ring-offset-slate-900
+         focus:outline-none focus:ring-2 focus:ring-offset-1
          transition-colors"
+  style="color: var(--theme-text-muted); --tw-ring-offset-color: var(--theme-bg-primary);"
   onclick={toggleTooltip}
   aria-controls={tooltipId}
   aria-expanded={show}
@@ -126,18 +126,26 @@
         aria-modal="true"
         aria-labelledby="filter-help-title"
         class="help-modal w-full max-w-sm p-4 rounded-xl
-                 bg-slate-800 border border-slate-600 shadow-2xl shadow-black/50
-                 text-sm text-slate-300"
+                 shadow-2xl shadow-black/50
+                 text-sm"
+        style="background: var(--theme-bg-secondary); border: 1px solid var(--theme-border); color: var(--theme-text-secondary);"
         onclick={(e) => e.stopPropagation()}
       >
         <!-- Header -->
         <div class="flex items-center justify-between mb-3">
-          <h3 id="filter-help-title" class="font-semibold text-white">Filter Syntax Help</h3>
+          <h3
+            id="filter-help-title"
+            class="font-semibold"
+            style="color: var(--theme-text-primary);"
+          >
+            Filter Syntax Help
+          </h3>
           <button
             type="button"
-            class="close-btn p-1 rounded hover:bg-slate-700
-                     focus:outline-none focus:ring-1 focus:ring-violet-500
-                     text-slate-400 hover:text-slate-300 transition-colors"
+            class="close-btn p-1 rounded
+                     focus:outline-none focus:ring-1
+                     transition-colors"
+            style="color: var(--theme-text-muted);"
             onclick={closeTooltip}
             aria-label="Close help"
           >
@@ -159,68 +167,96 @@
 
         <!-- Operators section -->
         <div class="operators mb-4">
-          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">Operators</h4>
+          <h4
+            class="text-xs font-medium uppercase tracking-wide mb-2"
+            style="color: var(--theme-text-muted);"
+          >
+            Operators
+          </h4>
           <div class="space-y-1.5">
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
-                >AND</code
+              <code
+                class="px-1.5 py-0.5 rounded text-xs font-mono"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-accent);">AND</code
               >
-              <span class="text-slate-400">Space between filters</span>
+              <span style="color: var(--theme-text-muted);">Space between filters</span>
             </div>
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
-                >OR</code
+              <code
+                class="px-1.5 py-0.5 rounded text-xs font-mono"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-accent);">OR</code
               >
-              <span class="text-slate-400">Comma between filters</span>
+              <span style="color: var(--theme-text-muted);">Comma between filters</span>
             </div>
             <div class="flex items-start gap-2">
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-violet-400 text-xs font-mono"
-                >NOT</code
+              <code
+                class="px-1.5 py-0.5 rounded text-xs font-mono"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-accent);">NOT</code
               >
-              <span class="text-slate-400">Dash prefix (-)</span>
+              <span style="color: var(--theme-text-muted);">Dash prefix (-)</span>
             </div>
           </div>
         </div>
 
         <!-- Examples section -->
         <div class="examples mb-4">
-          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">Examples</h4>
+          <h4
+            class="text-xs font-medium uppercase tracking-wide mb-2"
+            style="color: var(--theme-text-muted);"
+          >
+            Examples
+          </h4>
           <div class="space-y-2">
             <div>
               <code
-                class="block px-2 py-1 rounded bg-slate-900/50 text-xs font-mono text-slate-300"
+                class="block px-2 py-1 rounded text-xs font-mono"
+                style="background: var(--theme-bg-primary); color: var(--theme-text-secondary);"
               >
                 label:bug label:help-wanted
               </code>
-              <p class="text-xs text-slate-500 mt-0.5">Issues with both labels</p>
+              <p class="text-xs mt-0.5" style="color: var(--theme-text-muted);">
+                Issues with both labels
+              </p>
             </div>
             <div>
               <code
-                class="block px-2 py-1 rounded bg-slate-900/50 text-xs font-mono text-slate-300"
+                class="block px-2 py-1 rounded text-xs font-mono"
+                style="background: var(--theme-bg-primary); color: var(--theme-text-secondary);"
               >
                 label:bug,good-first-issue
               </code>
-              <p class="text-xs text-slate-500 mt-0.5">Issues with either label</p>
+              <p class="text-xs mt-0.5" style="color: var(--theme-text-muted);">
+                Issues with either label
+              </p>
             </div>
             <div>
               <code
-                class="block px-2 py-1 rounded bg-slate-900/50 text-xs font-mono text-slate-300"
+                class="block px-2 py-1 rounded text-xs font-mono"
+                style="background: var(--theme-bg-primary); color: var(--theme-text-secondary);"
               >
                 -author:dependabot
               </code>
-              <p class="text-xs text-slate-500 mt-0.5">Exclude bot authors</p>
+              <p class="text-xs mt-0.5" style="color: var(--theme-text-muted);">
+                Exclude bot authors
+              </p>
             </div>
           </div>
         </div>
 
         <!-- Filter types section -->
         <div class="filter-types mb-3">
-          <h4 class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+          <h4
+            class="text-xs font-medium uppercase tracking-wide mb-2"
+            style="color: var(--theme-text-muted);"
+          >
             Filter Types
           </h4>
           <div class="flex flex-wrap gap-1">
             {#each ['label', 'author', 'state', 'is', 'assignee'] as filterType (filterType)}
-              <code class="px-1.5 py-0.5 rounded bg-slate-700 text-xs font-mono text-slate-300">
+              <code
+                class="px-1.5 py-0.5 rounded text-xs font-mono"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-text-secondary);"
+              >
                 {filterType}:
               </code>
             {/each}
@@ -228,12 +264,13 @@
         </div>
 
         <!-- Footer with link -->
-        <div class="footer pt-3 border-t border-slate-700">
+        <div class="footer pt-3 border-t" style="border-color: var(--theme-border);">
           <a
             href="https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 text-xs text-violet-400 hover:text-violet-300 transition-colors"
+            class="footer-link inline-flex items-center gap-1 text-xs transition-colors"
+            style="color: var(--theme-accent);"
           >
             <span>GitHub Search Docs</span>
             <svg
@@ -254,10 +291,33 @@
         </div>
 
         <!-- Keyboard hint -->
-        <p class="text-xs text-slate-500 mt-2">
-          Press <kbd class="px-1 py-0.5 rounded bg-slate-700 text-slate-400 font-mono">Esc</kbd> to close
+        <p class="text-xs mt-2" style="color: var(--theme-text-muted);">
+          Press <kbd
+            class="px-1 py-0.5 rounded font-mono"
+            style="background: var(--theme-bg-tertiary); color: var(--theme-text-muted);">Esc</kbd
+          > to close
         </p>
       </div>
     </div>
   </div>
 {/if}
+
+<style>
+  .help-trigger:hover {
+    color: var(--theme-text-secondary);
+    background: var(--theme-bg-tertiary);
+  }
+  .help-trigger:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .close-btn:hover {
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-secondary);
+  }
+  .close-btn:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .footer-link:hover {
+    color: var(--theme-accent-hover);
+  }
+</style>

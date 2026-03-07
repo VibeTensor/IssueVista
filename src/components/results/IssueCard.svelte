@@ -162,7 +162,9 @@
         <div class="md:hidden">
           <div class="flex items-center justify-between gap-2 mb-2">
             <div class="flex items-center gap-1.5">
-              <span class="px-2 py-0.5 rounded bg-slate-700/80 text-white font-bold text-xs"
+              <span
+                class="issue-number-badge px-2 py-0.5 rounded font-bold text-xs"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-text-primary)"
                 >#{issue.number}</span
               >
               {#if isEasyIssue}
@@ -186,9 +188,9 @@
               <button
                 type="button"
                 onclick={handleCopy}
-                class="p-1.5 {isCopied
-                  ? 'bg-green-600'
-                  : 'bg-slate-700 hover:bg-slate-600'} text-white rounded transition-colors"
+                class="issue-copy-btn p-1.5 rounded transition-colors"
+                class:copied={isCopied}
+                style="color: var(--theme-text-primary)"
                 aria-label="Copy link"
                 title={isCopied ? 'Copied!' : 'Copy'}
               >
@@ -214,7 +216,8 @@
                 href={issue.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded transition-colors"
+                class="issue-view-btn p-1.5 rounded transition-colors"
+                style="color: var(--theme-text-primary)"
                 aria-label="View on GitHub"
               >
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,11 +232,15 @@
             </div>
           </div>
           <h3
-            class="text-sm font-semibold text-white hover:text-slate-200 mb-1.5 leading-snug line-clamp-2"
+            class="issue-title text-sm font-semibold mb-1.5 leading-snug line-clamp-2"
+            style="color: var(--theme-text-primary)"
           >
             <a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title}</a>
           </h3>
-          <div class="flex flex-wrap items-center gap-2 text-[10px] text-slate-400 mb-1.5">
+          <div
+            class="flex flex-wrap items-center gap-2 text-[10px] mb-1.5"
+            style="color: var(--theme-text-muted)"
+          >
             <span class="flex items-center gap-1">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 ><path
@@ -277,7 +284,8 @@
               {/each}
               {#if issue.labels.nodes.length > 3}
                 <span
-                  class="px-1.5 py-0.5 rounded text-[9px] font-medium bg-slate-700/50 text-slate-400"
+                  class="px-1.5 py-0.5 rounded text-[9px] font-medium"
+                  style="background: var(--theme-bg-tertiary); color: var(--theme-text-muted)"
                   >+{issue.labels.nodes.length - 3}</span
                 >
               {/if}
@@ -289,7 +297,9 @@
         <div class="hidden md:flex items-start gap-3">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-1.5">
-              <span class="px-2 py-0.5 rounded bg-slate-700/80 text-white font-bold text-xs"
+              <span
+                class="px-2 py-0.5 rounded font-bold text-xs"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-text-primary)"
                 >#{issue.number}</span
               >
               {#if isEasyIssue}
@@ -310,11 +320,15 @@
               </div>
             </div>
             <h3
-              class="text-sm font-semibold text-white hover:text-slate-200 mb-1.5 leading-snug line-clamp-2"
+              class="issue-title text-sm font-semibold mb-1.5 leading-snug line-clamp-2"
+              style="color: var(--theme-text-primary)"
             >
               <a href={issue.url} target="_blank" rel="noopener noreferrer">{issue.title}</a>
             </h3>
-            <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-1.5">
+            <div
+              class="flex flex-wrap items-center gap-3 text-xs mb-1.5"
+              style="color: var(--theme-text-muted)"
+            >
               <span class="flex items-center gap-1">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                   ><path
@@ -360,7 +374,8 @@
                 {/each}
                 {#if issue.labels.nodes.length > 4}
                   <span
-                    class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-700/50 text-slate-400"
+                    class="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                    style="background: var(--theme-bg-tertiary); color: var(--theme-text-muted)"
                     >+{issue.labels.nodes.length - 4}</span
                   >
                 {/if}
@@ -371,9 +386,9 @@
             <button
               type="button"
               onclick={handleCopy}
-              class="inline-flex items-center gap-1 px-2 py-1.5 {isCopied
-                ? 'bg-green-600'
-                : 'bg-slate-700 hover:bg-slate-600'} text-white rounded text-xs font-medium transition-colors"
+              class="issue-copy-btn inline-flex items-center gap-1 px-2 py-1.5 rounded text-xs font-medium transition-colors"
+              class:copied={isCopied}
+              style="color: var(--theme-text-primary)"
               title={isCopied ? 'Copied!' : 'Copy link'}
             >
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,7 +414,8 @@
               href={issue.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 px-2 py-1.5 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-medium transition-colors"
+              class="issue-view-btn inline-flex items-center gap-1 px-2 py-1.5 rounded text-xs font-medium transition-colors"
+              style="color: var(--theme-text-primary)"
             >
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -440,29 +456,38 @@
       <div class="p-3 h-full flex flex-col">
         <!-- Header with issue number -->
         <div class="flex items-center gap-2 mb-2">
-          <span class="px-2 py-0.5 rounded bg-slate-700/80 text-white font-bold text-xs"
+          <span
+            class="px-2 py-0.5 rounded font-bold text-xs"
+            style="background: var(--theme-bg-tertiary); color: var(--theme-text-primary)"
             >#{issue.number}</span
           >
-          <span class="text-xs text-slate-400">Details</span>
+          <span class="text-xs" style="color: var(--theme-text-muted)">Details</span>
         </div>
 
         <!-- Body preview -->
         <div class="flex-1 min-h-0 mb-3">
-          <p class="text-sm text-slate-300 leading-relaxed line-clamp-5">
+          <p
+            class="text-sm leading-relaxed line-clamp-5"
+            style="color: var(--theme-text-secondary)"
+          >
             {bodyPreview}
           </p>
         </div>
 
         <!-- Footer with action -->
-        <div class="flex items-center justify-between pt-2 border-t border-slate-700/50">
-          <span class="text-xs text-slate-500">
+        <div
+          class="flex items-center justify-between pt-2 border-t"
+          style="border-color: var(--theme-border)"
+        >
+          <span class="text-xs" style="color: var(--theme-text-muted)">
             {commentText}
           </span>
           <a
             href={issue.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-1 px-2 py-1 bg-violet-600 hover:bg-violet-500 text-white rounded text-xs font-medium transition-colors"
+            class="issue-view-btn inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium transition-colors"
+            style="color: var(--theme-text-primary)"
           >
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -484,3 +509,37 @@
 {#if contextMenu}
   <ContextMenu x={contextMenu.x} y={contextMenu.y} {issue} onClose={closeContextMenu} />
 {/if}
+
+<style>
+  /* Theme-aware hover states for issue title links */
+  .issue-title a:hover {
+    color: var(--theme-text-secondary);
+  }
+
+  /* Copy button - default (not copied) state */
+  .issue-copy-btn {
+    background: var(--theme-bg-tertiary);
+  }
+
+  .issue-copy-btn:hover {
+    background: var(--theme-accent-hover);
+  }
+
+  /* Copy button - copied state (semantic green, keep as-is) */
+  .issue-copy-btn.copied {
+    background: #16a34a; /* green-600 */
+  }
+
+  .issue-copy-btn.copied:hover {
+    background: #16a34a;
+  }
+
+  /* View/action button - accent colored */
+  .issue-view-btn {
+    background: var(--theme-accent);
+  }
+
+  .issue-view-btn:hover {
+    background: var(--theme-accent-hover);
+  }
+</style>

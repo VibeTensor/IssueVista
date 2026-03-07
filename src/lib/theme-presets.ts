@@ -51,18 +51,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'sun',
     isDark: false,
     colors: {
-      bgPrimary: '#f8fafc',
-      bgSecondary: '#ffffff',
-      bgTertiary: '#f1f5f9',
-      bgCard: '#ffffff',
-      bgInput: '#ffffff',
-      textPrimary: '#1e293b',
-      textSecondary: '#334155',
-      textMuted: '#64748b',
-      border: 'rgba(203, 213, 225, 0.5)',
-      shadow: 'rgba(0, 0, 0, 0.08)',
-      accent: 'oklch(0.78 0.13 291)',
-      accentHover: 'oklch(0.68 0.13 291)'
+      bgPrimary: 'oklch(0.975 0.003 264)',
+      bgSecondary: 'oklch(0.995 0 0)',
+      bgTertiary: 'oklch(0.945 0.005 264)',
+      bgCard: 'oklch(0.995 0 0)',
+      bgInput: 'oklch(0.995 0 0)',
+      textPrimary: 'oklch(0.13 0.03 264)',
+      textSecondary: 'oklch(0.22 0.025 264)',
+      textMuted: 'oklch(0.42 0.015 264)',
+      border: 'oklch(0.78 0.01 264 / 0.6)',
+      shadow: 'oklch(0 0 0 / 0.1)',
+      accent: 'oklch(0.55 0.2 291)',
+      accentHover: 'oklch(0.48 0.22 291)'
     }
   },
   dark: {
@@ -71,18 +71,18 @@ export const THEME_PRESETS: Record<Exclude<ThemePreset, 'system'>, ThemePresetCo
     icon: 'moon',
     isDark: true,
     colors: {
-      bgPrimary: 'oklch(0.1648 0.0075 270.93)',
-      bgSecondary: 'oklch(0.22 0.01 270)',
-      bgTertiary: 'oklch(0.28 0.012 270)',
-      bgCard: 'oklch(0.22 0.01 270 / 0.7)',
-      bgInput: 'oklch(0.22 0.01 270 / 0.8)',
-      textPrimary: 'oklch(0.98 0.004 264)',
-      textSecondary: 'oklch(0.9 0.008 264)',
-      textMuted: 'oklch(0.65 0.01 264)',
-      border: 'oklch(0.4 0.01 264 / 0.3)',
-      shadow: 'oklch(0 0 0 / 0.4)',
-      accent: 'oklch(0.78 0.13 291)',
-      accentHover: 'oklch(0.83 0.13 291)'
+      bgPrimary: 'oklch(0.15 0.01 270)',
+      bgSecondary: 'oklch(0.2 0.012 270)',
+      bgTertiary: 'oklch(0.26 0.014 270)',
+      bgCard: 'oklch(0.2 0.012 270 / 0.8)',
+      bgInput: 'oklch(0.2 0.012 270 / 0.85)',
+      textPrimary: 'oklch(0.96 0.005 264)',
+      textSecondary: 'oklch(0.85 0.008 264)',
+      textMuted: 'oklch(0.6 0.012 264)',
+      border: 'oklch(0.38 0.012 264 / 0.4)',
+      shadow: 'oklch(0 0 0 / 0.5)',
+      accent: 'oklch(0.72 0.16 291)',
+      accentHover: 'oklch(0.78 0.14 291)'
     }
   },
   midnight: {

@@ -92,14 +92,14 @@
       <div class="help-popup-scroll h-full max-h-[85vh] md:max-h-[75vh] overflow-y-auto">
         <!-- Header -->
         <div
-          class="sticky top-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 flex items-center justify-between border-b border-slate-700/50 z-10"
+          class="help-popup-header sticky top-0 backdrop-blur px-3 py-2.5 flex items-center justify-between z-10"
         >
           <div class="flex items-center gap-2 min-w-0">
             <div
-              class="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-violet-500 to-violet-600 shadow-sm shadow-violet-500/20"
+              class="help-popup-step-badge w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 shadow-sm"
             >
               <svg
-                class="w-3.5 h-3.5 text-white"
+                class="help-popup-icon-white w-3.5 h-3.5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -113,18 +113,18 @@
                 />
               </svg>
             </div>
-            <h2 id="help-dialog-title" class="text-base font-bold text-white truncate">
+            <h2 id="help-dialog-title" class="help-popup-text-primary text-base font-bold truncate">
               How It Works
             </h2>
           </div>
           <button
             bind:this={closeButtonRef}
             onclick={onClose}
-            class="w-8 h-8 rounded-md hover:bg-slate-700/50 flex items-center justify-center transition-colors"
+            class="help-popup-close-btn w-8 h-8 rounded-md flex items-center justify-center transition-colors"
             aria-label="Close"
           >
             <svg
-              class="w-5 h-5 text-slate-400 hover:text-white transition-colors"
+              class="help-popup-icon-muted w-5 h-5 transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -141,36 +141,40 @@
         </div>
 
         <!-- Content -->
-        <div class="px-3 py-2 space-y-2 bg-slate-900/95">
+        <div class="help-popup-content px-3 py-2 space-y-2">
           <!-- Step 1: Authentication -->
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
+                class="help-popup-step-badge flex-shrink-0 w-5 h-5 rounded flex items-center justify-center font-bold text-xs shadow-sm"
               >
                 1
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="text-xs font-bold text-white mb-1">Authentication (Optional)</h3>
-                <p class="text-slate-400 text-[11px] mb-1.5">
+                <h3 class="help-popup-text-primary text-xs font-bold mb-1">
+                  Authentication (Optional)
+                </h3>
+                <p class="help-popup-text-muted text-[11px] mb-1.5">
                   Without token: 60 req/hr · With token: 5000 req/hr
                 </p>
 
                 <!-- Token Generation - Collapsed -->
-                <details class="bg-slate-800/40 rounded p-2">
-                  <summary class="text-[11px] text-violet-400 cursor-pointer hover:text-violet-300"
+                <details class="help-popup-details rounded p-2">
+                  <summary class="help-popup-link text-[11px] cursor-pointer"
                     >How to create a token →</summary
                   >
-                  <ol class="mt-1.5 space-y-1 text-[11px] text-slate-300 list-decimal list-inside">
+                  <ol
+                    class="mt-1.5 space-y-1 text-[11px] help-popup-text-secondary list-decimal list-inside"
+                  >
                     <li>
                       Click <a
                         href="https://github.com/settings/tokens/new?description=IssueVista&scopes=public_repo"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="text-violet-400 hover:text-violet-300 underline">this link</a
+                        class="help-popup-link underline">this link</a
                       >
                     </li>
-                    <li>Check <span class="text-white">"public_repo"</span> scope</li>
+                    <li>Check <span class="help-popup-text-primary">"public_repo"</span> scope</li>
                     <li>Click <span class="text-green-400">"Generate token"</span></li>
                     <li>Copy & paste in the field above</li>
                   </ol>
@@ -183,13 +187,13 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
+                class="help-popup-step-badge flex-shrink-0 w-5 h-5 rounded flex items-center justify-center font-bold text-xs shadow-sm"
               >
                 2
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="text-xs font-bold text-white">Enter Repository URL</h3>
-                <p class="text-slate-400 text-[11px]">https://github.com/owner/repo</p>
+                <h3 class="help-popup-text-primary text-xs font-bold">Enter Repository URL</h3>
+                <p class="help-popup-text-muted text-[11px]">https://github.com/owner/repo</p>
               </div>
             </div>
           </div>
@@ -198,13 +202,15 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
+                class="help-popup-step-badge flex-shrink-0 w-5 h-5 rounded flex items-center justify-center font-bold text-xs shadow-sm"
               >
                 3
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="text-xs font-bold text-white">Find Issues</h3>
-                <p class="text-slate-400 text-[11px]">Filters: open, unassigned, no linked PRs</p>
+                <h3 class="help-popup-text-primary text-xs font-bold">Find Issues</h3>
+                <p class="help-popup-text-muted text-[11px]">
+                  Filters: open, unassigned, no linked PRs
+                </p>
               </div>
             </div>
           </div>
@@ -213,26 +219,24 @@
           <div class="sketch-card p-2.5">
             <div class="flex items-start gap-2">
               <div
-                class="flex-shrink-0 w-5 h-5 bg-gradient-to-br from-violet-500 to-violet-600 rounded flex items-center justify-center font-bold text-white text-xs shadow-sm shadow-violet-500/20"
+                class="help-popup-step-badge flex-shrink-0 w-5 h-5 rounded flex items-center justify-center font-bold text-xs shadow-sm"
               >
                 4
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="text-xs font-bold text-white">Start Contributing</h3>
-                <p class="text-slate-400 text-[11px]">Click "View" to open on GitHub</p>
+                <h3 class="help-popup-text-primary text-xs font-bold">Start Contributing</h3>
+                <p class="help-popup-text-muted text-[11px]">Click "View" to open on GitHub</p>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Footer -->
-        <div
-          class="sticky bottom-0 bg-slate-900/98 backdrop-blur px-3 py-2.5 border-t border-slate-700/50"
-        >
+        <div class="help-popup-footer sticky bottom-0 backdrop-blur px-3 py-2.5">
           <button
             bind:this={ctaButtonRef}
             onclick={onClose}
-            class="w-full bg-gradient-to-r from-violet-500 to-violet-600 text-white py-2 px-4 rounded font-semibold text-xs hover:from-violet-400 hover:to-violet-500 shadow-sm shadow-violet-500/25 transition-all duration-200"
+            class="help-popup-cta-btn w-full py-2 px-4 rounded font-semibold text-xs transition-all duration-200"
           >
             Got it!
           </button>
@@ -243,10 +247,80 @@
 {/if}
 
 <style>
+  /* Theme-aware color classes */
+
+  .help-popup-header {
+    background: var(--theme-bg-primary);
+    border-bottom: 1px solid var(--theme-border);
+  }
+
+  .help-popup-content {
+    background: var(--theme-bg-primary);
+  }
+
+  .help-popup-footer {
+    background: var(--theme-bg-primary);
+    border-top: 1px solid var(--theme-border);
+  }
+
+  .help-popup-text-primary {
+    color: var(--theme-text-primary);
+  }
+
+  .help-popup-text-secondary {
+    color: var(--theme-text-secondary);
+  }
+
+  .help-popup-text-muted {
+    color: var(--theme-text-muted);
+  }
+
+  .help-popup-step-badge {
+    background: var(--theme-accent);
+    color: var(--theme-text-primary);
+  }
+
+  .help-popup-close-btn:hover {
+    background: var(--theme-bg-tertiary);
+  }
+
+  .help-popup-icon-muted {
+    color: var(--theme-text-muted);
+  }
+
+  .help-popup-icon-muted:hover {
+    color: var(--theme-text-primary);
+  }
+
+  .help-popup-icon-white {
+    color: var(--theme-text-primary);
+  }
+
+  .help-popup-details {
+    background: var(--theme-bg-secondary);
+  }
+
+  .help-popup-link {
+    color: var(--theme-accent);
+  }
+
+  .help-popup-link:hover {
+    color: var(--theme-accent-hover);
+  }
+
+  .help-popup-cta-btn {
+    background: var(--theme-accent);
+    color: var(--theme-text-primary);
+  }
+
+  .help-popup-cta-btn:hover {
+    background: var(--theme-accent-hover);
+  }
+
   /* Custom scrollbar for help popup - inset from edges */
   .help-popup-scroll {
     scrollbar-width: thin;
-    scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+    scrollbar-color: var(--theme-border) transparent;
     /* Add padding to keep scrollbar inside rounded area */
     padding-right: 4px;
   }
@@ -263,7 +337,7 @@
   }
 
   .help-popup-scroll::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.4);
+    background: var(--theme-border);
     border-radius: 100px;
     /* Create inset effect - transparent border clips the thumb */
     border: 2px solid transparent;
@@ -271,7 +345,7 @@
   }
 
   .help-popup-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.6);
+    background: var(--theme-text-muted);
     border: 2px solid transparent;
     background-clip: padding-box;
   }

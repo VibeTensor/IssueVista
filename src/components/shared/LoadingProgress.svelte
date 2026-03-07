@@ -167,11 +167,11 @@
     margin: 0 auto;
     max-width: 400px;
     width: 100%;
-    background: rgba(30, 41, 59, 0.7);
+    background: var(--theme-bg-card);
     backdrop-filter: blur(16px);
     border-radius: 12px;
     position: relative;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 30px var(--theme-shadow);
   }
 
   .loading-progress-container::before {
@@ -179,7 +179,7 @@
     position: absolute;
     inset: -2px;
     background: transparent;
-    border: 2px solid rgba(148, 163, 184, 0.25);
+    border: 2px solid var(--theme-border);
     border-radius: inherit;
     filter: url(#sketch);
     pointer-events: none;
@@ -198,7 +198,7 @@
   .progress-track {
     flex: 1;
     height: 12px;
-    background: rgba(71, 85, 105, 0.5);
+    background: var(--theme-bg-tertiary);
     border-radius: 6px;
     overflow: hidden;
     position: relative;
@@ -274,7 +274,7 @@
   .progress-percentage {
     font-size: 0.875rem;
     font-weight: 700;
-    color: #e2e8f0;
+    color: var(--theme-text-primary);
     min-width: 3rem;
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -284,7 +284,7 @@
   .status-message {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #f1f5f9;
+    color: var(--theme-text-primary);
     margin: 0 0 0.75rem 0;
     line-height: 1.4;
   }
@@ -297,7 +297,7 @@
     gap: 0.5rem;
     flex-wrap: wrap;
     padding: 0.5rem 0.75rem;
-    background: rgba(51, 65, 85, 0.4);
+    background: var(--theme-bg-tertiary);
     border-radius: 6px;
     margin-bottom: 1rem;
   }
@@ -308,11 +308,11 @@
     align-items: center;
     gap: 0.375rem;
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: var(--theme-text-muted);
   }
 
   .separator {
-    color: #475569;
+    color: var(--theme-text-muted);
   }
 
   .icon {

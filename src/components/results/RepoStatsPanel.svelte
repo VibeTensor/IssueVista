@@ -203,10 +203,10 @@
 
 <style>
   .stats-panel {
-    background: var(--theme-bg-card, rgba(30, 41, 59, 0.6));
+    background: var(--theme-bg-card);
     backdrop-filter: blur(12px);
     border-radius: 12px;
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.4));
+    border: 1px solid var(--theme-border);
     margin-bottom: 1rem;
     overflow: hidden;
   }
@@ -220,16 +220,16 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    color: var(--theme-text-primary, white);
+    color: var(--theme-text-primary);
     transition: background-color 0.15s ease;
   }
 
   .stats-header:hover {
-    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.3));
+    background: var(--theme-bg-tertiary);
   }
 
   .stats-header:focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: -2px;
   }
 
@@ -242,7 +242,7 @@
   .header-icon {
     width: 1rem;
     height: 1rem;
-    color: var(--theme-accent, var(--theme-accent, oklch(0.78 0.13 291)));
+    color: var(--theme-accent);
   }
 
   .header-title {
@@ -255,7 +255,7 @@
   .header-repo {
     font-size: 0.625rem;
     font-weight: 400;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     max-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -265,7 +265,7 @@
   .chevron-icon {
     width: 1rem;
     height: 1rem;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     transition: transform 0.2s ease;
   }
 
@@ -294,9 +294,9 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem;
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.5));
+    background: var(--theme-bg-secondary);
     border-radius: 8px;
-    border: 1px solid var(--theme-border, rgba(71, 85, 105, 0.3));
+    border: 1px solid var(--theme-border);
   }
 
   .stat-icon {
@@ -330,13 +330,13 @@
   .stat-value {
     font-size: 0.875rem;
     font-weight: 700;
-    color: var(--theme-text-primary, white);
+    color: var(--theme-text-primary);
     line-height: 1.2;
   }
 
   .stat-label {
     font-size: 0.625rem;
-    color: var(--theme-text-muted, rgb(148, 163, 184));
+    color: var(--theme-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -348,22 +348,22 @@
     gap: 0.375rem;
     margin-top: 0.75rem;
     padding: 0.25rem 0.5rem;
-    background: var(--theme-bg-tertiary, rgba(51, 65, 85, 0.4));
+    background: var(--theme-bg-tertiary);
     border-radius: 9999px;
     font-size: 0.625rem;
-    color: var(--theme-text-secondary, rgb(203, 213, 225));
+    color: var(--theme-text-secondary);
   }
 
   .language-dot {
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: var(--theme-accent, var(--theme-accent, oklch(0.78 0.13 291)));
+    background: var(--theme-accent);
   }
 
   /* Loading skeleton */
   .stat-item.skeleton {
-    background: var(--theme-bg-secondary, rgba(30, 41, 59, 0.5));
+    background: var(--theme-bg-secondary);
   }
 
   .skeleton-icon {
@@ -372,9 +372,9 @@
     border-radius: 4px;
     background: linear-gradient(
       90deg,
-      var(--theme-bg-tertiary, rgba(51, 65, 85, 0.4)) 25%,
-      var(--theme-bg-secondary, rgba(30, 41, 59, 0.6)) 50%,
-      var(--theme-bg-tertiary, rgba(51, 65, 85, 0.4)) 75%
+      var(--theme-bg-tertiary) 25%,
+      var(--theme-bg-secondary) 50%,
+      var(--theme-bg-tertiary) 75%
     );
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
@@ -386,9 +386,9 @@
     border-radius: 4px;
     background: linear-gradient(
       90deg,
-      var(--theme-bg-tertiary, rgba(51, 65, 85, 0.4)) 25%,
-      var(--theme-bg-secondary, rgba(30, 41, 59, 0.6)) 50%,
-      var(--theme-bg-tertiary, rgba(51, 65, 85, 0.4)) 75%
+      var(--theme-bg-tertiary) 25%,
+      var(--theme-bg-secondary) 50%,
+      var(--theme-bg-tertiary) 75%
     );
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;

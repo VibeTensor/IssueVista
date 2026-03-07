@@ -37,7 +37,8 @@
       aria-checked={enabled}
     />
     <div
-      class="toggle-track w-11 h-6 bg-slate-700 rounded-full peer-checked:bg-green-500 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-green-400 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-slate-900"
+      class="toggle-track w-11 h-6 rounded-full peer-checked:bg-green-500 transition-colors peer-focus-visible:ring-2 peer-focus-visible:ring-green-400 peer-focus-visible:ring-offset-2"
+      style="background-color: var(--theme-bg-tertiary); --tw-ring-offset-color: var(--theme-bg-primary);"
       aria-hidden="true"
     ></div>
     <div
@@ -45,7 +46,7 @@
       aria-hidden="true"
     ></div>
   </div>
-  <span class="text-sm font-semibold text-slate-200">
+  <span class="text-sm font-semibold" style="color: var(--theme-text-primary);">
     Easy Issues Only
     {#if zeroCommentCount > 0}
       <span
@@ -65,17 +66,17 @@
   /* Filter toggle styles */
   .filter-toggle-container {
     padding: 0.5rem 1rem;
-    background: rgba(51, 65, 85, 0.5);
+    background: var(--theme-bg-tertiary);
     border-radius: 0.75rem;
-    border: 1px solid rgba(71, 85, 105, 0.5);
+    border: 1px solid var(--theme-border);
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease;
   }
 
   .filter-toggle-container:hover {
-    background: rgba(51, 65, 85, 0.7);
-    border-color: rgba(71, 85, 105, 0.8);
+    background: var(--theme-bg-tertiary);
+    border-color: var(--theme-border);
   }
 
   .toggle-track {

@@ -23,14 +23,18 @@
 </script>
 
 <div class="flex items-center gap-2" role="group" aria-labelledby="sort-label">
-  <label for="sort-comments" id="sort-label" class="text-sm font-semibold text-slate-400"
-    >Sort:</label
+  <label
+    for="sort-comments"
+    id="sort-label"
+    class="text-sm font-semibold"
+    style="color: var(--theme-text-muted);">Sort:</label
   >
   <select
     id="sort-comments"
     value={sortOrder}
     onchange={handleChange}
-    class="sort-dropdown bg-slate-800 border border-slate-600 text-white text-sm font-semibold rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 outline-none cursor-pointer"
+    class="sort-dropdown text-sm font-semibold rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 outline-none cursor-pointer"
+    style="background: var(--theme-bg-input); border: 1px solid var(--theme-border); color: var(--theme-text-primary); --tw-ring-offset-color: var(--theme-bg-primary);"
     aria-describedby="sort-description"
   >
     <option value="default">Default Order</option>
@@ -52,8 +56,8 @@
   }
 
   .sort-dropdown option {
-    background: #1e293b;
-    color: white;
+    background: var(--theme-bg-secondary);
+    color: var(--theme-text-primary);
   }
 
   /* Accessibility: Respect user's motion preferences */

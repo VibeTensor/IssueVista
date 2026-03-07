@@ -338,7 +338,9 @@
     <!-- Repository URL Input -->
     <div>
       <div class="flex items-center justify-between mb-1.5">
-        <label for="repoUrl" class="text-xs font-medium text-slate-300"> Repository URL </label>
+        <label for="repoUrl" class="text-xs font-medium" style="color: var(--theme-text-secondary)">
+          Repository URL
+        </label>
         <span
           id="repoUrl-hint"
           class="text-[10px] {validationState === 'valid'
@@ -354,7 +356,12 @@
       </div>
       <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
-          <svg class="h-3.5 w-3.5 text-slate-500" fill="currentColor" viewBox="0 0 24 24">
+          <svg
+            class="h-3.5 w-3.5"
+            style="color: var(--theme-text-muted)"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
             />
@@ -366,12 +373,13 @@
           type="text"
           value={repoUrl}
           placeholder="Try: facebook/react, microsoft/vscode"
-          class="sketch-input w-full pl-8 pr-14 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500 {validationState ===
+          class="sketch-input search-input w-full pl-8 pr-14 py-2 text-xs rounded-md outline-none {validationState ===
           'valid'
             ? 'border-green-500/50'
             : validationState === 'invalid'
               ? 'border-red-500/50'
               : ''}"
+          style="color: var(--theme-text-primary); background: var(--theme-bg-input)"
           oninput={handleRepoUrlInput}
           onkeydown={handleKeydown}
           onfocus={handleInputFocus}
@@ -391,13 +399,13 @@
             tabindex="-1"
             onclick={handleClearInput}
             class="absolute inset-y-0 right-7 flex items-center cursor-pointer rounded
-                   focus:outline-none focus-visible:ring-1 focus-visible:ring-slate-400
-                   hover:text-slate-300 transition-colors"
+                   focus:outline-none icon-btn-hover transition-colors"
             aria-label="Clear search"
             title="Clear"
           >
             <svg
-              class="h-3.5 w-3.5 text-slate-400"
+              class="h-3.5 w-3.5"
+              style="color: var(--theme-text-muted)"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -417,7 +425,7 @@
           <button
             type="button"
             onclick={handleCopyUrl}
-            class="absolute inset-y-0 right-2 flex items-center cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-slate-400 rounded"
+            class="absolute inset-y-0 right-2 flex items-center cursor-pointer focus:outline-none icon-btn-hover rounded"
             aria-label="Copy repository URL to clipboard"
             title={copied ? 'Copied!' : 'Copy URL'}
           >
@@ -439,7 +447,8 @@
               </svg>
             {:else}
               <svg
-                class="h-3.5 w-3.5 text-slate-400 hover:text-slate-300 transition-colors"
+                class="h-3.5 w-3.5 transition-colors"
+                style="color: var(--theme-text-muted)"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -493,7 +502,7 @@
     <!-- Token Input -->
     <div>
       <div class="flex items-center justify-between mb-1.5">
-        <label for="token" class="text-xs font-medium text-slate-300">
+        <label for="token" class="text-xs font-medium" style="color: var(--theme-text-secondary)">
           {#if isAuthenticated}
             <span class="flex items-center gap-1.5">
               Token
@@ -502,12 +511,17 @@
               >
             </span>
           {:else}
-            Token <span class="text-slate-500 text-[10px] font-normal">(optional)</span>
+            Token <span class="text-[10px] font-normal" style="color: var(--theme-text-muted)"
+              >(optional)</span
+            >
           {/if}
         </label>
         <!-- Rate limit display inline with token -->
         {#if rateLimitRemaining !== undefined && rateLimitRemaining > 0}
-          <span class="text-[10px] {rateLimitRemaining < 10 ? 'text-amber-400' : 'text-slate-500'}">
+          <span
+            class="text-[10px] {rateLimitRemaining < 10 ? 'text-amber-400' : ''}"
+            style={rateLimitRemaining >= 10 ? 'color: var(--theme-text-muted)' : ''}
+          >
             {rateLimitRemaining} left{#if rateLimitResetTime}
               · {rateLimitResetTime}{/if}
           </span>
@@ -516,7 +530,8 @@
       <div class="relative">
         <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
           <svg
-            class="h-3.5 w-3.5 text-slate-500"
+            class="h-3.5 w-3.5"
+            style="color: var(--theme-text-muted)"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -534,7 +549,8 @@
           type="password"
           value={token}
           placeholder={isAuthenticated ? '••••••••' : 'ghp_xxxx...'}
-          class="sketch-input w-full pl-8 pr-3 py-2 text-xs text-white rounded-md outline-none bg-slate-800/80 placeholder-slate-500"
+          class="sketch-input search-input w-full pl-8 pr-3 py-2 text-xs rounded-md outline-none"
+          style="color: var(--theme-text-primary); background: var(--theme-bg-input)"
           oninput={handleTokenInput}
         />
       </div>
@@ -543,9 +559,13 @@
     <!-- Advanced Filters Section (Issue #121) -->
     <div>
       <div class="flex items-center justify-between mb-1.5">
-        <span class="text-xs font-medium text-slate-300 flex items-center gap-1.5">
+        <span
+          class="text-xs font-medium flex items-center gap-1.5"
+          style="color: var(--theme-text-secondary)"
+        >
           <svg
-            class="h-3.5 w-3.5 text-slate-500"
+            class="h-3.5 w-3.5"
+            style="color: var(--theme-text-muted)"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -559,7 +579,9 @@
             />
           </svg>
           Advanced Filters
-          <span class="text-slate-500 text-[10px] font-normal">(optional)</span>
+          <span class="text-[10px] font-normal" style="color: var(--theme-text-muted)"
+            >(optional)</span
+          >
         </span>
         <FilterHelpTooltip bind:show={showFilterHelp} onClose={() => (showFilterHelp = false)} />
       </div>
@@ -577,8 +599,8 @@
       onclick={onSearch}
       disabled={!canSubmit}
       class="w-full py-1.5 px-3 rounded-md font-medium text-xs transition-all {canSubmit
-        ? 'bg-violet-600 hover:bg-violet-500 text-white shadow-md shadow-violet-500/20'
-        : 'bg-slate-800 text-slate-600 cursor-not-allowed'}"
+        ? 'search-btn-enabled'
+        : 'search-btn-disabled cursor-not-allowed'}"
     >
       <span class="flex items-center justify-center gap-1.5">
         {#if loading}
@@ -608,10 +630,11 @@
 
     <!-- Keyboard shortcut hint (Issue #166) -->
     <div
-      class="hidden md:flex justify-center items-center gap-1 mt-2 text-[0.625rem] text-slate-500"
+      class="hidden md:flex justify-center items-center gap-1 mt-2 text-[0.625rem]"
+      style="color: var(--theme-text-muted)"
     >
       Press <kbd
-        class="inline-flex items-center justify-center px-1.5 py-0.5 bg-slate-700/40 border border-slate-600/30 rounded text-[0.5625rem] text-slate-400"
+        class="kbd-hint inline-flex items-center justify-center px-1.5 py-0.5 rounded text-[0.5625rem]"
         >Enter</kbd
       > to search
     </div>
@@ -619,26 +642,70 @@
 </div>
 
 <style>
+  /* Input placeholder color using theme variable */
+  .search-input::placeholder {
+    color: var(--theme-text-muted);
+  }
+
+  /* Quick pick chips - theme-aware */
   .quick-pick-chip {
     padding: 0.125rem 0.375rem;
     font-size: 0.5625rem;
     font-weight: 500;
-    color: #94a3b8;
-    background: rgba(51, 65, 85, 0.4);
-    border: 1px solid rgba(71, 85, 105, 0.3);
+    color: var(--theme-text-muted);
+    background: var(--theme-bg-tertiary);
+    border: 1px solid var(--theme-border);
     border-radius: 3px;
     transition: all 0.1s ease;
     cursor: pointer;
   }
 
   .quick-pick-chip:hover:not(:disabled) {
-    color: #e2e8f0;
-    background: rgba(71, 85, 105, 0.5);
-    border-color: rgba(100, 116, 139, 0.5);
+    color: var(--theme-text-primary);
+    background: var(--theme-bg-secondary);
+    border-color: var(--theme-border);
   }
 
   .quick-pick-chip:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+  }
+
+  /* Search button - enabled state */
+  .search-btn-enabled {
+    background: var(--theme-accent);
+    color: #fff;
+    box-shadow: 0 4px 6px -1px var(--theme-shadow);
+  }
+
+  .search-btn-enabled:hover {
+    background: var(--theme-accent-hover);
+  }
+
+  /* Search button - disabled state */
+  .search-btn-disabled {
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-muted);
+    opacity: 0.5;
+  }
+
+  /* Icon button hover and focus ring */
+  .icon-btn-hover {
+    color: var(--theme-text-muted);
+  }
+
+  .icon-btn-hover:hover {
+    color: var(--theme-text-secondary);
+  }
+
+  .icon-btn-hover:focus-visible {
+    box-shadow: 0 0 0 1px var(--theme-accent);
+  }
+
+  /* Keyboard shortcut hint badge */
+  .kbd-hint {
+    background: var(--theme-bg-tertiary);
+    border: 1px solid var(--theme-border);
+    color: var(--theme-text-muted);
   }
 </style>

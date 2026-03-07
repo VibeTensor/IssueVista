@@ -167,18 +167,20 @@
     {#each chips as chip (chip.id)}
       <div
         class="filter-chip group flex items-center gap-1 px-2 py-1 rounded-md text-sm
-               {chip.negated
-          ? 'bg-red-900/30 border border-red-700/50 text-red-300'
-          : 'bg-slate-700/50 border border-slate-600 text-slate-300'}
-               hover:bg-slate-600/50 transition-colors"
+               {chip.negated ? 'negated' : ''}
+               transition-colors"
+        style={chip.negated
+          ? 'background: rgb(127 29 29 / 0.3); border: 1px solid rgb(185 28 28 / 0.5); color: #fca5a5;'
+          : `background: var(--theme-bg-tertiary); border: 1px solid var(--theme-border); color: var(--theme-text-secondary);`}
         role="listitem"
       >
         <span class="chip-label">{chip.displayLabel}</span>
         <button
           type="button"
-          class="chip-remove ml-1 p-0.5 rounded hover:bg-slate-500/50
-                 focus:outline-none focus:ring-1 focus:ring-violet-500
+          class="chip-remove ml-1 p-0.5 rounded
+                 focus:outline-none focus:ring-1
                  opacity-60 group-hover:opacity-100 transition-opacity"
+          style="--ring-color: var(--theme-accent);"
           onclick={() => removeChip(chip.id)}
           aria-label="Remove filter: {chip.displayLabel}"
           {disabled}
@@ -207,10 +209,10 @@
     <button
       type="button"
       class="add-filter-btn flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px]
-             bg-slate-800/50 border border-slate-600/50 border-dashed
-             text-slate-400 hover:text-slate-300 hover:border-slate-500
-             focus:outline-none focus:ring-1 focus:ring-violet-500
+             border border-dashed
+             focus:outline-none focus:ring-1
              transition-colors"
+      style="background: var(--theme-bg-secondary); border-color: var(--theme-border); color: var(--theme-text-muted);"
       onclick={(e) => {
         e.stopPropagation();
         showAddMenu = true;
@@ -245,8 +247,9 @@
     >
       <div
         class="add-filter-menu flex flex-wrap items-center gap-2 p-3 rounded-xl
-               bg-slate-800 border border-slate-600 shadow-2xl shadow-black/50
+               shadow-2xl shadow-black/50
                max-w-sm w-full"
+        style="background: var(--theme-bg-secondary); border: 1px solid var(--theme-border);"
         role="dialog"
         aria-modal="true"
         aria-label="Add filter"
@@ -257,11 +260,12 @@
         <button
           type="button"
           class="negate-btn px-2 py-1 rounded text-xs font-medium flex-shrink-0
-             {isNegated
-            ? 'bg-red-900/50 text-red-300 border border-red-700'
-            : 'bg-slate-700 text-slate-400 border border-slate-600'}
-             hover:bg-slate-600 focus:outline-none focus:ring-1 focus:ring-violet-500
+             {isNegated ? 'negated' : ''}
+             focus:outline-none focus:ring-1
              transition-colors"
+          style={isNegated
+            ? 'background: rgb(127 29 29 / 0.5); color: #fca5a5; border: 1px solid #b91c1c;'
+            : `background: var(--theme-bg-tertiary); color: var(--theme-text-muted); border: 1px solid var(--theme-border);`}
           onclick={() => (isNegated = !isNegated)}
           aria-pressed={isNegated}
           title="Toggle NOT operator"
@@ -276,10 +280,9 @@
               <button
                 type="button"
                 class="type-btn px-2 py-1 rounded text-xs
-                   bg-slate-700 text-slate-300 border border-slate-600
-                   hover:bg-slate-600 hover:text-white
-                   focus:outline-none focus:ring-1 focus:ring-violet-500
+                   focus:outline-none focus:ring-1
                    transition-colors"
+                style="background: var(--theme-bg-tertiary); color: var(--theme-text-secondary); border: 1px solid var(--theme-border);"
                 onclick={() => selectFilterType(type)}
               >
                 {FILTER_TYPE_LABELS[type]}
@@ -289,8 +292,8 @@
         {:else}
           <!-- Selected type and value input -->
           <span
-            class="selected-type px-2 py-1 rounded text-xs font-medium flex-shrink-0
-               bg-violet-900/50 text-violet-300 border border-violet-700"
+            class="selected-type px-2 py-1 rounded text-xs font-medium flex-shrink-0"
+            style="background: color-mix(in srgb, var(--theme-accent) 20%, transparent); color: var(--theme-accent); border: 1px solid var(--theme-accent);"
           >
             {FILTER_TYPE_LABELS[selectedFilterType]}:
           </span>
@@ -300,9 +303,9 @@
             bind:value={filterValueInput}
             type="text"
             class="value-input px-2 py-1 rounded text-sm w-28 sm:w-32 min-w-0
-               bg-slate-900 text-white border border-slate-600
-               focus:outline-none focus:ring-1 focus:ring-violet-500
-               placeholder:text-slate-500"
+               focus:outline-none focus:ring-1
+               transition-colors"
+            style="background: var(--theme-bg-input); color: var(--theme-text-primary); border: 1px solid var(--theme-border);"
             placeholder={selectedFilterType === 'state'
               ? 'open or closed'
               : selectedFilterType === 'is'
@@ -319,9 +322,9 @@
           <button
             type="button"
             class="confirm-btn px-2 py-1 rounded text-xs flex-shrink-0
-               bg-violet-600 text-white
-               hover:bg-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-400
+               focus:outline-none focus:ring-1
                transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            style="background: var(--theme-accent); color: var(--theme-text-primary);"
             onclick={addChip}
             disabled={!filterValueInput.trim()}
           >
@@ -332,10 +335,10 @@
         <!-- Cancel button -->
         <button
           type="button"
-          class="cancel-btn p-1 rounded text-slate-400 flex-shrink-0
-             hover:text-slate-300 hover:bg-slate-700
-             focus:outline-none focus:ring-1 focus:ring-violet-500
+          class="cancel-btn p-1 rounded flex-shrink-0
+             focus:outline-none focus:ring-1
              transition-colors"
+          style="color: var(--theme-text-muted);"
           onclick={resetAddForm}
           aria-label="Cancel"
         >
@@ -357,3 +360,61 @@
     </div>
   </div>
 {/if}
+
+<style>
+  .filter-chip:hover {
+    background: var(--theme-bg-tertiary) !important;
+    filter: brightness(1.2);
+  }
+  .filter-chip.negated:hover {
+    background: rgb(127 29 29 / 0.4) !important;
+    filter: none;
+  }
+  .chip-remove:hover {
+    background: var(--theme-bg-tertiary);
+  }
+  .chip-remove:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .add-filter-btn:hover {
+    color: var(--theme-text-secondary);
+    border-color: var(--theme-text-muted);
+  }
+  .add-filter-btn:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .negate-btn:hover {
+    background: var(--theme-bg-tertiary) !important;
+    filter: brightness(1.2);
+  }
+  .negate-btn:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .type-btn:hover {
+    background: var(--theme-bg-tertiary) !important;
+    filter: brightness(1.2);
+    color: var(--theme-text-primary);
+  }
+  .type-btn:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .value-input::placeholder {
+    color: var(--theme-text-muted);
+  }
+  .value-input:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+  .confirm-btn:hover {
+    background: var(--theme-accent-hover) !important;
+  }
+  .confirm-btn:focus {
+    --tw-ring-color: var(--theme-accent-hover);
+  }
+  .cancel-btn:hover {
+    color: var(--theme-text-secondary);
+    background: var(--theme-bg-tertiary);
+  }
+  .cancel-btn:focus {
+    --tw-ring-color: var(--theme-accent);
+  }
+</style>

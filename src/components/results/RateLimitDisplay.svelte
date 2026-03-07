@@ -31,7 +31,10 @@
     aria-label="GitHub API rate limit status"
     class="text-xs text-center lg:text-left"
   >
-    <span class={`${isLowRemaining ? 'text-amber-400' : 'text-slate-500'}`}>
+    <span
+      class={isLowRemaining ? 'text-amber-400' : ''}
+      style={isLowRemaining ? '' : `color: var(--theme-text-muted)`}
+    >
       {remaining} requests
       {#if resetTime}
         · resets {resetTime}

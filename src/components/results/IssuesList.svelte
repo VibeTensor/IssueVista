@@ -82,14 +82,16 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <!-- Left: Title and info -->
       <div class="text-center md:text-left">
-        <h2 class="text-xl md:text-2xl font-bold text-white">
+        <h2 class="text-xl md:text-2xl font-bold" style="color: var(--theme-text-primary)">
           {displayedIssues.length}
           {displayedIssues.length === 1 ? 'Issue' : 'Issues'} Found
           {#if showOnlyZeroComments && displayedIssues.length !== issues.length}
-            <span class="text-sm text-slate-400 font-normal ml-1">(from {issues.length})</span>
+            <span class="text-sm font-normal ml-1" style="color: var(--theme-text-muted)"
+              >(from {issues.length})</span
+            >
           {/if}
         </h2>
-        <p class="text-xs text-slate-400 mt-0.5">
+        <p class="text-xs mt-0.5" style="color: var(--theme-text-muted)">
           {#if isAuthenticated}
             Open, unassigned, no pull requests
           {:else}
@@ -106,7 +108,8 @@
 
     <!-- Filter and Sort Controls -->
     <div
-      class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-3 border-t border-slate-700/50"
+      class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-3 border-t"
+      style="border-color: var(--theme-border)"
     >
       <FilterControls enabled={showOnlyZeroComments} {zeroCommentCount} onToggle={onFilterToggle} />
 
@@ -126,5 +129,7 @@
 
 <!-- Success footer - Compact -->
 <div class="mt-6 text-center py-6">
-  <p class="text-sm text-slate-400">Pick an issue and start contributing!</p>
+  <p class="text-sm" style="color: var(--theme-text-muted)">
+    Pick an issue and start contributing!
+  </p>
 </div>

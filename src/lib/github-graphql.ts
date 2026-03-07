@@ -12,6 +12,14 @@ import {
 
 const GITHUB_GRAPHQL_ENDPOINT = 'https://api.github.com/graphql';
 
+/**
+ * Sanitize a GitHub label color to prevent CSS injection.
+ * GitHub API returns 6-char hex strings, but we validate defensively.
+ */
+function sanitizeLabelColor(color: string): string {
+  return /^[0-9a-fA-F]{6}$/.test(color) ? color : '666666';
+}
+
 export interface GitHubIssue {
   number: number;
   title: string;
@@ -426,7 +434,7 @@ export class GitHubAPI {
         labels: {
           nodes: issue.labels.map((label: any) => ({
             name: label.name,
-            color: label.color,
+            color: sanitizeLabelColor(label.color),
             description: label.description
           }))
         },
@@ -548,7 +556,7 @@ export class GitHubAPI {
             labels: {
               nodes: issue.labels.map((label: any) => ({
                 name: label.name,
-                color: label.color,
+                color: sanitizeLabelColor(label.color),
                 description: label.description
               }))
             },

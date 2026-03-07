@@ -255,7 +255,8 @@
     onclick={() => (showDropdown ? closeDropdown(true) : openDropdown())}
     onkeydown={handleTriggerKeyDown}
     disabled={isDisabled}
-    class="inline-flex items-center gap-1 px-2 py-1 bg-slate-700/60 hover:bg-slate-600/80 text-slate-300 hover:text-white rounded text-[10px] font-medium transition-colors disabled:opacity-50"
+    class="export-trigger inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors disabled:opacity-50"
+    style="background: var(--theme-bg-tertiary); color: var(--theme-text-secondary);"
     aria-label="Export issues"
     aria-expanded={showDropdown}
     aria-haspopup="menu"
@@ -285,7 +286,8 @@
   {#if showDropdown}
     <div
       bind:this={menuRef}
-      class="absolute left-0 top-full mt-1 w-36 bg-slate-800 rounded shadow-lg border border-slate-700 overflow-hidden z-50 focus:outline-none focus:ring-1 focus:ring-slate-500/50"
+      class="export-dropdown absolute left-0 top-full mt-1 w-36 rounded shadow-lg overflow-hidden z-50"
+      style="background: var(--theme-bg-secondary); border: 1px solid var(--theme-border);"
       role="menu"
       aria-label="Export formats"
       aria-activedescendant={activeDescendantId}
@@ -298,9 +300,9 @@
           type="button"
           onclick={() => exportIssues(item.id)}
           onmouseenter={() => (focusedIndex = index)}
-          class="w-full px-2.5 py-1.5 text-left text-[10px] text-slate-300 hover:bg-slate-700 hover:text-white transition-colors duration-150 motion-reduce:transition-none"
-          class:bg-slate-700={focusedIndex === index}
-          class:text-white={focusedIndex === index}
+          class="export-menu-item w-full px-2.5 py-1.5 text-left text-[10px] transition-colors duration-150 motion-reduce:transition-none"
+          class:focused={focusedIndex === index}
+          style="color: var(--theme-text-secondary);"
           role="menuitem"
           tabindex="-1"
         >
@@ -310,3 +312,20 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .export-trigger:hover {
+    color: var(--theme-text-primary);
+  }
+
+  .export-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--theme-border);
+  }
+
+  .export-menu-item:hover,
+  .export-menu-item.focused {
+    background: var(--theme-bg-tertiary);
+    color: var(--theme-text-primary);
+  }
+</style>

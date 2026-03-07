@@ -25,7 +25,7 @@ export class GitHubOAuth {
     const params = new URLSearchParams({
       client_id: GITHUB_CLIENT_ID,
       redirect_uri: REDIRECT_URI,
-      scope: 'public_repo read:user user:email',
+      scope: 'read:user',
       state: this.generateState()
     });
 
@@ -95,7 +95,14 @@ export class GitHubOAuth {
    */
   static getStoredUser(): GitHubUser | null {
     const userStr = localStorage.getItem('github_user');
-    return userStr ? JSON.parse(userStr) : null;
+    if (!userStr) return null;
+    try {
+      return JSON.parse(userStr);
+    } catch {
+      console.error('[OAuth] Failed to parse stored user data');
+      localStorage.removeItem('github_user');
+      return null;
+    }
   }
 
   /**
@@ -117,7 +124,9 @@ export class GitHubOAuth {
    * Generate random state for CSRF protection
    */
   private static generateState(): string {
-    const state = Math.random().toString(36).substring(7);
+    const bytes = new Uint8Array(32);
+    crypto.getRandomValues(bytes);
+    const state = Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
     localStorage.setItem('github_oauth_state', state);
     return state;
   }
@@ -148,7 +157,7 @@ export class GitHubOAuth {
       },
       body: JSON.stringify({
         client_id: GITHUB_CLIENT_ID,
-        scope: 'public_repo read:user user:email'
+        scope: 'read:user'
       })
     });
 
@@ -157,9 +166,13 @@ export class GitHubOAuth {
     }
 
     const data = await response.json();
+    const uri: string = data.verification_uri;
+    if (!uri || !uri.startsWith('https://')) {
+      throw new Error('Invalid verification URI received from GitHub');
+    }
     return {
       user_code: data.user_code,
-      verification_uri: data.verification_uri
+      verification_uri: uri
     };
   }
 

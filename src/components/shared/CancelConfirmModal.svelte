@@ -205,14 +205,14 @@
 
   /* Modal Dialog */
   .cancel-modal {
-    background: rgba(30, 41, 59, 0.95);
+    background: var(--theme-bg-card);
     backdrop-filter: blur(16px);
     border-radius: 16px;
     padding: 1.5rem;
     max-width: 360px;
     width: 100%;
     position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px var(--theme-shadow);
     animation: modal-enter 0.2s ease-out;
   }
 
@@ -221,7 +221,7 @@
     position: absolute;
     inset: -2px;
     background: transparent;
-    border: 2px solid rgba(148, 163, 184, 0.25);
+    border: 2px solid var(--theme-border);
     border-radius: inherit;
     filter: url(#sketch);
     pointer-events: none;
@@ -258,7 +258,7 @@
   .modal-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: #f1f5f9;
+    color: var(--theme-text-primary);
     text-align: center;
     margin: 0 0 1rem 0;
   }
@@ -270,15 +270,15 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: rgba(51, 65, 85, 0.5);
+    background: var(--theme-bg-tertiary);
     border-radius: 8px;
     margin-bottom: 1rem;
     font-size: 0.875rem;
-    color: #94a3b8;
+    color: var(--theme-text-muted);
   }
 
   .issues-info strong {
-    color: #e2e8f0;
+    color: var(--theme-text-primary);
     font-weight: 700;
   }
 
@@ -292,7 +292,7 @@
   /* Description */
   .modal-description {
     font-size: 0.875rem;
-    color: #94a3b8;
+    color: var(--theme-text-muted);
     text-align: center;
     line-height: 1.5;
     margin: 0 0 1.25rem 0;
@@ -336,7 +336,7 @@
   .btn-continue:hover {
     background: var(--theme-accent-hover, oklch(0.83 0.13 291));
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px oklch(0.78 0.13 291 / 0.3);
+    box-shadow: 0 4px 12px var(--theme-shadow);
   }
 
   .btn-continue:focus-visible {

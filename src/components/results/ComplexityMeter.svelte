@@ -51,8 +51,8 @@
     return 'from-red-500 to-red-400';
   });
 
-  // Background color for track (unfilled portion)
-  const trackClass = 'bg-slate-700/50';
+  // Background color for track (unfilled portion) - uses theme variable
+  const trackStyle = 'background-color: var(--theme-bg-tertiary)';
 </script>
 
 <div
@@ -65,7 +65,7 @@
   title={showTooltip ? tooltipText : undefined}
 >
   <!-- Track (background) -->
-  <div class="h-1.5 rounded-full {trackClass} overflow-hidden">
+  <div class="h-1.5 rounded-full overflow-hidden" style={trackStyle}>
     <!-- Fill (progress) -->
     <div
       class="h-full rounded-full bg-gradient-to-r {gradientClass} transition-all duration-300"

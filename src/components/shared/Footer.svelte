@@ -41,16 +41,43 @@
       <div class="footer-brand">
         <svg
           class="logo-icon"
-          viewBox="0 0 24 24"
+          viewBox="0 0 128 128"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <circle cx="64" cy="64" r="56" fill="oklch(0.78 0.13 291)" />
           <path
-            d="M8 12L11 15L16 9"
-            stroke="currentColor"
-            stroke-width="2"
+            d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
+            stroke="white"
+            stroke-width="6"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <circle cx="32" cy="50" r="10" fill="white" />
+          <circle cx="64" cy="64" r="12" fill="white" />
+          <circle cx="96" cy="78" r="10" fill="white" />
+          <path
+            d="M 27 50 L 30 53 L 37 46"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M 58 64 L 62 68 L 70 58"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M 91 78 L 94 81 L 101 74"
+            stroke="oklch(0.78 0.13 291)"
+            stroke-width="3"
+            fill="none"
             stroke-linecap="round"
             stroke-linejoin="round"
           />
@@ -124,7 +151,7 @@
 <style>
   .footer {
     width: 100%;
-    border-top: 1px solid var(--theme-border, oklch(0.3 0.01 264 / 0.3));
+    border-top: 1px solid var(--theme-border);
     padding: 1rem 1rem;
     margin-top: 2rem;
   }
@@ -153,40 +180,40 @@
   .logo-icon {
     width: 1rem;
     height: 1rem;
-    color: oklch(0.78 0.13 291);
+    color: var(--theme-accent);
   }
 
   .brand-name {
     font-size: 0.8125rem;
     font-weight: 700;
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   .version-badge {
     font-family: var(--font-mono, monospace);
     font-size: 0.5625rem;
     font-weight: 600;
-    color: oklch(0.78 0.13 291);
-    background: oklch(0.78 0.13 291 / 0.12);
+    color: var(--theme-accent);
+    background: oklch(from var(--theme-accent) l c h / 0.12);
     padding: 0.0625rem 0.3125rem;
     border-radius: 0.1875rem;
   }
 
   .by-text {
     font-size: 0.5625rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
   }
 
   .company-link {
     font-size: 0.6875rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.15s ease;
   }
 
   .company-link:hover {
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   /* Social */
@@ -202,7 +229,7 @@
     justify-content: center;
     width: 1.75rem;
     height: 1.75rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
     background: transparent;
     border: none;
     border-radius: 0.375rem;
@@ -212,7 +239,7 @@
   }
 
   .social-btn:hover {
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   .social-btn svg {
@@ -238,7 +265,7 @@
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
     text-decoration: none;
     font-size: 0.6875rem;
     font-weight: 500;
@@ -247,12 +274,12 @@
   }
 
   .footer-link:hover {
-    color: var(--theme-text-primary, oklch(0.95 0.004 264));
+    color: var(--theme-text-primary);
   }
 
   .footer-copy {
     font-size: 0.625rem;
-    color: var(--theme-text-muted, oklch(0.52 0.01 264));
+    color: var(--theme-text-muted);
   }
 
   /* Mobile */

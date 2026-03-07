@@ -63,13 +63,13 @@ Open http://localhost:4321
 
 ## Features
 
-| Feature | Without Token | With Token |
-|---------|:---:|:---:|
-| Open issues | Yes | Yes |
-| Unassigned filter | Yes | Yes |
-| PR detection | No | Yes |
-| Rate limit | 60/hr | 5000/hr |
-| API | REST | GraphQL |
+| Feature           | Without Token | With Token |
+| ----------------- | :-----------: | :--------: |
+| Open issues       |      Yes      |    Yes     |
+| Unassigned filter |      Yes      |    Yes     |
+| PR detection      |      No       |    Yes     |
+| Rate limit        |     60/hr     |  5000/hr   |
+| API               |     REST      |  GraphQL   |
 
 ### Search and Filtering
 
@@ -140,14 +140,14 @@ IssueVista/
 
 ## Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server |
-| `npm run build` | Production build |
-| `npm run lint` | Run ESLint |
+| Command                | Description               |
+| ---------------------- | ------------------------- |
+| `npm run dev`          | Start dev server          |
+| `npm run build`        | Production build          |
+| `npm run lint`         | Run ESLint                |
 | `npm run format:check` | Check Prettier formatting |
-| `npm run test` | Run unit tests |
-| `npm run test:e2e` | Run E2E tests |
+| `npm run test`         | Run unit tests            |
+| `npm run test:e2e`     | Run E2E tests             |
 
 ## Contributing
 

@@ -63,19 +63,49 @@ const ogImage = `${siteUrl}/og-image.png`;
       href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.min.css"
     />
 
-    <!-- Theme Detection (blocking to prevent FOUC) -->
+    <!-- Theme Detection (blocking to prevent FOUC) - same as Layout.astro -->
     <script is:inline>
       (function () {
-        if (
-          localStorage.getItem('issuevista-theme-preset') === 'dark' ||
-          localStorage.getItem('issuevista-theme') === 'dark' ||
-          (!localStorage.getItem('issuevista-theme-preset') &&
-            !localStorage.getItem('issuevista-theme') &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ) {
-          document.documentElement.classList.add('dark');
-          document.documentElement.style.colorScheme = 'dark';
+        const PRESET_KEY = 'issuevista-theme-preset';
+        const LEGACY_KEY = 'issuevista-theme';
+        const OLD_PRESET_KEY = 'issueflow-theme-preset';
+        const OLD_LEGACY_KEY = 'issueflow-theme';
+        const DARK_PRESETS = ['dark', 'midnight', 'ocean', 'forest', 'sunset'];
+
+        if (!localStorage.getItem(PRESET_KEY) && localStorage.getItem(OLD_PRESET_KEY)) {
+          localStorage.setItem(PRESET_KEY, localStorage.getItem(OLD_PRESET_KEY));
+          localStorage.removeItem(OLD_PRESET_KEY);
+          localStorage.removeItem(OLD_LEGACY_KEY);
+        } else if (!localStorage.getItem(PRESET_KEY) && localStorage.getItem(OLD_LEGACY_KEY)) {
+          localStorage.setItem(PRESET_KEY, localStorage.getItem(OLD_LEGACY_KEY));
+          localStorage.removeItem(OLD_LEGACY_KEY);
         }
+
+        let preset = localStorage.getItem(PRESET_KEY);
+        if (!preset) {
+          const legacy = localStorage.getItem(LEGACY_KEY);
+          if (legacy === 'dark' || legacy === 'light' || legacy === 'system') {
+            preset = legacy;
+          }
+        }
+        if (!preset) preset = 'system';
+
+        let resolved = preset;
+        if (preset === 'system') {
+          resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        if (DARK_PRESETS.includes(resolved) || DARK_PRESETS.includes(preset)) {
+          document.documentElement.classList.add('dark');
+        }
+
+        if (preset !== 'light' && preset !== 'dark' && preset !== 'system') {
+          document.documentElement.classList.add('theme-' + preset);
+        }
+
+        const isDark =
+          DARK_PRESETS.includes(preset) || (preset === 'system' && resolved === 'dark');
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
       })();
     </script>
 
@@ -102,11 +132,100 @@ const ogImage = `${siteUrl}/og-image.png`;
     </script>
 
     <style is:global>
+      /* ========================================
+         SHARED THEME SYSTEM (same as Layout.astro)
+         ======================================== */
       :root {
         --font-sans: 'Geist Sans', 'Geist', system-ui, -apple-system, sans-serif;
         --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+
+        /* Dark mode colors (default) */
+        --theme-bg-primary: oklch(0.15 0.01 270);
+        --theme-bg-secondary: oklch(0.2 0.012 270);
+        --theme-bg-tertiary: oklch(0.26 0.014 270);
+        --theme-bg-card: oklch(0.2 0.012 270 / 0.8);
+        --theme-bg-input: oklch(0.2 0.012 270 / 0.85);
+        --theme-text-primary: oklch(0.96 0.005 264);
+        --theme-text-secondary: oklch(0.85 0.008 264);
+        --theme-text-muted: oklch(0.6 0.012 264);
+        --theme-border: oklch(0.38 0.012 264 / 0.4);
+        --theme-shadow: oklch(0 0 0 / 0.5);
+        --theme-accent: oklch(0.72 0.16 291);
+        --theme-accent-hover: oklch(0.78 0.14 291);
       }
 
+      html:not(.dark) {
+        /* Light mode colors - strong contrast */
+        --theme-bg-primary: oklch(0.975 0.003 264);
+        --theme-bg-secondary: oklch(0.995 0 0);
+        --theme-bg-tertiary: oklch(0.945 0.005 264);
+        --theme-bg-card: oklch(0.995 0 0);
+        --theme-bg-input: oklch(0.995 0 0);
+        --theme-text-primary: oklch(0.13 0.03 264);
+        --theme-text-secondary: oklch(0.22 0.025 264);
+        --theme-text-muted: oklch(0.42 0.015 264);
+        --theme-border: oklch(0.78 0.01 264 / 0.6);
+        --theme-shadow: oklch(0 0 0 / 0.1);
+        --theme-accent: oklch(0.55 0.2 291);
+        --theme-accent-hover: oklch(0.48 0.22 291);
+      }
+
+      /* Theme presets - same as Layout.astro */
+      html.theme-midnight {
+        --theme-bg-primary: oklch(0.13 0.03 280);
+        --theme-bg-secondary: oklch(0.17 0.035 280);
+        --theme-bg-tertiary: oklch(0.22 0.04 280);
+        --theme-bg-card: oklch(0.17 0.035 280 / 0.8);
+        --theme-text-primary: oklch(0.93 0.01 280);
+        --theme-text-secondary: oklch(0.82 0.015 280);
+        --theme-text-muted: oklch(0.6 0.03 280);
+        --theme-border: oklch(0.6 0.03 280 / 0.25);
+        --theme-accent: oklch(0.55 0.24 285);
+        --theme-accent-hover: oklch(0.65 0.22 285);
+      }
+
+      html.theme-ocean {
+        --theme-bg-primary: oklch(0.16 0.03 250);
+        --theme-bg-secondary: oklch(0.22 0.04 250);
+        --theme-bg-tertiary: oklch(0.28 0.05 250);
+        --theme-bg-card: oklch(0.22 0.04 250 / 0.8);
+        --theme-text-primary: oklch(0.95 0.01 230);
+        --theme-text-secondary: oklch(0.85 0.03 230);
+        --theme-text-muted: oklch(0.72 0.08 230);
+        --theme-border: oklch(0.72 0.08 230 / 0.25);
+        --theme-accent: oklch(0.65 0.17 230);
+        --theme-accent-hover: oklch(0.72 0.14 230);
+      }
+
+      html.theme-forest {
+        --theme-bg-primary: oklch(0.15 0.03 145);
+        --theme-bg-secondary: oklch(0.2 0.04 145);
+        --theme-bg-tertiary: oklch(0.26 0.05 145);
+        --theme-bg-card: oklch(0.2 0.04 145 / 0.8);
+        --theme-text-primary: oklch(0.95 0.02 145);
+        --theme-text-secondary: oklch(0.85 0.05 145);
+        --theme-text-muted: oklch(0.72 0.1 145);
+        --theme-border: oklch(0.72 0.1 145 / 0.25);
+        --theme-accent: oklch(0.65 0.19 150);
+        --theme-accent-hover: oklch(0.72 0.17 150);
+      }
+
+      html.theme-sunset {
+        --theme-bg-primary: oklch(0.15 0.03 25);
+        --theme-bg-secondary: oklch(0.2 0.035 25);
+        --theme-bg-tertiary: oklch(0.26 0.04 25);
+        --theme-bg-card: oklch(0.2 0.035 25 / 0.8);
+        --theme-text-primary: oklch(0.97 0.005 25);
+        --theme-text-secondary: oklch(0.87 0.03 25);
+        --theme-text-muted: oklch(0.75 0.06 25);
+        --theme-border: oklch(0.75 0.06 25 / 0.25);
+        --theme-accent: oklch(0.72 0.17 55);
+        --theme-accent-hover: oklch(0.78 0.14 55);
+      }
+
+      /* ========================================
+         BASE STYLES
+         ======================================== */
       * {
         margin: 0;
         padding: 0;
@@ -115,21 +234,25 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       html {
         scroll-behavior: smooth;
+        background-color: var(--theme-bg-primary);
+      }
+
+      html.dark {
+        color-scheme: dark;
+      }
+
+      html:not(.dark) {
+        color-scheme: light;
       }
 
       body {
         font-family: var(--font-sans);
-        background-color: oklch(0.98 0.004 264);
-        color: oklch(0.15 0.02 264);
+        background-color: var(--theme-bg-primary);
+        color: var(--theme-text-primary);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         min-height: 100vh;
         overflow-x: hidden;
-      }
-
-      .dark body {
-        background-color: oklch(0.1648 0.0075 270.93);
-        color: oklch(0.95 0.004 264);
       }
 
       .sr-only {
@@ -144,7 +267,9 @@ const ogImage = `${siteUrl}/og-image.png`;
         border-width: 0;
       }
 
-      /* Animation keyframes */
+      /* ========================================
+         ANIMATION KEYFRAMES
+         ======================================== */
       @keyframes aurora {
         0% {
           background-position: 0% 50%;
@@ -187,7 +312,9 @@ const ogImage = `${siteUrl}/og-image.png`;
         }
       }
 
-      /* Scrollbar styling */
+      /* ========================================
+         SCROLLBAR STYLING
+         ======================================== */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -204,6 +331,14 @@ const ogImage = `${siteUrl}/og-image.png`;
 
       ::-webkit-scrollbar-thumb:hover {
         background: oklch(0.52 0.01 264 / 0.5);
+      }
+
+      html.dark ::-webkit-scrollbar-thumb {
+        background: oklch(0.35 0.01 264 / 0.5);
+      }
+
+      html.dark ::-webkit-scrollbar-thumb:hover {
+        background: oklch(0.45 0.01 264 / 0.6);
       }
     </style>
   </head>

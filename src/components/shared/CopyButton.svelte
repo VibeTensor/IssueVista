@@ -93,9 +93,10 @@
 <button
   type="button"
   onclick={handleCopy}
-  class="inline-flex flex-row items-center justify-center gap-2 {showCopied
-    ? 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-500 hover:to-green-600'
-    : 'bg-gradient-to-br from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600'} text-white rounded-xl font-bold sketch-button transition-all shadow-md {className}"
+  class="inline-flex flex-row items-center justify-center gap-2 rounded-xl font-bold sketch-button transition-all shadow-md {className}"
+  style="color: white; background: {showCopied
+    ? 'linear-gradient(to bottom right, #16a34a, #15803d)'
+    : `linear-gradient(to bottom right, var(--theme-bg-tertiary), var(--theme-bg-secondary))`};"
   aria-label={ariaLabel}
   title={showCopied ? 'Copied!' : label}
 >

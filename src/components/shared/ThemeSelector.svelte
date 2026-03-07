@@ -332,7 +332,7 @@
     justify-content: center;
     width: 3rem;
     height: 3rem;
-    background: var(--theme-accent, oklch(0.78 0.13 291));
+    background: var(--theme-accent);
     color: white;
     border: none;
     border-radius: 9999px;

@@ -19,7 +19,8 @@
   <button
     type="button"
     onclick={onClear}
-    class="text-sm font-semibold text-slate-400 hover:text-white focus-visible:text-white focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-md px-2 py-1 transition-colors flex items-center gap-1.5"
+    class="clear-filters-btn text-sm font-semibold focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 rounded-md px-2 py-1 transition-colors flex items-center gap-1.5"
+    style="color: var(--theme-text-muted); --tw-ring-offset-color: var(--theme-bg-primary);"
     aria-label="Clear all active filters and reset to default"
   >
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -33,3 +34,10 @@
     Clear Filters
   </button>
 {/if}
+
+<style>
+  .clear-filters-btn:hover,
+  .clear-filters-btn:focus-visible {
+    color: var(--theme-text-primary);
+  }
+</style>

@@ -144,7 +144,7 @@
   }
 
   .toast-success {
-    background: var(--theme-accent, oklch(0.78 0.13 291));
+    background: var(--theme-accent);
   }
 
   .toast-error {
