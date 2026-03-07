@@ -359,7 +359,7 @@
   }
 
   .primary-action:focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 

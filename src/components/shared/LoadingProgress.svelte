@@ -214,7 +214,7 @@
 
   /* Progress Fill Colors (from getProgressColor) */
   .progress-fill.bg-violet-500 {
-    background: var(--theme-accent, oklch(0.78 0.13 291));
+    background: var(--theme-accent);
   }
 
   .progress-fill.bg-emerald-500 {

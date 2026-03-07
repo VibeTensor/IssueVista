@@ -47,7 +47,7 @@
     border: 1px solid var(--theme-border);
     padding: 5rem 2rem;
     text-align: center;
-    background-color: var(--theme-bg-card, var(--theme-bg-secondary));
+    background-color: var(--theme-bg-card);
     opacity: 0;
     transform: translateY(20px);
     transition:
@@ -107,7 +107,7 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: white;
-    background-color: var(--theme-text-primary);
+    background-color: var(--theme-accent);
     text-decoration: none;
     transition: transform 0.15s ease;
   }

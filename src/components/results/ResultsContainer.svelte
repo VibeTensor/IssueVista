@@ -1587,7 +1587,7 @@
   }
 
   .filter-toggle:hover {
-    border-color: var(--theme-accent, oklch(0.72 0.16 291));
+    border-color: var(--theme-accent);
     opacity: 0.9;
   }
 

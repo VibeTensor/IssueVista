@@ -58,7 +58,7 @@
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
         >
-          <circle cx="64" cy="64" r="56" fill="oklch(0.78 0.13 291)" />
+          <circle cx="64" cy="64" r="56" fill="var(--theme-accent)" />
           <path
             d="M 20 64 Q 44 30, 64 64 Q 84 98, 108 64"
             stroke="white"
@@ -71,7 +71,7 @@
           <circle cx="96" cy="78" r="10" fill="white" />
           <path
             d="M 27 50 L 30 53 L 37 46"
-            stroke="oklch(0.78 0.13 291)"
+            stroke="var(--theme-accent)"
             stroke-width="3"
             fill="none"
             stroke-linecap="round"
@@ -79,7 +79,7 @@
           />
           <path
             d="M 58 64 L 62 68 L 70 58"
-            stroke="oklch(0.78 0.13 291)"
+            stroke="var(--theme-accent)"
             stroke-width="3"
             fill="none"
             stroke-linecap="round"
@@ -87,7 +87,7 @@
           />
           <path
             d="M 91 78 L 94 81 L 101 74"
-            stroke="oklch(0.78 0.13 291)"
+            stroke="var(--theme-accent)"
             stroke-width="3"
             fill="none"
             stroke-linecap="round"

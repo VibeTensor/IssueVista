@@ -285,7 +285,7 @@
   .info-icon {
     width: 1.125rem;
     height: 1.125rem;
-    color: var(--theme-accent, oklch(0.78 0.13 291));
+    color: var(--theme-accent);
     flex-shrink: 0;
   }
 
@@ -329,18 +329,18 @@
   /* Continue Button (primary, safer default) */
   .btn-continue {
     color: white;
-    background: var(--theme-accent, oklch(0.78 0.13 291));
+    background: var(--theme-accent);
     border: none;
   }
 
   .btn-continue:hover {
-    background: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    background: var(--theme-accent-hover);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px var(--theme-shadow);
   }
 
   .btn-continue:focus-visible {
-    outline: 2px solid var(--theme-accent, oklch(0.78 0.13 291));
+    outline: 2px solid var(--theme-accent);
     outline-offset: 2px;
   }
 

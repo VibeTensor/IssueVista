@@ -245,7 +245,7 @@
     border-radius: 0.75rem;
     border: 1px solid var(--theme-border);
     padding: 1rem;
-    background-color: var(--theme-bg-card, var(--theme-bg-secondary));
+    background-color: var(--theme-bg-card);
     box-shadow: 0 4px 24px var(--theme-shadow);
   }
 

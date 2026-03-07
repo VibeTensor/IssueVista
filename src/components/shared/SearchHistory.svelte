@@ -375,7 +375,7 @@
   .export-btn {
     font-size: 0.5625rem;
     font-weight: 500;
-    color: var(--theme-accent, oklch(0.78 0.13 291));
+    color: var(--theme-accent);
     background: transparent;
     border: 1px solid color-mix(in srgb, var(--theme-accent) 30%, transparent);
     cursor: pointer;
@@ -385,7 +385,7 @@
   }
 
   .export-btn:hover {
-    color: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    color: var(--theme-accent-hover);
     background: color-mix(in srgb, var(--theme-accent) 10%, transparent);
     border-color: color-mix(in srgb, var(--theme-accent) 50%, transparent);
   }
@@ -484,7 +484,7 @@
   }
 
   .issue-count {
-    color: var(--theme-accent, oklch(0.78 0.13 291));
+    color: var(--theme-accent);
   }
 
   .search-count {
@@ -594,7 +594,7 @@
     background-color: color-mix(in srgb, var(--theme-accent) 30%, transparent);
     border-radius: 2px;
     padding: 0 1px;
-    color: var(--theme-accent-hover, oklch(0.83 0.13 291));
+    color: var(--theme-accent-hover);
   }
 
   /* No matches empty state (Issue #129) */
