@@ -45,9 +45,9 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
-    "@astrojs/svelte": "^7.2.5",
+    "@astrojs/svelte": "^8.0.5",
     "@unocss/astro": "^66.6.0",
-    "astro": "^5.16.11",
+    "astro": "^6.1.8",
     "framer-motion": "^12.34.3",
     "graphql-request": "^7.4.0",
     "react": "^19.2.4",
