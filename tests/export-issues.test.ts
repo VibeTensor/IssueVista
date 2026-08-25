@@ -41,7 +41,9 @@ function formatIssuesForExport(
   switch (format) {
     case 'markdown':
       return issuesToFormat
-        .map((issue) => `- [#${issue.number} ${issue.title.replace(/\]/g, '\\]')}](${issue.url})`)
+        .map(
+          (issue) => `- [#${issue.number} ${issue.title.replace(/[\\\]]/g, '\\$&')}](${issue.url})`
+        )
         .join('\n');
 
     case 'plain':
