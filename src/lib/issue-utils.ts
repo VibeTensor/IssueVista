@@ -324,7 +324,7 @@ export function getBodyPreview(issue: GitHubIssue, maxLength: number = 200): str
   }
 
   // Strip common markdown elements
-  const text = issue.body
+  let text = issue.body
     // Remove code blocks
     .replace(/```[\s\S]*?```/g, '[code]')
     // Remove inline code
@@ -340,12 +340,17 @@ export function getBodyPreview(issue: GitHubIssue, maxLength: number = 200): str
     // Remove blockquotes
     .replace(/^>\s+/gm, '')
     // Remove horizontal rules
-    .replace(/^[-*_]{3,}\s*$/gm, '')
-    // Remove HTML tags
-    .replace(/<[^>]+>/g, '')
-    // Normalize whitespace
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/^[-*_]{3,}\s*$/gm, '');
+
+  // Remove HTML tags; repeat until stable so split tags like <<script>script> cannot survive one pass
+  let previous: string;
+  do {
+    previous = text;
+    text = text.replace(/<[^>]*>/g, '');
+  } while (text !== previous);
+
+  // Normalize whitespace
+  text = text.replace(/\s+/g, ' ').trim();
 
   if (text.length <= maxLength) {
     return text;

@@ -14,7 +14,8 @@ import {
   sortByComments,
   countZeroCommentIssues,
   hasZeroCommentIssues,
-  aggregateLabelFrequencies
+  aggregateLabelFrequencies,
+  getBodyPreview
 } from '../src/lib/issue-utils';
 
 /**
@@ -547,5 +548,14 @@ describe('aggregateLabelFrequencies', () => {
       const result = aggregateLabelFrequencies([issue]);
       expect(result[0].color).toBe('666666');
     });
+  });
+});
+
+describe('getBodyPreview', () => {
+  it('strips HTML tags that only form after a first pass', () => {
+    const issue = { ...createMockIssue(0), body: 'Hello <<script>script>alert(1)</script> world' };
+    const preview = getBodyPreview(issue);
+    expect(preview).not.toContain('<script');
+    expect(preview).not.toContain('<');
   });
 });
