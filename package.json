@@ -60,7 +60,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "@vitest/ui": "^4.1.11",
     "eslint": "^9.39.2",
