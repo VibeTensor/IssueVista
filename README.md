@@ -176,6 +176,12 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 - Tokens stored in browser localStorage only
 - Open source and auditable
 
+## Support
+
+Support ongoing project maintenance through GitHub Sponsors.
+
+<a href="https://github.com/sponsors/VibeTensor"><img src="https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?style=flat-square&logo=github" alt="GitHub Sponsors" /></a>
+
 ## License
 
 [MIT](./LICENSE)
